@@ -36,7 +36,8 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxt/http'],
+
   // axios: {},
   http: {
     proxy: true // Can be also an object with default options

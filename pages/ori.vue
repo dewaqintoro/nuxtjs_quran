@@ -1,9 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <div v-if="filterSurah" class="font-arabic">
+    <div v-if="allSurah" class="font-arabic">
       <input type="text" v-model="search" placeholder="search ..." >
-      <button @click="searchFilter()">search</button>
       
       <div class="item" v-for="(surah, index) in filterSurah" :key="index">
         <a :href="'/surah/'+surah.index">
@@ -26,7 +25,6 @@
 <script>
 import { ref, useAsync } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
-import { __isNotEmptyString, __normalizeText } from '~/utils/index.ts'
 
 export default {
   name: 'Quran',
@@ -35,17 +33,15 @@ export default {
   },
   setup(){
     const selectedCity = ref('')
-    const asalCity = ref('Yunus')
+    const asalCity = ref('')
     const allSurah = useAsync(async () => await getAllSurah())
     const filterSurah = useAsync(async () => await getFilter())
-
     const search = ref('')
 
     return {
       allSurah,
-      search,
       filterSurah,
-      searchFilter,
+      search,
       cek
     }
 
@@ -54,30 +50,17 @@ export default {
       return resp.surah_info
     }
 
-    async function searchFilter(){
-      filterSurah.value = useAsync(async () => await getFilter())
-      console.log('filterSurah', filterSurah)
-    }
-
     async function cek(){
       console.log(allSurah?.value)
     }
 
     async function getFilter(){
-        const ad = allSurah?.value
-        const oldSearch = asalCity.value
+      // console.log(allSurah?.value)
 
-        if(ad !== null ){
-        return allSurah?.value.filter((item) => {
-            const predicateTranslation = __normalizeText(item.translation).includes(
-            __normalizeText(oldSearch)
-            )
-            const predicateLatin = __normalizeText(item.latin).includes(
-            __normalizeText(oldSearch)
-            )
-            return predicateLatin || predicateTranslation
-        })
-      }
+      return allSurah.value.filter((surah) => {
+        console.log(surah)
+        // return surah.latin.match(search)
+      })
     }
   }
 }
