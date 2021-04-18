@@ -1,11 +1,11 @@
 <template>
   <div>
     <Navbar />
-    <div v-if="filterSurah" class="font-arabic">
-      <input type="text" v-model="search" placeholder="search ..." >
-      <button @click="searchFilter()">search</button>
+      <input type="text" v-model="search" @change="getFilter" placeholder="search ..." >
+      <button @click="getFilter()">search</button>
+    <div class="font-arabic">
       
-      <div class="item" v-for="(surah, index) in filterSurah" :key="index">
+      <div class="item" v-for="(surah, index) in dew" :key="index">
         <a :href="'/surah/'+surah.index">
           <div class="card">
             <div class="flex">
@@ -27,6 +27,7 @@
 import { ref, useAsync } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
 import { __isNotEmptyString, __normalizeText } from '~/utils/index.ts'
+import json from '~/data/surah-info.json'
 
 export default {
   name: 'Quran',
@@ -37,16 +38,19 @@ export default {
     const selectedCity = ref('')
     const asalCity = ref('Yunus')
     const allSurah = useAsync(async () => await getAllSurah())
-    const filterSurah = useAsync(async () => await getFilter())
-
+    const filterSurah = json
     const search = ref('')
+    const dew = ref([])
+    getFilter()
 
     return {
       allSurah,
       search,
       filterSurah,
       searchFilter,
-      cek
+      dew,
+      cek,
+      getFilter
     }
 
     async function getAllSurah(){
@@ -54,30 +58,27 @@ export default {
       return resp.surah_info
     }
 
+    async function cek(){
+      console.log('dew', dew)
+    }
+
     async function searchFilter(){
       filterSurah.value = useAsync(async () => await getFilter())
-      console.log('filterSurah', filterSurah)
     }
 
-    async function cek(){
-      console.log(allSurah?.value)
-    }
-
-    async function getFilter(){
-        const ad = allSurah?.value
-        const oldSearch = asalCity.value
-
-        if(ad !== null ){
-        return allSurah?.value.filter((item) => {
-            const predicateTranslation = __normalizeText(item.translation).includes(
-            __normalizeText(oldSearch)
-            )
-            const predicateLatin = __normalizeText(item.latin).includes(
-            __normalizeText(oldSearch)
-            )
-            return predicateLatin || predicateTranslation
-        })
-      }
+    function getFilter(){
+      // if(aaa){
+      //   console.log('sudah')
+      //   return filterSurah.surah_info.filter(surat =>
+      //     surat.latin.toLowerCase().includes(search.value.toLowerCase())
+      //   );
+      // }else {
+      //   console.log('belum')
+      // }
+      const data = filterSurah.surah_info.filter(surat =>
+        surat.latin.toLowerCase().includes(search.value.toLowerCase())
+      );
+      dew.value = data
     }
   }
 }
