@@ -1,6 +1,6 @@
 <template>
   <span>
-    <button @click="cek()">cek</button>
+    <!-- <button @click="cek()">cek</button> -->
     <hr/>
     <div v-if="allSurah" class="font-arabic">
       
@@ -29,23 +29,15 @@ export default {
   setup(){
     const selectedCity = ref('')
     const asalCity = ref('')
-    const surah = useAsync(async () => await getSurah())
     const allSurah = useAsync(async () => await getAllSurah())
 
     return {
-      surah,
       allSurah,
       cek
     }
 
-    async function getSurah(){
-      const resp = await import('~/data/surah/1.json')
-      return resp[1]
-    }
-
     async function getAllSurah(){
       const resp = await import('~/data/surah-info.json')
-      // console.log(resp)
       return resp.surah_info
     }
 
@@ -101,7 +93,7 @@ html {
 
 @screen mobile {
   .item {
-    @apply mx-4;
+    @apply mx-2 px-2;
   }
 }
 </style>

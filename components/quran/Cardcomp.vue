@@ -1,10 +1,13 @@
 <template>
   <div class="card">
-    <div class="flex">
-      <div class="idSurah">{{index}}</div>
+    <div>
+      <!-- <div class="idSurah">{{index}}</div> -->
       <!-- <button @click="cek()">cek</button> -->
       <div class="nameSurah">
-        <p class="text-right text-3xl">{{surat}}</p>
+        <div class="flex justify-between">
+          <div class="idSurah text-xl font-bold">{{index}}</div>
+          <div class="surat">{{surat}}</div>
+        </div>
         <div class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
           <p>{{arti}}</p>
@@ -100,7 +103,17 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
 
+.surat {
+  @apply text-right text-3xl;
+}
+
 .my-audio{
-  max-width: 70%;
+  max-width: 90%;
+}
+
+@screen mobile {
+  .surat {
+    @apply text-xl;
+  }
 }
 </style>

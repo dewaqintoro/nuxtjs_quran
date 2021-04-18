@@ -83,25 +83,10 @@ html {
 .item {
   @apply px-8 mx-36 my-8;
 }
-/* .card {
-  @apply p-4 rounded-lg my-8;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15);
-  .idSurah {
-    @apply text-center;
-    width: 50px;
-  }
-  .nameSurah {
-    @apply px-4 w-full;
-  }
-}
-
-.card:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
-} */
 
 @screen mobile {
   .item {
-    @apply mx-4;
+    @apply mx-2 px-2;
   }
 }
 </style>

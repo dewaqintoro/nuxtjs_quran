@@ -1,5 +1,3 @@
-# jne
-
 ## Build Setup
 
 ```bash
