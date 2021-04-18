@@ -1,12 +1,21 @@
 <template>
   <div>
     <Navbar />
-      <input type="text" v-model="search" @change="getFilter" placeholder="search ..." >
-      <button @click="getFilter()">search</button>
+    <div class="text-center">
+      <!-- <input class="border" type="text" v-model="search" @change="searchFilter" placeholder="search ..." > -->
+      
+      <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
+      <!-- <button class="btn-search" @click="searchFilter()">Cari</button> -->
+      <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+        Cari
+      </button>
+    </div>
     <div class="font-arabic">
       
-      <div class="item" v-for="(surah, index) in dew" :key="index">
-        <a :href="'/surah/'+surah.index">
+      <div class="item" v-for="(surah, index) in allSurah" :key="index">
+        <!-- <a :href="'/surah/'+surah.index"> -->
+        <nuxt-link :to="'/surah/'+surah.index">
+        
           <div class="card">
             <div class="flex">
               <div class="idSurah">{{surah.index}}</div>
@@ -17,7 +26,9 @@
               </div>
             </div>
           </div>
-        </a>
+
+          </nuxt-link>
+        <!-- </a> -->
       </div>
         
     </div>
@@ -35,50 +46,28 @@ export default {
     Navbar
   },
   setup(){
-    const selectedCity = ref('')
-    const asalCity = ref('Yunus')
-    const allSurah = useAsync(async () => await getAllSurah())
-    const filterSurah = json
+    const data = json
     const search = ref('')
-    const dew = ref([])
-    getFilter()
+    const allSurah = ref([])
+    searchFilter()
 
     return {
-      allSurah,
       search,
-      filterSurah,
-      searchFilter,
-      dew,
+      allSurah,
       cek,
-      getFilter
+      searchFilter
     }
 
-    async function getAllSurah(){
-      const resp = await import('~/data/surah-info.json')
-      return resp.surah_info
-    }
 
     async function cek(){
-      console.log('dew', dew)
+      console.log('allSurah', allSurah)
     }
 
-    async function searchFilter(){
-      filterSurah.value = useAsync(async () => await getFilter())
-    }
-
-    function getFilter(){
-      // if(aaa){
-      //   console.log('sudah')
-      //   return filterSurah.surah_info.filter(surat =>
-      //     surat.latin.toLowerCase().includes(search.value.toLowerCase())
-      //   );
-      // }else {
-      //   console.log('belum')
-      // }
-      const data = filterSurah.surah_info.filter(surat =>
+    function searchFilter(){
+      const result = data.surah_info.filter(surat =>
         surat.latin.toLowerCase().includes(search.value.toLowerCase())
       );
-      dew.value = data
+      allSurah.value = result
     }
   }
 }
@@ -107,9 +96,12 @@ html {
   line-height: 2;
 }
 
-/* .logo {
-  max-width: 50%;
-} */
+.btn-search {
+  background-color: #4497eb;
+}
+.btn-search:hover {
+  background-color: #2187ec;
+}
 .item {
   @apply px-8 mx-36 my-8;
 }
