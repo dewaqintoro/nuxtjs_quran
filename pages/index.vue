@@ -1,7 +1,6 @@
 <template>
-  <span>
-    <!-- <button @click="cek()">cek</button> -->
-    <hr/>
+  <div>
+    <Navbar />
     <div v-if="allSurah" class="font-arabic">
       
       <div class="item"  v-for="(x, index) in allSurah" :key="index">
@@ -20,12 +19,17 @@
       </div>
         
     </div>
-  </span>
+  </div>
 </template>
 <script>
 import { ref, useAsync } from '@nuxtjs/composition-api'
+import Navbar from '~/components/quran/Navbar.vue'
+
 export default {
   name: 'Quran',
+  components: {
+    Navbar
+  },
   setup(){
     const selectedCity = ref('')
     const asalCity = ref('')
@@ -71,6 +75,9 @@ html {
   line-height: 2;
 }
 
+/* .logo {
+  max-width: 50%;
+} */
 .item {
   @apply px-8 mx-36 my-8;
 }

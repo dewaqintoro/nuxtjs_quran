@@ -1,10 +1,7 @@
 <template>
   <div class="font-arabic">
+    <Navbar />
     <button @click="cek()">cek</button>
-    <nuxt-link to="/">
-        Home
-      </nuxt-link>
-    <hr/>
     <div v-if="surah" class="mt-8">
       <Headerquran :surah="surah" />
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
@@ -23,11 +20,13 @@
 import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
+import Navbar from '~/components/quran/Navbar.vue'
 
 export default {
   name: 'Surah',
   components: {
     Headerquran,
+    Navbar,
     Cardcomp
   },
   setup(){
