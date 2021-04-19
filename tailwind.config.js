@@ -23,6 +23,7 @@ module.exports = {
         'lightest': '#F5F8FA',
         'bluetweet': 'rgb(29, 161, 242)',
         'darkred': '#d03801',
+        'darkone': '#1d2d50'
       }
     },
   },

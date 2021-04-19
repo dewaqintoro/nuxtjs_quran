@@ -1,11 +1,20 @@
 <template>
-  <div>
-    <Navbar />
-    <div class="text-center">
-      <!-- <input class="border" type="text" v-model="search" @change="searchFilter" placeholder="search ..." > -->
+  <div class="main text-white" :style="{ background: classObject.background, color: classObject.color }">
+    <Navbar :classObject="classObject" />
+    <div>
       
+      <div class="text">
+        <div>Dark Theme</div>
+        Off
+        <label class="switch">
+          <input type="checkbox" @change="update($event)" />
+          <span class="slider round"></span>
+        </label>
+        On
+      </div>
+    </div>
+    <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
-      <!-- <button class="btn-search" @click="searchFilter()">Cari</button> -->
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Cari
       </button>
@@ -58,6 +67,15 @@ export default {
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
+    const bgcolor = ref('#1d2d50')
+    const textcolor = ref('white')
+    const langganan = ref('Bulan')
+
+    const classObject= ref({
+      'background': 'white',
+      'color': 'black',
+    })
+
     searchFilter()
 
     return {
@@ -65,9 +83,24 @@ export default {
       allSurah,
       pageOfItems,
       loading,
+      bgcolor,
+      textcolor,
+      classObject,
       cek,
       searchFilter,
-      onChangePage
+      onChangePage,
+      update
+    }
+
+    function update(e) {
+      if (e.srcElement.checked === true) {
+        // bgcolor.value = 'bg-darkone'
+        classObject.value.background = '#1d2d50'
+        classObject.value.color = 'white'
+      } else {
+        classObject.value.background = 'white'
+        classObject.value.color = 'black'
+      }
     }
 
     function onChangePage(data = any){
@@ -141,6 +174,95 @@ html {
 
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+}
+
+/* switch */
+.text {
+  @apply w-full my-4;
+  /* font-family: Poppins; */
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+  font-feature-settings: 'liga' off;
+  font-size: 16px;
+  line-height: 32px;
+  /* color: #374151; */
+}
+.circle-green {
+  position: relative;
+  width: 406px;
+  height: 406px;
+  border-radius: 50%;
+  top: -37px;
+  left: 80%;
+  background: #00db65;
+  opacity: 0.6;
+}
+.switch {
+  @apply mx-2;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider::before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.round {
+  border-radius: 34px;
+}
+.round::before {
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #1f2937;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #1f2937;
+}
+
+input:checked + .slider::before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.dark {
+  background-color: #1d2d50;
+  color: white;
+}
+
+.light {
+  background-color: white;
+  color: black;
 }
 
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white">
-    <header class="text-gray-600 body-font">
+  <div :style="{ background: classObject.background, color: classObject.color }">
+    <header class="body-font">
       <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a class="flex order-first lg:order-none lg:w-2/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+        <a class="flex order-first lg:order-none lg:w-2/5 title-font font-medium items-center lg:items-center lg:justify-center mb-4 md:mb-0">
         <!-- <spam>
           <img class="logo" src="/logo.png" />
         </spam> -->
@@ -20,7 +20,14 @@
 
 export default {
   name: 'Navbar',
-  setup(){
+  props: {
+    classObject: {
+      type: Object,
+      required: true,
+    },
+  },
+  setup(props){
+    console.log(props.classObject)
   }
 }
 </script>
