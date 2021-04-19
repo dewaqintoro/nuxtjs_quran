@@ -14,7 +14,7 @@
         On
       </div>
     </div>
-    <!-- <button @click="cek()">cek</button> -->
+    <!-- <button @click="cek()">cek {{isChecked}}</button> -->
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -83,9 +83,9 @@ export default {
     const theme = ref({})
     console.log('init theme', theme)
     const classObject= ref({
-      'darktheme': true,
-      'background': '#1d2d50',
-      'color': 'white',
+      'darktheme': false,
+      'background': 'white',
+      'color': 'black',
     })
 
     if(thisTheme){
@@ -121,8 +121,8 @@ export default {
     }
 
     async function cek(){
-      console.log('theme', theme.value)
-      console.log('inii', app.$cookies.get('theme'))
+      console.log('isChecked', isChecked)
+      // console.log('inii', app.$cookies.get('theme'))
     }
 
     function setCookie(data){
@@ -131,14 +131,15 @@ export default {
         maxAge: 60 * 60 * 24 * 7
       })
       getCookie()
-      isChecked.value = data.value.darktheme
     }
 
     function getCookie(){
       const data = app.$cookies.get('theme')
       theme.value = data
+      console.log('dataa',data)
       setTimeout(function () {
           loadingTheme.value = false
+          // isChecked.value = data
       }, 200);
     }
 
