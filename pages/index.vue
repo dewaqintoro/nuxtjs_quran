@@ -136,10 +136,10 @@ export default {
     function getCookie(){
       const data = app.$cookies.get('theme')
       theme.value = data
-      console.log('dataa',data)
+      // console.log('dataa',data?.darktheme)
+      isChecked.value = data?.darktheme
       setTimeout(function () {
           loadingTheme.value = false
-          // isChecked.value = data
       }, 200);
     }
 
