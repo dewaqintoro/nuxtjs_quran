@@ -13,6 +13,7 @@
         On
       </div>
     </div>
+    <button @click="cek()">cek</button>
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-import { ref, useAsync } from '@nuxtjs/composition-api'
+import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
 import Loading from '~/components/quran/Loading.vue'
 import json from '~/data/surah-info.json'
@@ -62,6 +63,7 @@ export default {
     Loading
   },
   setup(){
+    const { app, store } = useContext()
     const data = json
     const search = ref('')
     const allSurah = ref([])
@@ -108,8 +110,8 @@ export default {
     }
 
     async function cek(){
-      console.log('pageOfItems.value', pageOfItems.value)
-      console.log('allSurah', allSurah)
+      // console.log('pageOfItems.value', pageOfItems.value)
+      console.log('store', store.state.theme)
       // pageOfItems.value
     }
 
