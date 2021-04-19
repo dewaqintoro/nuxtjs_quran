@@ -4,6 +4,33 @@
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="mt-8">
       <Headerquran :surah="surah" />
+      <div class="text-center flex justify-center">
+        <div>
+          <div>Terjemahan</div>
+          <div class="flex text-center justify-center">
+            <div>Off</div>
+            <label class="switch">
+              <input type="checkbox" @change="update($event)" />
+              <span class="slider round"></span>
+            </label>
+            <div>On</div>
+          </div>
+        </div>
+        <button @click="deleteWidget()">
+          Delete
+        </button>
+        <!-- <div>
+          <div>Terjemahan</div>
+          <div class="flex text-center justify-center">
+            <div>Off</div>
+            <label class="switch">
+              <input type="checkbox" @change="update($event)" />
+              <span class="slider round"></span>
+            </label>
+            <div>On</div>
+          </div>
+        </div> -->
+      </div>
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
         :index="index"
@@ -17,6 +44,9 @@
     <div v-else>
       <Loading />
     </div>
+    <Transition name="drawer">
+      <Setting v-if="isDeleteWidget" @close="closeModal" />
+    </Transition>
   </div>
 </template>
 <script>
@@ -40,6 +70,8 @@ export default {
     const surah = ref({})
     const theme = app.$cookies.get('theme')
     const loading = ref(true)
+    const langganan = ref('Bulan')
+    const isDeleteWidget = ref(false)
 
     getSurah()
 
@@ -47,7 +79,28 @@ export default {
       surah,
       theme,
       loading,
+      isDeleteWidget,
       cek,
+      update,
+      closeModal,
+      deleteWidget
+    }
+
+    function closeModal() {
+      isDeleteWidget.value = false
+    }
+
+    function deleteWidget() {
+      isDeleteWidget.value = true
+      // emit('delete', item)
+    }
+
+    function update(e) {
+      if (e.srcElement.checked === true) {
+        langganan.value = 'Tahun'
+      } else {
+        langganan.value = 'Bulan'
+      }
     }
 
     async function getSurah(){
@@ -96,6 +149,63 @@ html {
 
 .item {
   @apply px-8 mx-36 my-8;
+}
+
+.switch {
+  @apply mx-2;
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 21.76px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider::before {
+  position: absolute;
+  content: '';
+  height: 16.64px;
+  width: 16.64px;
+  left: 3.20px;
+  bottom: 3.20px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.round {
+  border-radius: 21.76px;
+}
+.round::before {
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #1f2937;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #1f2937;
+}
+
+input:checked + .slider::before {
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
 }
 
 @screen mobile {
