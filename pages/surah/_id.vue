@@ -163,6 +163,7 @@ export default {
 <style lang="postcss" scoped>
 .main {
   min-height: 100vh;
+  padding-bottom: 100px;
 }
 @font-face {
   font-family: "lpmq";
