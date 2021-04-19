@@ -13,6 +13,14 @@
             </label>
           </div>
         </div>
+        <div>
+          <div class="text-center py-4">
+            <button @click="modeTheme()" class="focus:outline-none ">
+              change
+              <!-- <font-awesome-icon class="iconTheme" :icon="['fas', iconTheme]" /> -->
+            </button>
+          </div>
+        </div>
 
         <div class="flex mt-6">
           <div class="flex buttom">
@@ -38,9 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useAsync } from '@nuxtjs/composition-api'
-// import { useProfileStore } from '@/store'
-// import { useRepository } from '@/composables'
+import { defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Setting',
@@ -51,27 +57,62 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
+    const { app, store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
-    const langganan = ref('Bulan')
+    const iconTheme = ref()
+    const theme = ref({})
 
     return {
       size,
       isLoading,
       doDelete,
-      update,
-      langganan
-    }
 
-    function update(e) {
-      if (e.srcElement.checked === true) {
-        langganan.value = 'Tahun'
-      } else {
-        langganan.value = 'Bulan'
-      }
+      iconTheme,
+      modeTheme
     }
 
     async function doDelete() {
+    }
+
+    async function modeTheme(){
+      const data = app.$cookies.get('theme')
+      emit('changetheme')
+      if(data.darktheme){
+        const classObject= ref({
+          'darktheme': false,
+          'background': 'white',
+          'color': 'black',
+        })
+        setCookie(classObject)
+      } else {
+        const classObject= ref({
+          'darktheme': true,
+          'background': '#1d2d50',
+          'color': 'white',
+        })
+        setCookie(classObject)
+      }
+      
+    }
+
+    function setCookie(data){
+      app.$cookies.set('theme', data.value, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getCookie()
+    }
+
+    function getCookie(){
+      const data = app.$cookies.get('theme')
+      theme.value = data
+      console.log('dataas', data)
+      // if(data?.darktheme){
+      //   iconTheme.value = 'moon'
+      // } else {
+      //   iconTheme.value = 'sun'
+      // }
     }
   },
 })

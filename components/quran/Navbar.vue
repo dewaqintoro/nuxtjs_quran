@@ -12,7 +12,7 @@
         </button>
       </div>
       <Transition name="drawer">
-        <Setting :theme="theme" v-if="isDeleteWidget" @close="closeModal" />
+        <Setting :theme="theme" v-if="isDeleteWidget" @close="closeModal" @changetheme="changetheme" />
       </Transition>
     </div>
   </header>
@@ -29,7 +29,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(_, { emit }) {
     const { store, route, app } = useContext()
     const isDeleteWidget = ref(false)
 
@@ -37,11 +37,16 @@ export default defineComponent({
       isDeleteWidget,
       cekData,
       closeModal,
-      deleteWidget
+      deleteWidget,
+      changetheme,
     }
 
     function closeModal() {
       isDeleteWidget.value = false
+    }
+
+    function changetheme(){
+      emit('changetheme')
     }
 
     function deleteWidget() {

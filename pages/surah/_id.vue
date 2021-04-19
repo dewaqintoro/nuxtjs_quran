@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" />
+    <Navbar :theme="theme" @changetheme="changetheme"/>
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
@@ -64,6 +64,26 @@ export default {
       loading,
       loadingTheme,
       cek,
+      changetheme
+    }
+
+    function changetheme(){
+      const data = app.$cookies.get('theme')
+      if(data?.darktheme){
+        const classObject= ref({
+          'darktheme': false,
+          'background': 'white',
+          'color': 'black',
+        })
+        setCookie(classObject)
+      } else {
+        const classObject= ref({
+          'darktheme': true,
+          'background': '#1d2d50',
+          'color': 'white',
+        })
+        setCookie(classObject)
+      }
     }
 
     function setCookie(data){
