@@ -1,8 +1,8 @@
 <template>
   <div class="font-arabic">
     <Navbar />
-    <!-- <button @click="cek()">cek</button> -->
-    <div v-if="surah" class="mt-8">
+    <button @click="cek()">cek</button>
+    <!-- <div v-if="surah" class="mt-8">
       <Headerquran :surah="surah" />
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
@@ -12,10 +12,8 @@
         :arti="surah.translations.id.text[index]"
         />
       </div>
-    </div>
-    <div v-else>
-      <Loading />
-    </div>
+        
+    </div> -->
   </div>
 </template>
 <script>
@@ -23,23 +21,25 @@ import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
 import Navbar from '~/components/quran/Navbar.vue'
-import Loading from '~/components/quran/Loading.vue'
 
 export default {
   name: 'Surah',
   components: {
     Headerquran,
     Navbar,
-    Cardcomp,
-    Loading
+    Cardcomp
   },
   setup(){
     const { route } = useContext()
     const idParams = route.value?.params?.id
-    const surah = useAsync(async () => await getSurah())
+    console.log('idParams', idParams)
+    // const surah = useAsync(async () => await getSurah())
+    const surah = ref({})
+    getSurah()
 
-    const iniSurat = surah.value?.text
-    const arti = surah.value?.translations?.id?.text
+
+    // const iniSurat = surah.value?.text
+    // const arti = surah.value?.translations?.id?.text
 
     return {
       surah,
@@ -47,12 +47,16 @@ export default {
     }
 
     async function getSurah(){
-      const resp = await import(`~/data/surah/${idParams}.json`)
-      return resp[idParams]
+      setTimeout(async function () {
+        const resp = await import(`~/data/surah/${idParams}.json`)
+        // console.log('resp', resp)
+        surah.value = resp[idParams]
+        // return resp[idParams]
+      }, 1000);
     }
 
     async function cek(){
-      console.log(iniSurat);
+      console.log(surah.value);
     }
 
     

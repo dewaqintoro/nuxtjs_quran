@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :style="{ background: theme.background, color: theme.color }">
     <div>
       <!-- <div class="idSurah">{{index}}</div> -->
       <!-- <button @click="cek()">cek</button> -->
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { ref, useAsync } from '@nuxtjs/composition-api'
+import { ref, useContext, computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'Cardcomp',
@@ -50,11 +50,12 @@ export default {
     },
   },
   setup(props){
-    // console.log(props.arti)
+    const { route, store } = useContext()
     const sumAyat = props.surah?.number
     const sumIndex = props.index
     const idSurah = ref('')
     const idAyat = ref('')
+    const theme = computed(() => store.state.theme)
     
 
     if (sumAyat.length === 1){
@@ -75,6 +76,7 @@ export default {
 
     const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
+      theme,
       urlAudio,
       cek
     }

@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ background: classObject.background, color: classObject.color }">
+  <div :style="{ background: theme.background, color: theme.color }">
     <header class="body-font">
       <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex order-first lg:order-none lg:w-2/5 title-font font-medium items-center lg:items-center lg:justify-center mb-4 md:mb-0">
@@ -17,17 +17,16 @@
 </template>
 
 <script>
+import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 
 export default {
   name: 'Navbar',
-  props: {
-    classObject: {
-      type: Object,
-      required: true,
-    },
-  },
-  setup(props){
-    console.log(props.classObject)
+  setup(){
+    const { store } = useContext()
+    const theme = computed(() => store.state.theme)
+
+    return { theme}
+
   }
 }
 </script>

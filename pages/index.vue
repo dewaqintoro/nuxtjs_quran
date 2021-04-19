@@ -1,6 +1,6 @@
 <template>
-  <div class="main text-white" :style="{ background: classObject.background, color: classObject.color }">
-    <Navbar :classObject="classObject" />
+  <div class="main text-white" :style="{ background: theme.background, color: theme.color }">
+    <Navbar />
     <div>
       
       <div class="text">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
 import Loading from '~/components/quran/Loading.vue'
 import json from '~/data/surah-info.json'
@@ -72,11 +72,13 @@ export default {
     const bgcolor = ref('#1d2d50')
     const textcolor = ref('white')
     const langganan = ref('Bulan')
+    // const theme = computed(store.state.theme)
+    const theme = computed(() => store.state.theme)
 
-    const classObject= ref({
-      'background': 'white',
-      'color': 'black',
-    })
+    // const classObject= ref({
+    //   'background': 'white',
+    //   'color': 'black',
+    // })
 
     searchFilter()
 
@@ -87,8 +89,8 @@ export default {
       loading,
       bgcolor,
       textcolor,
-      classObject,
       cek,
+      theme,
       searchFilter,
       onChangePage,
       update
@@ -97,11 +99,19 @@ export default {
     function update(e) {
       if (e.srcElement.checked === true) {
         // bgcolor.value = 'bg-darkone'
-        classObject.value.background = '#1d2d50'
-        classObject.value.color = 'white'
+        // classObject.value.background = '#1d2d50'
+        // classObject.value.color = 'white'
+        store.commit('setTheme', {
+          background: '#1d2d50',
+          color: 'white',
+        })
       } else {
-        classObject.value.background = 'white'
-        classObject.value.color = 'black'
+        // classObject.value.background = 'white'
+        // classObject.value.color = 'black'
+        store.commit('setTheme', {
+          background: 'white',
+          color: 'black',
+        })
       }
     }
 
@@ -111,7 +121,7 @@ export default {
 
     async function cek(){
       // console.log('pageOfItems.value', pageOfItems.value)
-      console.log('store', store.state.theme)
+      console.log('store', theme)
       // pageOfItems.value
     }
 
