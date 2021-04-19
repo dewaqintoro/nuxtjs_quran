@@ -6,7 +6,7 @@
         <!-- <spam>
           <img class="logo" src="/logo.png" />
         </spam> -->
-          <span class="ml-3 text-xl w-full">
+          <span class="text-xl w-full">
             <nuxt-link to="/">Home</nuxt-link>
           </span>
           <!-- <span class="ml-3 text-xl">Cek Ongkir</span> -->

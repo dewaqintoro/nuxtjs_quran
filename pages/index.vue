@@ -42,7 +42,6 @@
 <script>
 import { ref, useAsync } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
-import { __isNotEmptyString, __normalizeText } from '~/utils/index.ts'
 import json from '~/data/surah-info.json'
 
 export default {
@@ -66,14 +65,8 @@ export default {
       onChangePage
     }
 
-    // function onChangePage2(pageOfItems) {
-    //     this.pageOfItems = pageOfItems;
-    // }
-
-    function onChangePage(data= any){
+    function onChangePage(data = any){
       pageOfItems.value = data
-      console.log('pageOfItems.value', pageOfItems.value)
-      console.log('data', data)
     }
 
     async function cek(){
