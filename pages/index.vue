@@ -1,11 +1,7 @@
 <template>
 <span v-if="!loadingTheme">
-  <div :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme"/>
-    <div>
-      <div class="text-center py-4">
-      </div>
-    </div>
+  <Navbar :theme="theme" @changetheme="changetheme"/>
+  <div class="main" :style="{ background: theme.background, color: theme.color }">
     <!-- <button @click="cek()">cek {{iconTheme}}</button> -->
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
@@ -166,6 +162,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.main {
+  @apply pt-8;
+}
 @font-face {
   font-family: "lpmq";
   src: url(/fonts/lpmq.otf) format("opentype");
@@ -221,6 +220,9 @@ html {
 
 
 @screen mobile {
+  .main {
+    @apply pt-16;
+  }
   .item {
     @apply mx-2 px-2;
   }
