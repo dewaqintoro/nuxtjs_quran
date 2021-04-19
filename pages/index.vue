@@ -29,64 +29,7 @@
       </div>
 
       <div v-else>
-        <div class="item">
-          <div class="card my-8">
-            <div class="flex">
-              <div class="nameSurahLoading">
-                <div class="flex justify-between">
-                  <div class="satuA loading"></div>
-                  <div class="satuB loading"></div>
-                </div>
-                <div class="flex justify-between">
-                  <div class="duaA"></div>
-                  <div class="duaB loading"></div>
-                </div>
-                <div class="flex justify-between">
-                  <div class="tigaA"></div>
-                  <div class="tigaB loading"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card my-8">
-              <div class="flex">
-                <div class="nameSurahLoading">
-                  <div class="flex justify-between">
-                    <div class="satuA loading"></div>
-                    <div class="satuB loading"></div>
-                  </div>
-                  <div class="flex justify-between">
-                    <div class="duaA"></div>
-                    <div class="duaB loading"></div>
-                  </div>
-                  <div class="flex justify-between">
-                    <div class="tigaA"></div>
-                    <div class="tigaB loading"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card my-8">
-              <div class="flex">
-                <div class="nameSurahLoading">
-                  <div class="flex justify-between">
-                    <div class="satuA loading"></div>
-                    <div class="satuB loading"></div>
-                  </div>
-                  <div class="flex justify-between">
-                    <div class="duaA"></div>
-                    <div class="duaB loading"></div>
-                  </div>
-                  <div class="flex justify-between">
-                    <div class="tigaA"></div>
-                    <div class="tigaB loading"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-        </div>
+        <Loading />
       </div>
 
       <div class="text-center py-3">
@@ -100,12 +43,14 @@
 <script>
 import { ref, useAsync } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
+import Loading from '~/components/quran/Loading.vue'
 import json from '~/data/surah-info.json'
 
 export default {
   name: 'Quran',
   components: {
-    Navbar
+    Navbar,
+    Loading
   },
   setup(){
     const data = json
@@ -203,75 +148,10 @@ html {
   .item {
     @apply mx-2 px-2;
   }
-}
-
-
-.main {
-  background: white;
-  width: 400px;
-  min-height: 400px;
-  border-radius: 10px;
-  -webkit-box-shadow: 10px 10px 0px -1px rgba(0,0,0,0.32);
-  -moz-box-shadow: 10px 10px 0px -1px rgba(0,0,0,0.32);
-  box-shadow: 10px 10px 0px -1px rgba(0,0,0,0.32);
-  padding: 30px;
-}
-
-.loading {
-  @apply my-2;
-  background: #c1c1c1;
-  min-height: 25px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 30px;
-}
-
-.loading::before {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, transparent, #d7d7d7, transparent);
-  transform: translateX(-100%);
-  animation: loading 1s infinite;
-}
-
-.nameSurahLoading {
-  @apply px-4 justify-end items-end w-full;
-}
-
-.satuA {
-  width: 8%;
-}
-
-.satuB {
-  width: 90%;
-}
-
-.duaA {
-  width: 10%;
-}
-
-.duaB {
-  width: 65%;
-}
-
-.tigaA {
-  width: 10%;
-}
-
-.tigaB {
-  width: 50%;
-}
-
-@keyframes loading {
-  100% {
-    transform: translateX(100%);
+  .surat {
+    @apply text-2xl;
   }
 }
 
-.img {
-  min-height: 200px;
-}
+
 </style>

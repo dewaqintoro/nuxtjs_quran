@@ -6,14 +6,14 @@
       <div class="nameSurah">
         <div class="flex justify-between">
           <div class="idSurah text-xl font-bold">{{index}}</div>
-          <div class="surat">{{surat}}</div>
+          <div class="surat text-3xl">{{surat}}</div>
         </div>
         <div class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
           <p>{{arti}}</p>
           <!-- <p>{{surah.translations.id.text[index]}}</p> -->
           <!-- <p>https://quran.kemenag.go.id/cmsq/source/s01/00{{surah.number}}00{{index}}.mp3</p> -->
-          <div>
+          <div class="mt-4">
             <audio controls class="my-audio">
               <source :src="urlAudio" type="audio/ogg">
               <source :src="urlAudio" type="audio/mpeg">
@@ -113,7 +113,7 @@ export default {
 
 @screen mobile {
   .surat {
-    @apply text-xl;
+    @apply text-2xl;
   }
 }
 </style>

@@ -12,7 +12,9 @@
         :arti="surah.translations.id.text[index]"
         />
       </div>
-        
+    </div>
+    <div v-else>
+      <Loading />
     </div>
   </div>
 </template>
@@ -21,13 +23,15 @@ import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
 import Navbar from '~/components/quran/Navbar.vue'
+import Loading from '~/components/quran/Loading.vue'
 
 export default {
   name: 'Surah',
   components: {
     Headerquran,
     Navbar,
-    Cardcomp
+    Cardcomp,
+    Loading
   },
   setup(){
     const { route } = useContext()
