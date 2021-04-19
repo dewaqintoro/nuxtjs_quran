@@ -1,10 +1,11 @@
 <template>
-  <div class="main text-white" :style="{ background: theme.background, color: theme.color }">
+<span v-if="!loadingTheme">
+  <div :style="{ background: theme.background, color: theme.color }">
     <Navbar :theme="theme" />
     <div>
       
       <div class="text">
-        <div>Dark Theme</div>
+        <div>darktheme Theme</div>
         Off
         <label class="switch">
           <input type="checkbox" @change="update($event)" :checked="isChecked"/>
@@ -13,7 +14,7 @@
         On
       </div>
     </div>
-    <button @click="cek()">cek</button>
+    <!-- <button @click="cek()">cek</button> -->
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -48,6 +49,7 @@
         
     </div>
   </div>
+</span>
 </template>
 
 <script>
@@ -72,12 +74,28 @@ export default {
     const bgcolor = ref('#1d2d50')
     const textcolor = ref('white')
     const langganan = ref('Bulan')
+    const loadingTheme = ref(true)
     const isChecked = ref()
     // const theme = computed(store.state.theme)
     // const theme = computed(() => store.state.theme)
+    const thisTheme = app.$cookies.get('theme')
+    
     const theme = ref({})
-    // setCookie()
-    getCookie()
+    console.log('init theme', theme)
+    const classObject= ref({
+      'darktheme': true,
+      'background': '#1d2d50',
+      'color': 'white',
+    })
+
+    if(thisTheme){
+      console.log('ada tema')
+      getCookie()
+    } else {
+      console.log('tidak ada tema')
+      setCookie(classObject)
+    }
+    
 
     // const classObject= ref({
     //   'background': 'white',
@@ -98,7 +116,8 @@ export default {
       theme,
       searchFilter,
       onChangePage,
-      update
+      update,
+      loadingTheme
     }
 
     async function cek(){
@@ -112,18 +131,21 @@ export default {
         maxAge: 60 * 60 * 24 * 7
       })
       getCookie()
+      isChecked.value = data.value.darktheme
     }
 
     function getCookie(){
       const data = app.$cookies.get('theme')
       theme.value = data
-      isChecked.value = data.dark
+      setTimeout(function () {
+          loadingTheme.value = false
+      }, 200);
     }
 
     function update(e) {
        app.$cookies.remove('theme')
       if (e.srcElement.checked === true) {
-        // bgcolor.value = 'bg-darkone'
+        // bgcolor.value = 'bg-darkthemeone'
         // classObject.value.background = '#1d2d50'
         // classObject.value.color = 'white'
         // store.commit('setTheme', {
@@ -131,7 +153,7 @@ export default {
         //   color: 'white',
         // })
         const classObject= ref({
-          'dark': true,
+          'darktheme': true,
           'background': '#1d2d50',
           'color': 'white',
         })
@@ -145,7 +167,7 @@ export default {
         //   color: 'black',
         // })
         const classObject= ref({
-          'dark': false,
+          'darktheme': false,
           'background': 'white',
           'color': 'black',
         })
