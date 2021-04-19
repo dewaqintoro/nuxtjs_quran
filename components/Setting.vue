@@ -5,7 +5,7 @@
 
 
         <div class="flex justify-between">
-          <div class="text-xl">Terjemahan</div>
+          <div class="text-xl">Dark theme</div>
           <div class="flex justify-center">
             <label class="switch">
               <input type="checkbox" @change="update($event)" />
@@ -13,23 +13,16 @@
             </label>
           </div>
         </div>
-        <div>
+        <!-- <div>
           <div class="text-center py-4">
-            <button @click="modeTheme()" class="focus:outline-none ">
-              change
-              <!-- <font-awesome-icon class="iconTheme" :icon="['fas', iconTheme]" /> -->
+            <button @click="$emit('changetheme')" class="focus:outline-none ">
+              <font-awesome-icon class="iconTheme" :icon="['fas', theme.icon]" />
             </button>
           </div>
-        </div>
+        </div> -->
 
         <div class="flex mt-6">
           <div class="flex buttom">
-            <!-- <button
-              class="btn cancel text-black font-bold py-2 px-4 focus:outline-none mr-1"
-              @click="$emit('close')"
-            >
-              Kembali
-            </button> -->
           </div>
           <div class="w-full buttom" align="right">
             <button
@@ -56,63 +49,17 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const { app, store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
-    const iconTheme = ref()
-    const theme = ref({})
-
     return {
       size,
       isLoading,
-      doDelete,
-
-      iconTheme,
-      modeTheme
+      update,
     }
 
-    async function doDelete() {
-    }
-
-    async function modeTheme(){
-      const data = app.$cookies.get('theme')
-      emit('changetheme')
-      if(data.darktheme){
-        const classObject= ref({
-          'darktheme': false,
-          'background': 'white',
-          'color': 'black',
-        })
-        setCookie(classObject)
-      } else {
-        const classObject= ref({
-          'darktheme': true,
-          'background': '#1d2d50',
-          'color': 'white',
-        })
-        setCookie(classObject)
-      }
-      
-    }
-
-    function setCookie(data){
-      app.$cookies.set('theme', data.value, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getCookie()
-    }
-
-    function getCookie(){
-      const data = app.$cookies.get('theme')
-      theme.value = data
-      console.log('dataas', data)
-      // if(data?.darktheme){
-      //   iconTheme.value = 'moon'
-      // } else {
-      //   iconTheme.value = 'sun'
-      // }
+    async function update() {
     }
   },
 })

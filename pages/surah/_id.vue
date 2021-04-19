@@ -8,6 +8,7 @@
       </div>
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
+        :theme="theme"
         :index="index"
         :surat="surat"
         :surah="surah"
@@ -46,6 +47,7 @@ export default {
     const loadingTheme = ref(true)
     const classObject= ref({
       'darktheme': false,
+      'icon': 'sun',
       'background': 'white',
       'color': 'black',
     })
@@ -73,6 +75,7 @@ export default {
         const classObject= ref({
           'darktheme': false,
           'background': 'white',
+          'icon': 'sun',
           'color': 'black',
         })
         setCookie(classObject)
@@ -80,6 +83,7 @@ export default {
         const classObject= ref({
           'darktheme': true,
           'background': '#1d2d50',
+          'icon': 'moon',
           'color': 'white',
         })
         setCookie(classObject)

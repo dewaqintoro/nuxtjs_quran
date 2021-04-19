@@ -32,6 +32,10 @@ import { ref, useContext, computed } from '@nuxtjs/composition-api'
 export default {
   name: 'Cardcomp',
   props: {
+    theme: {
+      type: Object,
+      required: true,
+    },
     surat: {
       type: String,
       required: true,
@@ -55,8 +59,6 @@ export default {
     const sumIndex = props.index
     const idSurah = ref('')
     const idAyat = ref('')
-    // const theme = computed(() => store.state.theme)
-    const theme = app.$cookies.get('theme')
 
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`
@@ -76,7 +78,6 @@ export default {
 
     const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
-      theme,
       urlAudio,
       cek
     }
