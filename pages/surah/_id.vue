@@ -2,10 +2,10 @@
   <div class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
     <Navbar :theme="theme" />
     <!-- <button @click="cek()">cek</button> -->
-    <div v-if="!loading" class="mt-8">
+    <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
       <div class="text-center flex justify-center">
-        <div>
+        <!-- <div>
           <div>Terjemahan</div>
           <div class="flex text-center justify-center">
             <div>Off</div>
@@ -15,10 +15,7 @@
             </label>
             <div>On</div>
           </div>
-        </div>
-        <button @click="deleteWidget()">
-          Delete
-        </button>
+        </div> -->
         <!-- <div>
           <div>Terjemahan</div>
           <div class="flex text-center justify-center">
@@ -44,9 +41,6 @@
     <div v-else>
       <Loading />
     </div>
-    <Transition name="drawer">
-      <Setting v-if="isDeleteWidget" @close="closeModal" />
-    </Transition>
   </div>
 </template>
 <script>
@@ -71,7 +65,6 @@ export default {
     const theme = app.$cookies.get('theme')
     const loading = ref(true)
     const langganan = ref('Bulan')
-    const isDeleteWidget = ref(false)
 
     getSurah()
 
@@ -79,20 +72,8 @@ export default {
       surah,
       theme,
       loading,
-      isDeleteWidget,
       cek,
       update,
-      closeModal,
-      deleteWidget
-    }
-
-    function closeModal() {
-      isDeleteWidget.value = false
-    }
-
-    function deleteWidget() {
-      isDeleteWidget.value = true
-      // emit('delete', item)
     }
 
     function update(e) {
@@ -145,6 +126,10 @@ html {
 .font-arabic{
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
+}
+
+.content {
+  @apply mt-8;
 }
 
 .item {
@@ -211,6 +196,9 @@ input:checked + .slider::before {
 @screen mobile {
   .item {
     @apply mx-2 px-2;
+  }
+  .content {
+    @apply mt-16;
   }
 }
 </style>

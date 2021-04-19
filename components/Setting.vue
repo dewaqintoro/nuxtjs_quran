@@ -1,49 +1,34 @@
 <template>
   <AppModal title="" :show-header="false" :size="size" @close="$emit('close')">
-    <div class="container">
+    <div class="containerCustom">
       <div class="wrapper">
 
 
-        <div class="text-center flex justify-center">
-          <div>
-            <div>Terjemahan</div>
-            <div class="flex text-center justify-center">
-              <div>Off</div>
-              <label class="switch">
-                <input type="checkbox" @change="update($event)" />
-                <span class="slider round"></span>
-              </label>
-              <div>On</div>
-            </div>
+        <div class="flex justify-between">
+          <div class="text-xl">Terjemahan</div>
+          <div class="flex justify-center">
+            <label class="switch">
+              <input type="checkbox" @change="update($event)" />
+              <span class="slider round"></span>
+            </label>
           </div>
-          <!-- <div>
-            <div>Terjemahan</div>
-            <div class="flex text-center justify-center">
-              <div>Off</div>
-              <label class="switch">
-                <input type="checkbox" @change="update($event)" />
-                <span class="slider round"></span>
-              </label>
-              <div>On</div>
-            </div>
-          </div> -->
         </div>
 
         <div class="flex mt-6">
           <div class="flex buttom">
-            <button
+            <!-- <button
               class="btn cancel text-black font-bold py-2 px-4 focus:outline-none mr-1"
               @click="$emit('close')"
             >
               Kembali
-            </button>
+            </button> -->
           </div>
           <div class="w-full buttom" align="right">
             <button
-              @click="doDelete"
+              @click="$emit('close')"
               class="btn save text-white font-bold py-2 px-4 focus:outline-none"
             >
-              Hapus
+              Kembali
             </button>
           </div>
         </div>
@@ -156,13 +141,14 @@ input:checked + .slider::before {
 
 
 
-.container {
+.containerCustom {
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   .wrapper {
-    max-width: 550px;
+    @apply w-full;
+    /* max-width: 550px; */
     @apply px-4 py-8;
     .title {
       color: #111827;
