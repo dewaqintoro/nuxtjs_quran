@@ -1,7 +1,7 @@
 <template>
   <div class="font-arabic">
     <Navbar />
-    <button @click="cek()">cek</button>
+    <!-- <button @click="cek()">cek</button> -->
     <div v-if="surah" class="mt-8">
       <Headerquran :surah="surah" />
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">

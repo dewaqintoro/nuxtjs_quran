@@ -12,7 +12,7 @@
     </div>
     <div class="font-arabic">
       
-      <div class="item" v-for="(surah, index) in allSurah" :key="index">
+      <div class="item" v-for="(surah, index) in pageOfItems" :key="index">
         <!-- <a :href="'/surah/'+surah.index"> -->
         <nuxt-link :to="'/surah/'+surah.index">
         
@@ -30,10 +30,15 @@
           </nuxt-link>
         <!-- </a> -->
       </div>
+
+      <div class="text-center py-3">
+				<jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
+			</div>
         
     </div>
   </div>
 </template>
+
 <script>
 import { ref, useAsync } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
@@ -49,18 +54,32 @@ export default {
     const data = json
     const search = ref('')
     const allSurah = ref([])
+    const pageOfItems = ref([])
     searchFilter()
 
     return {
       search,
       allSurah,
+      pageOfItems,
       cek,
-      searchFilter
+      searchFilter,
+      onChangePage
     }
 
+    // function onChangePage2(pageOfItems) {
+    //     this.pageOfItems = pageOfItems;
+    // }
+
+    function onChangePage(data= any){
+      pageOfItems.value = data
+      console.log('pageOfItems.value', pageOfItems.value)
+      console.log('data', data)
+    }
 
     async function cek(){
+      console.log('pageOfItems.value', pageOfItems.value)
       console.log('allSurah', allSurah)
+      // pageOfItems.value
     }
 
     function searchFilter(){

@@ -13,9 +13,8 @@
     "@nuxt/http": "^0.6.4",
     "@nuxtjs/composition-api": "^0.22.4",
     "core-js": "^3.9.1",
-    "fuse.js": "^6.4.6",
-    "nuxt": "^2.15.3",
-    "vue-fuse": "^3.0.0"
+    "jw-vue-pagination": "^1.0.3",
+    "nuxt": "^2.15.3"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
