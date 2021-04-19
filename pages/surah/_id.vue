@@ -1,8 +1,8 @@
 <template>
-  <div class="font-arabic">
+  <div class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
     <Navbar />
-    <button @click="cek()">cek</button>
-    <!-- <div v-if="surah" class="mt-8">
+    <!-- <button @click="cek()">cek</button> -->
+    <div v-if="!loading" class="mt-8">
       <Headerquran :surah="surah" />
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
@@ -13,28 +13,36 @@
         />
       </div>
         
-    </div> -->
+    </div>
+    <div v-else>
+      <Loading />
+    </div>
   </div>
 </template>
 <script>
-import { ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { ref, useAsync, useContext, computed } from '@nuxtjs/composition-api'
 import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
 import Navbar from '~/components/quran/Navbar.vue'
+import Loading from '~/components/quran/Loading.vue'
 
 export default {
   name: 'Surah',
   components: {
     Headerquran,
     Navbar,
-    Cardcomp
+    Cardcomp,
+    Loading
   },
   setup(){
-    const { route } = useContext()
+    const { route, store } = useContext()
     const idParams = route.value?.params?.id
     console.log('idParams', idParams)
     // const surah = useAsync(async () => await getSurah())
     const surah = ref({})
+    const theme = computed(() => store.state.theme)
+    const loading = ref(true)
+
     getSurah()
 
 
@@ -43,6 +51,8 @@ export default {
 
     return {
       surah,
+      theme,
+      loading,
       cek,
     }
 
@@ -51,12 +61,14 @@ export default {
         const resp = await import(`~/data/surah/${idParams}.json`)
         // console.log('resp', resp)
         surah.value = resp[idParams]
+        loading.value = false
         // return resp[idParams]
       }, 1000);
     }
 
     async function cek(){
       console.log(surah.value);
+      console.log('theme', theme);
     }
 
     
@@ -65,6 +77,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.main {
+  min-height: 100vh;
+}
 @font-face {
   font-family: "lpmq";
   src: url(/fonts/lpmq.otf) format("opentype");

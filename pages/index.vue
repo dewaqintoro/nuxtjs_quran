@@ -267,16 +267,6 @@ input:checked + .slider::before {
   transform: translateX(26px);
 }
 
-.dark {
-  background-color: #1d2d50;
-  color: white;
-}
-
-.light {
-  background-color: white;
-  color: black;
-}
-
 
 @screen mobile {
   .item {
