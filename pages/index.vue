@@ -4,7 +4,7 @@
     <div class="text-center">
       <!-- <input class="border" type="text" v-model="search" @change="searchFilter" placeholder="search ..." > -->
       
-      <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
+      <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <!-- <button class="btn-search" @click="searchFilter()">Cari</button> -->
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Cari
