@@ -1,8 +1,10 @@
 <template>
-  <header class="app-header font-arabic font-bold">
+  <header class="app-header font-arabic font-bold" :style="{ background: theme.background, color: theme.color }">
     <div class="inner container">
       <div class="start">
-        Home
+        <nuxt-link to="/">
+          Home
+        </nuxt-link>
       </div>
       <div class="end">
         <button @click="deleteWidget()">
@@ -10,7 +12,7 @@
         </button>
       </div>
       <Transition name="drawer">
-        <Setting v-if="isDeleteWidget" @close="closeModal" />
+        <Setting :theme="theme" v-if="isDeleteWidget" @close="closeModal" />
       </Transition>
     </div>
   </header>
@@ -21,6 +23,12 @@ import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-
 
 export default defineComponent({
   name: 'Navbar',
+  props: {
+    theme: {
+      type: Object,
+      required: true,
+    },
+  },
   setup() {
     const { store, route, app } = useContext()
     const isDeleteWidget = ref(false)
@@ -84,22 +92,12 @@ export default defineComponent({
   .header-menu {
     @apply fixed w-full left-0 bottom-0;
     @apply justify-evenly py-1;
-    @apply bg-gray-900;
   }
   .header-button {
     @apply flex-col;
   }
 }
 @screen sm {
-  .button-signup {
-    @apply rounded-full py-2 px-4;
-    @apply bg-white !important;
-  }
-  .header-button {
-    .icon {
-      @apply hidden;
-    }
-  }
 }
 @screen md {
   .app-header {

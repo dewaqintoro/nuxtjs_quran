@@ -1,32 +1,10 @@
 <template>
-  <div class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
+  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
     <Navbar :theme="theme" />
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
       <div class="text-center flex justify-center">
-        <!-- <div>
-          <div>Terjemahan</div>
-          <div class="flex text-center justify-center">
-            <div>Off</div>
-            <label class="switch">
-              <input type="checkbox" @change="update($event)" />
-              <span class="slider round"></span>
-            </label>
-            <div>On</div>
-          </div>
-        </div> -->
-        <!-- <div>
-          <div>Terjemahan</div>
-          <div class="flex text-center justify-center">
-            <div>Off</div>
-            <label class="switch">
-              <input type="checkbox" @change="update($event)" />
-              <span class="slider round"></span>
-            </label>
-            <div>On</div>
-          </div>
-        </div> -->
       </div>
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
@@ -62,9 +40,21 @@ export default {
     const { route, store, app } = useContext()
     const idParams = route.value?.params?.id
     const surah = ref({})
-    const theme = app.$cookies.get('theme')
+    const thisTheme = app.$cookies.get('theme')
+    const theme = ref({})
     const loading = ref(true)
-    const langganan = ref('Bulan')
+    const loadingTheme = ref(true)
+    const classObject= ref({
+      'darktheme': false,
+      'background': 'white',
+      'color': 'black',
+    })
+
+    if(thisTheme){
+      getCookie()
+    } else {
+      setCookie(classObject)
+    }
 
     getSurah()
 
@@ -72,16 +62,24 @@ export default {
       surah,
       theme,
       loading,
+      loadingTheme,
       cek,
-      update,
     }
 
-    function update(e) {
-      if (e.srcElement.checked === true) {
-        langganan.value = 'Tahun'
-      } else {
-        langganan.value = 'Bulan'
-      }
+    function setCookie(data){
+      app.$cookies.set('theme', data.value, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getCookie()
+    }
+
+    function getCookie(){
+      const data = app.$cookies.get('theme')
+      theme.value = data
+      setTimeout(function () {
+          loadingTheme.value = false
+      }, 200);
     }
 
     async function getSurah(){
@@ -93,7 +91,7 @@ export default {
     }
 
     async function cek(){
-      console.log(surah.value);
+      // console.log(surah.value);
       console.log('theme', theme);
     }
 
@@ -134,63 +132,6 @@ html {
 
 .item {
   @apply px-8 mx-36 my-8;
-}
-
-.switch {
-  @apply mx-2;
-  position: relative;
-  display: inline-block;
-  width: 48px;
-  height: 21.76px;
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.slider::before {
-  position: absolute;
-  content: '';
-  height: 16.64px;
-  width: 16.64px;
-  left: 3.20px;
-  bottom: 3.20px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-.round {
-  border-radius: 21.76px;
-}
-.round::before {
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: #1f2937;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #1f2937;
-}
-
-input:checked + .slider::before {
-  -webkit-transform: translateX(24px);
-  -ms-transform: translateX(24px);
-  transform: translateX(24px);
 }
 
 @screen mobile {

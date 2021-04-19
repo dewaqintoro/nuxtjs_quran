@@ -1,6 +1,6 @@
 <template>
   <AppModal title="" :show-header="false" :size="size" @close="$emit('close')">
-    <div class="containerCustom">
+    <div class="containerCustom" :style="{ background: theme.background, color: theme.color }">
       <div class="wrapper">
 
 
@@ -44,16 +44,12 @@ import { defineComponent, ref, useAsync } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Setting',
-  // props: {
-  //   item: {
-  //     type: Object,
-  //     required: false,
-  //   },
-  //   page: {
-  //     type: Object,
-  //     required: false,
-  //   },
-  // },
+  props: {
+    theme: {
+      type: Object,
+      required: true,
+    },
+  },
   setup(_, { emit }) {
     const isLoading = ref(true)
     const size = ref('small')
