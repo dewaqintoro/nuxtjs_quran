@@ -8,7 +8,7 @@
           <div class="text-xl">Dark theme</div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="update($event)" />
+              <input type="checkbox" @change="$emit('changetheme')" :checked="isChecked"/>
               <span class="slider round"></span>
             </label>
           </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Setting',
@@ -53,14 +53,23 @@ export default defineComponent({
     const { app, store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
+    const isChecked = computed(() => {
+      if(props.theme.darktheme){
+        return true
+      }else {
+        return false
+      }
+    })
     return {
       size,
       isLoading,
-      update,
+      isChecked,
+      // update,
     }
 
-    async function update() {
-    }
+    // function update(e) {
+    //   emit('changetheme')
+    // }
   },
 })
 </script>
