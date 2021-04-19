@@ -1,12 +1,9 @@
 <template>
 <span v-if="!loadingTheme">
   <div :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" />
+    <Navbar :theme="theme" @changetheme="changetheme"/>
     <div>
       <div class="text-center py-4">
-        <button @click="modeTheme()" class="focus:outline-none ">
-          <font-awesome-icon class="iconTheme" :icon="['fas', iconTheme]" />
-        </button>
       </div>
     </div>
     <!-- <button @click="cek()">cek {{iconTheme}}</button> -->
@@ -97,36 +94,34 @@ export default {
       theme,
       searchFilter,
       onChangePage,
-      update,
       loadingTheme,
-      modeTheme,
-      iconTheme
+      iconTheme,
+      changetheme
     }
 
     async function cek(){
       console.log('iconTheme', iconTheme)
     }
 
-    async function modeTheme(){
+    function changetheme(){
       const data = app.$cookies.get('theme')
-      if(data.darktheme){
+      if(data?.darktheme){
         const classObject= ref({
           'darktheme': false,
           'background': 'white',
+          'icon': 'sun',
           'color': 'black',
         })
-        isChecked.value = false
         setCookie(classObject)
       } else {
         const classObject= ref({
           'darktheme': true,
           'background': '#1d2d50',
+          'icon': 'moon',
           'color': 'white',
         })
-        isChecked.value = true
         setCookie(classObject)
       }
-      
     }
 
     function setCookie(data){
@@ -149,27 +144,6 @@ export default {
       setTimeout(function () {
           loadingTheme.value = false
       }, 200);
-    }
-
-    function update(e) {
-       app.$cookies.remove('theme')
-      if (e.srcElement.checked === true) {
-        const classObject= ref({
-          'darktheme': true,
-          'background': '#1d2d50',
-          'color': 'white',
-        })
-        isChecked.value = true
-        setCookie(classObject)
-      } else {
-        const classObject= ref({
-          'darktheme': false,
-          'background': 'white',
-          'color': 'black',
-        })
-        isChecked.value = false
-        setCookie(classObject)
-      }
     }
 
     function onChangePage(data = any){

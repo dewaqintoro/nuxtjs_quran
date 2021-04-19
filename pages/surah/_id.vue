@@ -151,7 +151,7 @@ html {
 }
 
 .content {
-  @apply mt-8;
+  @apply pt-8;
 }
 
 .item {
