@@ -3,8 +3,14 @@
   <div :style="{ background: theme.background, color: theme.color }">
     <Navbar :theme="theme" />
     <div>
+      <div class="text-center py-4">
+        <button @click="modeTheme()" class="focus:outline-none ">
+          <font-awesome-icon class="iconTheme" :icon="['fas', iconTheme]" />
+        </button>
+      </div>
+
       
-      <div class="text">
+      <!-- <div class="text">
         <div>darktheme Theme</div>
         Off
         <label class="switch">
@@ -12,9 +18,9 @@
           <span class="slider round"></span>
         </label>
         On
-      </div>
+      </div> -->
     </div>
-    <!-- <button @click="cek()">cek {{isChecked}}</button> -->
+    <!-- <button @click="cek()">cek {{iconTheme}}</button> -->
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -76,12 +82,12 @@ export default {
     const langganan = ref('Bulan')
     const loadingTheme = ref(true)
     const isChecked = ref()
+    const iconTheme = ref()
     // const theme = computed(store.state.theme)
     // const theme = computed(() => store.state.theme)
     const thisTheme = app.$cookies.get('theme')
     
     const theme = ref({})
-    console.log('init theme', theme)
     const classObject= ref({
       'darktheme': false,
       'background': 'white',
@@ -89,10 +95,8 @@ export default {
     })
 
     if(thisTheme){
-      console.log('ada tema')
       getCookie()
     } else {
-      console.log('tidak ada tema')
       setCookie(classObject)
     }
     
@@ -117,12 +121,36 @@ export default {
       searchFilter,
       onChangePage,
       update,
-      loadingTheme
+      loadingTheme,
+      modeTheme,
+      iconTheme
     }
 
     async function cek(){
-      console.log('isChecked', isChecked)
+      console.log('iconTheme', iconTheme)
       // console.log('inii', app.$cookies.get('theme'))
+    }
+
+    async function modeTheme(){
+      const data = app.$cookies.get('theme')
+      if(data.darktheme){
+        const classObject= ref({
+          'darktheme': false,
+          'background': 'white',
+          'color': 'black',
+        })
+        isChecked.value = false
+        setCookie(classObject)
+      } else {
+        const classObject= ref({
+          'darktheme': true,
+          'background': '#1d2d50',
+          'color': 'white',
+        })
+        isChecked.value = true
+        setCookie(classObject)
+      }
+      
     }
 
     function setCookie(data){
@@ -138,6 +166,11 @@ export default {
       theme.value = data
       // console.log('dataa',data?.darktheme)
       isChecked.value = data?.darktheme
+      if(data?.darktheme){
+        iconTheme.value = 'moon'
+      } else {
+        iconTheme.value = 'sun'
+      }
       setTimeout(function () {
           loadingTheme.value = false
       }, 200);
@@ -322,6 +355,11 @@ input:checked + .slider::before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.iconTheme {
+  width: 30px;
+  height: 30px
 }
 
 
