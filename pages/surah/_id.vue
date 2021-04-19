@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme"/>
-    <!-- <button @click="cek()">cek</button> -->
+    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" :sub="sub"/>
+    <button @click="cek()">cek {{sub}}</button>
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
       <div class="text-center flex justify-center">
@@ -13,6 +13,8 @@
         :surat="surat"
         :surah="surah"
         :arti="surah.translations.id.text[index]"
+        :sub="sub"
+        :audio="audio"
         />
       </div>
         
@@ -42,15 +44,26 @@ export default {
     const idParams = route.value?.params?.id
     const surah = ref({})
     const thisTheme = app.$cookies.get('theme')
+    const thisSub = app.$cookies.get('sub')
     const theme = ref({})
     const loading = ref(true)
     const loadingTheme = ref(true)
+    const sub = ref(false)
+    const audio = ref(false)
     const classObject= ref({
       'darktheme': false,
       'icon': 'sun',
       'background': 'white',
       'color': 'black',
     })
+
+    if(!thisSub){
+      console.log('tidak ada sub')
+      const data = 'On'
+      setSub(data)
+    } else {
+      getSub()
+    }
 
     if(thisTheme){
       getCookie()
@@ -65,8 +78,37 @@ export default {
       theme,
       loading,
       loadingTheme,
+      sub,
+      thisSub,
+      audio,
       cek,
-      changetheme
+      changetheme,
+      changesub
+    }
+
+    async function changesub(){
+      const data = app.$cookies.get('sub')
+      if(data === 'On'){
+        setSub('Off')
+      } else {
+        setSub('On')
+      }
+    }
+    async function cek(){
+      console.log('sub', sub);
+    }
+
+    function setSub(data){
+      app.$cookies.set('sub', data, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getSub()
+    }
+
+    function getSub(){
+      const data = app.$cookies.get('sub')
+      sub.value = data
     }
 
     function changetheme(){
@@ -98,6 +140,7 @@ export default {
       getCookie()
     }
 
+    
     function getCookie(){
       const data = app.$cookies.get('theme')
       theme.value = data
@@ -113,13 +156,6 @@ export default {
         loading.value = false
       }, 1000);
     }
-
-    async function cek(){
-      // console.log(surah.value);
-      console.log('theme', theme);
-    }
-
-    
   }
 }
 </script>

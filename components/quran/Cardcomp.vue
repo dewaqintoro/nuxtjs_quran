@@ -8,18 +8,18 @@
           <div class="idSurah text-xl font-bold">{{index}}</div>
           <div class="surat text-3xl">{{surat}}</div>
         </div>
-        <div class="text-left mt-4 text-xl">
+        <div v-if="sub === 'On'" class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
           <p>{{arti}}</p>
           <!-- <p>{{surah.translations.id.text[index]}}</p> -->
           <!-- <p>https://quran.kemenag.go.id/cmsq/source/s01/00{{surah.number}}00{{index}}.mp3</p> -->
-          <div class="mt-4">
-            <audio controls class="my-audio">
-              <source :src="urlAudio" type="audio/ogg">
-              <source :src="urlAudio" type="audio/mpeg">
-              Your browser does not support the audio element.
-            </audio>
-          </div>
+        </div>
+        <div v-if="audio" class="mt-4">
+          <audio controls class="my-audio">
+            <source :src="urlAudio" type="audio/ogg">
+            <source :src="urlAudio" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </div>
     </div>
@@ -50,6 +50,14 @@ export default {
     },
     index: {
       type: String,
+      required: true,
+    },
+    sub: {
+      type: String,
+      required: true,
+    },
+    audio: {
+      type: Boolean,
       required: true,
     },
   },

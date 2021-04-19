@@ -13,13 +13,16 @@
             </label>
           </div>
         </div>
-        <!-- <div>
-          <div class="text-center py-4">
-            <button @click="$emit('changetheme')" class="focus:outline-none ">
-              <font-awesome-icon class="iconTheme" :icon="['fas', theme.icon]" />
-            </button>
+
+        <div class="flex justify-between">
+          <div class="text-xl">Terjemhan</div>
+          <div class="flex justify-center">
+            <label class="switch">
+              <input type="checkbox" @change="$emit('changesub')" :checked="isSub"/>
+              <span class="slider round"></span>
+            </label>
           </div>
-        </div> -->
+        </div>
 
         <div class="flex mt-6">
           <div class="flex buttom">
@@ -48,6 +51,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    sub: {
+      type: String,
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const { app, store } = useContext()
@@ -60,10 +67,18 @@ export default defineComponent({
         return false
       }
     })
+    const isSub = computed(() => {
+      if(props.sub === 'On'){
+        return true
+      } else {
+        return false
+      }
+    })
     return {
       size,
       isLoading,
       isChecked,
+      isSub,
       // update,
     }
 
