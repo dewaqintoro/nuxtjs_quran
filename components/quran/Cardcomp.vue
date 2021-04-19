@@ -50,12 +50,14 @@ export default {
     },
   },
   setup(props){
-    const { route, store } = useContext()
+    const { route, store, app } = useContext()
     const sumAyat = props.surah?.number
     const sumIndex = props.index
     const idSurah = ref('')
     const idAyat = ref('')
-    const theme = computed(() => store.state.theme)
+    // const theme = computed(() => store.state.theme)
+    const theme = app.$cookies.get('theme')
+
     
 
     if (sumAyat.length === 1){

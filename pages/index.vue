@@ -1,13 +1,13 @@
 <template>
   <div class="main text-white" :style="{ background: theme.background, color: theme.color }">
-    <Navbar />
+    <Navbar :theme="theme" />
     <div>
       
       <div class="text">
         <div>Dark Theme</div>
         Off
         <label class="switch">
-          <input type="checkbox" @change="update($event)" />
+          <input type="checkbox" @change="update($event)" :checked="isChecked"/>
           <span class="slider round"></span>
         </label>
         On
@@ -72,8 +72,12 @@ export default {
     const bgcolor = ref('#1d2d50')
     const textcolor = ref('white')
     const langganan = ref('Bulan')
+    const isChecked = ref()
     // const theme = computed(store.state.theme)
-    const theme = computed(() => store.state.theme)
+    // const theme = computed(() => store.state.theme)
+    const theme = ref({})
+    // setCookie()
+    getCookie()
 
     // const classObject= ref({
     //   'background': 'white',
@@ -87,6 +91,7 @@ export default {
       allSurah,
       pageOfItems,
       loading,
+      isChecked,
       bgcolor,
       textcolor,
       cek,
@@ -96,22 +101,56 @@ export default {
       update
     }
 
+    async function cek(){
+      console.log('theme', theme.value)
+      console.log('inii', app.$cookies.get('theme'))
+    }
+
+    function setCookie(data){
+      app.$cookies.set('theme', data.value, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getCookie()
+    }
+
+    function getCookie(){
+      const data = app.$cookies.get('theme')
+      theme.value = data
+      isChecked.value = data.dark
+    }
+
     function update(e) {
+       app.$cookies.remove('theme')
       if (e.srcElement.checked === true) {
         // bgcolor.value = 'bg-darkone'
         // classObject.value.background = '#1d2d50'
         // classObject.value.color = 'white'
-        store.commit('setTheme', {
-          background: '#1d2d50',
-          color: 'white',
+        // store.commit('setTheme', {
+        //   background: '#1d2d50',
+        //   color: 'white',
+        // })
+        const classObject= ref({
+          'dark': true,
+          'background': '#1d2d50',
+          'color': 'white',
         })
+        isChecked.value = true
+        setCookie(classObject)
       } else {
         // classObject.value.background = 'white'
         // classObject.value.color = 'black'
-        store.commit('setTheme', {
-          background: 'white',
-          color: 'black',
+        // store.commit('setTheme', {
+        //   background: 'white',
+        //   color: 'black',
+        // })
+        const classObject= ref({
+          'dark': false,
+          'background': 'white',
+          'color': 'black',
         })
+        isChecked.value = false
+        setCookie(classObject)
       }
     }
 
@@ -119,11 +158,6 @@ export default {
       pageOfItems.value = data
     }
 
-    async function cek(){
-      // console.log('pageOfItems.value', pageOfItems.value)
-      console.log('store', theme)
-      // pageOfItems.value
-    }
 
     function searchFilter(){
       setTimeout(function () {

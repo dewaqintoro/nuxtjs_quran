@@ -1,6 +1,6 @@
 <template>
   <div class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar />
+    <Navbar :theme="theme" />
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="mt-8">
       <Headerquran :surah="surah" />
@@ -35,12 +35,13 @@ export default {
     Loading
   },
   setup(){
-    const { route, store } = useContext()
+    const { route, store, app } = useContext()
     const idParams = route.value?.params?.id
     console.log('idParams', idParams)
     // const surah = useAsync(async () => await getSurah())
     const surah = ref({})
-    const theme = computed(() => store.state.theme)
+    // const theme = computed(() => store.state.theme)
+    const theme = app.$cookies.get('theme')
     const loading = ref(true)
 
     getSurah()

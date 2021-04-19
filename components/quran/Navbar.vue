@@ -21,11 +21,19 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 
 export default {
   name: 'Navbar',
+  props: {
+    theme: {
+      type: Object,
+      required: true,
+    },
+  },
   setup(){
-    const { store } = useContext()
-    const theme = computed(() => store.state.theme)
+    const { store, app } = useContext()
+    // const theme = computed(() => store.state.theme)
+    // const theme = app.$cookies.get('theme')
 
-    return { theme}
+
+    // return { theme}
 
   }
 }
