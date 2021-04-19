@@ -4,7 +4,6 @@
     <div class="text-xl">
       <p>( {{surah.name_latin}} - {{surah.translations.id.name}} )</p>
       <p>{{surah.number_of_ayah}} Ayat</p>
-      <font-awesome-icon :icon="['fab', 'twitter']" />
     </div>
     
   </div>

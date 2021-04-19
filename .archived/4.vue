@@ -8,6 +8,15 @@
           <font-awesome-icon class="iconTheme" :icon="['fas', iconTheme]" />
         </button>
       </div>
+      <!-- <div class="text">
+        <div>darktheme Theme</div>
+        Off
+        <label class="switch">
+          <input type="checkbox" @change="update($event)" :checked="isChecked"/>
+          <span class="slider round"></span>
+        </label>
+        On
+      </div> -->
     </div>
     <!-- <button @click="cek()">cek {{iconTheme}}</button> -->
     <div class="text-center">
@@ -17,7 +26,7 @@
       </button>
     </div>
     <div class="font-arabic">
-      <!-- <div v-if="!loading">
+      <div v-if="!loading">
         <div class="item" v-for="(surah, index) in pageOfItems" :key="index">
           <nuxt-link :to="'/surah/'+surah.index">
             <div class="card">
@@ -32,9 +41,9 @@
             </div>
           </nuxt-link>
         </div>
-      </div> -->
+      </div>
 
-      <div>
+      <div v-else>
         <Loading />
       </div>
 

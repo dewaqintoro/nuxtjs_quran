@@ -58,8 +58,6 @@ export default {
     // const theme = computed(() => store.state.theme)
     const theme = app.$cookies.get('theme')
 
-    
-
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`
     } else if(sumAyat.length === 2){

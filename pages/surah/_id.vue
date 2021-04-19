@@ -37,18 +37,11 @@ export default {
   setup(){
     const { route, store, app } = useContext()
     const idParams = route.value?.params?.id
-    console.log('idParams', idParams)
-    // const surah = useAsync(async () => await getSurah())
     const surah = ref({})
-    // const theme = computed(() => store.state.theme)
     const theme = app.$cookies.get('theme')
     const loading = ref(true)
 
     getSurah()
-
-
-    // const iniSurat = surah.value?.text
-    // const arti = surah.value?.translations?.id?.text
 
     return {
       surah,
@@ -60,10 +53,8 @@ export default {
     async function getSurah(){
       setTimeout(async function () {
         const resp = await import(`~/data/surah/${idParams}.json`)
-        // console.log('resp', resp)
         surah.value = resp[idParams]
         loading.value = false
-        // return resp[idParams]
       }, 1000);
     }
 
