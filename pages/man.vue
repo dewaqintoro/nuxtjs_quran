@@ -53,7 +53,7 @@
   grid-template-rows: repeat(minmax(100px, auto));
   margin: 40px;
   grid-auto-flow: dense;
-  grid-gap: 10px;
+  grid-gap: 20px;
 }
 
 .container .box {
@@ -86,42 +86,58 @@
   }
   .container .box:nth-child(1){
     /* background-color: #7BD5F5; */
-    background: url('/a1.svg');
+    /* background: url('/a1.svg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #9d9d9d,
+                -5px -5px 10px #ffffff;
     grid-column: span 2;
     grid-row: span 1;
   }
   .container .box:nth-child(2){
     /* background-color: #787FF6; */
     /* background-color: #56C595; */
-    background: url('/a2.svg');
+    /* background: url('/a2.svg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #9d9d9d,
+                -5px -5px 10px #ffffff;
     grid-column: span 1;
     grid-row: span 1;
   }
   .container .box:nth-child(3){
     /* background-color: #4ADEDE; */
-    background: url('/a3.svg');
+    /* background: url('/a3.svg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #9d9d9d,
+                -5px -5px 10px #ffffff;
     grid-column: span 1;
     grid-row: span 2;
   }
   .container .box:nth-child(4){
     /* background-color: #7BD5F5; */
-    background: url('/a4.svg');
+    /* background: url('/a4.svg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     grid-column: span 1;
     grid-row: span 2;
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #9d9d9d,
+                -5px -5px 10px #ffffff;
   }
   .container .box:nth-child(5){
     /* background-color: #7BE494; */
-    background: url('/a5.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
+    /* background: url('/a5.svg'); */
+    /* background-size: cover;
+    background-repeat: no-repeat; */
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #9d9d9d,
+                -5px -5px 10px #ffffff;
+
   }
   
 /* } */
