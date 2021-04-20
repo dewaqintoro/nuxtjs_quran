@@ -4,31 +4,31 @@
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum</p>
+        <p>Daftar Surat</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum</p>
+        <p>Do'a Harian</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum</p>
+        <p>Do'a Tahlil</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum</p>
+        <p>Wirid</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum</p>
+        <p>Asmaul Husna</p>
       </div>
     </div>
   </div>
@@ -41,7 +41,8 @@
   justify-content: center;
   align-self: center;
   min-height: 100vh;
-  background: #222;
+  /* background-color: #4ADEDE; */
+  background-color: rgba(74, 222, 222, 0.1);
 }
 .container {
   position: relative;
@@ -55,6 +56,7 @@
 }
 
 .container .box {
+  @apply rounded-2xl;
   background: #333;
   padding: 10px;
   display: grid;
@@ -77,22 +79,34 @@
 }
 
 
-@screen mobile {
+/* @screen mobile { */
+  .container {
+    margin: 20px;
+  }
   .container .box:nth-child(1){
-    grid-column: span 1;
+    background-color: #7BD5F5;
+    grid-column: span 2;
     grid-row: span 1;
   }
   .container .box:nth-child(2){
+    /* background-color: #787FF6; */
+    background-color: #56C595;
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .container .box:nth-child(3){
+    background-color: #4ADEDE;
     grid-column: span 1;
     grid-row: span 2;
   }
-  .container .box:nth-child(3){
+  .container .box:nth-child(4){
+    background-color: #7BD5F5;
     grid-column: span 1;
     grid-row: span 2;
   }
   .container .box:nth-child(5){
-    grid-column: span 2;
-    grid-row: span 1;
+    background-color: #7BE494;
   }
-}
+  
+/* } */
 </style>
