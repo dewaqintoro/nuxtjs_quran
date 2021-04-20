@@ -36,6 +36,13 @@
 </template>
 
 <style lang="postcss" scoped>
+
+/* .content {
+  @apply w-full h-full rounded-2xl;
+  background: #36454f;
+  box-shadow: inset 5px 5px 10px #29343c,
+              inset -5px -5px 10px #435662;
+} */
 .main {
   display: flex;
   justify-content: center;
@@ -67,7 +74,7 @@ background-color: #36454f;
 
 .container .box {
   @apply rounded-2xl;
-  padding: 10px;
+  padding: 20px;
   display: grid;
   font-size: 20px;
   place-items: center;
@@ -82,6 +89,9 @@ background-color: #36454f;
 
   box-shadow:  5px 5px 10px #29343c,
              -5px -5px 10px #435662;
+
+  /* box-shadow:  5px 5px 2px #33414a,
+             -5px -5px 2px #394954; */
 }
 
 .container .box:hover {
@@ -117,7 +127,8 @@ background-color: #36454f;
     box-shadow:  5px 5px 10px #444f4f,
              -5px -5px 10px #98afb1; */
 
-    background: #36454f;
+    /* background: #36454f; */
+    background: linear-gradient(145deg, #313e47, #3a4a55);
   }
   .container .box:nth-child(2){
     grid-column: span 1;
@@ -134,7 +145,8 @@ background-color: #36454f;
                 -5px -5px 10px #ffffff; */
 
     /* neo v2 */
-    background: #495e68;
+    /* background: #495e68; */
+    background: linear-gradient(145deg, #42555e, #4e656f);
     
   }
   .container .box:nth-child(3){
@@ -151,8 +163,8 @@ background-color: #36454f;
                 -5px -5px 10px #ffffff; */
 
     /* neo v2 */
-    background: #4b5661;
-
+    /* background: #4b5661; */
+    background: linear-gradient(145deg, #444d57, #505c68);
     
   }
   .container .box:nth-child(4){
@@ -166,7 +178,9 @@ background-color: #36454f;
     /* neo v1 */
     /* background: #e0e0e0; */
 
-    background: #3d4d5a;
+    /* neo v2 */
+    /* background: #3d4d5a; */
+    background: linear-gradient(145deg, #374551, #415260);
   }
   .container .box:nth-child(5){
     /* background-color: #7BE494; */
@@ -178,7 +192,8 @@ background-color: #36454f;
     /* background: #e0e0e0; */
 
     /* neo v2 */
-    background: #4d5b5c;
+    /* background: #4d5b5c; */
+    background: linear-gradient(145deg, #455253, #526162);
 
   }
   
