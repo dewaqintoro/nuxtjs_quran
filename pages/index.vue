@@ -126,24 +126,25 @@ export default {
       store.dispatch('changeAudio')
     }
     function changetheme(){
-      const data = app.$cookies.get('theme')
-      if(data?.darktheme){
-        const classObject= ref({
-          'darktheme': false,
-          'background': 'white',
-          'icon': 'sun',
-          'color': 'black',
-        })
-        // setCookie(classObject)
-      } else {
-        const classObject= ref({
-          'darktheme': true,
-          'background': '#1d2d50',
-          'icon': 'moon',
-          'color': 'white',
-        })
-        // setCookie(classObject)
-      }
+      store.dispatch('changeTheme')
+      // const data = app.$cookies.get('theme')
+      // if(data?.darktheme){
+      //   const classObject= ref({
+      //     'darktheme': false,
+      //     'background': 'white',
+      //     'icon': 'sun',
+      //     'color': 'black',
+      //   })
+      //   setCookie(classObject)
+      // } else {
+      //   const classObject= ref({
+      //     'darktheme': true,
+      //     'background': '#1d2d50',
+      //     'icon': 'moon',
+      //     'color': 'white',
+      //   })
+      //   setCookie(classObject)
+      // }
     }
     function onChangePage(data = any){
       pageOfItems.value = data

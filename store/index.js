@@ -70,6 +70,29 @@ export const actions = {
       commit('setState', { loadingTheme: false })
     }, 200);
   },
+  changeTheme({ commit }) {
+    const data = this.$cookies.get('theme')
+    console.log('changeTheme', data)
+    if(data.darktheme){
+      const classObject= {
+        'darktheme': false,
+        'background': 'white',
+        'icon': 'sun',
+        'color': 'black',
+      }
+      this.dispatch('setTheme', classObject);
+      commit('setState', { theme: classObject })
+    } else {
+      const classObject= {
+        'darktheme': true,
+        'background': '#1d2d50',
+        'icon': 'moon',
+        'color': 'white',
+      }
+      this.dispatch('setTheme', classObject);
+      commit('setState', { theme: classObject })
+    }
+  },
   
 }
 
