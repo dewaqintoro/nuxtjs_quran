@@ -55,7 +55,6 @@ export const actions = {
   },
 
   setTheme({ commit }, data) {
-    console.log('setTheme', data)
     this.$cookies.set('theme',data, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
@@ -63,13 +62,11 @@ export const actions = {
   },
   getTheme({ commit }) {
     const themeCookie = this.$cookies.get('theme')
-    console.log('getTheme', themeCookie)
     commit('setState', { theme: themeCookie })
     commit('setState', { loadingTheme: false })
   },
   changeTheme({ commit }) {
     const data = this.$cookies.get('theme')
-    console.log('changeTheme', data)
     if(data.darktheme){
       const classObject= {
         'darktheme': false,

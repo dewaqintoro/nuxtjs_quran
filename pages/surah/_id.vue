@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
+  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
+    <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
@@ -8,7 +8,7 @@
       </div>
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
-        :theme="theme"
+        :theme="storeTheme"
         :index="index"
         :surat="surat"
         :surah="surah"
@@ -44,15 +44,9 @@ export default {
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
-    const theme = ref({})
     const loading = ref(true)
-    const loadingTheme = ref(true)
-    const classObject= ref({
-      'darktheme': false,
-      'icon': 'sun',
-      'background': 'white',
-      'color': 'black',
-    })
+    const loadingTheme = computed(() => store.state.loadingTheme)
+    const storeTheme = computed(() => store.state.theme)
 
     if(!thisSub){
       store.dispatch('setSub', 'On')
@@ -67,16 +61,16 @@ export default {
     }
 
     if(thisTheme){
-      getCookie()
+      store.dispatch('getTheme')
     } else {
-      setCookie(classObject)
+      store.dispatch('setTheme', initTheme.value)
     }
 
     getSurah()
 
     return {
       surah,
-      theme,
+      storeTheme,
       loading,
       loadingTheme,
       cek,
@@ -97,41 +91,7 @@ export default {
     }
 
     function changetheme(){
-      const data = app.$cookies.get('theme')
-      if(data?.darktheme){
-        const classObject= ref({
-          'darktheme': false,
-          'background': 'white',
-          'icon': 'sun',
-          'color': 'black',
-        })
-        setCookie(classObject)
-      } else {
-        const classObject= ref({
-          'darktheme': true,
-          'background': '#1d2d50',
-          'icon': 'moon',
-          'color': 'white',
-        })
-        setCookie(classObject)
-      }
-    }
-
-    function setCookie(data){
-      app.$cookies.set('theme', data.value, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getCookie()
-    }
-
-    
-    function getCookie(){
-      const data = app.$cookies.get('theme')
-      theme.value = data
-      setTimeout(function () {
-          loadingTheme.value = false
-      }, 200);
+      store.dispatch('changeTheme')
     }
 
     async function getSurah(){

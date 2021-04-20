@@ -2,9 +2,7 @@
 <span v-if="!loadingTheme">
   <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
   <div class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <button @click="cek()">cek</button>
-    <button @click="duh()">getSub</button>
-    <button @click="sett()">setSub</button>
+    <!-- <button @click="cek()">cek</button> -->
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -60,21 +58,12 @@ export default {
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
-    // const loadingTheme = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
-    const iconTheme = ref()
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
     const initTheme = computed(() => store.state.initTheme)
     const storeTheme = computed(() => store.state.theme)
-    const theme = ref({})
-
-    const classObject= ref({
-      'darktheme': false,
-      'background': 'white',
-      'color': 'black',
-    })
 
     if(!thisSub){
       store.dispatch('setSub', 'On')
@@ -104,29 +93,17 @@ export default {
       pageOfItems,
       loading,
       cek,
-      theme,
       storeTheme,
       searchFilter,
       onChangePage,
       loadingTheme,
-      iconTheme,
       changetheme,
       changesub,
       changeaudio,
-      duh,
-      sett
     }
 
     async function cek(){
       console.log('initTheme', initTheme.value)
-    }
-
-    async function duh(){
-      store.dispatch('getSub')
-    }
-
-    async function sett(){
-      store.dispatch('setSub', 'On')
     }
 
     async function changesub(){
@@ -139,27 +116,6 @@ export default {
 
     function changetheme(){
       store.dispatch('changeTheme')
-    }
-
-    function setCookie(data){
-      app.$cookies.set('theme', data.value, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getCookie()
-    }
-
-    function getCookie(){
-      const data = app.$cookies.get('theme')
-      theme.value = data
-      if(data?.darktheme){
-        iconTheme.value = 'moon'
-      } else {
-        iconTheme.value = 'sun'
-      }
-      setTimeout(function () {
-          loadingTheme.value = false
-      }, 200);
     }
 
     function onChangePage(data = any){
@@ -231,11 +187,6 @@ html {
 
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
-}
-
-.iconTheme {
-  width: 30px;
-  height: 30px
 }
 
 
