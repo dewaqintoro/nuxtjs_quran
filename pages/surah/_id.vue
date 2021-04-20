@@ -2,11 +2,14 @@
   <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
     <!-- <button @click="cek()">cek</button> -->
-    <div v-if="!loading" class="content">
+    <div v-if="loading">
+      <Loading />
+    </div>
+    <div v-else class="content">
       <Headerquran :surah="surah" />
       <div class="text-center flex justify-center">
       </div>
-      <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
+      <div class="item" v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
         :theme="storeTheme"
         :index="index"
@@ -15,11 +18,8 @@
         :arti="surah.translations.id.text[index]"
         />
       </div>
-        
     </div>
-    <div v-else>
-      <Loading />
-    </div>
+    
   </div>
 </template>
 <script>
@@ -39,6 +39,7 @@ export default {
   setup(){
     const { route, store, app } = useContext()
     const idParams = route.value?.params?.id
+    getSurah()
     const surah = ref({})
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
@@ -64,7 +65,7 @@ export default {
     } else {
       store.dispatch('setTheme', initTheme.value)
     }
-    getSurah()
+    
     return {
       surah,
       storeTheme,
@@ -87,11 +88,11 @@ export default {
       store.dispatch('changeTheme')
     }
     async function getSurah(){
-      setTimeout(async function () {
-        const resp = await import(`~/data/surah/${idParams}.json`)
-        surah.value = resp[idParams]
+      const resp = await import(`~/data/surah/${idParams}.json`)
+      surah.value = resp[idParams]
+      setTimeout(async function () {  
         loading.value = false
-      }, 1000);
+      }, 500);
     }
   }
 }
@@ -128,7 +129,7 @@ html {
 }
 @screen mobile {
   .item {
-    @apply mx-2 px-2;
+    @apply mx-2 px-2 pt-2;
   }
   .content {
     @apply pt-16;
