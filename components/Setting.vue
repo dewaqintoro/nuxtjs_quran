@@ -68,8 +68,10 @@ export default defineComponent({
     const size = ref('small')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
+    const theme = computed(() => store.state.theme)
+
     const isChecked = computed(() => {
-      if(props.theme.darktheme){
+      if(theme.value.darktheme){
         return true
       }else {
         return false

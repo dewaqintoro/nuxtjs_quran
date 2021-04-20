@@ -1,7 +1,7 @@
 <template>
 <span v-if="!loadingTheme">
-  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
-  <div class="main" :style="{ background: theme.background, color: theme.color }">
+  <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
+  <div class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <button @click="cek()">cek</button>
     <button @click="duh()">getSub</button>
     <button @click="sett()">setSub</button>
@@ -60,13 +60,14 @@ export default {
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
-    const loadingTheme = ref(true)
-    const isChecked = ref()
+    // const loadingTheme = ref(true)
+    const loadingTheme = computed(() => store.state.loadingTheme)
     const iconTheme = ref()
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
-    
+    const initTheme = computed(() => store.state.initTheme)
+    const storeTheme = computed(() => store.state.theme)
     const theme = ref({})
 
     const classObject= ref({
@@ -88,9 +89,11 @@ export default {
     }
 
     if(thisTheme){
-      getCookie()
+      // getCookie()
+      store.dispatch('getTheme')
     } else {
-      setCookie(classObject)
+      // setCookie(classObject)
+      store.dispatch('setTheme', initTheme.value)
     }
     
     searchFilter()
@@ -100,9 +103,9 @@ export default {
       allSurah,
       pageOfItems,
       loading,
-      isChecked,
       cek,
       theme,
+      storeTheme,
       searchFilter,
       onChangePage,
       loadingTheme,
@@ -115,6 +118,7 @@ export default {
     }
 
     async function cek(){
+      console.log('initTheme', initTheme.value)
     }
 
     async function duh(){
@@ -134,24 +138,7 @@ export default {
     }
 
     function changetheme(){
-      const data = app.$cookies.get('theme')
-      if(data?.darktheme){
-        const classObject= ref({
-          'darktheme': false,
-          'background': 'white',
-          'icon': 'sun',
-          'color': 'black',
-        })
-        setCookie(classObject)
-      } else {
-        const classObject= ref({
-          'darktheme': true,
-          'background': '#1d2d50',
-          'icon': 'moon',
-          'color': 'white',
-        })
-        setCookie(classObject)
-      }
+      store.dispatch('changeTheme')
     }
 
     function setCookie(data){
@@ -165,7 +152,6 @@ export default {
     function getCookie(){
       const data = app.$cookies.get('theme')
       theme.value = data
-      isChecked.value = data?.darktheme
       if(data?.darktheme){
         iconTheme.value = 'moon'
       } else {
