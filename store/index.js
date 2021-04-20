@@ -60,6 +60,7 @@ export const actions = {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
+    this.dispatch('getTheme');
   },
   getTheme({ commit }) {
     const themeCookie = this.$cookies.get('theme')
