@@ -12,7 +12,7 @@
         </button>
       </div>
       <Transition name="drawer">
-        <Setting :theme="theme" :audio="audio" v-if="isDeleteWidget" @close="closeModal" @changetheme="$emit('changetheme')" @changesub="$emit('changesub')" @changeaudio="$emit('changeaudio')" />
+        <Setting :theme="theme" v-if="isDeleteWidget" @close="closeModal" @changetheme="$emit('changetheme')" @changesub="$emit('changesub')" @changeaudio="$emit('changeaudio')" />
       </Transition>
     </div>
   </header>
@@ -26,10 +26,6 @@ export default defineComponent({
   props: {
     theme: {
       type: Object,
-      required: true,
-    },
-    audio: {
-      type: String,
       required: true,
     },
   },

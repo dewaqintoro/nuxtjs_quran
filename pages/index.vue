@@ -1,6 +1,6 @@
 <template>
 <span v-if="!loadingTheme">
-  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :audio="audio"/>
+  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
   <div class="main" :style="{ background: theme.background, color: theme.color }">
     <button @click="cek()">cek</button>
     <button @click="duh()">getSub</button>
@@ -68,7 +68,6 @@ export default {
     const thisAudio = app.$cookies.get('audio')
     
     const theme = ref({})
-    const audio = ref('On')
 
     const classObject= ref({
       'darktheme': false,
@@ -83,9 +82,9 @@ export default {
     }
 
     if(!thisAudio){
-      setAudio('On')
+      store.dispatch('setAudio', 'On')
     } else {
-      getAudio()
+      store.dispatch('getAudio')
     }
 
     if(thisTheme){
@@ -104,7 +103,6 @@ export default {
       isChecked,
       cek,
       theme,
-      audio,
       searchFilter,
       onChangePage,
       loadingTheme,
@@ -132,25 +130,7 @@ export default {
     }
 
     async function changeaudio(){
-      const data = app.$cookies.get('audio')
-      if(data === 'On'){
-        setAudio('Off')
-      } else {
-        setAudio('On')
-      }
-    }
-
-    function setAudio(data){
-      app.$cookies.set('audio', data, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getAudio()
-    }
-
-    function getAudio(){
-      const data = app.$cookies.get('audio')
-      audio.value = data
+      store.dispatch('changeAudio')
     }
 
     function changetheme(){

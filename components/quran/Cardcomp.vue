@@ -14,7 +14,7 @@
           <!-- <p>{{surah.translations.id.text[index]}}</p> -->
           <!-- <p>https://quran.kemenag.go.id/cmsq/source/s01/00{{surah.number}}00{{index}}.mp3</p> -->
         </div>
-        <div v-if="audio === 'On'" class="mt-4">
+        <div v-if="audioStore === 'On'" class="mt-4">
           <audio controls class="my-audio">
             <source :src="urlAudio" type="audio/ogg">
             <source :src="urlAudio" type="audio/mpeg">
@@ -52,10 +52,6 @@ export default {
       type: String,
       required: true,
     },
-    audio: {
-      type: String,
-      required: true,
-    },
   },
   setup(props){
     const { route, store, app } = useContext()
@@ -64,6 +60,7 @@ export default {
     const idSurah = ref('')
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
+    const audioStore = computed(() => store.state.audio)
 
 
     if (sumAyat.length === 1){
@@ -86,6 +83,7 @@ export default {
     return {
       urlAudio,
       subStore,
+      audioStore,
       cek
     }
 

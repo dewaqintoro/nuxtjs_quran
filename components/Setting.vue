@@ -61,20 +61,13 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    sub: {
-      type: String,
-      required: true,
-    },
-    audio: {
-      type: String,
-      required: true,
-    },
   },
   setup(props, { emit }) {
     const { app, store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
     const subStore = computed(() => store.state.sub)
+    const audioStore = computed(() => store.state.audio)
     const isChecked = computed(() => {
       if(props.theme.darktheme){
         return true
@@ -91,7 +84,7 @@ export default defineComponent({
     })
 
     const isAudio = computed(() => {
-      if(props.audio === 'On'){
+      if(audioStore.value === 'On'){
         return true
       } else {
         return false
@@ -102,7 +95,6 @@ export default defineComponent({
       size,
       isLoading,
       isChecked,
-      subStore,
       isSub,
       isAudio
       // update,

@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :audio="audio"/>
-    <!-- <button @click="cek()">cek {{audio}}</button> -->
+    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
+    <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
       <div class="text-center flex justify-center">
@@ -13,7 +13,6 @@
         :surat="surat"
         :surah="surah"
         :arti="surah.translations.id.text[index]"
-        :audio="audio"
         />
       </div>
         
@@ -48,7 +47,6 @@ export default {
     const theme = ref({})
     const loading = ref(true)
     const loadingTheme = ref(true)
-    const audio = ref('On')
     const classObject= ref({
       'darktheme': false,
       'icon': 'sun',
@@ -63,9 +61,9 @@ export default {
     }
 
     if(!thisAudio){
-      setAudio('On')
+      store.dispatch('setAudio', 'On')
     } else {
-      getAudio()
+      store.dispatch('getAudio')
     }
 
     if(thisTheme){
@@ -81,7 +79,6 @@ export default {
       theme,
       loading,
       loadingTheme,
-      audio,
       cek,
       changetheme,
       changesub,
@@ -93,29 +90,10 @@ export default {
     }
 
     async function changeaudio(){
-      const data = app.$cookies.get('audio')
-      if(data === 'On'){
-        setAudio('Off')
-      } else {
-        setAudio('On')
-      }
+      store.dispatch('changeAudio')
     }
 
     async function cek(){
-      console.log('audio', audio);
-    }
-
-    function setAudio(data){
-      app.$cookies.set('audio', data, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getAudio()
-    }
-
-    function getAudio(){
-      const data = app.$cookies.get('audio')
-      audio.value = data
     }
 
     function changetheme(){
