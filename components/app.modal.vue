@@ -28,6 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, onBeforeUnmount, onMounted, ref } from '@nuxtjs/composition-api'
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 
 export default defineComponent({
   name: 'AppModal',
@@ -52,12 +53,24 @@ export default defineComponent({
   setup(props, { emit }) {
     const modalElement = ref<HTMLElement | null>(null)
 
-    // onMounted(() => {
-      
-    // })
+    onMounted(() => {
+      disableBodyScroll(modalElement.value as HTMLElement, {
+        reserveScrollBarGap: true,
+        allowTouchMove: (el: any) => {
+          while (el && el !== document.body) {
+            if (el.getAttribute('body-scroll-lock-ignore') !== null) {
+              return true
+            }
+            el = el.parentNode as HTMLElement
+          }
+        },
+      })
+    })
 
-    // onBeforeUnmount(() => {
-    // })
+    onBeforeUnmount(() => {
+      enableBodyScroll(modalElement.value as HTMLElement)
+      clearAllBodyScrollLocks()
+    })
 
     return { modalElement, closeModal }
 
