@@ -42,7 +42,8 @@
   align-self: center;
   min-height: 100vh;
   /* background-color: #4ADEDE; */
-  background-color: rgba(74, 222, 222, 0.1);
+  /* background-color: rgba(74, 222, 222, 0.1); */
+  background: url('/andro4.svg');
 }
 .container {
   position: relative;
@@ -90,13 +91,16 @@
   }
   .container .box:nth-child(2){
     /* background-color: #787FF6; */
-    background-color: #56C595;
+    /* background-color: #56C595; */
+    background: url('/pad2.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
     grid-column: span 1;
     grid-row: span 1;
   }
   .container .box:nth-child(3){
     /* background-color: #4ADEDE; */
-    background: url('/andro2.svg');
+    background: url('/pad1.svg');
     background-size: cover;
     background-repeat: no-repeat;
     grid-column: span 1;
