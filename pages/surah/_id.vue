@@ -220,7 +220,7 @@ html {
 }
 
 .item {
-  @apply px-8 mx-36 my-8;
+  @apply px-8 mx-36 py-8;
 }
 
 @screen mobile {
@@ -228,7 +228,7 @@ html {
     @apply mx-2 px-2;
   }
   .content {
-    @apply mt-16;
+    @apply pt-16;
   }
 }
 </style>
