@@ -1,10 +1,8 @@
 <template>
+<!-- <span></span> -->
 <span v-if="!loadingTheme">
-  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
-  <div class="main" :style="{ background: theme.background, color: theme.color }">
-    <!-- <button @click="cek()">cek</button>
-    <button @click="duh()">getSub</button>
-    <button @click="sett()">setSub</button> -->
+  <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
+  <div class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -59,12 +57,16 @@ export default {
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
-    const loadingTheme = ref(true)
-    const isChecked = ref()
+    // const loadingTheme = ref(true)
+    const loadingTheme = computed(() => store.state.loadingTheme)
     const iconTheme = ref()
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
+    const initTheme = computed(() => store.state.initTheme)
+    const storeTheme = computed(() => store.state.theme)
+    console.log('loadingTheme', loadingTheme.value)
+    console.log('initTheme', initTheme.value)
     
     const theme = ref({})
     const classObject= ref({
@@ -83,9 +85,11 @@ export default {
       store.dispatch('getAudio')
     }
     if(thisTheme){
-      getCookie()
+      // getCookie()
+      store.dispatch('getTheme')
     } else {
-      setCookie(classObject)
+      // setCookie(classObject)
+      store.dispatch('setTheme', classObject)
     }
     
     searchFilter()
@@ -94,7 +98,6 @@ export default {
       allSurah,
       pageOfItems,
       loading,
-      isChecked,
       cek,
       theme,
       searchFilter,
@@ -105,7 +108,8 @@ export default {
       changesub,
       changeaudio,
       duh,
-      sett
+      sett,
+      storeTheme
     }
     async function cek(){
     }
@@ -130,7 +134,7 @@ export default {
           'icon': 'sun',
           'color': 'black',
         })
-        setCookie(classObject)
+        // setCookie(classObject)
       } else {
         const classObject= ref({
           'darktheme': true,
@@ -138,29 +142,29 @@ export default {
           'icon': 'moon',
           'color': 'white',
         })
-        setCookie(classObject)
+        // setCookie(classObject)
       }
     }
-    function setCookie(data){
-      app.$cookies.set('theme', data.value, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getCookie()
-    }
-    function getCookie(){
-      const data = app.$cookies.get('theme')
-      theme.value = data
-      isChecked.value = data?.darktheme
-      if(data?.darktheme){
-        iconTheme.value = 'moon'
-      } else {
-        iconTheme.value = 'sun'
-      }
-      setTimeout(function () {
-          loadingTheme.value = false
-      }, 200);
-    }
+    // function setCookie(data){
+    //   app.$cookies.set('theme', data.value, {
+    //     path: '/',
+    //     maxAge: 60 * 60 * 24 * 7
+    //   })
+    //   getCookie()
+    //   store.dispatch('getTheme')
+    // }
+    // function getCookie(){
+    //   const data = app.$cookies.get('theme')
+    //   theme.value = data
+    //   if(data?.darktheme){
+    //     iconTheme.value = 'moon'
+    //   } else {
+    //     iconTheme.value = 'sun'
+    //   }
+    //   setTimeout(function () {
+    //       loadingTheme.value = false
+    //   }, 200);
+    // }
     function onChangePage(data = any){
       pageOfItems.value = data
     }

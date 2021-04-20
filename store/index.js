@@ -2,6 +2,13 @@ export const state = () => ({
   audio: '',
   sub: '',
   theme: {},
+  initTheme: {
+    darktheme: false,
+    background: 'white',
+    color: 'black',
+  },
+  loadingTheme: true,
+
 })
 
 export const actions = {
@@ -45,6 +52,22 @@ export const actions = {
       this.dispatch('setAudio', 'On');
       commit('setState', { audio: 'On' })
     }
+  },
+
+  setTheme({ commit }, data) {
+    console.log('setTheme',data)
+    this.$cookies.set('theme',data, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
+    })
+  },
+  getTheme({ commit }) {
+    const themeCookie = this.$cookies.get('theme')
+    console.log('getTheme', themeCookie)
+    commit('setState', { theme: themeCookie })
+    setTimeout(function () {
+      commit('setState', { loadingTheme: false })
+    }, 200);
   },
   
 }
