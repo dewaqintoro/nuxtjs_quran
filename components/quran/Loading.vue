@@ -69,7 +69,7 @@ export default {
 
 <style lang="postcss" scoped>
 .item {
-  @apply px-8 mx-36 my-8;
+  @apply my-8;
 }
 .card {
   @apply text-3xl p-4 rounded-lg;
