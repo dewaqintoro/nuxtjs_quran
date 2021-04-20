@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
+  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
+    <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
@@ -8,7 +8,7 @@
       </div>
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
-        :theme="theme"
+        :theme="storeTheme"
         :index="index"
         :surat="surat"
         :surah="surah"
@@ -45,7 +45,9 @@ export default {
     const thisAudio = app.$cookies.get('audio')
     const theme = ref({})
     const loading = ref(true)
-    const loadingTheme = ref(true)
+    const loadingTheme = computed(() => store.state.loadingTheme)
+    const storeTheme = computed(() => store.state.theme)
+    const initTheme = computed(() => store.state.initTheme)
     const classObject= ref({
       'darktheme': false,
       'icon': 'sun',
@@ -63,14 +65,15 @@ export default {
       store.dispatch('getAudio')
     }
     if(thisTheme){
-      getCookie()
+      store.dispatch('getTheme')
     } else {
-      setCookie(classObject)
+      store.dispatch('setTheme', initTheme.value)
     }
     getSurah()
     return {
       surah,
       theme,
+      storeTheme,
       loading,
       loadingTheme,
       cek,

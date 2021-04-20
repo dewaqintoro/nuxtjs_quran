@@ -145,26 +145,6 @@ export default {
         // setCookie(classObject)
       }
     }
-    // function setCookie(data){
-    //   app.$cookies.set('theme', data.value, {
-    //     path: '/',
-    //     maxAge: 60 * 60 * 24 * 7
-    //   })
-    //   getCookie()
-    //   store.dispatch('getTheme')
-    // }
-    // function getCookie(){
-    //   const data = app.$cookies.get('theme')
-    //   theme.value = data
-    //   if(data?.darktheme){
-    //     iconTheme.value = 'moon'
-    //   } else {
-    //     iconTheme.value = 'sun'
-    //   }
-    //   setTimeout(function () {
-    //       loadingTheme.value = false
-    //   }, 200);
-    // }
     function onChangePage(data = any){
       pageOfItems.value = data
     }
