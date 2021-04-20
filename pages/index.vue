@@ -58,7 +58,6 @@ export default {
     const pageOfItems = ref([])
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
-    const iconTheme = ref()
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
@@ -92,7 +91,6 @@ export default {
       searchFilter,
       onChangePage,
       loadingTheme,
-      iconTheme,
       changetheme,
       changesub,
       changeaudio,
@@ -171,10 +169,6 @@ html {
 }
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
-}
-.iconTheme {
-  width: 30px;
-  height: 30px
 }
 @screen mobile {
   .main {
