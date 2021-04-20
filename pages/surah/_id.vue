@@ -48,7 +48,6 @@ export default {
     const theme = ref({})
     const loading = ref(true)
     const loadingTheme = ref(true)
-    const sub = ref('On')
     const audio = ref('On')
     const classObject= ref({
       'darktheme': false,
@@ -82,7 +81,6 @@ export default {
       theme,
       loading,
       loadingTheme,
-      sub,
       audio,
       cek,
       changetheme,
@@ -107,25 +105,12 @@ export default {
       console.log('audio', audio);
     }
 
-    function setSub(data){
-      app.$cookies.set('sub', data, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getSub()
-    }
-
     function setAudio(data){
       app.$cookies.set('audio', data, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7
       })
       getAudio()
-    }
-
-    function getSub(){
-      const data = app.$cookies.get('sub')
-      sub.value = data
     }
 
     function getAudio(){

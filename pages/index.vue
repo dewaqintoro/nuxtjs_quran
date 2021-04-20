@@ -2,7 +2,7 @@
 <span v-if="!loadingTheme">
   <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :audio="audio"/>
   <div class="main" :style="{ background: theme.background, color: theme.color }">
-    <button @click="cek()">cek {{subStore}}</button>
+    <button @click="cek()">cek</button>
     <button @click="duh()">getSub</button>
     <button @click="sett()">setSub</button>
     <div class="text-center">
@@ -63,14 +63,11 @@ export default {
     const loadingTheme = ref(true)
     const isChecked = ref()
     const iconTheme = ref()
-    // const theme = computed(store.state.theme)
-    const subStore = computed(() => store.state.sub)
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
     
     const theme = ref({})
-    const sub = ref('On')
     const audio = ref('On')
 
     const classObject= ref({
@@ -107,7 +104,6 @@ export default {
       isChecked,
       cek,
       theme,
-      sub,
       audio,
       searchFilter,
       onChangePage,
@@ -116,13 +112,11 @@ export default {
       changetheme,
       changesub,
       changeaudio,
-      subStore,
       duh,
       sett
     }
 
     async function cek(){
-      console.log('subStore', subStore)
     }
 
     async function duh(){
@@ -135,13 +129,6 @@ export default {
 
     async function changesub(){
       store.dispatch('changeSub')
-
-      // const data = app.$cookies.get('sub')
-      // if(data === 'On'){
-      //   setSub('Off')
-      // } else {
-      //   setSub('On')
-      // }
     }
 
     async function changeaudio(){
@@ -153,14 +140,6 @@ export default {
       }
     }
 
-    // function setSub(data){
-    //   app.$cookies.set('sub', data, {
-    //     path: '/',
-    //     maxAge: 60 * 60 * 24 * 7
-    //   })
-    //   getSub()
-    // }
-
     function setAudio(data){
       app.$cookies.set('audio', data, {
         path: '/',
@@ -168,11 +147,6 @@ export default {
       })
       getAudio()
     }
-
-    // function getSub(){
-    //   const data = app.$cookies.get('sub')
-    //   sub.value = data
-    // }
 
     function getAudio(){
       const data = app.$cookies.get('audio')
