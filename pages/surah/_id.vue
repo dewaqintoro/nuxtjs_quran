@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" :sub="sub"/>
-    <button @click="cek()">cek {{sub}}</button>
+    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :sub="sub" :audio="audio"/>
+    <!-- <button @click="cek()">cek {{audio}}</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
       <div class="text-center flex justify-center">
@@ -45,11 +45,12 @@ export default {
     const surah = ref({})
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
+    const thisAudio = app.$cookies.get('audio')
     const theme = ref({})
     const loading = ref(true)
     const loadingTheme = ref(true)
-    const sub = ref(false)
-    const audio = ref(false)
+    const sub = ref('On')
+    const audio = ref('On')
     const classObject= ref({
       'darktheme': false,
       'icon': 'sun',
@@ -58,11 +59,15 @@ export default {
     })
 
     if(!thisSub){
-      console.log('tidak ada sub')
-      const data = 'On'
-      setSub(data)
+      setSub('On')
     } else {
       getSub()
+    }
+
+    if(!thisAudio){
+      setAudio('On')
+    } else {
+      getAudio()
     }
 
     if(thisTheme){
@@ -79,11 +84,11 @@ export default {
       loading,
       loadingTheme,
       sub,
-      thisSub,
       audio,
       cek,
       changetheme,
-      changesub
+      changesub,
+      changeaudio
     }
 
     async function changesub(){
@@ -94,8 +99,18 @@ export default {
         setSub('On')
       }
     }
+
+    async function changeaudio(){
+      const data = app.$cookies.get('audio')
+      if(data === 'On'){
+        setAudio('Off')
+      } else {
+        setAudio('On')
+      }
+    }
+
     async function cek(){
-      console.log('sub', sub);
+      console.log('audio', audio);
     }
 
     function setSub(data){
@@ -106,9 +121,22 @@ export default {
       getSub()
     }
 
+    function setAudio(data){
+      app.$cookies.set('audio', data, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getAudio()
+    }
+
     function getSub(){
       const data = app.$cookies.get('sub')
       sub.value = data
+    }
+
+    function getAudio(){
+      const data = app.$cookies.get('audio')
+      audio.value = data
     }
 
     function changetheme(){

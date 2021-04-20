@@ -24,6 +24,16 @@
           </div>
         </div>
 
+        <div class="flex justify-between">
+          <div class="text-xl">Audio</div>
+          <div class="flex justify-center">
+            <label class="switch">
+              <input type="checkbox" @change="$emit('changeaudio')" :checked="isAudio"/>
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
         <div class="flex mt-6">
           <div class="flex buttom">
           </div>
@@ -55,6 +65,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    audio: {
+      type: String,
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const { app, store } = useContext()
@@ -74,11 +88,21 @@ export default defineComponent({
         return false
       }
     })
+
+    const isAudio = computed(() => {
+      if(props.audio === 'On'){
+        return true
+      } else {
+        return false
+      }
+    })
+
     return {
       size,
       isLoading,
       isChecked,
       isSub,
+      isAudio
       // update,
     }
 

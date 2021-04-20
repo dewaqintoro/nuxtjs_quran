@@ -14,7 +14,7 @@
           <!-- <p>{{surah.translations.id.text[index]}}</p> -->
           <!-- <p>https://quran.kemenag.go.id/cmsq/source/s01/00{{surah.number}}00{{index}}.mp3</p> -->
         </div>
-        <div v-if="audio" class="mt-4">
+        <div v-if="audio === 'On'" class="mt-4">
           <audio controls class="my-audio">
             <source :src="urlAudio" type="audio/ogg">
             <source :src="urlAudio" type="audio/mpeg">
@@ -57,7 +57,7 @@ export default {
       required: true,
     },
     audio: {
-      type: Boolean,
+      type: String,
       required: true,
     },
   },

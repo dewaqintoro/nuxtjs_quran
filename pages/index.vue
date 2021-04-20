@@ -1,6 +1,6 @@
 <template>
 <span v-if="!loadingTheme">
-  <Navbar :theme="theme" @changetheme="changetheme"/>
+  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :sub="sub" :audio="audio"/>
   <div class="main" :style="{ background: theme.background, color: theme.color }">
     <!-- <button @click="cek()">cek {{iconTheme}}</button> -->
     <div class="text-center">
@@ -64,13 +64,30 @@ export default {
     // const theme = computed(store.state.theme)
     // const theme = computed(() => store.state.theme)
     const thisTheme = app.$cookies.get('theme')
+    const thisSub = app.$cookies.get('sub')
+    const thisAudio = app.$cookies.get('audio')
     
     const theme = ref({})
+    const sub = ref('On')
+    const audio = ref('On')
+
     const classObject= ref({
       'darktheme': false,
       'background': 'white',
       'color': 'black',
     })
+
+    if(!thisSub){
+      setSub('On')
+    } else {
+      getSub()
+    }
+
+    if(!thisAudio){
+      setAudio('On')
+    } else {
+      getAudio()
+    }
 
     if(thisTheme){
       getCookie()
@@ -88,15 +105,63 @@ export default {
       isChecked,
       cek,
       theme,
+      sub,
+      audio,
       searchFilter,
       onChangePage,
       loadingTheme,
       iconTheme,
-      changetheme
+      changetheme,
+      changesub,
+      changeaudio
     }
 
     async function cek(){
       console.log('iconTheme', iconTheme)
+    }
+
+    async function changesub(){
+      const data = app.$cookies.get('sub')
+      if(data === 'On'){
+        setSub('Off')
+      } else {
+        setSub('On')
+      }
+    }
+
+    async function changeaudio(){
+      const data = app.$cookies.get('audio')
+      if(data === 'On'){
+        setAudio('Off')
+      } else {
+        setAudio('On')
+      }
+    }
+
+    function setSub(data){
+      app.$cookies.set('sub', data, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getSub()
+    }
+
+    function setAudio(data){
+      app.$cookies.set('audio', data, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getAudio()
+    }
+
+    function getSub(){
+      const data = app.$cookies.get('sub')
+      sub.value = data
+    }
+
+    function getAudio(){
+      const data = app.$cookies.get('audio')
+      audio.value = data
     }
 
     function changetheme(){
