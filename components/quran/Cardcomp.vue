@@ -8,7 +8,7 @@
           <div class="idSurah text-xl font-bold">{{index}}</div>
           <div class="surat text-3xl">{{surat}}</div>
         </div>
-        <div v-if="sub === 'On'" class="text-left mt-4 text-xl">
+        <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
           <p>{{arti}}</p>
           <!-- <p>{{surah.translations.id.text[index]}}</p> -->
@@ -52,10 +52,6 @@ export default {
       type: String,
       required: true,
     },
-    sub: {
-      type: String,
-      required: true,
-    },
     audio: {
       type: String,
       required: true,
@@ -67,6 +63,8 @@ export default {
     const sumIndex = props.index
     const idSurah = ref('')
     const idAyat = ref('')
+    const subStore = computed(() => store.state.sub)
+
 
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`
@@ -87,6 +85,7 @@ export default {
     const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
       urlAudio,
+      subStore,
       cek
     }
 

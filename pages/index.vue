@@ -1,8 +1,10 @@
 <template>
 <span v-if="!loadingTheme">
-  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :sub="sub" :audio="audio"/>
+  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :audio="audio"/>
   <div class="main" :style="{ background: theme.background, color: theme.color }">
-    <!-- <button @click="cek()">cek {{iconTheme}}</button> -->
+    <button @click="cek()">cek {{subStore}}</button>
+    <button @click="duh()">getSub</button>
+    <button @click="sett()">setSub</button>
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -51,7 +53,7 @@ export default {
     Navbar,
     Loading
   },
-  setup(){
+  setup(_, {emit}){
     const { app, store } = useContext()
     const data = json
     const search = ref('')
@@ -62,7 +64,7 @@ export default {
     const isChecked = ref()
     const iconTheme = ref()
     // const theme = computed(store.state.theme)
-    // const theme = computed(() => store.state.theme)
+    const subStore = computed(() => store.state.sub)
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
@@ -78,9 +80,9 @@ export default {
     })
 
     if(!thisSub){
-      setSub('On')
+      store.dispatch('setSub', 'On')
     } else {
-      getSub()
+      store.dispatch('getSub')
     }
 
     if(!thisAudio){
@@ -113,20 +115,33 @@ export default {
       iconTheme,
       changetheme,
       changesub,
-      changeaudio
+      changeaudio,
+      subStore,
+      duh,
+      sett
     }
 
     async function cek(){
-      console.log('iconTheme', iconTheme)
+      console.log('subStore', subStore)
+    }
+
+    async function duh(){
+      store.dispatch('getSub')
+    }
+
+    async function sett(){
+      store.dispatch('setSub', 'On')
     }
 
     async function changesub(){
-      const data = app.$cookies.get('sub')
-      if(data === 'On'){
-        setSub('Off')
-      } else {
-        setSub('On')
-      }
+      store.dispatch('changeSub')
+
+      // const data = app.$cookies.get('sub')
+      // if(data === 'On'){
+      //   setSub('Off')
+      // } else {
+      //   setSub('On')
+      // }
     }
 
     async function changeaudio(){
@@ -138,13 +153,13 @@ export default {
       }
     }
 
-    function setSub(data){
-      app.$cookies.set('sub', data, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getSub()
-    }
+    // function setSub(data){
+    //   app.$cookies.set('sub', data, {
+    //     path: '/',
+    //     maxAge: 60 * 60 * 24 * 7
+    //   })
+    //   getSub()
+    // }
 
     function setAudio(data){
       app.$cookies.set('audio', data, {
@@ -154,10 +169,10 @@ export default {
       getAudio()
     }
 
-    function getSub(){
-      const data = app.$cookies.get('sub')
-      sub.value = data
-    }
+    // function getSub(){
+    //   const data = app.$cookies.get('sub')
+    //   sub.value = data
+    // }
 
     function getAudio(){
       const data = app.$cookies.get('audio')

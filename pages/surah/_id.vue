@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
-    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :sub="sub" :audio="audio"/>
+    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" :audio="audio"/>
     <!-- <button @click="cek()">cek {{audio}}</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
@@ -13,7 +13,6 @@
         :surat="surat"
         :surah="surah"
         :arti="surah.translations.id.text[index]"
-        :sub="sub"
         :audio="audio"
         />
       </div>
@@ -59,9 +58,9 @@ export default {
     })
 
     if(!thisSub){
-      setSub('On')
+      store.dispatch('setSub', 'On')
     } else {
-      getSub()
+      store.dispatch('getSub')
     }
 
     if(!thisAudio){
@@ -92,12 +91,7 @@ export default {
     }
 
     async function changesub(){
-      const data = app.$cookies.get('sub')
-      if(data === 'On'){
-        setSub('Off')
-      } else {
-        setSub('On')
-      }
+      store.dispatch('changeSub')
     }
 
     async function changeaudio(){

@@ -74,6 +74,7 @@ export default defineComponent({
     const { app, store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
+    const subStore = computed(() => store.state.sub)
     const isChecked = computed(() => {
       if(props.theme.darktheme){
         return true
@@ -82,7 +83,7 @@ export default defineComponent({
       }
     })
     const isSub = computed(() => {
-      if(props.sub === 'On'){
+      if(subStore.value === 'On'){
         return true
       } else {
         return false
@@ -101,6 +102,7 @@ export default defineComponent({
       size,
       isLoading,
       isChecked,
+      subStore,
       isSub,
       isAudio
       // update,
