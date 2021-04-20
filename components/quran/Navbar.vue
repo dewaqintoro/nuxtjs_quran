@@ -20,7 +20,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-
 export default defineComponent({
   name: 'Navbar',
   props: {
@@ -32,7 +31,6 @@ export default defineComponent({
   setup(_, { emit }) {
     const { store, route, app } = useContext()
     const isDeleteWidget = ref(false)
-
     return {
       isDeleteWidget,
       cekData,
@@ -40,20 +38,16 @@ export default defineComponent({
       deleteWidget,
       changetheme,
     }
-
     function closeModal() {
       isDeleteWidget.value = false
     }
-
     function changetheme(){
       emit('changetheme')
     }
-
     function deleteWidget() {
       isDeleteWidget.value = true
       // emit('delete', item)
     }
-
     function cekData() {
     }
   },
@@ -66,12 +60,10 @@ export default defineComponent({
   src: url(/fonts/lpmq.otf) format("opentype");
   font-display: swap;
 }
-
 .font-arabic{
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-
 .app-header {
   @apply fixed w-full top-0 py-4;
   @apply z-30 select-none;
@@ -92,7 +84,6 @@ export default defineComponent({
     height: 32px;
   }
 }
-
 @screen mobile {
   .header-menu {
     @apply fixed w-full left-0 bottom-0;

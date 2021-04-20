@@ -1,8 +1,10 @@
 <template>
 <span v-if="!loadingTheme">
-  <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
-  <div class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <!-- <button @click="cek()">cek</button> -->
+  <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
+  <div class="main" :style="{ background: theme.background, color: theme.color }">
+    <!-- <button @click="cek()">cek</button>
+    <button @click="duh()">getSub</button>
+    <button @click="sett()">setSub</button> -->
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -44,7 +46,6 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/quran/Navbar.vue'
 import Loading from '~/components/quran/Loading.vue'
 import json from '~/data/surah-info.json'
-
 export default {
   name: 'Quran',
   components: {
@@ -58,71 +59,111 @@ export default {
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
-    const loadingTheme = computed(() => store.state.loadingTheme)
+    const loadingTheme = ref(true)
+    const isChecked = ref()
+    const iconTheme = ref()
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
-    const initTheme = computed(() => store.state.initTheme)
-    const storeTheme = computed(() => store.state.theme)
-
+    
+    const theme = ref({})
+    const classObject= ref({
+      'darktheme': false,
+      'background': 'white',
+      'color': 'black',
+    })
     if(!thisSub){
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
     }
-
     if(!thisAudio){
       store.dispatch('setAudio', 'On')
     } else {
       store.dispatch('getAudio')
     }
-
     if(thisTheme){
-      // getCookie()
-      store.dispatch('getTheme')
+      getCookie()
     } else {
-      // setCookie(classObject)
-      store.dispatch('setTheme', initTheme.value)
+      setCookie(classObject)
     }
     
     searchFilter()
-
     return {
       search,
       allSurah,
       pageOfItems,
       loading,
+      isChecked,
       cek,
-      storeTheme,
+      theme,
       searchFilter,
       onChangePage,
       loadingTheme,
+      iconTheme,
       changetheme,
       changesub,
       changeaudio,
+      duh,
+      sett
     }
-
     async function cek(){
-      console.log('initTheme', initTheme.value)
     }
-
+    async function duh(){
+      store.dispatch('getSub')
+    }
+    async function sett(){
+      store.dispatch('setSub', 'On')
+    }
     async function changesub(){
       store.dispatch('changeSub')
     }
-
     async function changeaudio(){
       store.dispatch('changeAudio')
     }
-
     function changetheme(){
-      store.dispatch('changeTheme')
+      const data = app.$cookies.get('theme')
+      if(data?.darktheme){
+        const classObject= ref({
+          'darktheme': false,
+          'background': 'white',
+          'icon': 'sun',
+          'color': 'black',
+        })
+        setCookie(classObject)
+      } else {
+        const classObject= ref({
+          'darktheme': true,
+          'background': '#1d2d50',
+          'icon': 'moon',
+          'color': 'white',
+        })
+        setCookie(classObject)
+      }
     }
-
+    function setCookie(data){
+      app.$cookies.set('theme', data.value, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getCookie()
+    }
+    function getCookie(){
+      const data = app.$cookies.get('theme')
+      theme.value = data
+      isChecked.value = data?.darktheme
+      if(data?.darktheme){
+        iconTheme.value = 'moon'
+      } else {
+        iconTheme.value = 'sun'
+      }
+      setTimeout(function () {
+          loadingTheme.value = false
+      }, 200);
+    }
     function onChangePage(data = any){
       pageOfItems.value = data
     }
-
-
     function searchFilter(){
       setTimeout(function () {
           const result = data.surah_info.filter(surat =>
@@ -136,7 +177,6 @@ export default {
   }
 }
 </script>
-
 <style lang="postcss" scoped>
 .main {
   @apply pt-8;
@@ -146,7 +186,6 @@ export default {
   src: url(/fonts/lpmq.otf) format("opentype");
   font-display: swap;
 }
-
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
@@ -157,12 +196,10 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
 .font-arabic{
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-
 .btn-search {
   background-color: #4497eb;
 }
@@ -184,12 +221,13 @@ html {
   }
   
 }
-
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
-
-
+.iconTheme {
+  width: 30px;
+  height: 30px
+}
 @screen mobile {
   .main {
     @apply pt-16;
@@ -201,6 +239,4 @@ html {
     @apply text-2xl;
   }
 }
-
-
 </style>

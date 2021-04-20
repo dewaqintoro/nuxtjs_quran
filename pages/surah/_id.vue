@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
+  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: theme.background, color: theme.color }">
+    <Navbar :theme="theme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
     <!-- <button @click="cek()">cek</button> -->
     <div v-if="!loading" class="content">
       <Headerquran :surah="surah" />
@@ -8,7 +8,7 @@
       </div>
       <div class="item"  v-for="(surat, index) in surah.text" :key="surat.index">
         <Cardcomp
-        :theme="storeTheme"
+        :theme="theme"
         :index="index"
         :surat="surat"
         :surah="surah"
@@ -28,7 +28,6 @@ import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
 import Navbar from '~/components/quran/Navbar.vue'
 import Loading from '~/components/quran/Loading.vue'
-
 export default {
   name: 'Surah',
   components: {
@@ -44,33 +43,34 @@ export default {
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
+    const theme = ref({})
     const loading = ref(true)
-    const loadingTheme = computed(() => store.state.loadingTheme)
-    const storeTheme = computed(() => store.state.theme)
-
+    const loadingTheme = ref(true)
+    const classObject= ref({
+      'darktheme': false,
+      'icon': 'sun',
+      'background': 'white',
+      'color': 'black',
+    })
     if(!thisSub){
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
     }
-
     if(!thisAudio){
       store.dispatch('setAudio', 'On')
     } else {
       store.dispatch('getAudio')
     }
-
     if(thisTheme){
-      store.dispatch('getTheme')
+      getCookie()
     } else {
-      store.dispatch('setTheme', initTheme.value)
+      setCookie(classObject)
     }
-
     getSurah()
-
     return {
       surah,
-      storeTheme,
+      theme,
       loading,
       loadingTheme,
       cek,
@@ -78,22 +78,49 @@ export default {
       changesub,
       changeaudio
     }
-
     async function changesub(){
       store.dispatch('changeSub')
     }
-
     async function changeaudio(){
       store.dispatch('changeAudio')
     }
-
     async function cek(){
     }
-
     function changetheme(){
-      store.dispatch('changeTheme')
+      const data = app.$cookies.get('theme')
+      if(data?.darktheme){
+        const classObject= ref({
+          'darktheme': false,
+          'background': 'white',
+          'icon': 'sun',
+          'color': 'black',
+        })
+        setCookie(classObject)
+      } else {
+        const classObject= ref({
+          'darktheme': true,
+          'background': '#1d2d50',
+          'icon': 'moon',
+          'color': 'white',
+        })
+        setCookie(classObject)
+      }
     }
-
+    function setCookie(data){
+      app.$cookies.set('theme', data.value, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      getCookie()
+    }
+    
+    function getCookie(){
+      const data = app.$cookies.get('theme')
+      theme.value = data
+      setTimeout(function () {
+          loadingTheme.value = false
+      }, 200);
+    }
     async function getSurah(){
       setTimeout(async function () {
         const resp = await import(`~/data/surah/${idParams}.json`)
@@ -104,7 +131,6 @@ export default {
   }
 }
 </script>
-
 <style lang="postcss" scoped>
 .main {
   min-height: 100vh;
@@ -115,7 +141,6 @@ export default {
   src: url(/fonts/lpmq.otf) format("opentype");
   font-display: swap;
 }
-
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
@@ -126,20 +151,16 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
 .font-arabic{
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-
 .content {
   @apply pt-8;
 }
-
 .item {
   @apply px-8 mx-36 py-8;
 }
-
 @screen mobile {
   .item {
     @apply mx-2 px-2;

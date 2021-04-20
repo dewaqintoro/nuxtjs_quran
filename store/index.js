@@ -2,13 +2,6 @@ export const state = () => ({
   audio: '',
   sub: '',
   theme: {},
-  initTheme: {
-    'darktheme': false,
-    'background': 'white',
-    'color': 'black',
-  },
-  loadingTheme: true,
-  isChecked: false
 })
 
 export const actions = {
@@ -51,40 +44,6 @@ export const actions = {
     } else {
       this.dispatch('setAudio', 'On');
       commit('setState', { audio: 'On' })
-    }
-  },
-
-  setTheme({ commit }, data) {
-    this.$cookies.set('theme',data, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7
-    })
-  },
-  getTheme({ commit }) {
-    const themeCookie = this.$cookies.get('theme')
-    commit('setState', { theme: themeCookie })
-    commit('setState', { loadingTheme: false })
-  },
-  changeTheme({ commit }) {
-    const data = this.$cookies.get('theme')
-    if(data.darktheme){
-      const classObject= {
-        'darktheme': false,
-        'background': 'white',
-        'icon': 'sun',
-        'color': 'black',
-      }
-      this.dispatch('setTheme', classObject);
-      commit('setState', { theme: classObject })
-    } else {
-      const classObject= {
-        'darktheme': true,
-        'background': '#1d2d50',
-        'icon': 'moon',
-        'color': 'white',
-      }
-      this.dispatch('setTheme', classObject);
-      commit('setState', { theme: classObject })
     }
   },
   

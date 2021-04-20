@@ -28,7 +28,6 @@
 
 <script>
 import { ref, useContext, computed } from '@nuxtjs/composition-api'
-
 export default {
   name: 'Cardcomp',
   props: {
@@ -61,8 +60,6 @@ export default {
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
-
-
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`
     } else if(sumAyat.length === 2){
@@ -70,7 +67,6 @@ export default {
     } else {
       idSurah.value = sumAyat
     }
-
     if (sumIndex.length === 1){
       idAyat.value = `00${sumIndex}`
     } else if(sumIndex.length === 2){
@@ -78,7 +74,6 @@ export default {
     } else {
       idAyat.value = sumIndex
     }
-
     const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
       urlAudio,
@@ -86,14 +81,12 @@ export default {
       audioStore,
       cek
     }
-
     function cek(){
       console.log(urlAudio.value)
     }
   }
 }
 </script>
-
 <style lang="postcss" scoped>
 .card {
   @apply px-4 pb-4 pt-8 rounded-lg my-8;
@@ -106,19 +99,15 @@ export default {
     @apply px-4 w-full;
   }
 }
-
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
-
 .surat {
   @apply text-right text-3xl;
 }
-
 .my-audio{
   max-width: 90%;
 }
-
 @screen mobile {
   .surat {
     @apply text-2xl;

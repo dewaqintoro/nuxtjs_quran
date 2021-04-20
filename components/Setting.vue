@@ -53,7 +53,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-
 export default defineComponent({
   name: 'Setting',
   props: {
@@ -68,10 +67,8 @@ export default defineComponent({
     const size = ref('small')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
-    const theme = computed(() => store.state.theme)
-
     const isChecked = computed(() => {
-      if(theme.value.darktheme){
+      if(props.theme.darktheme){
         return true
       }else {
         return false
@@ -84,7 +81,6 @@ export default defineComponent({
         return false
       }
     })
-
     const isAudio = computed(() => {
       if(audioStore.value === 'On'){
         return true
@@ -92,7 +88,6 @@ export default defineComponent({
         return false
       }
     })
-
     return {
       size,
       isLoading,
@@ -101,7 +96,6 @@ export default defineComponent({
       isAudio
       // update,
     }
-
     // function update(e) {
     //   emit('changetheme')
     // }
@@ -122,7 +116,6 @@ export default defineComponent({
     height: 0;
   }
 }
-
 .slider {
   position: absolute;
   cursor: pointer;
@@ -134,7 +127,6 @@ export default defineComponent({
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
-
 .slider::before {
   position: absolute;
   content: '';
@@ -152,23 +144,17 @@ export default defineComponent({
 .round::before {
   border-radius: 50%;
 }
-
 input:checked + .slider {
   background-color: #1f2937;
 }
-
 input:focus + .slider {
   box-shadow: 0 0 1px #1f2937;
 }
-
 input:checked + .slider::before {
   -webkit-transform: translateX(24px);
   -ms-transform: translateX(24px);
   transform: translateX(24px);
 }
-
-
-
 .containerCustom {
   margin: 0 auto;
   display: flex;
