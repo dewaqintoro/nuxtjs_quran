@@ -6,7 +6,7 @@
       <div class="nameSurah">
         <div class="flex justify-between">
           <div class="idSurah text-xl font-bold">{{index}}</div>
-          <div class="surat text-3xl">{{surat}}</div>
+          <div class="surat">{{surat}}</div>
         </div>
         <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
@@ -104,6 +104,7 @@ export default {
 }
 .surat {
   @apply text-right text-3xl;
+  line-height: 4rem !important;
 }
 .my-audio{
   max-width: 90%;
