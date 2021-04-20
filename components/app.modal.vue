@@ -1,18 +1,20 @@
 <template>
-  <div class="modal-wrapper">
+  <div class="modal-wrapper" >
     <div class="curtain" @click="closeModal" />
     <div class="modal-dialog container" :class="size">
-      <div ref="modalElement" class="modal-content">
+      <div ref="modalElement" class="modal-content" :style="{ background: theme.background, color: theme.color }">
         <div v-if="showHeader" class="modal-header">
           <slot name="header">
             <div class="title">
-              <!-- {{ title }} --> Title
+              {{ title }}
             </div>
             <div class="close" @click="closeModal">
-              <fa :icon="['far', 'times']" class="icon" />
+              <!-- <fa :icon="['far', 'times']" class="icon" /> -->
+              <font-awesome-icon class="iconTheme" :icon="['fas', 'times']" />
             </div>
           </slot>
         </div>
+        <hr />
         <div class="modal-body">
           <slot />
         </div>
@@ -41,6 +43,10 @@ export default defineComponent({
     showHeader: {
       type: Boolean,
       default: true,
+    },
+    theme: {
+      type: Object,
+      required: true,
     },
   },
   setup(props, { emit }) {
@@ -81,13 +87,12 @@ export default defineComponent({
   .modal-content {
     @apply relative w-full pointer-events-auto overflow-hidden;
     @apply flex flex-col;
-    @apply rounded-xl bg-white;
+    @apply rounded-xl;
     max-height: calc(100% - 3.5rem);
     background-clip: padding-box;
   }
   .modal-header {
     @apply flex-shrink-0 flex items-center justify-between;
-    @apply text-white;
     @apply font-bold;
     .title {
       @apply px-4;

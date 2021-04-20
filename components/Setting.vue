@@ -1,10 +1,9 @@
 <template>
-  <AppModal title="" :show-header="false" :size="size" @close="$emit('close')">
+  <AppModal title="Setting" :theme="theme" :show-header="true" :size="size" @close="$emit('close')">
     <div class="containerCustom" :style="{ background: theme.background, color: theme.color }">
       <div class="wrapper">
 
-
-        <div class="flex justify-between">
+        <div class="item flex justify-between">
           <div class="text-xl">Dark theme</div>
           <div class="flex justify-center">
             <label class="switch">
@@ -14,7 +13,7 @@
           </div>
         </div>
 
-        <div class="flex justify-between">
+        <div class="item flex justify-between">
           <div class="text-xl">Terjemhan</div>
           <div class="flex justify-center">
             <label class="switch">
@@ -24,7 +23,7 @@
           </div>
         </div>
 
-        <div class="flex justify-between">
+        <div class="item flex justify-between">
           <div class="text-xl">Audio</div>
           <div class="flex justify-center">
             <label class="switch">
@@ -34,7 +33,7 @@
           </div>
         </div>
 
-        <div class="flex mt-6">
+        <div class="flex mt-4">
           <div class="flex buttom">
           </div>
           <div class="w-full buttom" align="right">
@@ -163,7 +162,7 @@ input:checked + .slider::before {
   .wrapper {
     @apply w-full;
     /* max-width: 550px; */
-    @apply px-4 py-8;
+    @apply px-4 py-4;
     .title {
       color: #111827;
       /* font-size: 32px; */
@@ -188,6 +187,9 @@ input:checked + .slider::before {
       background: #1f2937;
       box-shadow: 0.1px 2px 6px rgba(0, 0, 0, 0.16);
       border-radius: 6px;
+    }
+    .item {
+      @apply py-2; 
     }
   }
 }
