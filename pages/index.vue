@@ -57,7 +57,6 @@ export default {
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
-    // const loadingTheme = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const iconTheme = ref()
     const thisTheme = app.$cookies.get('theme')
@@ -65,15 +64,8 @@ export default {
     const thisAudio = app.$cookies.get('audio')
     const initTheme = computed(() => store.state.initTheme)
     const storeTheme = computed(() => store.state.theme)
-    console.log('loadingTheme', loadingTheme.value)
-    console.log('initTheme', initTheme.value)
     
-    const theme = ref({})
-    const classObject= ref({
-      'darktheme': false,
-      'background': 'white',
-      'color': 'black',
-    })
+  
     if(!thisSub){
       store.dispatch('setSub', 'On')
     } else {
@@ -85,11 +77,9 @@ export default {
       store.dispatch('getAudio')
     }
     if(thisTheme){
-      // getCookie()
       store.dispatch('getTheme')
     } else {
-      // setCookie(classObject)
-      store.dispatch('setTheme', classObject)
+      store.dispatch('setTheme', initTheme.value)
     }
     
     searchFilter()
@@ -99,7 +89,6 @@ export default {
       pageOfItems,
       loading,
       cek,
-      theme,
       searchFilter,
       onChangePage,
       loadingTheme,
@@ -107,17 +96,9 @@ export default {
       changetheme,
       changesub,
       changeaudio,
-      duh,
-      sett,
       storeTheme
     }
     async function cek(){
-    }
-    async function duh(){
-      store.dispatch('getSub')
-    }
-    async function sett(){
-      store.dispatch('setSub', 'On')
     }
     async function changesub(){
       store.dispatch('changeSub')
@@ -127,24 +108,6 @@ export default {
     }
     function changetheme(){
       store.dispatch('changeTheme')
-      // const data = app.$cookies.get('theme')
-      // if(data?.darktheme){
-      //   const classObject= ref({
-      //     'darktheme': false,
-      //     'background': 'white',
-      //     'icon': 'sun',
-      //     'color': 'black',
-      //   })
-      //   setCookie(classObject)
-      // } else {
-      //   const classObject= ref({
-      //     'darktheme': true,
-      //     'background': '#1d2d50',
-      //     'icon': 'moon',
-      //     'color': 'white',
-      //   })
-      //   setCookie(classObject)
-      // }
     }
     function onChangePage(data = any){
       pageOfItems.value = data

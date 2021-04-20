@@ -43,17 +43,12 @@ export default {
     const thisTheme = app.$cookies.get('theme')
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
-    const theme = ref({})
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const initTheme = computed(() => store.state.initTheme)
-    const classObject= ref({
-      'darktheme': false,
-      'icon': 'sun',
-      'background': 'white',
-      'color': 'black',
-    })
+
+
     if(!thisSub){
       store.dispatch('setSub', 'On')
     } else {
@@ -72,7 +67,6 @@ export default {
     getSurah()
     return {
       surah,
-      theme,
       storeTheme,
       loading,
       loadingTheme,
@@ -90,39 +84,7 @@ export default {
     async function cek(){
     }
     function changetheme(){
-      const data = app.$cookies.get('theme')
-      if(data?.darktheme){
-        const classObject= ref({
-          'darktheme': false,
-          'background': 'white',
-          'icon': 'sun',
-          'color': 'black',
-        })
-        setCookie(classObject)
-      } else {
-        const classObject= ref({
-          'darktheme': true,
-          'background': '#1d2d50',
-          'icon': 'moon',
-          'color': 'white',
-        })
-        setCookie(classObject)
-      }
-    }
-    function setCookie(data){
-      app.$cookies.set('theme', data.value, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7
-      })
-      getCookie()
-    }
-    
-    function getCookie(){
-      const data = app.$cookies.get('theme')
-      theme.value = data
-      setTimeout(function () {
-          loadingTheme.value = false
-      }, 200);
+      store.dispatch('changeTheme')
     }
     async function getSurah(){
       setTimeout(async function () {
@@ -162,7 +124,7 @@ html {
   @apply pt-8;
 }
 .item {
-  @apply px-8 mx-36 py-8;
+  @apply px-8 mx-36;
 }
 @screen mobile {
   .item {

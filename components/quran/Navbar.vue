@@ -71,10 +71,10 @@ export default defineComponent({
   min-width: 320px;
   .inner {
     @apply flex flex-wrap justify-between h-full text-xl;
-    @apply px-0;
+    @apply px-8;
   }
   .start {
-    @apply flex items-center;
+    @apply flex items-center ml-3;
   }
   .end {
     @apply grid grid-flow-col gap-4 mr-3;
