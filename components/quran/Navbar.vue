@@ -7,12 +7,12 @@
         </nuxt-link>
       </div>
       <div class="end">
-        <button @click="deleteWidget()">
+        <button class="focus:outline-none" @click="doSetting()">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
         </button>
       </div>
       <Transition name="drawer">
-        <Setting :theme="theme" v-if="isDeleteWidget" @close="closeModal" @changetheme="$emit('changetheme')" @changesub="$emit('changesub')" @changeaudio="$emit('changeaudio')" />
+        <Setting :theme="theme" v-if="isSetting" @close="closeModal" @changetheme="$emit('changetheme')" @changesub="$emit('changesub')" @changeaudio="$emit('changeaudio')" />
       </Transition>
     </div>
   </header>
@@ -30,22 +30,22 @@ export default defineComponent({
   },
   setup(_, { emit }) {
     const { store, route, app } = useContext()
-    const isDeleteWidget = ref(false)
+    const isSetting = ref(false)
     return {
-      isDeleteWidget,
+      isSetting,
       cekData,
       closeModal,
-      deleteWidget,
+      doSetting,
       changetheme,
     }
     function closeModal() {
-      isDeleteWidget.value = false
+      isSetting.value = false
     }
     function changetheme(){
       emit('changetheme')
     }
-    function deleteWidget() {
-      isDeleteWidget.value = true
+    function doSetting() {
+      isSetting.value = true
       // emit('delete', item)
     }
     function cekData() {
