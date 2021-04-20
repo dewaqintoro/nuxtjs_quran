@@ -95,17 +95,24 @@
     grid-row: span 1;
   }
   .container .box:nth-child(3){
-    background-color: #4ADEDE;
+    /* background-color: #4ADEDE; */
+    background: url('/andro2.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
     grid-column: span 1;
     grid-row: span 2;
   }
   .container .box:nth-child(4){
-    background-color: #7BD5F5;
+    /* background-color: #7BD5F5; */
+    background: url('/andro3.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
     grid-column: span 1;
     grid-row: span 2;
   }
   .container .box:nth-child(5){
     background-color: #7BE494;
+    /* background: url('/andro2.svg'); */
   }
   
 /* } */
