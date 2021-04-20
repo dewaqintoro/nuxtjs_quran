@@ -46,7 +46,6 @@ export default defineComponent({
     }
     function doSetting() {
       isSetting.value = true
-      // emit('delete', item)
     }
     function cekData() {
     }
@@ -74,10 +73,10 @@ export default defineComponent({
     @apply px-8;
   }
   .start {
-    @apply flex items-center ml-3;
+    @apply flex items-center;
   }
   .end {
-    @apply grid grid-flow-col gap-4 mr-3;
+    @apply grid grid-flow-col gap-4;
   }
   .line {
     @apply block w-px opacity-50 mr-3;

@@ -107,7 +107,8 @@ export default {
   line-height: 4rem !important;
 }
 .my-audio{
-  max-width: 90%;
+  max-width: 100%;
+  height: 35px;
 }
 @screen mobile {
   .surat {

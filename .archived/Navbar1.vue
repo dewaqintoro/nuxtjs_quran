@@ -9,12 +9,8 @@
           <span class="text-2xl w-full">
             <nuxt-link to="/">Home</nuxt-link>
           </span>
-          
-          <!-- <span class="ml-3 text-xl">Cek Ongkir</span> -->
         </a>
-        <button @click="deleteWidget()">
-            <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
-          </button>
+          <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
       </div>
     </header>
   </div>

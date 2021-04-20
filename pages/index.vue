@@ -125,7 +125,7 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .main {
-  @apply pt-8;
+  @apply pt-8 min-h-screen;
 }
 @font-face {
   font-family: "lpmq";
