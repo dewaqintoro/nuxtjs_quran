@@ -43,7 +43,7 @@ p{color: black;}
   justify-content: center;
   align-self: center;
   min-height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #f7f7f7;
   
 }
 .container {
@@ -67,9 +67,9 @@ p{color: black;}
   color: #fff;
   transition: 0.5s;
 
-  background: #f0f0f0;
-box-shadow:  5px 5px 12px #e4e4e4,
-             -5px -5px 12px #fcfcfc;
+  background: #f7f7f7;
+box-shadow:  5px 5px 12px #dedede,
+             -5px -5px 12px #ffffff;
 }
 
 .container .box:hover {
