@@ -4,43 +4,31 @@
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
+        <p>Lorem ipsum</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
+        <p>Lorem ipsum</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
+        <p>Lorem ipsum</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
+        <p>Lorem ipsum</p>
       </div>
     </div>
     <div class="box">
       <div class="content">
         <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
-      </div>
-    </div>
-    <div class="box">
-      <div class="content">
-        <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
-      </div>
-    </div>
-    <div class="box">
-      <div class="content">
-        <img src="/cooking.png"/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nulla dignissimos</p>
+        <p>Lorem ipsum</p>
       </div>
     </div>
   </div>
@@ -59,7 +47,7 @@
   position: relative;
   max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
   grid-template-rows: repeat(minmax(100px, auto));
   margin: 40px;
   grid-auto-flow: dense;
@@ -68,13 +56,14 @@
 
 .container .box {
   background: #333;
-  padding: 20px;
+  padding: 10px;
   display: grid;
   font-size: 20px;
   place-items: center;
   text-align: center;
   color: #fff;
   transition: 0.5s;
+  /* max-width: 45vw; */
 }
 
 .container .box:hover {
@@ -83,37 +72,27 @@
 
 .container .box img {
   position: relative;
-  max-width: 100px;
+  max-width: 50px;
   margin-bottom: 10px;
 }
 
-.container .box:nth-child(1){
-  grid-column: span 2;
-  grid-row: span 1;
-}
-.container .box:nth-child(2){
-  grid-column: span 1;
-  grid-row: span 2;
-}
-.container .box:nth-child(4){
-  grid-column: span 1;
-  grid-row: span 2;
-}
-.container .box:nth-child(5){
-  grid-column: span 3;
-  /* grid-row: span 2; */
-  grid-row: span 1;
-}
 
-@media (max-width: 991px){
-  .container {
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-    grid-template-rows: repeat(minmax(auto, auto));
+@screen mobile {
+  .container .box:nth-child(1){
+    grid-column: span 1;
+    grid-row: span 1;
   }
-  /* for one row */
-  .container .box{
-    grid-column: unset !important;
-    grid-row: unset !important;
+  .container .box:nth-child(2){
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  .container .box:nth-child(3){
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  .container .box:nth-child(5){
+    grid-column: span 2;
+    grid-row: span 1;
   }
 }
 </style>
