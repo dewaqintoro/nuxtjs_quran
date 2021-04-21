@@ -4,8 +4,10 @@
   <Navbar />
   <div v-if="!loadingTheme" class="dew main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="text-center">
-      <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
-      <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+      <!-- <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . ."> -->
+      <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
+
+      <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
         Cari
       </button>
     </div>
@@ -116,7 +118,11 @@ html {
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
+.input-search {
+  @apply appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight;
+}
 .btn-search {
+  @apply text-white font-bold py-2 px-4 rounded-lg ml-4;
   background-color: #4497eb;
 }
 .btn-search:hover {

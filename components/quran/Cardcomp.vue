@@ -5,7 +5,7 @@
       <!-- <button @click="cek()">cek</button> -->
       <div class="nameSurah">
         <div class="flex justify-between">
-          <div class="idSurah text-xl font-bold" :class="bgId">{{index}}</div>
+          <div class="idSurah" :class="bgId">{{index}}</div>
           <div class="surat">{{surat}}</div>
         </div>
         <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
@@ -110,9 +110,9 @@ export default {
   @apply px-4 pb-4 pt-8 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
-    @apply items-center justify-center flex;
-    width: 50px;
-    height: 50px;
+    @apply items-center justify-center flex font-bold;
+    width: 40px;
+    height: 40px;
     /* background: url('/shape1.svg') */
     
     background-size: cover;
@@ -136,6 +136,11 @@ export default {
 @screen mobile {
   .surat {
     @apply text-2xl;
+  }
+  .idSurah {
+    @apply text-sm;
+    width: 30px;
+    height: 30px;
   }
 }
 </style>

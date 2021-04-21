@@ -5,31 +5,31 @@
       <div class="container">
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/cooking.png"/>
+            <img class="m-auto" src="/quran2.png" alt="https://www.freepik.com" />
             <p>Daftar Surah</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/cooking.png"/>
+            <img class="m-auto" src="/allah.png" alt="https://www.freepik.com" />
             <p>Asmaul Husna</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/cooking.png"/>
+            <img class="m-auto" src="/praying.png" alt="https://www.freepik.com" />
             <p>Doa Harian</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/cooking.png"/>
+            <img class="m-auto" src="/pray.png" alt="https://www.freepik.com" />
             <p>Doa Tahlil</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/cooking.png"/>
+            <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
             <p>Wirid</p>
           </div>
         </nuxt-link>

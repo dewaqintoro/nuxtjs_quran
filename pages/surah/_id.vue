@@ -123,7 +123,7 @@ html {
     @apply pt-16;
   }
   .back {
-    @apply pl-4;
+    @apply ml-4;
   }
 }
 </style>
