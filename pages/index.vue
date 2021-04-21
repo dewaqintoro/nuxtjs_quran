@@ -1,33 +1,33 @@
 <template>
   <span>
     <Navbar />
-    <div class="main">
+    <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <div class="container">
-        <nuxt-link to="/surah" class="box">
+        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
             <p>Daftar Surat</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box">
+        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
             <p>Daftar Surat</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box">
+        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
             <p>Daftar Surat</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box">
+        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
             <p>Daftar Surat</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box">
+        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
             <p>Daftar Surat</p>
@@ -56,18 +56,19 @@ export default {
     const storeTheme = computed(() => store.state.theme)
 
     return {
+      loadingTheme,
+      storeTheme
     }
   }
 }
 </script>
 <style lang="postcss" scoped>
-p{color: black;}
 .main {
   @apply pt-16 min-h-screen;
   display: flex;
   justify-content: center;
   align-self: center;
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
   
 }
 .container {
@@ -88,12 +89,11 @@ p{color: black;}
   font-size: 20px;
   place-items: center;
   text-align: center;
-  color: #fff;
+  /* color: #fff; */
   transition: 0.5s;
 
-  background: #f7f7f7;
-box-shadow:  5px 5px 12px #dedede,
-             -5px -5px 12px #ffffff;
+  /* background: #f7f7f7; */
+/* box-shadow:  5px 5px 12px #dedede,-5px -5px 12px #ffffff; */
 }
 
 .container .box:hover {

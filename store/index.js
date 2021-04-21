@@ -6,6 +6,7 @@ export const state = () => ({
     darktheme: false,
     background: '#f7f7f7',
     color: 'black',
+    boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
   },
   loadingTheme: true,
 
@@ -76,15 +77,17 @@ export const actions = {
         'background': '#f7f7f7',
         'icon': 'sun',
         'color': 'black',
+        'boxShadow':  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
       }
       this.dispatch('setTheme', classObject);
       commit('setState', { theme: classObject })
     } else {
       const classObject= {
         'darktheme': true,
-        'background': '#1d2d50',
+        'background': '#36454f',
         'icon': 'moon',
         'color': 'white',
+        'boxShadow': '5px 5px 10px #29343c,-5px -5px 10px #435662',
       }
       this.dispatch('setTheme', classObject);
       commit('setState', { theme: classObject })

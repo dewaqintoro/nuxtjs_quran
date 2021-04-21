@@ -1,12 +1,12 @@
 <template>
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
-      <div class="start box">
+      <div class="start box" :style="{ boxShadow: storeTheme.boxShadow }">
         <nuxt-link class="btn-setting" to="/">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
-      <div class="end box">
+      <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
         <button class="btn-setting focus:outline-none" @click="doSetting()">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
         </button>
@@ -82,10 +82,9 @@ export default defineComponent({
   font-size: 20px;
   place-items: center;
   text-align: center;
-  color: black;
-  background: #f7f7f7;
+  /* background: #f7f7f7;
 box-shadow:  5px 5px 12px #dedede,
-             -5px -5px 12px #ffffff;
+             -5px -5px 12px #ffffff; */
 }
 
 .btn-setting {
