@@ -5,14 +5,14 @@
       <!-- <button @click="cek()">cek</button> -->
       <div class="nameSurah">
           <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
-            <p>{{index}}</p>
+            <p>{{surat[0]}}</p>
           </div>
           <div class="surat">
-            <p>{{surat}}</p>
+            <p>{{surat[1]}}</p>
           </div>
         <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
-          <p>{{arti}}</p>
+          <!-- <p>{{arti}}</p> -->
           <!-- <p>{{surah.translations.id.text[index]}}</p> -->
           <!-- <p>https://quran.kemenag.go.id/cmsq/source/s01/00{{surah.number}}00{{index}}.mp3</p> -->
         </div>
@@ -38,23 +38,24 @@ export default {
       required: true,
     },
     surat: {
-      type: String,
+      type: Array,
       required: true,
     },
     surah: {
       type: Object,
       required: true,
     },
-    arti: {
-      type: String,
-      required: true,
-    },
+    // arti: {
+    //   type: String,
+    //   required: true,
+    // },
     index: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
   setup(props){
+    console.log(props)
     const { route, store, app } = useContext()
     const sumAyat = props.surah?.number
     const sumIndex = props.index
@@ -69,8 +70,6 @@ export default {
         return 'lightTheme'
       }
     })
-
-    cek()
 
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`

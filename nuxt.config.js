@@ -1,5 +1,8 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  configureWebpack: config => {
+      config.output.globalObject = "this"
+  },
   head: {
     title: 'Al-Quran',
     htmlAttrs: {

@@ -2,7 +2,6 @@
   <span>
     <Navbar />
     <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
-      <!-- <button @click="cek()">cek</button> -->
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
@@ -17,18 +16,25 @@
         </div>
 
         <Headerquran :surah="surah" :theme="storeTheme"/>
+      <button @click="cek()">cek</button>
+
         <div class="text-center flex justify-center">
         </div>
-        <div class="item" v-for="(surat, index) in surah.text" :key="surat.index">
+        <div class="item" v-for="(surat, index) in pageOfItems" :key="surat.index">
           <Cardcomp
           :theme="storeTheme"
           :index="index"
           :surat="surat"
           :surah="surah"
-          :arti="surah.translations.id.text[index]"
+          
           />
+          <!-- :arti="surah.translations.id.text[index]" -->
         </div>
       </div>
+
+      <div class="text-center py-3">
+				<jw-pagination :items="newSurah" @changePage="onChangePage"></jw-pagination>
+			</div>
       
     </div>
   </span>
@@ -48,6 +54,7 @@ export default {
     Loading
   },
   setup(){
+    
     const { route, store, app } = useContext()
     const idParams = route.value?.params?.id
     getSurah()
@@ -55,22 +62,35 @@ export default {
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
+    const newSurah = ref([])
+    const pageOfItems = ref([])
 
     return {
       surah,
+      newSurah,
+      pageOfItems,
       storeTheme,
       loading,
       loadingTheme,
       cek,
+      onChangePage
+    }
+    function onChangePage(data = any){
+      pageOfItems.value = data
     }
     async function cek(){
-    }
-    async function getSurah(){
-      const resp = await import(`~/data/surah/${idParams}.json`)
-      surah.value = resp[idParams]
+      var obj2 = surah.value?.text
+      var result2 = Object.entries(obj2);
+      newSurah.value = result2
       setTimeout(async function () {  
         loading.value = false
       }, 500);
+    }
+
+    async function getSurah(){
+      const resp = await import(`~/data/surah/${idParams}.json`)
+      surah.value = resp[idParams]
+      cek()
     }
   }
 }
