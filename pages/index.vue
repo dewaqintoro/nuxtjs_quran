@@ -6,31 +6,31 @@
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
-            <p>Daftar Surat</p>
+            <p>Daftar Surah</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
-            <p>Daftar Surat</p>
+            <p>Asmaul Husna</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
-            <p>Daftar Surat</p>
+            <p>Doa Harian</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
-            <p>Daftar Surat</p>
+            <p>Doa Tahlil</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/cooking.png"/>
-            <p>Daftar Surat</p>
+            <p>Wirid</p>
           </div>
         </nuxt-link>
       </div>
