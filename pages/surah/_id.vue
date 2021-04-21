@@ -16,11 +16,10 @@
         </div>
 
         <Headerquran :surah="surah" :theme="storeTheme"/>
-      <button @click="cek()">cek</button>
-
+      <!-- <button @click="cek()">cek</button> -->
         <div class="text-center flex justify-center">
         </div>
-        <div class="item" v-for="(surat, index) in pageOfItems" :key="surat.index">
+        <div class="item" v-for="(surat, index) in pageOfItems" :key="index">
           <Cardcomp
           :theme="storeTheme"
           :index="index"

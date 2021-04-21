@@ -1,7 +1,8 @@
 <template>
   <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div>
-      <div class="nameSurah">
+      <button @click="cek()">cek</button>
+      <!-- <div class="nameSurah">
           <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
             <p>{{surat[0]}}</p>
           </div>
@@ -19,7 +20,7 @@
             Your browser does not support the audio element.
           </audio>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -33,27 +34,25 @@ export default {
       type: Object,
       required: true,
     },
-    surat: {
-      type: Array,
-      required: true,
-    },
-    surah: {
+    doa: {
       type: Object,
       required: true,
     },
-    arti: {
-      type: String,
-      required: true,
-    },
-    index: {
-      type: Number,
-      required: true,
-    },
+    // surah: {
+    //   type: Object,
+    //   required: true,
+    // },
+    // arti: {
+    //   type: String,
+    //   required: true,
+    // },
+    // index: {
+    //   type: Number,
+    //   required: true,
+    // },
   },
   setup(props){
     const { route, store, app } = useContext()
-    const sumAyat = props.surah?.number
-    const sumIndex = props.surat[0]
     const idSurah = ref('')
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
@@ -66,32 +65,31 @@ export default {
       }
     })
 
-    if (sumAyat.length === 1){
-      idSurah.value = `00${sumAyat}`
-    } else if(sumAyat.length === 2){
-      idSurah.value = `0${sumAyat}`
-    } else {
-      idSurah.value = sumAyat
-    }
-    if (sumIndex.length === 1){
-      idAyat.value = `00${sumIndex}`
-    } else if(sumIndex.length === 2){
-      idAyat.value = `0${sumIndex}`
-    } else {
-      idAyat.value = sumIndex
-    }
-    const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
+    // if (sumAyat.length === 1){
+    //   idSurah.value = `00${sumAyat}`
+    // } else if(sumAyat.length === 2){
+    //   idSurah.value = `0${sumAyat}`
+    // } else {
+    //   idSurah.value = sumAyat
+    // }
+    // if (sumIndex.length === 1){
+    //   idAyat.value = `00${sumIndex}`
+    // } else if(sumIndex.length === 2){
+    //   idAyat.value = `0${sumIndex}`
+    // } else {
+    //   idAyat.value = sumIndex
+    // }
+    // const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
-      bgId,
-      urlAudio,
-      subStore,
-      audioStore,
+      // bgId,
+      // urlAudio,
+      // subStore,
+      // audioStore,
       cek
     }
 
     function cek(){
-      console.log('idSurah.value', idSurah.value)
-      console.log('idAyat.value', idAyat.value)
+      console.log('props', props.doa)
 
     }
   }

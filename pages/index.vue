@@ -15,7 +15,7 @@
             <p>Asmaul Husna</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+        <nuxt-link to="/doa-harian" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/praying.png" alt="https://www.freepik.com" />
             <p>Doa Harian</p>
@@ -84,7 +84,7 @@ export default {
 }
 
 .main {
-  @apply pt-16 min-h-screen;
+  @apply pt-4 min-h-screen;
   display: flex;
   justify-content: center;
   align-self: center;
@@ -153,4 +153,9 @@ export default {
   }
   
 /* } */
+@screen mobile {
+  .main {
+    @apply pt-16;
+  }
+}
 </style>
