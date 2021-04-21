@@ -1,20 +1,20 @@
 <template>
   <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-    <div>
-      <button @click="show()" class="btn-show focus:outline-none">
-        <p class="font-bold">{{doa.title}}</p>
-        <div v-if="isShow" class="nameSurah">
-          <div class="surat">
-            <p>{{doa.arabic}}</p>
-          </div>
-          <div class="text-left mt-4 text-xl">
-            <p><i>( {{doa.latin}} )</i></p>
+    <button @click="show()" class="btn-show focus:outline-none">
+      <p class="font-bold">{{doa.title}}</p>
+      <div v-if="isShow" class="content">
+        <div class="arabic">
+          <p>{{doa.arabic}}</p>
+        </div>
+        <div class="text-left mt-4 text-xl">
+          <p><i>( {{doa.latin}} )</i></p>
+          <div v-if="subStore === 'On'">
             <p class="font-bold pt-4">Terjemahan :</p>
             <p>{{doa.translation}}</p>
           </div>
         </div>
-      </button>
-    </div>
+      </div>
+    </button>
   </div>
 </template>
 
@@ -31,14 +31,6 @@ export default {
       type: Object,
       required: true,
     },
-    // surah: {
-    //   type: Object,
-    //   required: true,
-    // },
-    // arti: {
-    //   type: String,
-    //   required: true,
-    // },
     index: {
       type: Number,
       required: true,
@@ -47,6 +39,7 @@ export default {
   setup(props){
     const { route, store, app } = useContext()
     const isShow = ref(false)
+    const subStore = computed(() => store.state.sub)
     const bgId = computed(() => {
       if(props.theme?.darktheme){
         return 'darkTheme'
@@ -57,6 +50,7 @@ export default {
     return {
       bgId,
       isShow,
+      subStore,
       cek,
       show
     }
@@ -86,14 +80,14 @@ export default {
     width: 45px;
     height: 45px;
   }
-  .nameSurah {
+  .content {
     @apply px-4 w-full pt-4;
   }
 }
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
-.surat {
+.arabic {
   @apply text-right text-3xl;
   line-height: 4rem !important;
 }
@@ -105,13 +99,8 @@ export default {
   .card {
     @apply my-2;
   }
-  .surat {
-    @apply text-2xl;
-  }
-  .idSurah {
-    @apply text-sm;
-    width: 30px;
-    height: 30px;
+  .arabic {
+    @apply text-3xl;
   }
 }
 </style>
