@@ -1,26 +1,19 @@
 <template>
   <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div>
-      <button @click="cek()">cek</button>
-      <!-- <div class="nameSurah">
-          <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
-            <p>{{surat[0]}}</p>
-          </div>
-          <div class="surat">
-            <p>{{surat[1]}}</p>
-          </div>
-        <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
+      <div class="nameSurah">
+        <div class="text-center">
+          <p>{{doa.title}}</p>
+        </div>
+        <div class="surat">
+          <p>{{doa.arabic}}</p>
+        </div>
+        <div class="text-left mt-4 text-xl">
+          <p>{{doa.latin}}</p>
           <p class="font-bold">Terjemahan :</p>
-          <p>{{arti}}</p>
+          <p>{{doa.translation}}</p>
         </div>
-        <div v-if="audioStore === 'On'" class="mt-4">
-          <audio controls class="my-audio">
-            <source :src="urlAudio" type="audio/ogg">
-            <source :src="urlAudio" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -46,10 +39,10 @@ export default {
     //   type: String,
     //   required: true,
     // },
-    // index: {
-    //   type: Number,
-    //   required: true,
-    // },
+    index: {
+      type: Number,
+      required: true,
+    },
   },
   setup(props){
     const { route, store, app } = useContext()
@@ -81,7 +74,7 @@ export default {
     // }
     // const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
-      // bgId,
+      bgId,
       // urlAudio,
       // subStore,
       // audioStore,
