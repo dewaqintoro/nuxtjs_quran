@@ -2,12 +2,12 @@
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
       <div class="start">
-        <nuxt-link to="/">
-          Home
+        <nuxt-link class="box" to="/">
+          <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
       <div class="end">
-        <button class="focus:outline-none" @click="doSetting()">
+        <button class="focus:outline-none box" @click="doSetting()">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
         </button>
       </div>
@@ -76,6 +76,21 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.box {
+  @apply rounded-full;
+  padding: 10px;
+  display: grid;
+  font-size: 20px;
+  place-items: center;
+  text-align: center;
+  color: black;
+  transition: 0.5s;
+
+  background: #f7f7f7;
+box-shadow:  5px 5px 12px #dedede,
+             -5px -5px 12px #ffffff;
+}
+
 @font-face {
   font-family: "lpmq";
   src: url(/fonts/lpmq.otf) format("opentype");

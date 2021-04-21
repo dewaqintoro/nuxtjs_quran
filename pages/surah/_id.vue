@@ -1,26 +1,28 @@
 <template>
-  <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio" />
-    <!-- <button @click="cek()">cek</button> -->
-    <div v-if="loading">
-      <Loading />
-    </div>
-    <div v-else class="content">
-      <Headerquran :surah="surah" />
-      <div class="text-center flex justify-center">
+  <span>
+    <Navbar />
+    <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <!-- <button @click="cek()">cek</button> -->
+      <div v-if="loading">
+        <Loading />
       </div>
-      <div class="item" v-for="(surat, index) in surah.text" :key="surat.index">
-        <Cardcomp
-        :theme="storeTheme"
-        :index="index"
-        :surat="surat"
-        :surah="surah"
-        :arti="surah.translations.id.text[index]"
-        />
+      <div v-else class="content">
+        <Headerquran :surah="surah" />
+        <div class="text-center flex justify-center">
+        </div>
+        <div class="item" v-for="(surat, index) in surah.text" :key="surat.index">
+          <Cardcomp
+          :theme="storeTheme"
+          :index="index"
+          :surat="surat"
+          :surah="surah"
+          :arti="surah.translations.id.text[index]"
+          />
+        </div>
       </div>
+      
     </div>
-    
-  </div>
+  </span>
 </template>
 <script>
 import { ref, useAsync, useContext, computed } from '@nuxtjs/composition-api'
@@ -41,51 +43,18 @@ export default {
     const idParams = route.value?.params?.id
     getSurah()
     const surah = ref({})
-    const thisTheme = app.$cookies.get('theme')
-    const thisSub = app.$cookies.get('sub')
-    const thisAudio = app.$cookies.get('audio')
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-    const initTheme = computed(() => store.state.initTheme)
 
-
-    if(!thisSub){
-      store.dispatch('setSub', 'On')
-    } else {
-      store.dispatch('getSub')
-    }
-    if(!thisAudio){
-      store.dispatch('setAudio', 'On')
-    } else {
-      store.dispatch('getAudio')
-    }
-    if(thisTheme){
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
-    
     return {
       surah,
       storeTheme,
       loading,
       loadingTheme,
       cek,
-      changetheme,
-      changesub,
-      changeaudio
-    }
-    async function changesub(){
-      store.dispatch('changeSub')
-    }
-    async function changeaudio(){
-      store.dispatch('changeAudio')
     }
     async function cek(){
-    }
-    function changetheme(){
-      store.dispatch('changeTheme')
     }
     async function getSurah(){
       const resp = await import(`~/data/surah/${idParams}.json`)

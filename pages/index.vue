@@ -1,48 +1,72 @@
 <template>
-<div class="main">
-  <div class="container">
-    <nuxt-link to="/surah" class="box">
-      <div class="content items-center">
-        <img class="m-auto" src="/cooking.png"/>
-        <p>Daftar Surat</p>
+  <span>
+    <Navbar />
+    <div class="main">
+      <div class="container">
+        <nuxt-link to="/surah" class="box">
+          <div class="content items-center">
+            <img class="m-auto" src="/cooking.png"/>
+            <p>Daftar Surat</p>
+          </div>
+        </nuxt-link>
+        <nuxt-link to="/surah" class="box">
+          <div class="content items-center">
+            <img class="m-auto" src="/cooking.png"/>
+            <p>Daftar Surat</p>
+          </div>
+        </nuxt-link>
+        <nuxt-link to="/surah" class="box">
+          <div class="content items-center">
+            <img class="m-auto" src="/cooking.png"/>
+            <p>Daftar Surat</p>
+          </div>
+        </nuxt-link>
+        <nuxt-link to="/surah" class="box">
+          <div class="content items-center">
+            <img class="m-auto" src="/cooking.png"/>
+            <p>Daftar Surat</p>
+          </div>
+        </nuxt-link>
+        <nuxt-link to="/surah" class="box">
+          <div class="content items-center">
+            <img class="m-auto" src="/cooking.png"/>
+            <p>Daftar Surat</p>
+          </div>
+        </nuxt-link>
       </div>
-    </nuxt-link>
-    <nuxt-link to="/surah" class="box">
-      <div class="content items-center">
-        <img class="m-auto" src="/cooking.png"/>
-        <p>Daftar Surat</p>
-      </div>
-    </nuxt-link>
-    <nuxt-link to="/surah" class="box">
-      <div class="content items-center">
-        <img class="m-auto" src="/cooking.png"/>
-        <p>Daftar Surat</p>
-      </div>
-    </nuxt-link>
-    <nuxt-link to="/surah" class="box">
-      <div class="content items-center">
-        <img class="m-auto" src="/cooking.png"/>
-        <p>Daftar Surat</p>
-      </div>
-    </nuxt-link>
-    <nuxt-link to="/surah" class="box">
-      <div class="content items-center">
-        <img class="m-auto" src="/cooking.png"/>
-        <p>Daftar Surat</p>
-      </div>
-    </nuxt-link>
-  </div>
-</div>
-</template>
+    </div>
 
+  </span>
+</template>
+<script>
+import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import Navbar from '~/components/quran/Navbar.vue'
+export default {
+  name: 'Quran',
+  components: {
+    Navbar,
+  },
+  setup(_, {emit}){
+    const { app, store } = useContext()
+    const search = ref('')
+    const allSurah = ref([])
+    const pageOfItems = ref([])
+    const loading = ref(true)
+    const loadingTheme = computed(() => store.state.loadingTheme)
+    const storeTheme = computed(() => store.state.theme)
+
+    return {
+    }
+  }
+}
+</script>
 <style lang="postcss" scoped>
 p{color: black;}
 .main {
-  
+  @apply pt-16 min-h-screen;
   display: flex;
   justify-content: center;
   align-self: center;
-  min-height: 100vh;
   background-color: #f7f7f7;
   
 }

@@ -4,7 +4,7 @@ export const state = () => ({
   theme: {},
   initTheme: {
     darktheme: false,
-    background: 'white',
+    background: '#f7f7f7',
     color: 'black',
   },
   loadingTheme: true,
