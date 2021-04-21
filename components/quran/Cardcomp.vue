@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :style="{ background: theme.background, color: theme.color }">
+  <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div>
       <!-- <div class="idSurah">{{index}}</div> -->
       <!-- <button @click="cek()">cek</button> -->
@@ -90,7 +90,7 @@ export default {
 <style lang="postcss" scoped>
 .card {
   @apply px-4 pb-4 pt-8 rounded-lg my-8;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
     @apply text-center;
     width: 50px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="title text-center" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div class="text-3xl">{{surah.name}}</div>
     <div class="text-xl">
       <p>( {{surah.name_latin}} - {{surah.translations.id.name}} )</p>
@@ -18,6 +18,10 @@ export default {
       type: Object,
       required: true,
     },
+    theme: {
+      type: Object,
+      required: true,
+    },
   },
   setup(){
   }
@@ -25,5 +29,14 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.title {
+  @apply py-4;
+  margin: 0 11rem;
+}
 
+@screen mobile {
+  .title {
+    @apply mx-4;
+  }
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="card my-8">
+    <div class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
       <div class="flex">
         <div class="nameSurahLoading">
           <div class="flex justify-between">
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="card my-8">
+    <div class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
         <div class="flex">
           <div class="nameSurahLoading">
             <div class="flex justify-between">
@@ -37,7 +37,26 @@
         </div>
       </div>
 
-      <div class="card my-8">
+      <div class="card my-8" :style="{ boxShadow: theme.boxShadow }">
+        <div class="flex">
+          <div class="nameSurahLoading">
+            <div class="flex justify-between">
+              <div class="satuA loading"></div>
+              <div class="satuB loading"></div>
+            </div>
+            <div class="flex justify-between">
+              <div class="duaA"></div>
+              <div class="duaB loading"></div>
+            </div>
+            <div class="flex justify-between">
+              <div class="tigaA"></div>
+              <div class="tigaB loading"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card my-8" :style="{ boxShadow: theme.boxShadow }">
         <div class="flex">
           <div class="nameSurahLoading">
             <div class="flex justify-between">
@@ -62,6 +81,12 @@
 
 export default {
   name: 'Loading',
+  props: {
+    theme: {
+      type: Object,
+      required: true,
+    },
+  },
   setup(){
   }
 }
@@ -73,7 +98,7 @@ export default {
 }
 .card {
   @apply text-3xl p-4 rounded-lg;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
     @apply text-center;
     width: 50px;

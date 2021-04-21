@@ -4,10 +4,10 @@
     <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
       <!-- <button @click="cek()">cek</button> -->
       <div v-if="loading">
-        <Loading />
+        <Loading :theme="storeTheme" />
       </div>
       <div v-else class="content">
-        <Headerquran :surah="surah" />
+        <Headerquran :surah="surah" :theme="storeTheme"/>
         <div class="text-center flex justify-center">
         </div>
         <div class="item" v-for="(surat, index) in surah.text" :key="surat.index">
@@ -70,6 +70,7 @@ export default {
 .main {
   min-height: 100vh;
   padding-bottom: 100px;
+  padding-top: 20px;
 }
 @font-face {
   font-family: "lpmq";
