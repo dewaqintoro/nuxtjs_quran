@@ -77,7 +77,7 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .back {
-  @apply pl-24 pb-8 ml-2;
+  @apply ml-32 pb-8;
   font-size:22px;
 }
 .btn-back {
