@@ -2,7 +2,7 @@
 <!-- <span></span> -->
 <span >
   <Navbar />
-  <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
+  <div v-if="!loadingTheme" class="dew main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -140,7 +140,7 @@ html {
 }
 @screen mobile {
   .main {
-    @apply pt-16;
+    @apply pt-20;
   }
   .item {
     @apply mx-2 px-2;

@@ -73,7 +73,7 @@ export const actions = {
     if(data.darktheme){
       const classObject= {
         'darktheme': false,
-        'background': 'white',
+        'background': '#f7f7f7',
         'icon': 'sun',
         'color': 'black',
       }

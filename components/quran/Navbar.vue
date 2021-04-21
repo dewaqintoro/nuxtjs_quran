@@ -1,13 +1,13 @@
 <template>
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
-      <div class="start">
-        <nuxt-link class="box" to="/">
+      <div class="start box">
+        <nuxt-link class="btn-setting" to="/">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
-      <div class="end">
-        <button class="focus:outline-none box" @click="doSetting()">
+      <div class="end box">
+        <button class="btn-setting focus:outline-none" @click="doSetting()">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
         </button>
       </div>
@@ -79,16 +79,18 @@ export default defineComponent({
 .box {
   @apply rounded-full;
   padding: 10px;
-  display: grid;
   font-size: 20px;
   place-items: center;
   text-align: center;
   color: black;
-  transition: 0.5s;
-
   background: #f7f7f7;
 box-shadow:  5px 5px 12px #dedede,
              -5px -5px 12px #ffffff;
+}
+
+.btn-setting {
+  width: 30px;
+  height: 30px;
 }
 
 @font-face {
@@ -113,7 +115,7 @@ box-shadow:  5px 5px 12px #dedede,
     @apply flex items-center;
   }
   .end {
-    @apply grid grid-flow-col gap-4;
+    /* @apply grid grid-flow-col gap-4; */
   }
   .line {
     @apply block w-px opacity-50 mr-3;
