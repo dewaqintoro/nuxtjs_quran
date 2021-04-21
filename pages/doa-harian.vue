@@ -5,7 +5,7 @@
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="font-arabic">
       <div class="title rounded-lg text-center" :style="{ boxShadow: storeTheme.boxShadow  }">
-        <div class="text-3xl">Do'a Harian</div>
+        <div class="text-3xl font-bold">Do'a Harian</div>
       </div>
 
       <div class="search flex justify-center text-center">
