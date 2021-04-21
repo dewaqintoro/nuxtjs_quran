@@ -2,7 +2,7 @@
   <span>
     <Navbar />
     <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
-      <div class="container">
+      <div class="container" :class="bgId">
         <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/quran2.png" alt="https://www.freepik.com" />
@@ -54,15 +54,35 @@ export default {
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
+    const bgId = computed(() => {
+      if(storeTheme.value?.darktheme){
+        return 'darkTheme'
+      } else {
+        return 'lightTheme'
+      }
+    })
 
     return {
       loadingTheme,
-      storeTheme
+      storeTheme,
+      bgId
     }
   }
 }
 </script>
 <style lang="postcss" scoped>
+.darkTheme{
+  /* color: rgb(61, 81, 94); */
+  .box:hover{
+    background: rgb(61, 81, 94);
+  }
+}
+.lightTheme{
+  .box:hover {
+    background: #f1f1f1;
+  }
+}
+
 .main {
   @apply pt-16 min-h-screen;
   display: flex;
@@ -96,9 +116,9 @@ export default {
 /* box-shadow:  5px 5px 12px #dedede,-5px -5px 12px #ffffff; */
 }
 
-.container .box:hover {
+/* .container .box:hover {
   background: #94B0B7;
-}
+} */
 
 .container .box img {
   position: relative;

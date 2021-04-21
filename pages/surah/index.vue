@@ -15,11 +15,11 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <div class="item" v-for="(surah, index) in pageOfItems" :key="index">
+        <div class="item" :class="bgId" v-for="(surah, index) in pageOfItems" :key="index">
           <nuxt-link :to="'/surah/'+surah.index">
             <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
               <div class="">
-                <div class="idSurah" :class="bgId" :style="{ boxShadow: storeTheme.boxShadow  }">{{surah.index}}</div>
+                <div class="idSurah" :style="{ boxShadow: storeTheme.boxShadow  }">{{surah.index}}</div>
                 <div class="nameSurah">
                   <p>{{surah.arabic}}</p>
                   <p class="mt-4">{{surah.latin}}</p>
@@ -101,12 +101,17 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-/* .darkTheme{
-  background: url('/fancy3.png');
+.darkTheme{
+  /* color: rgb(61, 81, 94); */
+  .card:hover{
+    background: rgb(61, 81, 94);
+  }
 }
 .lightTheme{
-  background: url('/fancy2.png');
-} */
+  .card:hover {
+    background: #f1f1f1;
+  }
+}
 .main {
   @apply pt-8 min-h-screen;
 }
@@ -157,10 +162,6 @@ html {
     @apply px-4 text-right w-full;
   }
   
-}
-.card:hover {
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20); */
-  background: #94B0B7;
 }
 @screen tablet {
   .main {
