@@ -26,6 +26,7 @@
           :index="index"
           :surat="surat"
           :surah="surah"
+          :arti="surah.translations.id.text[surat[0]]" 
           />
           <!-- :arti="surah.translations.id.text[index]" -->
         </div>
@@ -85,11 +86,17 @@ export default {
       onChangePage,
     }
 
+    function cek() {
+      console.log('newSurah',newSurah.value)
+      console.log('pageOfItems',pageOfItems.value)
+      console.log('surah.translations.id.text', surah.value.translations.id.text)
+    }
+
     function onChangePage(data = any){
       pageOfItems.value = data
       window.smoothscroll()
     }
-    async function cek(){
+    async function getNewSurah(){
       var obj2 = surah.value?.text
       var result2 = Object.entries(obj2);
       newSurah.value = result2
@@ -101,6 +108,7 @@ export default {
     async function getSurah(){
       const resp = await import(`~/data/surah/${idParams}.json`)
       surah.value = resp[idParams]
+      getNewSurah()
     }
   }
 }
