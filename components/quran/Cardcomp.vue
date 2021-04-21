@@ -92,8 +92,13 @@ export default {
   @apply px-4 pb-4 pt-8 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
-    @apply text-center;
+    @apply items-center justify-center flex;
     width: 50px;
+    height: 50px;
+    /* background: url('/shape1.svg') */
+    background: url('/fancy1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   .nameSurah {
     @apply px-4 w-full;

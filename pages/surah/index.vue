@@ -18,7 +18,9 @@
           <nuxt-link :to="'/surah/'+surah.index">
             <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
               <div class="flex">
-                <div class="idSurah">{{surah.index}}</div>
+                <div class="idSurah">
+                  <p>{{surah.index}}</p>
+                </div>
                 <div class="nameSurah">
                   <p>{{surah.arabic}}</p>
                   <p class="mt-4">{{surah.latin}}</p>

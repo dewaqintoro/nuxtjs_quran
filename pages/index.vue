@@ -90,7 +90,7 @@ export default {
   place-items: center;
   text-align: center;
   /* color: #fff; */
-  transition: 0.5s;
+  /* transition: 0.5s; */
 
   /* background: #f7f7f7; */
 /* box-shadow:  5px 5px 12px #dedede,-5px -5px 12px #ffffff; */
