@@ -2,9 +2,8 @@
 <!-- <span></span> -->
 <span >
   <Navbar />
-  <div v-if="!loadingTheme" class="dew main" :style="{ background: storeTheme.background, color: storeTheme.color }">
+  <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="text-center">
-      <!-- <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . ."> -->
       <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
 
       <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
@@ -20,9 +19,7 @@
           <nuxt-link :to="'/surah/'+surah.index">
             <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
               <div class="flex">
-                <div class="idSurah">
-                  <p>{{surah.index}}</p>
-                </div>
+                <div class="idSurah" :class="bgId">{{surah.index}}</div>
                 <div class="nameSurah">
                   <p>{{surah.arabic}}</p>
                   <p class="mt-4">{{surah.latin}}</p>
@@ -63,11 +60,19 @@ export default {
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
+    const bgId = computed(() => {
+      if(storeTheme.value?.darktheme){
+        return 'darkTheme'
+      } else {
+        return 'lightTheme'
+      }
+    })
 
     searchFilter()
     return {
       search,
       allSurah,
+      bgId,
       pageOfItems,
       loading,
       cek,
@@ -96,6 +101,12 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.darkTheme{
+  background: url('/fancy3.png');
+}
+.lightTheme{
+  background: url('/fancy2.png');
+}
 .main {
   @apply pt-8 min-h-screen;
 }
@@ -119,14 +130,17 @@ html {
   line-height: 2;
 }
 .input-search {
-  @apply appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight;
+  @apply appearance-none border rounded-lg py-2 px-8 text-gray-700 leading-tight;
 }
 .btn-search {
   @apply text-white font-bold py-2 px-4 rounded-lg ml-4;
-  background-color: #4497eb;
+  /* background-color: #4497eb; */
+  background-color: #115394;
 }
 .btn-search:hover {
-  background-color: #2187ec;
+  /* background-color: #2187ec; */
+  background-color: #1b63ac;
+
 }
 .item {
   @apply px-8 mx-36 my-8;
@@ -135,8 +149,11 @@ html {
   @apply text-3xl p-4 rounded-lg;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
-    @apply text-center;
-    width: 50px;
+    @apply text-center text-lg items-center justify-center flex font-bold;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   .nameSurah {
     @apply px-4 text-right w-full;
@@ -144,17 +161,23 @@ html {
   
 }
 .card:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20); */
+  background: #94B0B7;
 }
 @screen mobile {
   .main {
-    @apply pt-20;
+    @apply pt-24;
   }
   .item {
     @apply mx-2 px-2;
   }
   .surat {
     @apply text-2xl;
+  }
+  .idSurah {
+    @apply text-sm;
+    width: 30px;
+    height: 30px;
   }
 }
 </style>

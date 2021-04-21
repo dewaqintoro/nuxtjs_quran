@@ -97,7 +97,7 @@ export default {
 }
 
 .container .box:hover {
-  background: #e91e63;
+  background: #94B0B7;
 }
 
 .container .box img {

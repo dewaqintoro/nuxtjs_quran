@@ -109,9 +109,7 @@ html {
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-.content {
-  @apply pt-8;
-}
+
 .item {
   @apply px-8 mx-36;
 }
