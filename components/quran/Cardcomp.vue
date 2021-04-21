@@ -5,7 +5,7 @@
       <!-- <button @click="cek()">cek</button> -->
       <div class="nameSurah">
         <div class="flex justify-between">
-          <div class="idSurah text-xl font-bold">{{index}}</div>
+          <div class="idSurah text-xl font-bold" :class="bgId">{{index}}</div>
           <div class="surat">{{surat}}</div>
         </div>
         <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
@@ -60,6 +60,16 @@ export default {
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
+    const bgId = computed(() => {
+      if(props.theme?.darktheme){
+        return 'darkTheme'
+      } else {
+        return 'lightTheme'
+      }
+    })
+
+    cek()
+
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`
     } else if(sumAyat.length === 2){
@@ -76,18 +86,26 @@ export default {
     }
     const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
     return {
+      bgId,
       urlAudio,
       subStore,
       audioStore,
       cek
     }
+
     function cek(){
-      console.log(urlAudio.value)
+      console.log('bgId2', bgId)
     }
   }
 }
 </script>
 <style lang="postcss" scoped>
+.darkTheme{
+  background: url('/fancy3.png');
+}
+.lightTheme{
+  background: url('/fancy2.png');
+}
 .card {
   @apply px-4 pb-4 pt-8 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
@@ -96,7 +114,7 @@ export default {
     width: 50px;
     height: 50px;
     /* background: url('/shape1.svg') */
-    background: url('/fancy1.png');
+    
     background-size: cover;
     background-repeat: no-repeat;
   }

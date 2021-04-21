@@ -7,6 +7,15 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="content">
+
+        <div class="back">
+          <div class="btn-back" :style="{ boxShadow: storeTheme.boxShadow }">
+            <nuxt-link to="/surah">
+              <font-awesome-icon :icon="['fas', 'arrow-left']" />
+            </nuxt-link>
+          </div>
+        </div>
+
         <Headerquran :surah="surah" :theme="storeTheme"/>
         <div class="text-center flex justify-center">
         </div>
@@ -67,6 +76,15 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.back {
+  @apply pl-24 pb-8 ml-2;
+  font-size:22px;
+}
+.btn-back {
+  @apply items-center text-center justify-center rounded-full;
+  width: 40px;
+  height: 40px;
+}
 .main {
   min-height: 100vh;
   padding-bottom: 100px;
@@ -103,6 +121,9 @@ html {
   }
   .content {
     @apply pt-16;
+  }
+  .back {
+    @apply pl-4;
   }
 }
 </style>
