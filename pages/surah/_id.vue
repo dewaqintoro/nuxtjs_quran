@@ -113,6 +113,11 @@ html {
 .item {
   @apply px-8 mx-36;
 }
+@screen tablet {
+  .content {
+    @apply pt-20;
+  }
+}
 @screen mobile {
   .item {
     @apply mx-2 px-2 pt-2;

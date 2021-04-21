@@ -4,10 +4,12 @@
       <!-- <div class="idSurah">{{index}}</div> -->
       <!-- <button @click="cek()">cek</button> -->
       <div class="nameSurah">
-        <div class="flex justify-between">
-          <div class="idSurah" :class="bgId">{{index}}</div>
-          <div class="surat">{{surat}}</div>
-        </div>
+          <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
+            <p>{{index}}</p>
+          </div>
+          <div class="surat">
+            <p>{{surat}}</p>
+          </div>
         <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
           <p class="font-bold">Terjemahan :</p>
           <p>{{arti}}</p>
@@ -100,23 +102,13 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-.darkTheme{
-  background: url('/fancy3.png');
-}
-.lightTheme{
-  background: url('/fancy2.png');
-}
 .card {
   @apply px-4 pb-4 pt-8 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
-    @apply items-center justify-center flex font-bold;
-    width: 40px;
-    height: 40px;
-    /* background: url('/shape1.svg') */
-    
-    background-size: cover;
-    background-repeat: no-repeat;
+    @apply items-center justify-center flex font-bold rounded-full;
+    width: 45px;
+    height: 45px;
   }
   .nameSurah {
     @apply px-4 w-full;
@@ -126,7 +118,7 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
 .surat {
-  @apply text-right text-3xl;
+  @apply ml-16 text-right text-3xl;
   line-height: 4rem !important;
 }
 .my-audio{
