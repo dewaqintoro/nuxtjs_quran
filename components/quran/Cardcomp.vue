@@ -3,8 +3,10 @@
     <div>
       <div class="nameSurah">
           <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
+            <button @click="cek()">cek</button>
             <p>{{surat[0]}}</p>
           </div>
+          <p>{{idAyat}} - {{audio.value}}</p>
           <div class="surat">
             <p>{{surat[1]}}</p>
           </div>
@@ -12,11 +14,16 @@
           <p class="font-bold">Terjemahan :</p>
           <p>{{arti}}</p>
         </div>
-        <div v-if="audioStore === 'On'" class="mt-4">
-          <audio controls class="my-audio">
-            <source :src="urlAudio" type="audio/ogg">
-            <source :src="urlAudio" type="audio/mpeg">
+        
+        <div class="mt-4 bg-red-100">
+          <!-- <audio controls preload class="my-audio">
+            <source :src="audio.value" type="audio/ogg">
+            <source :src="audio.value" type="audio/mpeg">
             Your browser does not support the audio element.
+          </audio> -->
+          <audio :src="audio.value" controls></audio>
+          <audio class="audio">
+            <source :src="audio.value" type="audio/mpeg">
           </audio>
         </div>
       </div>
@@ -49,8 +56,13 @@ export default {
       type: Number,
       required: true,
     },
+    audio: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props){
+    
     const { route, store, app } = useContext()
     const sumAyat = props.surah?.number
     const sumIndex = props.surat[0]
@@ -58,6 +70,15 @@ export default {
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
+    const loadingAudio = computed(() => store.state.loadingAudio)
+
+    // const dew = computed(() => {
+    //   if(props.audio){
+    //     return props.audio
+    //   } else {
+    //     return 'tidak'
+    //   }
+    // })
     const bgId = computed(() => {
       if(props.theme?.darktheme){
         return 'darkTheme'
@@ -65,6 +86,12 @@ export default {
         return 'lightTheme'
       }
     })
+
+    // if(props.audio !== idAyat.value){
+    //   console.log('tidak sama')
+    // } else {
+    //   console.log('sama')
+    // }
 
     if (sumAyat.length === 1){
       idSurah.value = `00${sumAyat}`
@@ -80,19 +107,21 @@ export default {
     } else {
       idAyat.value = sumIndex
     }
-    const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
+    // const urlAudio = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSurah.value}${idAyat.value}.mp3`)
+    const urlAudio = computed(() => idSurah.value)
     return {
       bgId,
       urlAudio,
       subStore,
+      loadingAudio,
+      idAyat,
       audioStore,
-      cek
+      cek,
     }
 
     function cek(){
-      console.log('idSurah.value', idSurah.value)
-      console.log('idAyat.value', idAyat.value)
-
+      console.log('props',props.audio.value)
+      console.log('urlAudio',urlAudio.value)
     }
   }
 }

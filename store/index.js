@@ -9,7 +9,7 @@ export const state = () => ({
     boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
   },
   loadingTheme: true,
-
+  loadingAudio: false,
 })
 
 export const actions = {
@@ -92,6 +92,11 @@ export const actions = {
       this.dispatch('setTheme', classObject);
       commit('setState', { theme: classObject })
     }
+  },
+
+  setLoadingAudio({ commit }, data) {
+    console.log('setLoadingAudio', data)
+    commit('setState', { loadingAudio: false })
   },
   
 }
