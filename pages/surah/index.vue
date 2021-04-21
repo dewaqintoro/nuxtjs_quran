@@ -1,8 +1,8 @@
 <template>
 <!-- <span></span> -->
-<span v-if="!loadingTheme">
-  <Navbar :theme="storeTheme" @changetheme="changetheme" @changesub="changesub" @changeaudio="changeaudio"/>
-  <div class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
+<span >
+  <Navbar />
+  <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="text-center">
       <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
       <button @click="searchFilter()" class="btn-search text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -58,29 +58,8 @@ export default {
     const pageOfItems = ref([])
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
-    const thisTheme = app.$cookies.get('theme')
-    const thisSub = app.$cookies.get('sub')
-    const thisAudio = app.$cookies.get('audio')
-    const initTheme = computed(() => store.state.initTheme)
     const storeTheme = computed(() => store.state.theme)
-    
-  
-    if(!thisSub){
-      store.dispatch('setSub', 'On')
-    } else {
-      store.dispatch('getSub')
-    }
-    if(!thisAudio){
-      store.dispatch('setAudio', 'On')
-    } else {
-      store.dispatch('getAudio')
-    }
-    if(thisTheme){
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
-    
+
     searchFilter()
     return {
       search,
@@ -91,22 +70,11 @@ export default {
       searchFilter,
       onChangePage,
       loadingTheme,
-      changetheme,
-      changesub,
-      changeaudio,
       storeTheme
     }
     async function cek(){
     }
-    async function changesub(){
-      store.dispatch('changeSub')
-    }
-    async function changeaudio(){
-      store.dispatch('changeAudio')
-    }
-    function changetheme(){
-      store.dispatch('changeTheme')
-    }
+
     function onChangePage(data = any){
       pageOfItems.value = data
     }

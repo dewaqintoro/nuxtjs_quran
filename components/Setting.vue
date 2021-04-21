@@ -7,7 +7,7 @@
           <div class="text-xl">Dark theme</div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="$emit('changetheme')" :checked="isChecked"/>
+              <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
               <span class="slider round"></span>
             </label>
           </div>
@@ -17,7 +17,7 @@
           <div class="text-xl">Terjemhan</div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="$emit('changesub')" :checked="isSub"/>
+              <input type="checkbox" @change="changesub()" :checked="isSub"/>
               <span class="slider round"></span>
             </label>
           </div>
@@ -27,7 +27,7 @@
           <div class="text-xl">Audio</div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="$emit('changeaudio')" :checked="isAudio"/>
+              <input type="checkbox" @change="changeaudio()" :checked="isAudio"/>
               <span class="slider round"></span>
             </label>
           </div>
@@ -92,12 +92,21 @@ export default defineComponent({
       isLoading,
       isChecked,
       isSub,
-      isAudio
-      // update,
+      isAudio,
+      changesub,
+      changeaudio,
+      changetheme
     }
-    // function update(e) {
-    //   emit('changetheme')
-    // }
+    async function changesub(){
+      store.dispatch('changeSub')
+    }
+    async function changeaudio(){
+      store.dispatch('changeAudio')
+    }
+    function changetheme(){
+      store.dispatch('changeTheme')
+    }
+
   },
 })
 </script>
