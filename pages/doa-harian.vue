@@ -7,6 +7,14 @@
       <div class="title rounded-lg text-center" :style="{ boxShadow: storeTheme.boxShadow  }">
         <div class="text-3xl">Do'a Harian</div>
       </div>
+
+      <div class="search flex justify-center text-center">
+        <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
+
+        <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
+          Cari
+        </button>
+      </div>
         
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -19,7 +27,7 @@
         
     </div>
     <div class="text-center py-3">
-      <jw-pagination :items="dataDoa.data" @changePage="onChangePage"></jw-pagination>
+      <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
     </div>
         
   </div>
@@ -43,6 +51,8 @@ export default {
   setup(_, {emit}){
     const { app, store } = useContext()
     const dataDoa = dataJson
+    const search = ref('')
+    const allData = ref([])
     const pageOfItems = ref([])
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
@@ -65,21 +75,33 @@ export default {
       }
     }
 
-    if(dataDoa.data){
-      setTimeout(function () {
-          loading.value = false
-      }, 1000);
-    }
+    searchFilter()
 
     return {
+      search,
+      allData,
       storeTheme,
       pageOfItems,
       loadingTheme,
       loading,
       dataDoa,
       cek,
-      onChangePage
+      onChangePage,
+      searchFilter
     }
+
+    function searchFilter(){
+      
+      setTimeout(function () {
+        const result = dataDoa.data.filter(doa =>
+          doa.title.toLowerCase().includes(search.value.toLowerCase())
+        );
+        allData.value = result
+        loading.value = false
+      }, 1000);
+      
+    }
+
     async function cek(){
       console.log('dataJson', dataJson)
     }
@@ -93,6 +115,9 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.search {
+  @apply px-4 my-8;
+}
 .main {
   @apply pt-4 min-h-screen;
 }
@@ -133,6 +158,20 @@ html {
   line-height: 2;
 }
 
+.input-search {
+  @apply appearance-none border rounded-lg px-4 py-4 text-gray-700 leading-tight;
+}
+.btn-search {
+  @apply text-white font-bold py-2 px-4 rounded-lg ml-4;
+  /* background-color: #4497eb; */
+  background-color: #115394;
+}
+.btn-search:hover {
+  /* background-color: #2187ec; */
+  background-color: #1b63ac;
+
+}
+
 .item {
   @apply px-8 mx-36;
 }
@@ -156,6 +195,13 @@ html {
   }
   .title {
     @apply mx-4;
+  }
+  .input-search {
+    @apply my-2;
+    max-width: 220px;
+  }
+  .btn-search {
+    @apply my-2;
   }
 }
 </style>
