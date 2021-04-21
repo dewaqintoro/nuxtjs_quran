@@ -2,7 +2,7 @@
   <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div>
       <!-- <div class="idSurah">{{index}}</div> -->
-      <!-- <button @click="cek()">cek</button> -->
+      <button @click="cek()">cek</button>
       <div class="nameSurah">
           <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
             <p>{{surat[0]}}</p>
@@ -55,10 +55,9 @@ export default {
     },
   },
   setup(props){
-    console.log(props)
     const { route, store, app } = useContext()
     const sumAyat = props.surah?.number
-    const sumIndex = props.index
+    const sumIndex = props.surat[0]
     const idSurah = ref('')
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
@@ -95,7 +94,9 @@ export default {
     }
 
     function cek(){
-      console.log('bgId2', bgId)
+      console.log('idSurah.value', idSurah.value)
+      console.log('idAyat.value', idAyat.value)
+
     }
   }
 }

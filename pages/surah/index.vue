@@ -68,6 +68,16 @@ export default {
       }
     })
 
+    if (process.browser){
+      window.smoothscroll = () => {
+        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        if (currentScroll > 0) {
+          window.requestAnimationFrame(window.smoothscroll)
+          window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
+        }
+      }
+    }
+
     searchFilter()
     return {
       search,
@@ -86,6 +96,7 @@ export default {
 
     function onChangePage(data = any){
       pageOfItems.value = data
+      window.smoothscroll()
     }
     function searchFilter(){
       setTimeout(function () {

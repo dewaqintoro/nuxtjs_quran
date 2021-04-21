@@ -26,7 +26,6 @@
           :index="index"
           :surat="surat"
           :surah="surah"
-          
           />
           <!-- :arti="surah.translations.id.text[index]" -->
         </div>
@@ -65,6 +64,16 @@ export default {
     const newSurah = ref([])
     const pageOfItems = ref([])
 
+    if (process.browser){
+      window.smoothscroll = () => {
+        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        if (currentScroll > 0) {
+          window.requestAnimationFrame(window.smoothscroll)
+          window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
+        }
+      }
+    }
+
     return {
       surah,
       newSurah,
@@ -73,10 +82,12 @@ export default {
       loading,
       loadingTheme,
       cek,
-      onChangePage
+      onChangePage,
     }
+
     function onChangePage(data = any){
       pageOfItems.value = data
+      window.smoothscroll()
     }
     async function cek(){
       var obj2 = surah.value?.text
@@ -90,7 +101,6 @@ export default {
     async function getSurah(){
       const resp = await import(`~/data/surah/${idParams}.json`)
       surah.value = resp[idParams]
-      cek()
     }
   }
 }
