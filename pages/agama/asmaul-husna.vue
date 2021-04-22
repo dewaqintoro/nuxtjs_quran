@@ -1,10 +1,14 @@
-<template>
+<template >
   <span>
     <Navbar />
-    <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
+    <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
+    <SearchComp class="py-4" @search="searchFilter" />
+    <div v-if="loading">
+      <Loading :theme="storeTheme" />
+    </div>
+    <div v-else class="flex">
       <div class="container" :class="bgId">
-
-        <div class="item" v-for="(doa, index) in dataDoa" :key="index">
+        <div class="item" v-for="(doa, index) in allData" :key="index">
           <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
             <div class="content items-center">
               <p class="font-arabic text-3xl">{{doa.arabic}}</p>
@@ -13,9 +17,9 @@
             </div>
           </nuxt-link>
         </div>
-        
       </div>
       <div class="footer"></div>
+    </div>
     </div>
   </span>
 </template>
@@ -27,20 +31,23 @@ import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/asmaul-husna.json'
 import Cardcomp from '~/components/wirid/WiridComp'
-
+import SearchComp from '~/components/SearchComp.vue'
 export default {
   name: 'Quran',
   components: {
     Navbar,
     Loading,
     Cardcomp,
+    SearchComp
   },
   setup(_, {emit}){
     const { app, store } = useContext()
     const dataDoa = dataJson.data
+    const allData = ref([])
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
+    const search = ref('')
     const bgId = computed(() => {
       if(storeTheme.value?.darktheme){
         return 'darkTheme'
@@ -49,21 +56,30 @@ export default {
       }
     })
 
-    setLoading()
+    // setLoading()
+    searchFilter(search.value)
 
     return {
       storeTheme,
+      allData,
       bgId,
+      search,
       loadingTheme,
       loading,
       dataDoa,
       cek,
+      searchFilter
     }
 
-    function setLoading(){
+    function searchFilter(dataSearch){
       setTimeout(function () {
+        const result = dataDoa.filter(doa =>
+          doa.latin.toLowerCase().includes(dataSearch.toLowerCase())
+        );
+        allData.value = result
         loading.value = false
       }, 200);
+      
     }
 
     async function cek(search){
@@ -108,7 +124,7 @@ html {
 }
 
 .main {
-  @apply pt-20 min-h-screen pb-8 flex mt-8 px-16;
+  @apply pt-16 min-h-screen pb-8 mt-8 px-16;
   justify-content: center;
   align-self: center;
 }
