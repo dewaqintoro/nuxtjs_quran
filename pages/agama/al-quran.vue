@@ -21,7 +21,7 @@
             <p>Doa Harian</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+        <nuxt-link to="/agama/tahlil" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/pray.png" alt="https://www.freepik.com" />
             <p>Doa Tahlil</p>

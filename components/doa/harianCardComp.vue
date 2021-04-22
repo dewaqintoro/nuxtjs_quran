@@ -7,7 +7,7 @@
           <p>{{doa.arabic}}</p>
         </div>
         <div class="text-left mt-4 text-xl">
-          <p><i>( {{doa.latin}} )</i></p>
+          <p v-if="doa.latin"><i>( {{doa.latin}} )</i></p>
           <div v-if="subStore === 'On'">
             <p class="font-bold pt-4">Terjemahan :</p>
             <p>{{doa.translation}}</p>

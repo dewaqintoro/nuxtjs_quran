@@ -25,7 +25,7 @@
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
-import dataJson from '~/data/daily-doa.json'
+import dataJson from '~/data/tahlil.json'
 import Cardcomp from '~/components/doa/harianCardComp.vue'
 import SearchComp from '~/components/SearchComp.vue'
 

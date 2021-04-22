@@ -30,7 +30,7 @@ export default {
 
 <style lang="postcss" scoped>
 .title {
-  @apply py-4;
+  @apply py-4 rounded-lg;
   margin: 0 11rem;
 }
 

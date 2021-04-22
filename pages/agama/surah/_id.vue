@@ -182,7 +182,7 @@ html {
     @apply pt-8;
   }
   .item {
-    @apply mx-2 px-2 pt-2;
+    @apply mx-2 px-2;
   }
   .content {
     @apply pt-16;
