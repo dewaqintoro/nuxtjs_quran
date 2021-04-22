@@ -1,6 +1,6 @@
 <template>
-  <div class="search flex text-center">
-    <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" placeholder="Cari Surah. . .">
+  <div class="search text-center">
+    <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
 
     <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
       Cari
@@ -22,9 +22,11 @@ export default {
     return {
       search,
       storeTheme,
-      cek,
+      searchFilter,
     }
-    async function cek(){
+    async function searchFilter(){
+      // console.log('search', search)
+      emit('search', search.value)
     }
 
   }

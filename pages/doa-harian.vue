@@ -1,15 +1,8 @@
 <template>
-<!-- <span></span> -->
 <span >
   <Navbar />
-  <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="search text-center">
-      <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
-
-      <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
-        Cari
-      </button>
-    </div>
+  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
+    <SearchComp @search="searchFilter" />
     <div class="font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -22,26 +15,6 @@
       <div class="text-center py-3">
         <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
       </div>
-      <!-- <div v-else>
-        <div class="item" :class="bgId" v-for="(surah, index) in pageOfItems" :key="index">
-          <nuxt-link :to="'/surah/'+surah.index">
-            <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
-              <div class="">
-                <div class="idSurah" :style="{ boxShadow: storeTheme.boxShadow  }">{{surah.index}}</div>
-                <div class="nameSurah">
-                  <p>{{surah.arabic}}</p>
-                  <p class="mt-4">{{surah.latin}}</p>
-                  <p class="italic text-base">( {{surah.translation}} : {{surah.ayah_count}} ayat )</p>
-                </div>
-              </div>
-            </div>
-          </nuxt-link>
-        </div>
-      </div> -->
-
-      <!-- <div class="text-center py-3">
-				<jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
-			</div> -->
         
     </div>
   </div>
@@ -91,7 +64,7 @@ export default {
       }
     }
 
-    searchFilter()
+    searchFilter(search.value)
 
     return {
       search,
@@ -106,20 +79,19 @@ export default {
       searchFilter
     }
 
-    function searchFilter(){
-      
+    function searchFilter(dataSearch){
       setTimeout(function () {
         const result = dataDoa.data.filter(doa =>
-          doa.title.toLowerCase().includes(search.value.toLowerCase())
+          doa.title.toLowerCase().includes(dataSearch.toLowerCase())
         );
         allData.value = result
         loading.value = false
-      }, 1000);
+      }, 200);
       
     }
 
-    async function cek(){
-      console.log('dataJson', dataJson)
+    async function cek(search){
+      console.log('dew', search)
     }
 
     function onChangePage(data = any){
@@ -144,7 +116,7 @@ export default {
   }
 }
 .main {
-  @apply pt-8 min-h-screen;
+  @apply pt-24 min-h-screen;
 }
 @font-face {
   font-family: "lpmq";
@@ -165,34 +137,11 @@ html {
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-.input-search {
-  @apply appearance-none border rounded-lg py-2 px-8 text-gray-700 leading-tight;
-}
-.btn-search {
-  @apply text-white font-bold py-2 px-4 rounded-lg ml-4;
-  /* background-color: #4497eb; */
-  background-color: #115394;
-}
-.btn-search:hover {
-  /* background-color: #2187ec; */
-  background-color: #1b63ac;
-
-}
 .item {
   @apply px-8 mx-36 my-4;
 }
 .card {
   @apply text-3xl p-4 rounded-lg;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
-  .idSurah {
-    @apply text-center text-lg items-center justify-center flex font-bold rounded-full;
-    width: 40px;
-    height: 40px;
-  }
-  .nameSurah {
-    @apply px-4 text-right w-full;
-  }
-  
 }
 @screen tablet {
   .main {
@@ -205,23 +154,6 @@ html {
   }
   .item {
     @apply mx-2 px-2;
-  }
-  .surat {
-    @apply text-2xl;
-  }
-  .idSurah {
-    @apply text-sm;
-    width: 30px;
-    height: 30px;
-  }
-  .input-search {
-    @apply my-2;
-  }
-  .btn-search {
-    @apply my-2;
-  }
-  .input-search {
-    @apply px-4;
   }
 }
 </style>
