@@ -25,6 +25,10 @@
         </div>
       </div>
 
+      <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
+        --- Data tidak ditemukan ---
+      </div>
+
       <div class="text-center py-3">
 				<jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
 			</div>
