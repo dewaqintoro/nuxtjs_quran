@@ -9,7 +9,7 @@
             <p>Daftar Surah</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+        <nuxt-link to="/agama/asmaul-husna" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/allah.png" alt="https://www.freepik.com" />
             <p>Asmaul Husna</p>
@@ -34,8 +34,8 @@
           </div>
         </nuxt-link>
       </div>
+      <div class="footer"></div>
     </div>
-
   </span>
 </template>
 <script>
@@ -84,8 +84,7 @@ export default {
 }
 
 .main {
-  @apply pt-20 min-h-screen;
-  display: flex;
+  @apply pt-20 min-h-screen pb-8 flex mt-8 px-40;
   justify-content: center;
   align-self: center;
   /* background-color: #f7f7f7; */
@@ -109,16 +108,8 @@ export default {
   font-size: 20px;
   place-items: center;
   text-align: center;
-  /* color: #fff; */
-  /* transition: 0.5s; */
-
-  /* background: #f7f7f7; */
-/* box-shadow:  5px 5px 12px #dedede,-5px -5px 12px #ffffff; */
 }
 
-/* .container .box:hover {
-  background: #94B0B7;
-} */
 
 .container .box img {
   position: relative;
@@ -126,36 +117,36 @@ export default {
   margin-bottom: 10px;
 }
 
-
-/* @screen mobile { */
-  .container {
-    margin: 20px;
-  }
-  .container .box:nth-child(1){
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-  .container .box:nth-child(2){
-    grid-column: span 1;
-    grid-row: span 1;
-    
-  }
-  .container .box:nth-child(3){
-    grid-column: span 1;
-    grid-row: span 2;
-    
-  }
-  .container .box:nth-child(4){
-    grid-column: span 1;
-    grid-row: span 2;
-  }
-  .container .box:nth-child(5){
-  }
+.container {
+  margin: 20px;
+}
+.container .box:nth-child(1){
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.container .box:nth-child(2){
+  grid-column: span 1;
+  grid-row: span 1;
   
-/* } */
+}
+.container .box:nth-child(3){
+  grid-column: span 1;
+  grid-row: span 2;
+  
+}
+.container .box:nth-child(4){
+  grid-column: span 1;
+  grid-row: span 2;
+}
+.container .box:nth-child(5){
+}
+
+.footer {
+  height: 70px;
+}
 @screen mobile {
   .main {
-    @apply pt-16;
+    @apply pt-16 px-2;
   }
 }
 </style>
