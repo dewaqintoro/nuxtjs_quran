@@ -3,13 +3,7 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="search text-center">
-      <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Surah. . .">
-
-      <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
-        Cari
-      </button>
-    </div>
+    <SearchComp @search="searchFilter" />
     <div class="font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -82,7 +76,7 @@ export default {
       }
     }
 
-    searchFilter()
+    searchFilter(search.value)
     return {
       search,
       allSurah,
@@ -102,10 +96,10 @@ export default {
       pageOfItems.value = data
       window.smoothscroll()
     }
-    function searchFilter(){
+    function searchFilter(dataSearch){
       setTimeout(function () {
           const result = data.surah_info.filter(surat =>
-            surat.latin.toLowerCase().includes(search.value.toLowerCase())
+            surat.latin.toLowerCase().includes(dataSearch.toLowerCase())
           );
           allSurah.value = result
           loading.value = false
@@ -149,19 +143,7 @@ html {
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-.input-search {
-  @apply appearance-none border rounded-lg py-2 px-8 text-gray-700 leading-tight;
-}
-.btn-search {
-  @apply text-white font-bold py-2 px-4 rounded-lg ml-4;
-  /* background-color: #4497eb; */
-  background-color: #115394;
-}
-.btn-search:hover {
-  /* background-color: #2187ec; */
-  background-color: #1b63ac;
 
-}
 .item {
   @apply px-8 mx-36 my-8;
 }
@@ -197,15 +179,6 @@ html {
     @apply text-sm;
     width: 30px;
     height: 30px;
-  }
-  .input-search {
-    @apply my-2;
-  }
-  .btn-search {
-    @apply my-2;
-  }
-  .input-search {
-    @apply px-4;
   }
 }
 </style>

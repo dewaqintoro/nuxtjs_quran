@@ -86,12 +86,12 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .card {
-  @apply px-4 pb-4 pt-8 rounded-lg my-8;
+  @apply px-4 pb-4 pt-4 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .idSurah {
     @apply items-center justify-center flex font-bold rounded-full;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
   }
   .nameSurah {
     @apply px-4 w-full;
@@ -101,7 +101,7 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
 .surat {
-  @apply text-right text-3xl mt-4;
+  @apply text-right text-3xl mt-2;
   line-height: 4rem !important;
 }
 .my-audio{
