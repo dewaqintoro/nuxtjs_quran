@@ -13,7 +13,8 @@
             <div class="content items-center">
               <p class="font-arabic text-3xl">{{doa.arabic}}</p>
               <p class="my-4">{{doa.latin}}</p>
-              <p class="arti"> {{doa.translation_id}} )</p>
+              <hr/>
+              <p class="arti text-lg"><i>{{doa.translation_id}}</i></p>
             </div>
           </div>
         </div>
