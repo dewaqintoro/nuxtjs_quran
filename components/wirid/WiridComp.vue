@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
+  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div class="content">
       <div class="idSurah" :style="{ boxShadow: theme.boxShadow  }">
           <p class="text-lg">{{doa.times}}X</p>
@@ -50,6 +50,13 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.darkTheme:hover{
+  background: rgb(61, 81, 94) !important;
+}
+.lightTheme:hover{
+  background: #f1f1f1 !important;
+}
+
 .card {
   @apply px-4 pb-4 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
@@ -65,9 +72,7 @@ export default {
     @apply px-4 w-full pt-4;
   }
 }
-.card:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
-}
+
 .arabic {
   @apply text-right text-3xl;
   line-height: 4rem !important;

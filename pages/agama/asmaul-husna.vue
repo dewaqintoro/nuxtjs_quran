@@ -9,13 +9,13 @@
     <div v-else class="flex">
       <div class="container" :class="bgId">
         <div class="item" v-for="(doa, index) in allData" :key="index">
-          <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+          <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
             <div class="content items-center">
               <p class="font-arabic text-3xl">{{doa.arabic}}</p>
               <p class="my-4">{{doa.latin}}</p>
               <p class="arti"> {{doa.translation_id}} )</p>
             </div>
-          </nuxt-link>
+          </div>
         </div>
       </div>
       <div class="footer"></div>
