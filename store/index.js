@@ -95,7 +95,6 @@ export const actions = {
   },
 
   setLoadingAudio({ commit }, data) {
-    console.log('setLoadingAudio', data)
     commit('setState', { loadingAudio: false })
   },
   

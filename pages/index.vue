@@ -40,7 +40,7 @@
 </template>
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/quran/Navbar.vue'
+import Navbar from '~/components/Navbar.vue'
 export default {
   name: 'Quran',
   components: {

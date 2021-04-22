@@ -36,17 +36,19 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/quran/Navbar.vue'
-import Loading from '~/components/quran/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
+import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/daily-doa.json'
 import Cardcomp from '~/components/doa/harianCardComp.vue'
+import SearchComp from '~/components/SearchComp.vue'
 
 export default {
   name: 'Quran',
   components: {
     Navbar,
     Loading,
-    Cardcomp
+    Cardcomp,
+    SearchComp
   },
   setup(_, {emit}){
     const { app, store } = useContext()

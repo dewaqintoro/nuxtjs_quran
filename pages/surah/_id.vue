@@ -43,8 +43,8 @@
 import { ref, useAsync, useContext, computed } from '@nuxtjs/composition-api'
 import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
-import Navbar from '~/components/quran/Navbar.vue'
-import Loading from '~/components/quran/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
+import Loading from '@/components/Loading.vue'
 export default {
   name: 'Surah',
   components: {
@@ -105,10 +105,7 @@ export default {
       } else {
         idSuray = idParams
       }
-
-      console.log('data', data, idSuray)
       const result = ref(`https://quran.kemenag.go.id/cmsq/source/s01/${idSuray}${data}.mp3`)
-      console.log('_id result', result.value)
       return result
     }
 
@@ -119,12 +116,8 @@ export default {
     }
 
     function onChangePage(data = any){
-      store.dispatch('setLoadingAudio', true)
       pageOfItems.value = data
       window.smoothscroll()
-      setTimeout(async function () {  
-        store.dispatch('setLoadingAudio', false)
-      }, 1000);
     }
     async function getNewSurah(){
       var obj2 = surah.value?.text

@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <div class="flex mt-4">
+        <!-- <div class="flex mt-4">
           <div class="flex buttom">
           </div>
           <div class="w-full buttom" align="right">
@@ -44,7 +44,7 @@
               Kembali
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </AppModal>

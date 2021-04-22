@@ -1,7 +1,7 @@
 <template>
   <div class="title text-center" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div class="text-3xl">{{surah.name}}</div>
-    <div class="text-xl">
+    <div class="text-xl mt-4">
       <p>( {{surah.name_latin}} - {{surah.translations.id.name}} )</p>
       <p>{{surah.number_of_ayah}} Ayat</p>
     </div>
