@@ -1,7 +1,7 @@
 <template>
   <div class="card" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <button @click="show()" class="btn-show focus:outline-none">
-      <p class="font-bold">{{doa.title}}</p>
+      <p class="font-bold text-lg">{{doa.title}}</p>
       <div v-if="isShow" class="content">
         <div class="arabic">
           <p>{{doa.arabic}}</p>
@@ -70,7 +70,7 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .card {
-  @apply px-4 pb-4 pt-4 rounded-lg my-8;
+  @apply px-4 pb-4 rounded-lg my-8;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
   .btn-show {
     @apply text-center w-full;

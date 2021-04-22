@@ -84,7 +84,7 @@ export default {
 }
 
 .main {
-  @apply pt-4 min-h-screen;
+  @apply pt-20 min-h-screen;
   display: flex;
   justify-content: center;
   align-self: center;

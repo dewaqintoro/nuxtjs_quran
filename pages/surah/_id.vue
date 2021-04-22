@@ -147,9 +147,7 @@ export default {
   height: 40px;
 }
 .main {
-  min-height: 100vh;
-  padding-bottom: 100px;
-  padding-top: 20px;
+  @apply min-h-screen pb-20 pt-28;
 }
 @font-face {
   font-family: "lpmq";
@@ -180,6 +178,9 @@ html {
   }
 }
 @screen mobile {
+  .main {
+    @apply pt-8;
+  }
   .item {
     @apply mx-2 px-2 pt-2;
   }
