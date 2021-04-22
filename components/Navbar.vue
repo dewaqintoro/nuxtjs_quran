@@ -2,7 +2,7 @@
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
       <div class="start box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <nuxt-link class="btn-setting" to="/">
+        <nuxt-link class="btn-setting" to="/agama/al-quran">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
         </nuxt-link>
       </div>

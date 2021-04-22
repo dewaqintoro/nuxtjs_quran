@@ -9,7 +9,7 @@
 
         <div class="back">
           <div class="btn-back" :style="{ boxShadow: storeTheme.boxShadow }">
-            <nuxt-link to="/surah">
+            <nuxt-link to="/agama/surah">
               <font-awesome-icon :icon="['fas', 'arrow-left']" />
             </nuxt-link>
           </div>

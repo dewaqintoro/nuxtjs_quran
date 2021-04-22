@@ -1,33 +1,20 @@
 <template>
-<!-- <span></span> -->
 <span >
   <Navbar />
-  <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
+  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <SearchComp @search="searchFilter" />
     <div class="font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <div class="item" :class="bgId" v-for="(surah, index) in pageOfItems" :key="index">
-          <nuxt-link :to="'/surah/'+surah.index">
-            <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
-              <div class="">
-                <div class="idSurah" :style="{ boxShadow: storeTheme.boxShadow  }">{{surah.index}}</div>
-                <div class="nameSurah">
-                  <p>{{surah.arabic}}</p>
-                  <p class="mt-4">{{surah.latin}}</p>
-                  <p class="italic text-base">( {{surah.translation}} : {{surah.ayah_count}} ayat )</p>
-                </div>
-              </div>
-            </div>
-          </nuxt-link>
+        <div class="item" v-for="(doa, index) in pageOfItems" :key="index">
+          <Cardcomp :theme="storeTheme" :doa="doa" :index="index+1" />
         </div>
       </div>
-
       <div class="text-center py-3">
-				<jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
-			</div>
+        <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
+      </div>
         
     </div>
   </div>
@@ -38,25 +25,26 @@
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
-import json from '~/data/surah-info.json'
+import dataJson from '~/data/daily-doa.json'
+import Cardcomp from '~/components/doa/harianCardComp.vue'
 import SearchComp from '~/components/SearchComp.vue'
-
 
 export default {
   name: 'Quran',
   components: {
     Navbar,
     Loading,
+    Cardcomp,
     SearchComp
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const data = json
+    const dataDoa = dataJson
     const search = ref('')
-    const allSurah = ref([])
+    const allData = ref([])
     const pageOfItems = ref([])
-    const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
+    const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
     const bgId = computed(() => {
       if(storeTheme.value?.darktheme){
@@ -77,38 +65,44 @@ export default {
     }
 
     searchFilter(search.value)
+
     return {
       search,
-      allSurah,
-      bgId,
+      allData,
+      storeTheme,
       pageOfItems,
-      loading,
-      cek,
-      searchFilter,
-      onChangePage,
       loadingTheme,
-      storeTheme
+      loading,
+      dataDoa,
+      cek,
+      onChangePage,
+      searchFilter
     }
-    async function cek(){
+
+    function searchFilter(dataSearch){
+      setTimeout(function () {
+        const result = dataDoa.data.filter(doa =>
+          doa.title.toLowerCase().includes(dataSearch.toLowerCase())
+        );
+        allData.value = result
+        loading.value = false
+      }, 200);
+      
+    }
+
+    async function cek(search){
+      console.log('dew', search)
     }
 
     function onChangePage(data = any){
       pageOfItems.value = data
       window.smoothscroll()
     }
-    function searchFilter(dataSearch){
-      setTimeout(function () {
-          const result = data.surah_info.filter(surat =>
-            surat.latin.toLowerCase().includes(dataSearch.toLowerCase())
-          );
-          allSurah.value = result
-          loading.value = false
-      }, 1000);
-      
-    }
+
   }
 }
 </script>
+
 <style lang="postcss" scoped>
 .darkTheme{
   /* color: rgb(61, 81, 94); */
@@ -143,22 +137,11 @@ html {
   font-family: "lpmq", Arial, sans-serif;
   line-height: 2;
 }
-
 .item {
-  @apply px-8 mx-36 my-8;
+  @apply px-8 mx-36 my-4;
 }
 .card {
   @apply text-3xl p-4 rounded-lg;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
-  .idSurah {
-    @apply text-center text-lg items-center justify-center flex font-bold rounded-full;
-    width: 40px;
-    height: 40px;
-  }
-  .nameSurah {
-    @apply px-4 text-right w-full;
-  }
-  
 }
 @screen tablet {
   .main {
@@ -171,14 +154,6 @@ html {
   }
   .item {
     @apply mx-2 px-2;
-  }
-  .surat {
-    @apply text-2xl;
-  }
-  .idSurah {
-    @apply text-sm;
-    width: 30px;
-    height: 30px;
   }
 }
 </style>
