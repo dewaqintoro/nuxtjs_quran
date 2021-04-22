@@ -27,7 +27,7 @@
             <p>Doa Tahlil</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/surah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+        <nuxt-link to="/agama/wirid" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
             <p>Wirid</p>
