@@ -1,7 +1,13 @@
 <template>
-  <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }" class="error min-h-screen text-center justify-center center items-center">
-    <NuxtLink to="/agama/al-quran">Home page</NuxtLink>
-    <img class="m-auto" :src="background" />
+  <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color}" class="error min-h-screen text-center justify-center center items-center">
+    <NuxtLink to="/agama/al-quran">
+      <div>
+        <button class="back" :style="{ boxShadow: storeTheme.boxShadow  }">Home Page</button>
+      </div>
+    </NuxtLink>
+    <div class="gambar text-center justify-center center items-center">
+      <img :src="background" />
+    </div>
   </div>
 </template>
 
@@ -48,13 +54,21 @@
 </script>
 
 <style lang="postcss" scoped>
+.back {
+  @apply p-4 mt-8 mb-16 rounded-xl text-2xl;
+}
+
+.gambar {
+  display: flex;
+}
 .error {
-  @apply px-8 pt-16;
+  @apply pt-16 px-16;
 }
 
 .error img {
-  @apply pt-4;
-  max-width: 700px;
+  /* @apply py-16 mx-40; */
+  width: 60%;
+  /* max-width: 700px; */
 }
 .darkTheme{
   /* color: rgb(61, 81, 94); */
@@ -66,5 +80,20 @@
   .box:hover {
     background: #f1f1f1;
   }
+}
+
+@screen tablet {
+  .main {
+    @apply pt-28;
+  }
+}
+@screen mobile {
+  .error {
+    @apply px-2;
+  }
+  .back {
+    @apply p-4 mt-0 mb-8 rounded-xl text-sm;
+  }
+
 }
 </style>
