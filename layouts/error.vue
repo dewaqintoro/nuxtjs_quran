@@ -1,10 +1,10 @@
 <template>
   <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color}" class="error min-h-screen text-center justify-center center items-center">
-    <NuxtLink to="/agama/al-quran">
-      <div>
+    <div>
+      <NuxtLink to="/agama/al-quran">
         <button class="back" :style="{ boxShadow: storeTheme.boxShadow  }">Home Page</button>
-      </div>
-    </NuxtLink>
+      </NuxtLink>
+    </div>
     <div class="gambar text-center justify-center center items-center">
       <img :src="background" />
     </div>
@@ -55,7 +55,7 @@
 
 <style lang="postcss" scoped>
 .back {
-  @apply p-4 mt-8 mb-16 rounded-xl text-2xl;
+  @apply py-2 px-4 mt-8 mb-16 rounded-xl text-xl;
 }
 
 .gambar {
@@ -92,7 +92,7 @@
     @apply px-2;
   }
   .back {
-    @apply p-4 mt-0 mb-8 rounded-xl text-sm;
+    @apply mt-0 mb-8 rounded-xl text-sm;
   }
 
 }
