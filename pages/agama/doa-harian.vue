@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@import url(https://cdn.syncfusion.com/ej2/material.css);
+/* @import url(https://cdn.syncfusion.com/ej2/material.css); */
 
 /* .cari {
   @apply text-center items-center justify-center m-auto;
