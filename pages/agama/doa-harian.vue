@@ -2,13 +2,13 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <!-- <SearchComp @search="searchFilter" /> -->
-    <div class="cari" :class="bgId">
+    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
+    <!-- <div class="cari" :class="bgId">
       <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
         <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
         </ejs-autocomplete>
       </div>
-    </div>
+    </div> -->
     <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -36,7 +36,8 @@ import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/daily-doa.json'
 import Cardcomp from '~/components/doa/harianCardComp.vue'
-import SearchComp from '~/components/SearchComp.vue'
+// import SearchComp from '~/components/SearchComp.vue'
+import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {
   name: 'Quran',
@@ -74,8 +75,8 @@ export default {
       }
     }
 
-    // searchFilter(search.value)
-    searchFilter()
+    searchFilter(search.value)
+    // searchFilter()
 
     return {
       search,
@@ -92,13 +93,13 @@ export default {
       bgId
     }
 
-    function searchFilter(){
-      if(search.value === null ){
-        search.value = ''
+    function searchFilter(data){
+      if(data === null ){
+        data = ''
       }
       setTimeout(function () {
         const result = dataDoa.data.filter(doa =>
-          doa.title.toLowerCase().includes(search.value.toLowerCase())
+          doa.title.toLowerCase().includes(data.toLowerCase())
         );
         allData.value = result
         loading.value = false
@@ -120,50 +121,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.dew {
-  @apply m-auto px-8 rounded-lg;
-  max-width: 400px;
-}
-
-.darkTheme{
-  .card:hover{
-    background: rgb(61, 81, 94);
-  }
-  .dew {
-    .cari-input{
-      @apply pl-4 py-2;
-    }
-    ::-webkit-input-placeholder {
-          color: white !important;
-      }
-    .e-ddl.e-input-group.e-control-wrapper{
-      .e-input {
-        @apply text-lg;
-        color: white !important;
-      }
-    }
-
-    /* .e-ddl.e-input-group {
-      input.e-input::selection {
-            color: white !important;
-            background: rgb(61, 81, 94) !important;
-        }
-    } */
-  }
-
-}
-.lightTheme{
-  .dew {
-    .e-ddl.e-input-group.e-control-wrapper{
-      .e-input {
-        @apply text-lg;
-      }
-    }
-  }
-  .card:hover {
-    background: #f1f1f1;
-  }
-}
 .main {
   @apply pt-24 min-h-screen;
 }
