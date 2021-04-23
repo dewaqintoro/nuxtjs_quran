@@ -3,8 +3,9 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <SearchComp @search="searchFilter" />
-    <div class="font-arabic">
+    <!-- <SearchComp @search="searchFilter" /> -->
+    <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>
+    <div class=" min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
@@ -23,16 +24,16 @@
             </div>
           </nuxt-link>
         </div>
-      </div>
 
-      <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
+        <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
         --- Data tidak ditemukan ---
+        </div>
+
+        <div class="text-center py-3">
+          <jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
+        </div>
       </div>
 
-      <div class="text-center py-3">
-				<jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
-			</div>
-        
     </div>
   </div>
 </span>
@@ -43,7 +44,7 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import json from '~/data/surah-info.json'
-import SearchComp from '~/components/SearchComp.vue'
+import SearchComp from '~/components/SearchNewComp.vue'
 
 
 export default {
@@ -57,6 +58,7 @@ export default {
     const { app, store } = useContext()
     const data = json
     const search = ref('')
+    const dataFields= {value: 'latin'}
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
@@ -80,10 +82,16 @@ export default {
       }
     }
 
+    setTimeout(function () {
+        loading.value = false
+    }, 500);
+
     searchFilter(search.value)
     return {
+      data,
       search,
       allSurah,
+      dataFields,
       bgId,
       pageOfItems,
       loading,
@@ -101,13 +109,16 @@ export default {
       window.smoothscroll()
     }
     function searchFilter(dataSearch){
-      setTimeout(function () {
+      if(dataSearch === null ){
+        dataSearch = ''
+      }
+      // setTimeout(function () {
           const result = data.surah_info.filter(surat =>
             surat.latin.toLowerCase().includes(dataSearch.toLowerCase())
           );
           allSurah.value = result
-          loading.value = false
-      }, 1000);
+          // loading.value = false
+      // }, 1000);
       
     }
   }

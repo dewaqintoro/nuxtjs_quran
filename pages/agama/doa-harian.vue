@@ -3,12 +3,6 @@
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
-    <!-- <div class="cari" :class="bgId">
-      <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
-        <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
-        </ejs-autocomplete>
-      </div>
-    </div> -->
     <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -75,6 +69,10 @@ export default {
       }
     }
 
+    setTimeout(function () {
+      loading.value = false
+    }, 500);
+
     searchFilter(search.value)
     // searchFilter()
 
@@ -97,13 +95,13 @@ export default {
       if(data === null ){
         data = ''
       }
-      setTimeout(function () {
+      // setTimeout(function () {
         const result = dataDoa.data.filter(doa =>
           doa.title.toLowerCase().includes(data.toLowerCase())
         );
         allData.value = result
-        loading.value = false
-      }, 200);
+        // loading.value = false
+      // }, 200);
       
     }
 
@@ -162,9 +160,4 @@ html {
     @apply mx-2 px-2;
   }
 }
-
-/* * {
-  background-color: #29c2b8 !important;
-    color: #207cd9 !important;
-} */
 </style>

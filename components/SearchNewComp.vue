@@ -1,5 +1,6 @@
 <template>
   <div class="cari" :class="bgId">
+    <!-- <button @click="cek">cek</button> -->
     <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
       <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='data' :fields='fields' placeholder="Pencarian. . ." :highlight="true" >
       </ejs-autocomplete>
@@ -46,7 +47,7 @@ export default {
     }
 
     function cek(){
-      console.log('props', props)
+      console.log('props', props.data)
     }
     async function searchFilter(){
       // console.log('search', search)
