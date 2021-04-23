@@ -4,12 +4,12 @@
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <!-- <SearchComp @search="searchFilter" /> -->
     <div class="cari" :class="bgId">
-      <div class="dew" >
-        <ejs-autocomplete class="cari-input" :style="{ boxShadow: storeTheme.boxShadow }" @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
+      <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
+        <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
         </ejs-autocomplete>
       </div>
     </div>
-    <div class="font-arabic">
+    <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
@@ -120,34 +120,12 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-/* @import url(https://cdn.syncfusion.com/ej2/material.css); */
-
-/* .cari {
-  @apply text-center items-center justify-center m-auto;
-  color: aqua !important;
-  background: green !important;
-  ::-webkit-input-placeholder {
-        color: blue !important;
-    }
-  .cari-input {
-    color: aqua !important;
-    background: rgb(230, 230, 185) !important;
-    ::-webkit-input-placeholder {
-        color: blue !important;
-    }
-  }
-} */
-
-
-
-
 .dew {
-  @apply m-auto px-8;
+  @apply m-auto px-8 rounded-lg;
   max-width: 400px;
 }
 
 .darkTheme{
-  /* color: rgb(61, 81, 94); */
   .card:hover{
     background: rgb(61, 81, 94);
   }
@@ -160,23 +138,28 @@ export default {
       }
     .e-ddl.e-input-group.e-control-wrapper{
       .e-input {
-        font-size: 20px;
-        font-family: emoji;
+        @apply text-lg;
         color: white !important;
-        /* background: #32a5ab !important; */
       }
     }
 
-    .e-ddl.e-input-group {
+    /* .e-ddl.e-input-group {
       input.e-input::selection {
             color: white !important;
             background: rgb(61, 81, 94) !important;
         }
-    }
+    } */
   }
 
 }
 .lightTheme{
+  .dew {
+    .e-ddl.e-input-group.e-control-wrapper{
+      .e-input {
+        @apply text-lg;
+      }
+    }
+  }
   .card:hover {
     background: #f1f1f1;
   }
