@@ -1,7 +1,3 @@
-// import { NuxtCookies } from 'cookie-universal-nuxt'
-
-// declare module '@nuxt/types' {
-//   interface Context {
-//     $cookies: NuxtCookies
-//   }
-// }
+import Vue from 'vue'
+import { AutoCompletePlugin } from '@syncfusion/ej2-vue-dropdowns'
+Vue.use(AutoCompletePlugin)

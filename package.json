@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.22.4",
+    "@syncfusion/ej2-vue-dropdowns": "^19.1.57",
     "body-scroll-lock": "^3.1.5",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.9.1",

@@ -2,7 +2,13 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <SearchComp @search="searchFilter" />
+    <!-- <SearchComp @search="searchFilter" /> -->
+    <div class="cari">
+      <div class="dew" >
+        <ejs-autocomplete @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
+        </ejs-autocomplete>
+      </div>
+    </div>
     <div class="font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -49,6 +55,7 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
+    const dataFields= {value: 'title'}
     const bgId = computed(() => {
       if(storeTheme.value?.darktheme){
         return 'darkTheme'
@@ -67,11 +74,13 @@ export default {
       }
     }
 
-    searchFilter(search.value)
+    // searchFilter(search.value)
+    searchFilter()
 
     return {
       search,
       allData,
+      dataFields,
       storeTheme,
       pageOfItems,
       loadingTheme,
@@ -79,13 +88,16 @@ export default {
       dataDoa,
       cek,
       onChangePage,
-      searchFilter
+      searchFilter,
     }
 
-    function searchFilter(dataSearch){
+    function searchFilter(){
+      if(search.value === null ){
+        search.value = ''
+      }
       setTimeout(function () {
         const result = dataDoa.data.filter(doa =>
-          doa.title.toLowerCase().includes(dataSearch.toLowerCase())
+          doa.title.toLowerCase().includes(search.value.toLowerCase())
         );
         allData.value = result
         loading.value = false
@@ -93,8 +105,8 @@ export default {
       
     }
 
-    async function cek(search){
-      console.log('dew', search)
+    async function cek(){
+      console.log('search.value', search.value)
     }
 
     function onChangePage(data = any){
@@ -107,6 +119,16 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+@import url(https://cdn.syncfusion.com/ej2/material.css);
+
+.cari {
+  @apply text-center items-center justify-center m-auto;
+}
+.dew {
+  @apply m-auto px-8;
+  max-width: 400px;
+}
+
 .darkTheme{
   /* color: rgb(61, 81, 94); */
   .card:hover{
