@@ -3,9 +3,9 @@
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <!-- <SearchComp @search="searchFilter" /> -->
-    <div class="cari">
+    <div class="cari" :class="bgId">
       <div class="dew" >
-        <ejs-autocomplete @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
+        <ejs-autocomplete class="cari-input" :style="{ boxShadow: storeTheme.boxShadow }" @change="searchFilter" v-model="search" :dataSource='dataDoa.data' :fields='dataFields' placeholder="search. . ." :highlight="true" >
         </ejs-autocomplete>
       </div>
     </div>
@@ -89,6 +89,7 @@ export default {
       cek,
       onChangePage,
       searchFilter,
+      bgId
     }
 
     function searchFilter(){
@@ -121,9 +122,25 @@ export default {
 <style lang="postcss" scoped>
 @import url(https://cdn.syncfusion.com/ej2/material.css);
 
-.cari {
+/* .cari {
   @apply text-center items-center justify-center m-auto;
-}
+  color: aqua !important;
+  background: green !important;
+  ::-webkit-input-placeholder {
+        color: blue !important;
+    }
+  .cari-input {
+    color: aqua !important;
+    background: rgb(230, 230, 185) !important;
+    ::-webkit-input-placeholder {
+        color: blue !important;
+    }
+  }
+} */
+
+
+
+
 .dew {
   @apply m-auto px-8;
   max-width: 400px;
@@ -134,6 +151,30 @@ export default {
   .card:hover{
     background: rgb(61, 81, 94);
   }
+  .dew {
+    .cari-input{
+      @apply pl-4 py-2;
+    }
+    ::-webkit-input-placeholder {
+          color: white !important;
+      }
+    .e-ddl.e-input-group.e-control-wrapper{
+      .e-input {
+        font-size: 20px;
+        font-family: emoji;
+        color: white !important;
+        /* background: #32a5ab !important; */
+      }
+    }
+
+    .e-ddl.e-input-group {
+      input.e-input::selection {
+            color: white !important;
+            background: rgb(61, 81, 94) !important;
+        }
+    }
+  }
+
 }
 .lightTheme{
   .card:hover {
@@ -181,4 +222,9 @@ html {
     @apply mx-2 px-2;
   }
 }
+
+/* * {
+  background-color: #29c2b8 !important;
+    color: #207cd9 !important;
+} */
 </style>
