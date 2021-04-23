@@ -3,6 +3,9 @@
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
+    <div class="item text-center">
+      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allData.length}} data</p>
+    </div>
     <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -119,6 +122,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.sum {
+  @apply py-2 px-4 rounded-lg;
+  width: 100px;
+}
 .main {
   @apply pt-24 min-h-screen;
 }
