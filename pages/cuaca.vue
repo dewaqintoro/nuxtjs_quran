@@ -57,7 +57,8 @@ export default {
           doa.city_name.toLowerCase().includes(data.toLowerCase())
         );
         allData.value = result
-        console.log(result)
+        // console.log(result)
+        cekWeather()
     }
 
     async function cek(){
@@ -65,12 +66,12 @@ export default {
       console.log('temperature', weather.value?.current?.temperature)
     }
 
-    async function searchFilter(data){
-      console.log('data v2', data)
-      const params = {
-        access_key: '260d5d4d9750bca976a2fca0d279b280',
-        query: data+', Indonesia',
-      }
+    async function cekWeather(){
+      console.log('cekWeather')
+      // const params = {
+      //   access_key: '260d5d4d9750bca976a2fca0d279b280',
+      //   query: data+', Indonesia',
+      // }
 
       // const url = `http://api.weatherstack.com/current`
       const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
