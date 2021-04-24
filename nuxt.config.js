@@ -40,6 +40,7 @@ export default {
     '@nuxtjs/composition-api',
     '@nuxtjs/fontawesome',
     '@nuxt/typescript-build',
+    '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

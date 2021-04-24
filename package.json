@@ -25,6 +25,7 @@
     "@nuxt/types": "^2.15.4",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/fontawesome": "^1.1.2",
+    "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/tailwindcss": "^4.0.1",
     "@types/body-scroll-lock": "^2.6.1",
     "postcss": "^8.2.8"
