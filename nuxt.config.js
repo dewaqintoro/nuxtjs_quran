@@ -10,6 +10,7 @@ export default {
     },
     meta: [
       { charset: 'utf-8' },
+      { "http-equiv": 'Content-Security-Policy', content: 'upgrade-insecure-requests'},
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
@@ -17,6 +18,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  // render: {
+  //   csp: true
+  // },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
