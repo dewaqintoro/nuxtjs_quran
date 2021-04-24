@@ -62,6 +62,7 @@ export default {
     }
 
     async function cek(){
+      cekWeather()
       console.log('weather', weather.value)
       console.log('temperature', weather.value?.current?.temperature)
     }
