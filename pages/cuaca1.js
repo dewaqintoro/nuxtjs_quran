@@ -11,7 +11,7 @@ const axios = require('axios');
 // import axios from '@nuxtjs/axios'
 const params = {
   access_key: '260d5d4d9750bca976a2fca0d279b280',
-  query: 'Gayo Lues',
+  query: 'Magetan',
 }
 
 axios.get('http://api.weatherstack.com/current', {params})
