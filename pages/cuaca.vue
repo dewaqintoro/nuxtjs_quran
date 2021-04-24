@@ -75,8 +75,8 @@ export default {
         city : selectedCity.value[0]?.city || 'Sleman',
       }
 
-      const url = `http://localhost:5000/api/v1/cuaca`
-      // const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
+      // const url = `http://localhost:5000/api/v1/cuaca`
+      const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
       // const url = `http://localhost:5000/api/v1/history`
       // const result = await axios.get(url, {params});
       // console.log('result v2', result)
