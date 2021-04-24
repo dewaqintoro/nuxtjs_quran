@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <div class="content">
-      <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
+      <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
       <h1>Lokasi v2</h1>
-      <p v-if="weather.current">{{weather.current.temperature}}</p>
-      <p v-if="weather.location">{{weather.location.name}}, {{weather.location.region}}, {{weather.location.country}} </p>
+      <p v-if="weather.app_temp">{{weather.app_temp}}</p>
+      <p v-if="weather.city_name">{{weather.city_name}} </p>
       <button @click="cek">cek</button>
     </div>
     <!-- <div class="box">
@@ -19,7 +19,7 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import dataJson from '~/data/city.json'
+import dataJson from '~/data/csvjson.json'
 import SearchComp from '~/components/SearchNewComp.vue'
 import axios from 'axios'
 
@@ -30,44 +30,72 @@ export default {
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const dataDoa = dataJson.rajaongkir?.results
+    // const dataCity = dataJson.rajaongkir?.results
+    const dataCity = dataJson
     const search = ref('')
     const allData = ref([])
-    const dataFields= {value: 'city_name'}
+    const dataFields= {value: 'name'}
     const weather = ref([])
+    const selectedCity = ref([])
 
     // searchFilter(search.value)
     // searchFilter()
 
     return {
       search,
-      dataDoa,
+      dataCity,
       weather,
       allData,
       dataFields,
       searchFilter,
       cek,
+      cekCuaca,
+    }
+
+    async function cekCuaca(){
+      console.log('selectedCity', selectedCity.value[0])
+       const params = {
+        lat : selectedCity.value[0]?.latitude,
+        long : selectedCity.value[0]?.longitude,
+      }
+
+      // const url = `http://localhost:5000/api/v1/cuaca`
+      const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
+
+      if(selectedCity.value[0] !== 'undefined'){
+        const result = await axios.get(url, {params});
+        weather.value = result?.data?.data[0]
+        console.log('result v2', result?.data?.data[0])
+      } else {
+        console.log('selectedCity undefined', selectedCity)
+      }
+           
     }
 
     function searchFilter(data){
+      // console.log('key search', data)
       if(data === null ){
         data = ''
       }
-        const result = dataDoa.filter(doa =>
-          doa.city_name.toLowerCase().includes(data.toLowerCase())
-        );
-        allData.value = result
-        // console.log(result)
-        cekWeather()
+      const result = dataCity.filter(doa =>
+        doa.name.toLowerCase().includes(data.toLowerCase())
+      );
+      allData.value = result
+      if(result.length === 1){
+        selectedCity.value = result
+        cekCuaca()
+      }
+      // console.log('hasil pilihan',result)
     }
 
     async function cek(){
-      cekWeather()
-      console.log('weather', weather.value)
-      console.log('temperature', weather.value?.current?.temperature)
+      console.log('weather.value', weather.value)
+      // console.log('temperature', weather.value?.current?.temperature)
     }
 
-    async function cekWeather(){
+
+
+    async function cekWeather1(){
       console.log('cekWeather')
       // const params = {
       //   access_key: '260d5d4d9750bca976a2fca0d279b280',
@@ -82,6 +110,19 @@ export default {
       weather.value = result.data
       console.log('result v2', result.data.current.temperature)
       // province.value = data?.data?.rajaongkir?.results
+    }
+
+    async function cekWeather(){
+      const lat = 58.7984;
+      const lng = 17.8081;
+      const params = 'waveHeight,airTemperature';
+
+      fetch(`https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}`, {
+        headers: {
+          'Authorization': 'example-api-key'
+        }
+      }).then((response) => response.json()).then((jsonData) => {
+      });
     }
 
   }
