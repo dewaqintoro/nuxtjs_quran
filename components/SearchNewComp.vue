@@ -59,7 +59,7 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .dew {
-  @apply m-auto px-8 rounded-lg;
+  @apply m-auto px-6 rounded-lg;
   max-width: 400px;
 }
 
@@ -105,13 +105,7 @@ export default {
 @screen tablet {
 }
 @screen mobile {
-  .input-search {
-    @apply my-2;
-  }
-  .btn-search {
-    @apply my-2;
-  }
-  .input-search {
+  .cari {
     @apply px-4;
   }
 }

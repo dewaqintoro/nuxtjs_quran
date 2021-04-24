@@ -24,8 +24,9 @@ export default {
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src:'@/plugins/global.ts', ssr: false},
-    {src:'@/plugins/pagination.ts', ssr: false},
+    {src: '@/plugins/axios' },
+    {src: '@/plugins/global.ts', ssr: false},
+    {src: '@/plugins/pagination.ts', ssr: false},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,7 +43,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['cookie-universal-nuxt'],
+  modules: ['cookie-universal-nuxt', '@nuxtjs/axios',],
 
   // axios: {},
   http: {
