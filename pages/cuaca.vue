@@ -2,7 +2,7 @@
   <div class="main">
     <div class="content">
       <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
-      <h1>Lokasi</h1>
+      <h1>Lokasi v2</h1>
       <p v-if="weather.current">{{weather.current.temperature}}</p>
       <p v-if="weather.location">{{weather.location.name}}, {{weather.location.region}}, {{weather.location.country}} </p>
       <button @click="cek">cek</button>
@@ -66,7 +66,7 @@ export default {
     }
 
     async function searchFilter(data){
-      console.log('data', data)
+      console.log('data v2', data)
       const params = {
         access_key: '260d5d4d9750bca976a2fca0d279b280',
         query: data+', Indonesia',
@@ -78,7 +78,7 @@ export default {
       // const result = await axios.get(`${url}`, {params});
       const result = await axios.get(url);
       weather.value = result.data
-      console.log('result', result.data.current.temperature)
+      console.log('result v2', result.data.current.temperature)
       // province.value = data?.data?.rajaongkir?.results
     }
 
