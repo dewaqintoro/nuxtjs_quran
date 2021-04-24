@@ -72,8 +72,11 @@ export default {
         query: data+', Indonesia',
       }
 
-      const url = `http://api.weatherstack.com/current`
-      const result = await axios.get(`${url}`, {params});
+      // const url = `http://api.weatherstack.com/current`
+      const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
+      
+      // const result = await axios.get(`${url}`, {params});
+      const result = await axios.get(url);
       weather.value = result.data
       console.log('result', result.data.current.temperature)
       // province.value = data?.data?.rajaongkir?.results
