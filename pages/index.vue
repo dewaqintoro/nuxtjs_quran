@@ -1,5 +1,15 @@
 <template>
-  <span class="text-center">
-    <nuxt-link to="/agama/al-quran">alquran</nuxt-link>
-  </span>
+  <div></div>
 </template>
+
+<script lang="ts">
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'Index',
+  setup() {
+    const { redirect } = useContext()
+      redirect('/agama/al-quran')
+  },
+})
+</script>
