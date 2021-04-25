@@ -9,13 +9,20 @@
           <!-- <h1>Lokasi v2</h1> -->
           <p v-if="ifError">Data tidak tersedia</p>
           <div v-else>
-            <div v-if="!loading">
-              <p v-if="weather.weather">{{weather.city_name}}, {{selectedCity[0].admin_name}}</p>
-              <p v-if="weather.weather">{{weather.weather.description}}</p>
-              <p>{{weather.app_temp}}°C</p>
+            <div v-if="!loadingweather" class="text-center items-center">
+              <img :src="iconUrl" class="imgUrl"/>
+              <p v-if="storeWeather">{{storeWeather.city_name}}</p>
+              <p v-if="storeWeather">{{storeWeather.weather.description}}</p>
+              <p>{{storeWeather.app_temp}}°C</p>
             </div>
           </div>
-          <!-- <button @click="cek">cek</button> -->
+          <button @click="cek">cek</button>
+          <hr/>
+          <button @click="setWeather">setWeather</button>
+          <hr />
+          <button @click="cekCuaca">cekCuaca</button>
+          <button @click="getWeather">getWeather</button>
+          
         </div>
       </div>
     </div>
@@ -24,7 +31,7 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import dataJson from '~/data/cityid.json'
+import dataJson from '~/data/csvjson.json'
 import SearchComp from '~/components/SearchNewComp.vue'
 import axios from 'axios'
 
@@ -39,7 +46,7 @@ export default {
     const dataCity = dataJson
     const search = ref('')
     const allData = ref([])
-    const dataFields= {value: 'city'}
+    const dataFields= {value: 'name'}
     const weather = ref([])
     const minutely = ref([])
     const initialData = ({
@@ -50,17 +57,33 @@ export default {
     const selectedCity = ref([initialData])
     const ifError = ref(false)
     const loading = ref (true)
+    const imgUrl = ref('/Haze.svg')
+    const storeWeather = computed(() => store.state.weather)
+    const loadingweather = computed(() => store.state.loadingweather)
     const author = `<a href='https://www.freepik.com/vectors/icons'>Icons vector created by anindyanfitri - www.freepik.com</a>`
 
+    const iconUrl = computed(() => {
+      if(storeWeather.value?.weather?.code === 802){
+        return '/Clouds.svg'
+      }else {
+        return '/Haze.svg'
+      }
+    })
     // searchFilter(search.value)
     // searchFilter()
-    cekCuaca()
+
+    // cekCuaca()
+
+    // getWeather()
 
     return {
       search,
       dataCity,
       weather,
       selectedCity,
+      storeWeather,
+      imgUrl,
+      iconUrl,
       minutely,
       allData,
       loading,
@@ -68,15 +91,27 @@ export default {
       searchFilter,
       cek,
       cekCuaca,
-      ifError
+      ifError,
+      setWeather,
+      getWeather,
+      loadingweather
     }
+
+    async function getWeather(){
+      store.dispatch('getWeather')
+    }
+
+    async function setWeather(){
+      store.dispatch('setWeather', weather.value)
+    }
+
 
     async function cekCuaca(){
       console.log('selectedCity', selectedCity.value)
       loading.value = true
        const params = {
-        lat : selectedCity.value[0]?.lat || '-7.7156',
-        long : selectedCity.value[0]?.lng || '110.3556',
+        lat : selectedCity.value[0]?.latitude || '-7.7156',
+        long : selectedCity.value[0]?.longitude || '110.3556',
         // city : selectedCity.value[0]?.city || 'Sleman',
       }
 
@@ -84,7 +119,6 @@ export default {
       const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
       // const url = `http://localhost:5000/api/v1/history`
       // const result = await axios.get(url, {params});
-      // console.log('result v2', result)
 
       if(selectedCity.value[0] !== 'undefined'){
         const result = await axios.get(url, {params});
@@ -99,15 +133,15 @@ export default {
     }
 
     function searchFilter(data){
-      // console.log('key search', data)
+      console.log('key search', data)
       if(data === null ){
         data = ''
       }
       const result = dataCity.filter(doa =>
-        doa.city.toLowerCase().includes(data.toLowerCase())
+        doa.name.toLowerCase().includes(data.toLowerCase())
       );
       allData.value = result
-      console.log(result.length)
+      console.log('result', result)
       
       if(result.length === 1){
         selectedCity.value = result
@@ -118,7 +152,7 @@ export default {
       } else {
         if(result.length <=100){
           result.map(hasil => {
-            if(hasil.city.length === data.length){
+            if(hasil.name.length === data.length){
               selectedCity.value = result
               console.log('hasil', selectedCity.value)
               cekCuaca()
@@ -133,8 +167,9 @@ export default {
     }
 
     async function cek(){
-      console.log('weather.value', weather.value)
-      console.log('selectedCity.value[0] ', selectedCity.value[0] )
+      console.log('storeWeather.value', storeWeather.value)
+      console.log('storeWeather?.weather?.code', storeWeather.value?.weather?.code)
+      // console.log('selectedCity.value[0] ', selectedCity.value[0] )
     }
 
   }
@@ -151,6 +186,10 @@ export default {
   z-index: 10;
 }
 
+.imgUrl {
+  @apply px-16 w-full;
+  max-width: 300px;
+}
 .container{
   @apply w-full h-full;
   position: relative;

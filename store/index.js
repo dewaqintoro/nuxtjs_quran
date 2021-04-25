@@ -2,6 +2,7 @@ export const state = () => ({
   audio: '',
   sub: '',
   theme: {},
+  weather: [],
   initTheme: {
     darktheme: false,
     background: '#f7f7f7',
@@ -10,6 +11,7 @@ export const state = () => ({
   },
   loadingTheme: true,
   loadingAudio: false,
+  loadingweather: true,
 })
 
 export const actions = {
@@ -96,6 +98,23 @@ export const actions = {
 
   setLoadingAudio({ commit }, data) {
     commit('setState', { loadingAudio: false })
+  },
+
+  setWeather({ commit }, data) {
+    console.log('setWeather')
+    this.$cookies.set('weather',data, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
+    })
+    this.dispatch('getWeather');
+  },
+  getWeather({ commit }) {
+    console.log('getWeather')
+    const weatherCookie = this.$cookies.get('weather')
+    commit('setState', { weather: weatherCookie })
+    setTimeout(function () {
+      commit('setState', { loadingweather: false })
+    }, 200);
   },
   
 }
