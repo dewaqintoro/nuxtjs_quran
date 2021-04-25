@@ -20,7 +20,7 @@
                   <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" /> {{currentDate}}</p>
                   <img :src="imgUrl" class="imgUrl"/>
                   <p v-if="weather.weather">{{weather.weather.description}}</p>
-                  <p class="text-3xl font-bold py-2">{{weather.temp}}°C</p>
+                  <p class="font-bold py-2 text-4xl">{{weather.temp}}°C</p>
                 </div>
                 <div v-else class="loadingFetch ml-4 h-64">
                   <p class="">loading</p>
