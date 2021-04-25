@@ -156,9 +156,9 @@ export default {
       }
 
       // const url = `http://localhost:5000/api/v1/cuaca`
-      const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
+      // const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
+      const url = `http://www.back-end.my.id/api/v1/cuaca`
       // const url = `http://localhost:5000/api/v1/history`
-      // const result = await axios.get(url, {params});
 
       if(selectedCity.value[0] !== 'undefined'){
         const result = await axios.get(url, {params});
