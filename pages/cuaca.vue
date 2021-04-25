@@ -5,23 +5,25 @@
       <div class="container">
         <div class="my-item">
           <p>v1e</p>
-          <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
+          <div class="search">
+            <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
+          </div>
           <!-- <h1>Lokasi v2</h1> -->
           <p v-if="ifError">Data tidak tersedia</p>
           <div v-else>
             <div v-if="!loadingweather" class="text-center items-center">
-              <img :src="iconUrl" class="imgUrl"/>
+              <img :src="imgUrl" class="imgUrl"/>
               <p v-if="storeWeather">{{storeWeather.city_name}}</p>
               <p v-if="storeWeather">{{storeWeather.weather.description}}</p>
               <p>{{storeWeather.app_temp}}°C</p>
             </div>
           </div>
-          <button @click="cek">cek</button>
+          <!-- <button @click="cek">cek</button>
           <hr/>
           <button @click="setWeather">setWeather</button>
           <hr />
           <button @click="cekCuaca">cekCuaca</button>
-          <button @click="getWeather">getWeather</button>
+          <button @click="getWeather">getWeather</button> -->
           
         </div>
       </div>
@@ -57,22 +59,48 @@ export default {
     const selectedCity = ref([initialData])
     const ifError = ref(false)
     const loading = ref (true)
-    const imgUrl = ref('/Haze.svg')
+    const imgUrl = ref('')
     const storeWeather = computed(() => store.state.weather)
     const loadingweather = computed(() => store.state.loadingweather)
     const author = `<a href='https://www.freepik.com/vectors/icons'>Icons vector created by anindyanfitri - www.freepik.com</a>`
 
     const iconUrl = computed(() => {
-      if(storeWeather.value?.weather?.code === 802){
-        return '/Clouds.svg'
-      }else {
+      if(storeWeather.value?.weather?.code == (200 || 201 || 202)){
+        return '/ThunderstormRain.svg'
+      }
+      else if(storeWeather.value?.weather?.code == (230 || 231 || 232 || 233)){
+        return '/Thunderstorm.svg'
+      }
+      else if(storeWeather.value?.weather?.code == (808 || 804)){
+        console.log('ketemu')
+        return '/Default.svg'
+      }
+      else if(storeWeather.value?.weather?.code === (300 || 301 || 302)){
+        return '/Drizzle.svg'
+      }
+      else if(storeWeather.value?.weather?.code === 500 || 501 || 502 || 511 || 520 || 521 || 522){
+        return '/Rain.svg'
+      }
+      else if(storeWeather.value?.weather?.code === 600 || 601 || 602 || 610){
+        return '/Snow.svg'
+      }
+      else if(storeWeather.value?.weather?.code === 611 || 612){
+        return '/Sleet.svg'
+      }
+      else if(storeWeather.value?.weather?.code === 700 || 711 || 721 || 731 || 741 || 751){
         return '/Haze.svg'
+      }
+      else if(storeWeather.value?.weather?.code === 800){
+        return '/Clear.svg'
+      }
+      else {
+        return '/Default.svg'
       }
     })
     // searchFilter(search.value)
     // searchFilter()
 
-    // cekCuaca()
+    cekCuaca()
 
     // getWeather()
 
@@ -123,7 +151,9 @@ export default {
       if(selectedCity.value[0] !== 'undefined'){
         const result = await axios.get(url, {params});
         weather.value = result?.data?.data[0]
+        imgUrl.value = `https://www.weatherbit.io/static/img/icons/${result?.data?.data[0]?.weather?.icon}.png`
         minutely.value = result.data?.minutely
+        store.dispatch('setWeather', result?.data?.data[0])
         loading.value = false
         // console.log('result v2', result?.data)
       } else {
@@ -147,10 +177,10 @@ export default {
         selectedCity.value = result
         ifError.value = false
         cekCuaca()
-      } else if (result.length === 8912) {
+      } else if (result.length > 20) {
         ifError.value = false
       } else {
-        if(result.length <=100){
+        if(result.length <=20){
           result.map(hasil => {
             if(hasil.name.length === data.length){
               selectedCity.value = result
@@ -167,9 +197,7 @@ export default {
     }
 
     async function cek(){
-      console.log('storeWeather.value', storeWeather.value)
-      console.log('storeWeather?.weather?.code', storeWeather.value?.weather?.code)
-      // console.log('selectedCity.value[0] ', selectedCity.value[0] )
+      console.log('storeWeather', storeWeather, iconUrl, storeWeather.value?.weather?.code)
     }
 
   }
@@ -185,7 +213,10 @@ export default {
   @apply bg-gray-300 text-center;
   z-index: 10;
 }
-
+.search {
+  @apply items-center flex justify-center m-auto;
+  max-width: 250px;
+}
 .imgUrl {
   @apply px-16 w-full;
   max-width: 300px;
@@ -195,7 +226,8 @@ export default {
   position: relative;
   max-width: 400px;
   max-height: 400px;
-  background: rgba(255, 255, 255, 0.1);
+  /* background: rgba(255, 255, 255, 0.1); */
+  background: white;
   border-radius: 10px;
   display: flex;
   justify-content: center;
