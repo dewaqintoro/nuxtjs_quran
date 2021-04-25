@@ -5,26 +5,38 @@
       <div class="container">
         <div class="my-item">
           <!-- <h1>Lokasi v2</h1> -->
+          <div class="search">
+              <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
+          </div>
           <p v-if="ifError">Data tidak tersedia</p>
           <div v-if="loadingweather" class="loading">
             <Loading :sum="2" :theme="initTheme" />
           </div>
           <div v-else>
-            <div v-if="weather.weather">
-              <div class="search">
-                <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
+            <div>
+              <div>
+                <div v-if="weather.weather" class="text-center items-center p-4">
+                  <p class="text-xl font-bold py-2" v-if="weather"><font-awesome-icon :icon="['fas', 'map-marker-alt']" /> {{weather.city_name}} - Indonesia</p>
+                  <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" /> {{currentDate}}</p>
+                  <img :src="imgUrl" class="imgUrl"/>
+                  <p v-if="weather.weather">{{weather.weather.description}}</p>
+                  <p class="text-3xl font-bold py-2">{{weather.temp}}°C</p>
+                </div>
+                <div v-else class="loadingFetch ml-4 h-64">
+                  <p class="">loading</p>
+                </div>
               </div>
-              <div class="text-center items-center p-4">
-                <p class="text-xl font-bold py-2" v-if="weather"><font-awesome-icon :icon="['fas', 'map-marker-alt']" /> {{weather.city_name}} - Indonesia</p>
-                <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" /> {{currentDate}}</p>
-                <img :src="imgUrl" class="imgUrl"/>
-                <p v-if="weather.weather">{{weather.weather.description}}</p>
-                <p class="text-3xl font-bold py-2">{{weather.temp}}°C</p>
-              </div>
-              <div class="other">
-                <p>Relative humidity : {{rh}}%</p>
-                <p>Wind speed : {{wind_spd}} m/s</p>
-                <button @click="cek">cek</button>
+                <!-- <button @click="cek">cek</button> -->
+              <div class="other text-lg">
+                <div v-if="weather.weather" >
+                  <p>Relative humidity : {{rh}}%</p>
+                  <p>Wind speed : {{wind_spd}} m/s</p>
+                  <p>Latitude : {{weather.lat}}</p>
+                  <p>Longitude  : {{weather.lon}}</p>
+                </div>
+                <div v-else class="loadingFetch h-16">
+                  <p>loading</p>
+                </div>
               </div>
             </div>
           </div>
@@ -150,11 +162,13 @@ export default {
 
       if(selectedCity.value[0] !== 'undefined'){
         const result = await axios.get(url, {params});
-        weather.value = result?.data?.data[0]
-        imgUrl.value = `https://www.weatherbit.io/static/img/icons/${result?.data?.data[0]?.weather?.icon}.png`
-        minutely.value = result.data?.minutely
-        store.dispatch('setWeather', result?.data?.data[0])
-        loading.value = false
+        if(result?.data?.data){
+          weather.value = result?.data?.data[0]
+          imgUrl.value = `https://www.weatherbit.io/static/img/icons/${result?.data?.data[0]?.weather?.icon}.png`
+          minutely.value = result.data?.minutely
+          store.dispatch('setWeather', result?.data?.data[0])
+          loading.value = false
+        }
       } else {
         console.log(selectedCity)
       }
@@ -193,14 +207,7 @@ export default {
     }
 
     async function cek(){
-      var today = new Date();
-		  var curr_hour = today.getHours();
-      if (curr_hour > 17){
-
-      }
-
-      console.log('curr_hour', curr_hour)
-
+      console.log('weather.value', weather.value)
     }
 
   }
@@ -216,6 +223,11 @@ export default {
   @apply w-full;
   width: 280px;
   height: 400px;
+}
+
+.loadingFetch{
+  @apply w-full text-center;
+  width: 280px;
 }
 
 .content {
