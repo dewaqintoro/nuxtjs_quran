@@ -4,14 +4,16 @@
       
       <div class="container">
         <div class="my-item">
-          <!-- <h2>Login my-item</h2> -->
+          <p>v1e</p>
           <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
           <!-- <h1>Lokasi v2</h1> -->
           <p v-if="ifError">Data tidak tersedia</p>
           <div v-else>
-            <p v-if="weather.weather">{{weather.city_name}}, {{selectedCity[0].admin_name}}</p>
-            <p v-if="weather.weather">{{weather.weather.description}}</p>
-            <p>{{weather.app_temp}}°C</p>
+            <div v-if="!loading">
+              <p v-if="weather.weather">{{weather.city_name}}, {{selectedCity[0].admin_name}}</p>
+              <p v-if="weather.weather">{{weather.weather.description}}</p>
+              <p>{{weather.app_temp}}°C</p>
+            </div>
           </div>
           <!-- <button @click="cek">cek</button> -->
         </div>
@@ -47,6 +49,7 @@ export default {
     })
     const selectedCity = ref([initialData])
     const ifError = ref(false)
+    const loading = ref (true)
     const author = `<a href='https://www.freepik.com/vectors/icons'>Icons vector created by anindyanfitri - www.freepik.com</a>`
 
     // searchFilter(search.value)
@@ -60,6 +63,7 @@ export default {
       selectedCity,
       minutely,
       allData,
+      loading,
       dataFields,
       searchFilter,
       cek,
@@ -69,10 +73,11 @@ export default {
 
     async function cekCuaca(){
       console.log('selectedCity', selectedCity.value)
+      loading.value = true
        const params = {
-        // lat : selectedCity.value[0]?.latitude,
-        // long : selectedCity.value[0]?.longitude,
-        city : selectedCity.value[0]?.city || 'Sleman',
+        lat : selectedCity.value[0]?.lat || '-7.7156',
+        long : selectedCity.value[0]?.lng || '110.3556',
+        // city : selectedCity.value[0]?.city || 'Sleman',
       }
 
       // const url = `http://localhost:5000/api/v1/cuaca`
@@ -85,9 +90,10 @@ export default {
         const result = await axios.get(url, {params});
         weather.value = result?.data?.data[0]
         minutely.value = result.data?.minutely
-        console.log('result v2', result?.data)
+        loading.value = false
+        // console.log('result v2', result?.data)
       } else {
-        console.log('selectedCity undefined', selectedCity)
+        console.log(selectedCity)
       }
            
     }
@@ -101,6 +107,7 @@ export default {
         doa.city.toLowerCase().includes(data.toLowerCase())
       );
       allData.value = result
+      console.log(result.length)
       
       if(result.length === 1){
         selectedCity.value = result
@@ -109,10 +116,11 @@ export default {
       } else if (result.length === 8912) {
         ifError.value = false
       } else {
-        if(result.length <=10){
+        if(result.length <=100){
           result.map(hasil => {
             if(hasil.city.length === data.length){
               selectedCity.value = result
+              console.log('hasil', selectedCity.value)
               cekCuaca()
             } else {
               ifError.value = true
