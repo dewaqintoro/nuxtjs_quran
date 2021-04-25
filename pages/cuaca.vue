@@ -4,23 +4,28 @@
       
       <div class="container">
         <div class="my-item">
-          <p>v1e</p>
           <div class="search">
             <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
           </div>
           <!-- <h1>Lokasi v2</h1> -->
           <p v-if="ifError">Data tidak tersedia</p>
           <div v-else>
-            <div v-if="!loadingweather" class="text-center items-center">
-              <img :src="imgUrl" class="imgUrl"/>
-              <p v-if="storeWeather">{{storeWeather.city_name}}</p>
-              <p v-if="storeWeather">{{storeWeather.weather.description}}</p>
-              <p>{{storeWeather.app_temp}}°C</p>
+            <div v-if="!loadingweather && weather.weather">
+              <div class="text-center items-center p-4">
+                <p class="text-xl font-bold py-2" v-if="weather"><font-awesome-icon :icon="['fas', 'map-marker-alt']" /> {{weather.city_name}} - Indonesia</p>
+                <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" /> {{currentDate}}</p>
+                <img :src="imgUrl" class="imgUrl"/>
+                <p v-if="weather.weather">{{weather.weather.description}}</p>
+                <p class="text-3xl font-bold py-2">{{weather.temp}}°C</p>
+              </div>
+              <div class="other">
+                <p>Relative humidity : {{rh}}%</p>
+                <p>Wind speed : {{wind_spd}} m/s</p>
+          <!-- <button @click="cek">cek</button> -->
+              </div>
             </div>
           </div>
-          <!-- <button @click="cek">cek</button>
-          <hr/>
-          <button @click="setWeather">setWeather</button>
+          <!-- <button @click="setWeather">setWeather</button>
           <hr />
           <button @click="cekCuaca">cekCuaca</button>
           <button @click="getWeather">getWeather</button> -->
@@ -60,46 +65,31 @@ export default {
     const ifError = ref(false)
     const loading = ref (true)
     const imgUrl = ref('')
+    const wind_spd = computed(() => {
+      const spd = weather.value.wind_spd.toString()
+      return spd.substring(0, 4)
+    })
+    const rh = computed(() => {
+      const data = weather.value.rh.toString()
+      return data.substring(0, 4)
+    })
+    // const currentDate = ref('')
+    const currentDate = computed(() => {
+
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var myDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var date = new Date();
+      var day = date.getDate();
+      var month = date.getMonth();
+      var thisDay = date.getDay(),
+          thisDay = myDays[thisDay];
+      var yy = date.getYear();
+      var year = (yy < 1000) ? yy + 1900 : yy;
+      return thisDay + ', ' + day + ' ' + months[month] + ' ' + year
+    })
     const storeWeather = computed(() => store.state.weather)
     const loadingweather = computed(() => store.state.loadingweather)
     const author = `<a href='https://www.freepik.com/vectors/icons'>Icons vector created by anindyanfitri - www.freepik.com</a>`
-
-    const iconUrl = computed(() => {
-      if(storeWeather.value?.weather?.code == (200 || 201 || 202)){
-        return '/ThunderstormRain.svg'
-      }
-      else if(storeWeather.value?.weather?.code == (230 || 231 || 232 || 233)){
-        return '/Thunderstorm.svg'
-      }
-      else if(storeWeather.value?.weather?.code == (808 || 804)){
-        console.log('ketemu')
-        return '/Default.svg'
-      }
-      else if(storeWeather.value?.weather?.code === (300 || 301 || 302)){
-        return '/Drizzle.svg'
-      }
-      else if(storeWeather.value?.weather?.code === 500 || 501 || 502 || 511 || 520 || 521 || 522){
-        return '/Rain.svg'
-      }
-      else if(storeWeather.value?.weather?.code === 600 || 601 || 602 || 610){
-        return '/Snow.svg'
-      }
-      else if(storeWeather.value?.weather?.code === 611 || 612){
-        return '/Sleet.svg'
-      }
-      else if(storeWeather.value?.weather?.code === 700 || 711 || 721 || 731 || 741 || 751){
-        return '/Haze.svg'
-      }
-      else if(storeWeather.value?.weather?.code === 800){
-        return '/Clear.svg'
-      }
-      else {
-        return '/Default.svg'
-      }
-    })
-    // searchFilter(search.value)
-    // searchFilter()
-
     cekCuaca()
 
     // getWeather()
@@ -109,11 +99,13 @@ export default {
       dataCity,
       weather,
       selectedCity,
+      currentDate,
       storeWeather,
       imgUrl,
-      iconUrl,
       minutely,
       allData,
+      wind_spd,
+      rh,
       loading,
       dataFields,
       searchFilter,
@@ -135,11 +127,11 @@ export default {
 
 
     async function cekCuaca(){
-      console.log('selectedCity', selectedCity.value)
       loading.value = true
        const params = {
         lat : selectedCity.value[0]?.latitude || '-7.7156',
         long : selectedCity.value[0]?.longitude || '110.3556',
+        lang: 'en'
         // city : selectedCity.value[0]?.city || 'Sleman',
       }
 
@@ -155,7 +147,6 @@ export default {
         minutely.value = result.data?.minutely
         store.dispatch('setWeather', result?.data?.data[0])
         loading.value = false
-        // console.log('result v2', result?.data)
       } else {
         console.log(selectedCity)
       }
@@ -163,7 +154,6 @@ export default {
     }
 
     function searchFilter(data){
-      console.log('key search', data)
       if(data === null ){
         data = ''
       }
@@ -171,8 +161,6 @@ export default {
         doa.name.toLowerCase().includes(data.toLowerCase())
       );
       allData.value = result
-      console.log('result', result)
-      
       if(result.length === 1){
         selectedCity.value = result
         ifError.value = false
@@ -197,7 +185,14 @@ export default {
     }
 
     async function cek(){
-      console.log('storeWeather', storeWeather, iconUrl, storeWeather.value?.weather?.code)
+      var today = new Date();
+		  var curr_hour = today.getHours();
+      if (curr_hour > 17){
+
+      }
+
+      console.log('curr_hour', curr_hour)
+
     }
 
   }
@@ -210,33 +205,37 @@ export default {
 }
 
 .content {
-  @apply bg-gray-300 text-center;
+  /* @apply bg-gray-300; */
   z-index: 10;
 }
 .search {
-  @apply items-center flex justify-center m-auto;
+  @apply items-center flex justify-center m-auto pt-4;
   max-width: 250px;
 }
 .imgUrl {
   @apply px-16 w-full;
   max-width: 300px;
 }
+.other {
+  @apply w-full h-full rounded-b-lg p-4;
+  background: #00CCFF;
+}
 .container{
-  @apply w-full h-full;
+  @apply w-full h-full rounded-lg;
   position: relative;
   max-width: 400px;
-  max-height: 400px;
+  max-height: 600px;
   /* background: rgba(255, 255, 255, 0.1); */
   background: white;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   display: flex;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(5px);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  /* border: 1px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 .my-item {

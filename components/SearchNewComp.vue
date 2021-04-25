@@ -2,7 +2,7 @@
   <div class="cari" :class="bgId">
     <!-- <button @click="cek">cek</button> -->
     <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
-      <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='data' :fields='fields' placeholder="Pencarian. . ." :highlight="true" >
+      <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='data' :fields='fields' placeholder="Search. . ." :highlight="true" >
       </ejs-autocomplete>
     </div>
   </div>
