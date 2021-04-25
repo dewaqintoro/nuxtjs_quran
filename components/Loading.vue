@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
+    <div v-for="(x, index) in sum" :key="index" class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
       <div class="flex">
         <div class="nameSurahLoading">
           <div class="flex justify-between">
@@ -18,62 +18,6 @@
         </div>
       </div>
     </div>
-    <div class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-        <div class="flex">
-          <div class="nameSurahLoading">
-            <div class="flex justify-between">
-              <div class="satuA loading"></div>
-              <div class="satuB loading"></div>
-            </div>
-            <div class="flex justify-between">
-              <div class="duaA"></div>
-              <div class="duaB loading"></div>
-            </div>
-            <div class="flex justify-between">
-              <div class="tigaA"></div>
-              <div class="tigaB loading"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card my-8" :style="{ boxShadow: theme.boxShadow }">
-        <div class="flex">
-          <div class="nameSurahLoading">
-            <div class="flex justify-between">
-              <div class="satuA loading"></div>
-              <div class="satuB loading"></div>
-            </div>
-            <div class="flex justify-between">
-              <div class="duaA"></div>
-              <div class="duaB loading"></div>
-            </div>
-            <div class="flex justify-between">
-              <div class="tigaA"></div>
-              <div class="tigaB loading"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card my-8" :style="{ boxShadow: theme.boxShadow }">
-        <div class="flex">
-          <div class="nameSurahLoading">
-            <div class="flex justify-between">
-              <div class="satuA loading"></div>
-              <div class="satuB loading"></div>
-            </div>
-            <div class="flex justify-between">
-              <div class="duaA"></div>
-              <div class="duaB loading"></div>
-            </div>
-            <div class="flex justify-between">
-              <div class="tigaA"></div>
-              <div class="tigaB loading"></div>
-            </div>
-          </div>
-        </div>
-      </div>
   </div>
 </template>
 
@@ -86,6 +30,11 @@ export default {
       type: Object,
       required: true,
     },
+    sum: {
+      type: Number,
+      required: false,
+      default: 4
+    },
   },
   setup(){
   }
@@ -94,7 +43,7 @@ export default {
 
 <style lang="postcss" scoped>
 .item {
-  @apply my-8;
+  @apply my-8 mx-4;
 }
 .card {
   @apply text-3xl p-4 rounded-lg;

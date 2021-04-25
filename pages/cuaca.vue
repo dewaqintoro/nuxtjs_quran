@@ -4,13 +4,16 @@
       
       <div class="container">
         <div class="my-item">
-          <div class="search">
-            <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
-          </div>
           <!-- <h1>Lokasi v2</h1> -->
           <p v-if="ifError">Data tidak tersedia</p>
+          <div v-if="loadingweather" class="loading">
+            <Loading :sum="2" :theme="initTheme" />
+          </div>
           <div v-else>
-            <div v-if="!loadingweather && weather.weather">
+            <div v-if="weather.weather">
+              <div class="search">
+                <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
+              </div>
               <div class="text-center items-center p-4">
                 <p class="text-xl font-bold py-2" v-if="weather"><font-awesome-icon :icon="['fas', 'map-marker-alt']" /> {{weather.city_name}} - Indonesia</p>
                 <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" /> {{currentDate}}</p>
@@ -21,14 +24,10 @@
               <div class="other">
                 <p>Relative humidity : {{rh}}%</p>
                 <p>Wind speed : {{wind_spd}} m/s</p>
-          <!-- <button @click="cek">cek</button> -->
+                <button @click="cek">cek</button>
               </div>
             </div>
           </div>
-          <!-- <button @click="setWeather">setWeather</button>
-          <hr />
-          <button @click="cekCuaca">cekCuaca</button>
-          <button @click="getWeather">getWeather</button> -->
           
         </div>
       </div>
@@ -41,11 +40,13 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import dataJson from '~/data/csvjson.json'
 import SearchComp from '~/components/SearchNewComp.vue'
 import axios from 'axios'
+import Loading from '@/components/Loading.vue'
 
 export default {
   name: 'Quran',
   components: {
-    SearchComp
+    SearchComp,
+    Loading
   },
   setup(_, {emit}){
     const { app, store } = useContext()
@@ -89,6 +90,12 @@ export default {
     })
     const storeWeather = computed(() => store.state.weather)
     const loadingweather = computed(() => store.state.loadingweather)
+    const initTheme = {
+      darktheme: false,
+      background: '#f7f7f7',
+      color: 'black',
+      boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+    }
     const author = `<a href='https://www.freepik.com/vectors/icons'>Icons vector created by anindyanfitri - www.freepik.com</a>`
     cekCuaca()
 
@@ -106,6 +113,7 @@ export default {
       allData,
       wind_spd,
       rh,
+      initTheme,
       loading,
       dataFields,
       searchFilter,
@@ -204,6 +212,12 @@ export default {
   @apply min-h-screen bg-gray-100 items-center flex justify-center;
 }
 
+.loading {
+  @apply w-full;
+  width: 280px;
+  height: 400px;
+}
+
 .content {
   /* @apply bg-gray-300; */
   z-index: 10;
@@ -214,7 +228,7 @@ export default {
 }
 .imgUrl {
   @apply px-16 w-full;
-  max-width: 300px;
+  max-width: 350px;
 }
 .other {
   @apply w-full h-full rounded-b-lg p-4;
