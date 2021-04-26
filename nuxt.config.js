@@ -4,7 +4,7 @@ export default {
       config.output.globalObject = "this"
   },
   head: {
-    title: 'Al-Quran',
+    title: 'Ngoding Bentar',
     htmlAttrs: {
       lang: 'en'
     },
