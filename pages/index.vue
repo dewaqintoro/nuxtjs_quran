@@ -24,7 +24,7 @@ import dataJson from '~/data/myindex.json'
 import Cardcomp from '@/components/GlobalCardComp'
 
 export default {
-  name: 'Quran',
+  name: 'Ngodingbentar',
   components: {
     Navbar,
     Loading,

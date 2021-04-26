@@ -20,6 +20,13 @@
       "route" : "shorten",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 4,
+      "title": "Cek Ongkir",
+      "route" : "cekongkir",
+      "description": "",
+      "icon": ""
     }
   ]
 }
