@@ -876,6 +876,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@dafcoe/vue-notification@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@dafcoe/vue-notification/-/vue-notification-0.1.6.tgz#62b979ff9619259d9be6e9125da9afb63eb3db35"
+  integrity sha512-tX/V1/4wgrxWKQ9QDPzBTYBrOSFFBzHhvqSSyZzboBL+kCHcGRDAnRM9hG316+ib0lgn5eIt1u3n9dRfc1gOZw==
+
 "@fortawesome/fontawesome-common-types@^0.2.35":
   version "0.2.35"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.35.tgz#01dd3d054da07a00b764d78748df20daf2b317e9"
