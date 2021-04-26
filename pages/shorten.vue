@@ -32,7 +32,7 @@ import Toast from '@/components//Toast'
 
 import axios from 'axios'
 export default {
-  name: 'SearchComp',
+  name: 'Shorten',
   components: {
     Toast
   },

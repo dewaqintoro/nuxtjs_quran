@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Al-Quran",
+      "route" : "agama/al-quran",
+      "description": "",
+      "icon": ""
+    },
+    {
+      "id": 3,
+      "title": "Cuaca",
+      "route" : "cuaca",
+      "description": "",
+      "icon": ""
+    },
+    {
+      "id": 3,
+      "title": "Shorten Link",
+      "route" : "shorten",
+      "description": "",
+      "icon": ""
+    }
+  ]
+}
