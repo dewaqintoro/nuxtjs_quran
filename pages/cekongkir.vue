@@ -156,7 +156,7 @@ export default {
     const biayaTiki = ref('')
     const picked = ref('')
     const myTheme = {
-      background: 'bg-gray-100',
+      background: 'rgb(241, 241, 241)',
       color: 'black',
       boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
     }
@@ -240,10 +240,11 @@ export default {
 
 <style lang="postcss" scoped>
 .main-menu{
-  @apply min-h-screen bg-gray-100 pb-8;
+  background: rgb(241, 241, 241);
+  @apply min-h-screen pb-8 pt-16;
 }
 .section {
-  @apply block mb-8 px-8 justify-between mt-2;
+  @apply block mb-8 px-8 justify-between;
 }
 .section-input {
   @apply w-full p-8;

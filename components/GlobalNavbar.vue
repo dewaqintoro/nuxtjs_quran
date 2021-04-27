@@ -6,6 +6,11 @@
           <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
+      <div class="end box" :style="{ boxShadow: theme.boxShadow }">
+        <button class="btn-setting focus:outline-none" @click="doSetting()">
+          <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
+        </button>
+      </div>
     </div>
   </header>
 </template>
@@ -13,14 +18,14 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 export default defineComponent({
-  name: 'GlobalNavbar',
+  name: 'Navbar',
   props: {
     theme: {
       type: Object,
       required: true,
     },
   },
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const { store, route, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
@@ -81,8 +86,17 @@ export default defineComponent({
   height: 25px;
 }
 
+@font-face {
+  font-family: "lpmq";
+  src: url(/fonts/lpmq.otf) format("opentype");
+  font-display: swap;
+}
+.font-arabic{
+  font-family: "lpmq", Arial, sans-serif;
+  line-height: 2;
+}
 .app-header {
-  @apply w-full top-0 py-2;
+  @apply fixed w-full top-0 py-4;
   @apply z-30 select-none;
   height: var(--header-height);
   min-width: 320px;

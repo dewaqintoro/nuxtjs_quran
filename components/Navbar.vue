@@ -78,15 +78,15 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .box {
   @apply rounded-full;
-  padding: 10px;
-  font-size: 20px;
+  padding: 8px;
+  font-size: 18px;
   place-items: center;
   text-align: center;
 }
 
 .btn-setting {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 }
 
 @font-face {
