@@ -1,6 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gray-100 ">
-    <Navbar />
+<span>
+  <Navbar :theme="myTheme" />
+  <div class="main-menu">
     <!-- <div class="bg-white">
       <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -73,7 +74,18 @@
                   </div>
                 </div>
               </div>
-              <div class="berat flex flex-wrap mb-2">
+              <!-- <div class="berat flex flex-wrap mb-2">
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                  <label class="block tracking-wide text-black text-xs font-bold mb-2" for="grid-city">
+                    Berat (gram)
+                  </label>
+                  <input v-model="berat" @change="cek($event)"  class="appearance-none block w-full text-black border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="1000">
+                </div>
+              </div> -->
+            </form>
+          </div>
+          <!-- <hr class="mt-2"/> -->
+          <div class="berat flex flex-wrap mb-2 pt-4">
                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label class="block tracking-wide text-black text-xs font-bold mb-2" for="grid-city">
                     Berat (gram)
@@ -81,15 +93,13 @@
                   <input v-model="berat" @change="cek($event)"  class="appearance-none block w-full text-black border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="1000">
                 </div>
               </div>
-            </form>
-          </div>
           <button @click="cekBiaya()" class="cek-biaya focus:outline-none justify-end text-white font-bold py-2 px-4 rounded-full">
             Cek biaya
           </button>
         </div>
       </div>
       <div class="section-input lg:w-2/6 ">
-        <div class="bg-white p-8 rounded-3xl">
+        <div class="menu-kurir">
           <div class="text-center">
             <p class="text-lg font-bold">Kurir</p>
           </div>
@@ -120,10 +130,11 @@
       </div>
     </div>
   </div>
+</span>
 </template>
 <script>
 import { ref } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import Navbar from '~/components/GlobalNavbar'
 import axios from 'axios'
 export default {
   name: 'CekOngkir',
@@ -144,6 +155,11 @@ export default {
     const biayaPos = ref('')
     const biayaTiki = ref('')
     const picked = ref('')
+    const myTheme = {
+      background: 'bg-gray-100',
+      color: 'black',
+      boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+    }
 
     setProv()
 
@@ -151,6 +167,7 @@ export default {
       berat,
       province,
       city,
+      myTheme,
       cityAsal,
       asalProv,
       asalCity,
@@ -222,8 +239,11 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.main-menu{
+  @apply min-h-screen bg-gray-100 pb-8;
+}
 .section {
-  @apply block mb-8 px-8 justify-between mt-20;
+  @apply block mb-8 px-8 justify-between mt-2;
 }
 .section-input {
   @apply w-full p-8;
@@ -235,9 +255,9 @@ export default {
   @apply w-1/2 border-r-2 border-l-2;
 }
 .items{
-  @apply flex flex-wrap mb-6 w-full;
+  @apply flex flex-wrap w-full;
   .item {
-    @apply w-full px-3 mb-6;
+    @apply w-full px-3 mb-4;
   }
 }
 .garis {
@@ -253,6 +273,10 @@ export default {
   background: #0fbcf9;
 }
 
+.menu-kurir{
+  @apply bg-white p-8 rounded-3xl;
+}
+
 .section-kurir {
   max-height: 350px;
 }
@@ -262,7 +286,7 @@ export default {
     @apply block;
   }
   .section {
-    @apply px-2;
+    @apply px-2 pt-4;
   }
   .section-input {
     @apply w-full p-2;
@@ -280,7 +304,10 @@ export default {
     }
   }
   .berat {
-    @apply mt-8;
+    @apply mt-4;
+  }
+  .menu-kurir{
+    @apply p-4;
   }
 }
 
