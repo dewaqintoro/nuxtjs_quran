@@ -7,9 +7,9 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <div class="item" v-for="(item, index) in dataDoa" :key="index">
-          <Cardcomp :theme="storeTheme" :item="item"/>
-        </div>
+        <nuxt-link :to="item.route" v-for="(item, index) in dataDoa" :key="index">
+          <Cardcomp class="content" :theme="storeTheme" :item="item"/>
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -74,26 +74,11 @@ export default {
   }
 }
 .main {
-  @apply pt-24 min-h-screen pb-8;
+  @apply pt-24 min-h-screen pb-8 px-40;
 }
-@font-face {
-  font-family: "lpmq";
-  src: url(/fonts/lpmq.otf) format("opentype");
-  font-display: swap;
-}
-html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-.font-arabic{
-  font-family: "lpmq", Arial, sans-serif;
-  line-height: 2;
+
+.content {
+  @apply my-8;
 }
 .item {
   @apply px-8 mx-36 my-4;
@@ -108,7 +93,7 @@ html {
 }
 @screen mobile {
   .main {
-    @apply pt-20;
+    @apply pt-20 px-8;
   }
   .item {
     @apply mx-2 px-2;

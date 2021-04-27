@@ -1,6 +1,6 @@
 <template>
   <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-    <nuxt-link :to="item.route" class="content">
+    <div class="content">
       <!-- <div class="content"> -->
         <!-- <div class="idSurah" :style="{ boxShadow: theme.boxShadow  }">
           <p class="text-lg">{{item.index}}X</p>
@@ -9,7 +9,7 @@
           <p>{{item.title}}</p>
         </div>
       <!-- </div> -->
-    </nuxt-link>
+    </div>
   </div>
 </template>
 
@@ -71,7 +71,7 @@ export default {
     height: 45px;
   }
   .content {
-    @apply px-4 w-full pt-4;
+    @apply px-4 w-full;
   }
 }
 
