@@ -3,19 +3,20 @@
   <Navbar :theme="myTheme" />
   <div class="section">
     <div class="main">
-      <div class="head">Short links</div>
+      <div class="head">Url Shortener</div>
       <transition name="toast">
         <Toast class="text-center m-auto w-full" v-if="showToast" />
       </transition>
       <div class="search">
-        <input class="input-search focus:outline-none" id="username" type="search" v-model="search" placeholder="Place link. . .">
-
+        <!-- <input class="input-search focus:outline-none" id="username" type="text" v-model="search" placeholder="Paste long url and shorten it."> -->
+        <input class="input-search focus:outline-none" id="username" type="text" v-model="search" @focus="clearSearch" placeholder="Paste long url and shorten it.">
+          <!-- <font-awesome-icon class="iconTheme" :icon="['fas', 'times']" /> -->
         <button @click="searchFilter()" class="btn-search focus:outline-none" type="button">
           Shorten
         </button>
       </div>
       <div class="short-url">
-        <input class="copy-text" :value="myLink.shortUrl" />
+        <input class="copy-text text-center focus:outline-none" :value="myLink.shortUrl || '-'" />
         <button class="focus:outline-none mx-2 bg-gray-100 py-2 px-4 rounded-lg" @click="copy">
           Copy
         </button>
@@ -66,7 +67,12 @@ export default {
       copy,
       outFunc,
       showToast,
-      triggerToast
+      triggerToast,
+      clearSearch,
+    }
+
+    function clearSearch(){
+      console.log('clearSearch')
     }
 
     function outFunc() {
