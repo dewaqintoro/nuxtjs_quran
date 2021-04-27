@@ -84,7 +84,7 @@ export default {
   @apply px-8 mx-36 my-4;
 }
 .card {
-  @apply text-3xl p-4 rounded-lg;
+  @apply text-2xl p-4 rounded-lg;
 }
 @screen tablet {
   .main {

@@ -6,11 +6,11 @@
           <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
-      <div class="end box" :style="{ boxShadow: theme.boxShadow }">
+      <!-- <div class="end box" :style="{ boxShadow: theme.boxShadow }">
         <button class="btn-setting focus:outline-none" @click="doSetting()">
           <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
         </button>
-      </div>
+      </div> -->
     </div>
   </header>
 </template>
