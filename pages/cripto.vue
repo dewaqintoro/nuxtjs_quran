@@ -31,23 +31,66 @@
             <div class="port-head">
               Portofolio
             </div>
-            <div class="portfolio-card ">
-              <div class="pl-6 pt-6">
-                <h1 class="font-bold text-xl ">$ 17 643.41</h1>
-                <p>Portfolio balance</p>
-              </div>
-              <div class="pb-4">
-                <img src="/cripto/port2.png"/>
+            <div class="p-4">
+              <div class="portfolio-card ">
+                <div class="pl-6 pt-6">
+                  <h1 class="font-bold text-xl ">$ 17 643.41</h1>
+                  <p>Portfolio balance</p>
+                </div>
+                <div class="pb-4">
+                  <img src="/cripto/port2.png"/>
+                </div>
               </div>
             </div>
           </div>
           <div class="w-2/3 pl-8">
-            <div class="content-head flex justify-between">
+            <div class="flex justify-between">
               <div>
-                <h1>Portfolio</h1>
+                <h1>Your Assets</h1>
               </div>
               <div>
                 <font-awesome-icon :icon="['fas', 'sliders-h']" />
+              </div>
+            </div>
+            <div class="flex">
+              <div class="asset-content">
+                <div class="asset-card btc">
+                  <div class="flex justify-between">
+                    <p class="font-bold text-xl">1.25 BTC</p>
+                    <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                  </div>
+                  <p>$ 2948.04</p>
+                  <div class="asset-coin">
+                    <img src="/cripto/btc.png"/>
+                    <p>+ 0.14%</p>
+                  </div>
+                </div>
+              </div>
+              <div class="asset-content">
+                <div class="asset-card btc ltc">
+                  <div class="flex justify-between">
+                    <p class="font-bold text-xl">1.25 BTC</p>
+                    <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                  </div>
+                  <p>$ 2948.04</p>
+                  <div class="asset-coin">
+                    <img src="/cripto/btc.png"/>
+                    <p>+ 0.14%</p>
+                  </div>
+                </div>
+              </div>
+              <div class="asset-content">
+                <div class="asset-card eth">
+                  <div class="flex justify-between">
+                    <p class="font-bold text-xl">1.25 BTC</p>
+                    <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                  </div>
+                  <p>$ 2948.04</p>
+                  <div class="asset-coin">
+                    <img src="/cripto/btc.png"/>
+                    <p>+ 0.14%</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -78,6 +121,25 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.asset-coin {
+  @apply mt-16 flex justify-between;
+}
+.asset-content {
+  @apply w-1/3 p-4;
+  .btc {
+    background: #E5DEF0;
+  }
+  .ltc {
+    background: #D6EDDA;
+  }
+  .eth {
+    background: #F6F0D8;
+  }
+}
+.asset-card {
+  @apply p-4 rounded-2xl h-56;
+  /* height: 220px; */
+}
 .user {
   @apply flex items-center shadow-md px-4 rounded-full mx-2;
   background: #F2F5FA;
@@ -127,6 +189,7 @@ export default {
 
 .portfolio-card {
   background: #E5F2FE;
-  @apply rounded-2xl;
+  /* height: 220px; */
+  @apply rounded-2xl h-56;
 }
 </style>
