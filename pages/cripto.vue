@@ -1,10 +1,22 @@
 <template>
   <div class="base">
     <div class="main">
-      <div class="section-side">a</div>
+      <div class="section-side items-center justify-center text-center">
+        <!-- <div class="icon">
+          <img src="/cripto/icon.png"/>
+        </div> -->
+        <ul>
+          <li>
+            <img class="bg-red-100 m-auto" src="/cripto/icon.png"/>
+            <!-- <font-awesome-icon :icon="['fas', 'search']" /> -->
+          </li>
+          <li>ad</li>
+          <li>ad</li>
+        </ul>
+      </div>
       <div class="section-main" >
-        <div class="head text-2xl justify-between flex">
-          <div class="font-bold ">Overview</div>
+        <div class="head text-3xl justify-between flex">
+          <div class="font-bold">Overview</div>
           <div class="flex">
             <div class="circle" >
               <div class="btn-rounded">
@@ -22,30 +34,29 @@
               </div>
               <h1 class="mx-2">DewaQin</h1>
               <font-awesome-icon :icon="['fas', 'chevron-down']" />
-              
             </div>
           </div>
         </div>
-        <div class="content flex pt-8">
-          <div class="w-1/3">
+        <div class="part-one content flex pt-8">
+          <div class="one-left">
             <div class="port-head">
               Portofolio
             </div>
-            <div class="p-4">
+            <div class="py-4">
               <div class="portfolio-card ">
                 <div class="pl-6 pt-6">
                   <h1 class="font-bold text-xl ">$ 17 643.41</h1>
                   <p>Portfolio balance</p>
                 </div>
-                <div class="pb-4">
+                <!-- <div class="pb-4">
                   <img src="/cripto/port2.png"/>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
-          <div class="w-2/3 pl-8">
+          <div class="one-right">
             <div class="flex justify-between">
-              <div>
+              <div class="port-head">
                 <h1>Your Assets</h1>
               </div>
               <div>
@@ -95,6 +106,116 @@
             </div>
           </div>
         </div>
+        <div class="part-two mt-8 flex">
+          <div class="two-left">
+            <div class="market-head flex justify-between pr-4">
+              <div class="text-2xl font-bold">Market is down 0.80%</div>
+              <div class="flex">
+                <div class="user">
+                  <h1 class="mx-2">24h</h1>
+                  <font-awesome-icon :icon="['fas', 'chevron-down']" />
+                </div>
+                <div class="user">
+                  <h1 class="mx-2">Top gainers</h1>
+                  <font-awesome-icon :icon="['fas', 'chevron-down']" />
+                </div>
+              </div>
+            </div>
+            <div class="mt-8">
+              <table style="width:100%">
+                <tr class="text-left">
+                  <th>Name</th>
+                  <th>Proce</th>
+                  <th>Chanee</th>
+                  <th>Market Cap</th>
+                  <th class="text-center">Watch</th>
+                </tr>
+                <tr class="font-bold">
+                  <td class="flex">
+                    <div>
+                      <img src="/cripto/band.png"/>
+                    </div>
+                    <div class="ml-2">
+                      <div>Band Protocol</div>
+                      <div class="font-normal ">BAND</div>
+                    </div>
+                  </td>
+                  <td>$2.42</td>
+                  <td class="chanee">+13.38%</td>
+                  <td>$399.8M</td>
+                  <td class="text-center">
+                    <font-awesome-icon :icon="['far', 'star']" />
+                  </td>
+                </tr>
+                <tr class="font-bold">
+                  <td class="flex">
+                    <div>
+                      <img src="/cripto/ve.png"/>
+                    </div>
+                    <div class="ml-2">
+                      <div>VeChain</div>
+                      <div class="font-normal">VET</div>
+                    </div>
+                  </td>
+                  <td>$7.48</td>
+                  <td class="chanee">+11.19%</td>
+                  <td>$152.5M</td>
+                  <td class="text-center">
+                    <font-awesome-icon :icon="['far', 'star']" />
+                  </td>
+                </tr>
+                <tr class="font-bold">
+                  <td class="flex">
+                    <div>
+                      <img src="/cripto/aeve.png"/>
+                    </div>
+                    <div class="ml-2">
+                      <div>Aave</div>
+                      <div class="font-normal ">AAVE</div>
+                    </div>
+                  </td>
+                  <td>$0.0184</td>
+                  <td class="chanee">+7.57%</td>
+                  <td>$1.2B</td>
+                  <td class="text-center">
+                    <font-awesome-icon :icon="['far', 'star']" />
+                  </td>
+                </tr>
+                <tr class="font-bold">
+                  <td class="flex">
+                    <div>
+                      <img src="/cripto/waves.png"/>
+                    </div>
+                    <div class="ml-2">
+                      <div>Waves</div>
+                      <div class="font-normal">WAVES</div>
+                    </div>
+                  </td>
+                  <td>$30.68</td>
+                  <td class="chanee">+6.80%</td>
+                  <td>$399.8M</td>
+                  <td class="text-center">
+                    <font-awesome-icon :icon="['far', 'star']" />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="two-right">
+            <div class="two-right-card">
+              <div class="flex items-center text-3xl font-bold ">
+                Earn
+                <img src="/cripto/free.png"/>
+                crypto
+              </div>
+              <div class="text-3xl font-bold">with Coinview Earn!</div>
+              <div class="py-4">Learn about different cryptocurrencies and earn them for free!</div>
+              <div class="pt-6 pb-4">
+                <button class="btn-earn bg-blue text-xl text-black font-bold px-6 py-2 rounded-2xl ">Earn now</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -121,6 +242,44 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.icon {
+  width: 60px;
+  height: 60px;
+  @apply bg-red-100 items-center text-center flex justify-center rounded-xl;
+}
+th {
+  padding-top:10px;
+  padding-bottom:10px; 
+}
+td {
+  padding-top:10px;
+  padding-bottom:10px; 
+}
+.port-head {
+  @apply font-bold text-2xl;
+}
+.chanee {
+  color: #4BA582;
+}
+.one-left {
+  @apply w-1/3;
+}
+.one-right {
+  @apply w-2/3 pl-8;
+}
+.two-left {
+  width: 65%;
+}
+.two-right {
+  @apply p-4 text-white;
+  width: 35%;
+}
+.two-right-card {
+  @apply bg-black rounded-2xl px-8 py-10;
+}
+.btn-earn {
+  background: #BCDFFF;
+}
 .asset-coin {
   @apply mt-16 flex justify-between;
 }
@@ -190,6 +349,8 @@ export default {
 .portfolio-card {
   background: #E5F2FE;
   /* height: 220px; */
+  /* background: url('/cripto/bg.png');
+  background-size: full; */
   @apply rounded-2xl h-56;
 }
 </style>
