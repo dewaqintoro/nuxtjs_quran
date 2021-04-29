@@ -5,14 +5,29 @@
         <!-- <div class="icon">
           <img src="/cripto/icon.png"/>
         </div> -->
-        <ul>
+        <div class="mt-8">
+          <img class="m-auto p-3 rounded-2xl bg-red-100" src="/cripto/icon.png"/>
+        </div>
+        <ul class="mt-32">
           <li>
-            <img class="bg-red-100 m-auto" src="/cripto/icon.png"/>
-            <!-- <font-awesome-icon :icon="['fas', 'search']" /> -->
+            <img class="m-auto" src="/cripto/icon-home.png"/>
           </li>
-          <li>ad</li>
-          <li>ad</li>
+          <li>
+            <img class="m-auto" src="/cripto/icon-wallet.png"/>
+          </li>
+          <li>
+            <img class="m-auto" src="/cripto/icon-chart.png"/>
+          </li>
+          <li>
+            <img class="m-auto" src="/cripto/icon-cube.png"/>
+          </li>
+          <li>
+            <img class="m-auto" src="/cripto/icon-profile.png"/>
+          </li>
         </ul>
+        <div class="mt-32">
+          <img class="m-auto" src="/cripto/icon-login.png"/>
+        </div>
       </div>
       <div class="section-main" >
         <div class="head text-3xl justify-between flex">
@@ -242,6 +257,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+ul li{
+  @apply my-16;
+}
 .icon {
   width: 60px;
   height: 60px;
