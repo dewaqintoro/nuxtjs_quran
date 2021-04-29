@@ -6,7 +6,7 @@
           <img src="/cripto/icon.png"/>
         </div> -->
         <div class="mt-8">
-          <img class="m-auto p-3 rounded-2xl bg-red-100" src="/cripto/icon.png"/>
+          <img class="icon" src="/cripto/icon.png"/>
         </div>
         <ul class="mt-32">
           <li>
@@ -126,11 +126,11 @@
             <div class="market-head flex justify-between pr-4">
               <div class="text-2xl font-bold">Market is down 0.80%</div>
               <div class="flex">
-                <div class="user">
+                <div class="time">
                   <h1 class="mx-2">24h</h1>
                   <font-awesome-icon :icon="['fas', 'chevron-down']" />
                 </div>
-                <div class="user">
+                <div class="time">
                   <h1 class="mx-2">Top gainers</h1>
                   <font-awesome-icon :icon="['fas', 'chevron-down']" />
                 </div>
@@ -218,13 +218,13 @@
           </div>
           <div class="two-right">
             <div class="two-right-card">
-              <div class="flex items-center text-3xl font-bold ">
+              <div class="flex items-center font-bold ">
                 Earn
                 <img src="/cripto/free.png"/>
                 crypto
               </div>
-              <div class="text-3xl font-bold">with Coinview Earn!</div>
-              <div class="py-4">Learn about different cryptocurrencies and earn them for free!</div>
+              <div class="font-bold">with Coinview Earn!</div>
+              <div class="py-4 text-lg">Learn about different cryptocurrencies and earn them for free!</div>
               <div class="pt-6 pb-4">
                 <button class="btn-earn bg-blue text-xl text-black font-bold px-6 py-2 rounded-2xl ">Earn now</button>
               </div>
@@ -261,9 +261,8 @@ ul li{
   @apply my-16;
 }
 .icon {
-  width: 60px;
-  height: 60px;
-  @apply bg-red-100 items-center text-center flex justify-center rounded-xl;
+  background: #F6F0D8;
+  @apply m-auto p-3 rounded-2xl;
 }
 th {
   padding-top:10px;
@@ -293,7 +292,7 @@ td {
   width: 35%;
 }
 .two-right-card {
-  @apply bg-black rounded-2xl px-8 py-10;
+  @apply bg-black rounded-2xl px-8 py-10 text-3xl;
 }
 .btn-earn {
   background: #BCDFFF;
@@ -320,6 +319,13 @@ td {
 .user {
   @apply flex items-center shadow-md px-4 rounded-full mx-2;
   background: #F2F5FA;
+  font-size: 18px;
+  place-items: center;
+  text-align: center;
+}
+
+.time {
+  @apply flex items-center border px-4 rounded-full mx-2;
   font-size: 18px;
   place-items: center;
   text-align: center;
@@ -370,5 +376,11 @@ td {
   /* background: url('/cripto/bg.png');
   background-size: full; */
   @apply rounded-2xl h-56;
+}
+
+@media only screen and (max-width: 1100px) {
+  .two-right-card {
+    @apply bg-black rounded-2xl px-6 py-10 text-2xl;
+  }
 }
 </style>
