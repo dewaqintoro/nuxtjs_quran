@@ -1,55 +1,69 @@
 <template>
   <div class="base">
-    <div class="main">
+    <div class="main max-h-screen">
       <div class="section-side items-center justify-center text-center">
         <!-- <div class="icon">
           <img src="/cripto/icon.png"/>
         </div> -->
         <div class="mt-8">
-          <img class="icon" src="/cripto/icon.png"/>
+          <nuxt-link to="/">
+            <img class="icon" src="/cripto/icon.png"/>
+          </nuxt-link>
         </div>
-        <ul class="mt-32">
+        <ul class="mt-16">
           <li>
-            <img class="m-auto" src="/cripto/icon-home.png"/>
+            <nuxt-link to="#">
+              <img class="m-auto" src="/cripto/icon-home.png"/>
+            </nuxt-link>
           </li>
           <li>
-            <img class="m-auto" src="/cripto/icon-wallet.png"/>
+            <nuxt-link to="#">
+              <img class="m-auto" src="/cripto/icon-wallet.png"/>
+            </nuxt-link>
           </li>
           <li>
-            <img class="m-auto" src="/cripto/icon-chart.png"/>
+            <nuxt-link to="#">
+              <img class="m-auto" src="/cripto/icon-chart.png"/>
+            </nuxt-link>
           </li>
           <li>
-            <img class="m-auto" src="/cripto/icon-cube.png"/>
+            <nuxt-link to="#">
+              <img class="m-auto" src="/cripto/icon-cube.png"/>
+            </nuxt-link>
           </li>
           <li>
-            <img class="m-auto" src="/cripto/icon-profile.png"/>
+            <nuxt-link to="#">
+              <img class="m-auto" src="/cripto/icon-profile.png"/>
+            </nuxt-link>
           </li>
         </ul>
-        <div class="mt-32">
-          <img class="m-auto" src="/cripto/icon-login.png"/>
-        </div>
+        <!-- <div class="mt-32">
+          <nuxt-link to="#">
+            <img class="m-auto" src="/cripto/icon-login.png"/>
+          </nuxt-link>
+        </div> -->
       </div>
-      <div class="section-main" >
+      <div class="section-main overflow-y-scroll max-h-screen" >
         <div class="head text-3xl justify-between flex">
           <div class="font-bold">Overview</div>
           <div class="flex">
-            <div class="circle" >
+            <nuxt-link to="#" class="circle" >
               <div class="btn-rounded">
                 <font-awesome-icon :icon="['fas', 'search']" />
               </div>
-            </div>
-            <div class="circle" >
+            </nuxt-link>
+            <nuxt-link to="#" class="circle" >
               <div class="btn-rounded">
                 <font-awesome-icon :icon="['far', 'bell']" />
               </div>
-            </div>
-            <div class="user">
+            </nuxt-link>
+            <nuxt-link to="#" class="user">
               <div class="btn-rounded">
                 <font-awesome-icon :icon="['fas', 'user-circle']" />
               </div>
               <h1 class="mx-2">DewaQin</h1>
-              <font-awesome-icon :icon="['fas', 'chevron-down']" />
-            </div>
+              <!-- <font-awesome-icon :icon="['fas', 'chevron-down']" /> -->
+            </nuxt-link>
           </div>
         </div>
         <div class="part-one content flex pt-8">
@@ -63,9 +77,6 @@
                   <h1 class="font-bold text-xl ">$ 17 643.41</h1>
                   <p>Portfolio balance</p>
                 </div>
-                <!-- <div class="pb-4">
-                  <img src="/cripto/port2.png"/>
-                </div> -->
               </div>
             </div>
           </div>
@@ -75,7 +86,9 @@
                 <h1>Your Assets</h1>
               </div>
               <div>
-                <font-awesome-icon :icon="['fas', 'sliders-h']" />
+                <nuxt-link to="#">
+                  <font-awesome-icon :icon="['fas', 'sliders-h']" />
+                </nuxt-link>
               </div>
             </div>
             <div class="flex">
@@ -83,7 +96,9 @@
                 <div class="asset-card btc">
                   <div class="flex justify-between">
                     <p class="font-bold text-xl">1.25 BTC</p>
-                    <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                    <nuxt-link to="#">
+                      <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                    </nuxt-link>
                   </div>
                   <p>$ 2948.04</p>
                   <div class="asset-coin">
@@ -96,7 +111,9 @@
                 <div class="asset-card btc ltc">
                   <div class="flex justify-between">
                     <p class="font-bold text-xl">1.25 BTC</p>
-                    <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                    <nuxt-link to="#">
+                      <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                    </nuxt-link>
                   </div>
                   <p>$ 2948.04</p>
                   <div class="asset-coin">
@@ -109,7 +126,9 @@
                 <div class="asset-card eth">
                   <div class="flex justify-between">
                     <p class="font-bold text-xl">1.25 BTC</p>
-                    <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                    <nuxt-link to="#">
+                      <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
+                    </nuxt-link>
                   </div>
                   <p>$ 2948.04</p>
                   <div class="asset-coin">
@@ -127,12 +146,24 @@
               <div class="text-2xl font-bold">Market is down 0.80%</div>
               <div class="flex">
                 <div class="time">
-                  <h1 class="mx-2">24h</h1>
-                  <font-awesome-icon :icon="['fas', 'chevron-down']" />
+                  <!-- <h1 class="mx-2">24h</h1> -->
+                  <select name="cars" id="cars" class="focus:outline-none">
+                    <option value="volvo">24H</option>
+                    <option value="saab">1Day</option>
+                    <option value="mercedes">1M</option>
+                    <option value="audi">1Y</option>
+                  </select>
+                  <!-- <font-awesome-icon :icon="['fas', 'chevron-down']" /> -->
                 </div>
                 <div class="time">
-                  <h1 class="mx-2">Top gainers</h1>
-                  <font-awesome-icon :icon="['fas', 'chevron-down']" />
+                  <!-- <h1 class="mx-2">Top gainers</h1>
+                  <font-awesome-icon :icon="['fas', 'chevron-down']" /> -->
+                  <select name="top" id="top" class="focus:outline-none">
+                    <option value="topgainer">Top gainers</option>
+                    <option value="saab">A</option>
+                    <option value="mercedes">B</option>
+                    <option value="audi">C</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -257,6 +288,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 ul li{
   @apply my-16;
 }
@@ -354,7 +389,8 @@ td {
   height: 20px;
 }
 .base{
-  @apply px-8 py-4 min-h-screen;
+  /* @apply px-8 py-4 min-h-screen max-h-screen bg-gray-100; */
+  @apply px-4 min-h-screen max-h-screen;
 }
 
 .main {

@@ -1,8 +1,8 @@
 <template>
   <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color}" class="error min-h-screen text-center justify-center center items-center">
     <div>
-      <NuxtLink to="/agama/al-quran">
-        <button class="back" :style="{ boxShadow: storeTheme.boxShadow  }">Home Page</button>
+      <NuxtLink to="/">
+        <button class="back focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }">Home Page</button>
       </NuxtLink>
     </div>
     <div class="gambar text-center justify-center center items-center">

@@ -27,6 +27,13 @@
       "route" : "cekongkir",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 5,
+      "title": "Dashboard Crypto (Desktop)",
+      "route" : "crypto",
+      "description": "",
+      "icon": ""
     }
   ]
 }
