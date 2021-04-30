@@ -10,6 +10,9 @@
         <nuxt-link :to="item.route" v-for="(item, index) in dataDoa" :key="index">
           <Cardcomp class="content" :theme="storeTheme" :item="item"/>
         </nuxt-link>
+        <a :href="item.route" target="_blank" v-for="(item, index) in extIndex" :key="index">
+          <Cardcomp class="content" :theme="storeTheme" :item="item"/>
+        </a>
       </div>
     </div>
   </div>
@@ -21,6 +24,7 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/myindex.json'
+import dataExt from '~/data/extIndex.json'
 import Cardcomp from '@/components/GlobalCardComp'
 
 export default {
@@ -33,6 +37,7 @@ export default {
   setup(_, {emit}){
     const { app, store } = useContext()
     const dataDoa = dataJson.data
+    const extIndex = dataExt.data
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
@@ -44,6 +49,7 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
+      extIndex,
       cek,
     }
 

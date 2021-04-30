@@ -48,10 +48,6 @@ export default {
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const search = ref('')
-    const allSurah = ref([])
-    const pageOfItems = ref([])
-    const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const bgId = computed(() => {
