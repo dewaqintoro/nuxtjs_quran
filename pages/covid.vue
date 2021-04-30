@@ -1,4 +1,4 @@
-<template>
+<template class="place-items-center">
   <div class="main">
     <div class="one">
       <div class="header font-bold px-8">
@@ -10,13 +10,13 @@
         <div class="switch">
           <div class="bg-gray-100">
             <div class="box">
-              <input type="checkbox" class="toggle-btn focus:outline-none " />
+              <input type="checkbox" class="toggle-btn focus:outline-none " @change="update($event)" />
               <div class="signup"></div>
               <div class="login"></div>
             </div>
           </div>
         </div>
-        <div class="case mt-14">
+        <div v-if="isIndo" class="case mt-14">
           <div class="case-card text-xl p-10 sm:p-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 ">
             <div class="positif text-white text-center py-4 rounded-lg">
               <p class="text-2xl font-bold" v-if="indo_Casess.total">{{jumlah_positif}}</p>
@@ -48,6 +48,27 @@
             <!-- <div class="tiga bg-blue-500 text-white text-center py-4 rounded-lg sm:col-span-2 md:col-span-1">7</div> -->
           </div>
         </div>
+
+        <div v-else class="case mt-14">
+          <div class="case-card text-xl p-10 sm:p-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 ">
+            <div class="positif text-white text-center py-4 rounded-lg">
+              <p v-if="global_Cases.confirmed" class="text-2xl font-bold">{{global_Confirmed}}</p>
+              <p>TERKONFIRMASI</p>
+            </div>
+            <div class="aktif text-white text-center py-4 rounded-lg">
+              <p v-if="global_Active" class="text-2xl font-bold">{{global_Active}}</p>
+              <p>KASUS AKTIF</p>
+            </div>
+            <div class="sembuh text-white text-center py-4 rounded-lg">
+              <p v-if="global_Cases.confirmed" class="text-2xl font-bold">{{global_Recovered}}</p>
+              <p>SEMBUH</p>
+            </div>
+            <div class="meninggal text-white text-center py-4 rounded-lg sm:col-span-1 md:col-span-3 lg:col-span-3">
+              <p v-if="global_Cases.confirmed" class="text-2xl font-bold">{{global_Deaths}}</p>
+              <p>MENINGGAL</p>
+            </div>
+          </div>
+        </div>
         
       </div>
     </div>
@@ -69,9 +90,71 @@ export default {
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const global_Confirmed = ref([])
-    const global_Recovered = ref([])
-    const global_Deaths = ref([])
+    const isIndo = ref(true)
+    const global_Confirmed = computed(() => {
+      var bilangan = global_Cases.value?.confirmed?.value ;
+      if(typeof bilangan === 'number'){
+        var	number_string = bilangan.toString()
+        let sisa 	= number_string.length % 3
+        let rupiah 	= number_string.substr(0, sisa)
+        let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+            
+        if (ribuan) {
+          let separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
+        return rupiah
+      }
+    })
+    const global_Recovered = computed(() => {
+      var bilangan = global_Cases.value?.recovered?.value ;
+      if(typeof bilangan === 'number'){
+        var	number_string = bilangan.toString()
+        let sisa 	= number_string.length % 3
+        let rupiah 	= number_string.substr(0, sisa)
+        let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+            
+        if (ribuan) {
+          let separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
+        return rupiah
+      }
+    })
+    const global_Deaths = computed(() => {
+      var bilangan = global_Cases.value?.deaths?.value ;
+      if(typeof bilangan === 'number'){
+        var	number_string = bilangan.toString()
+        let sisa 	= number_string.length % 3
+        let rupiah 	= number_string.substr(0, sisa)
+        let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+            
+        if (ribuan) {
+          let separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
+        return rupiah
+      }
+    })
+    const global_Active = computed(() => {
+      const confirmed = global_Cases.value?.confirmed?.value
+      const recovered = global_Cases.value?.recovered?.value
+      const deaths = global_Cases.value?.deaths?.value
+      const active = confirmed - recovered - deaths
+
+      if(typeof active === 'number'){
+        var	number_string = active.toString()
+        let sisa 	= number_string.length % 3
+        let rupiah 	= number_string.substr(0, sisa)
+        let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+            
+        if (ribuan) {
+          let separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
+        return rupiah
+      }
+    })
     const global_Cases = ref({})
     const indo_Casess = ref([])
     const indo_Vaksinasi = ref([])
@@ -271,9 +354,11 @@ export default {
     // globalCases()
     indoCases()
     vaksinasi()
+    globalCases()
     return {
       series,
       chartOptions,
+      isIndo,
       global_Cases,
       indo_Casess,
       indo_Vaksinasi,
@@ -286,10 +371,22 @@ export default {
       global_Confirmed,
       global_Recovered,
       global_Deaths,
+      global_Active,
       cek,
       globalConfirmed,
       globalRecovered,
-      globalDeaths
+      globalDeaths,
+      update
+    }
+
+    function update(e) {
+      isIndo.value = !isIndo.value
+      console.log('isIndo.value', isIndo.value)
+      // if (e.srcElement.checked === true) {
+      //   console.log('on')
+      // } else {
+      //   console.log('off')
+      // }
     }
 
     async function cek(){
@@ -336,7 +433,7 @@ export default {
       try{
         const url = `https://covid19.mathdro.id/api/confirmed`
         const result = await axios.get(url);
-        global_Confirmed.value = result.data
+        // global_Confirmed.value = result.data
       } catch (err){
         console.log('err', err)
       }
@@ -369,6 +466,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.main {
+  @apply place-items-center px-36;
+}
 .positif {
   background: rgb(253, 166, 4);
 }
@@ -430,12 +530,27 @@ export default {
   @apply w-full;
 }
 
+@media (max-width: 900px) {
+  .main {
+    @apply px-16;
+  }
+  .tiga{
+    @apply col-span-2;
+  }
+}
+
 @media (max-width: 700px) {
+  .main {
+    @apply px-8;
+  }
   .tiga{
     @apply col-span-2;
   }
 }
 @media (max-width: 500px) {
+  .main {
+    @apply px-0;
+  }
   .case-card{
     @apply grid-cols-1;
   }

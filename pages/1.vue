@@ -2,6 +2,10 @@
   <div class="analitik">
     <!-- <AnalitikDropdown /> -->
     <div class="chart-title">Analitik</div>
+    <p>https://data.covid19.go.id/public/api/prov.json</p>
+    <p>https://data.covid19.go.id/public/api/data.json</p>
+    <p>https://data.covid19.go.id/public/api/pemeriksaan-vaksinasi.json</p>
+    <p>https://data.covid19.go.id/public/api/update.json</p>
     <div class="myChart">
       <ClientOnly>
         <div id="chart">
