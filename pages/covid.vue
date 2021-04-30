@@ -17,10 +17,29 @@
           </div>
         </div>
         <div class="case mt-14">
-          <div class="p-10 sm:p-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 ">
-            <div class="positif text-white text-center text-5xl py-4 rounded-lg">5</div>
-            <div class="meninggal text-white text-center text-5xl py-4 rounded-lg">6</div>
-            <div class="tiga bg-blue-500 text-white text-center text-5xl py-4 rounded-lg sm:col-span-2 md:col-span-1">7</div>
+          <div class="case-card text-xl p-10 sm:p-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 ">
+            <div class="positif text-white text-center py-4 rounded-lg">
+              <p class="text-2xl font-bold" v-if="indo_Casess.total">{{jumlah_positif}}</p>
+              <p>TERKONFIRMASI</p>
+            </div>
+            <div class="meninggal text-white text-center py-4 rounded-lg">
+              <p class="text-2xl font-bold" v-if="indo_Casess.total">{{jumlah_dirawat.value}}</p>
+              <p class="text-xl" v-if="indo_Casess.total">{{jumlah_dirawat.persentase}}%</p>
+              <p>KASUS AKTIF</p>
+            </div>
+            <div class="meninggal text-white text-center py-4 rounded-lg">
+              <p class="text-2xl font-bold" v-if="indo_Casess.total">{{jumlah_sembuh.value}}</p>
+              <p class="text-xl" v-if="indo_Casess.total">{{jumlah_sembuh.persentase}}%</p>
+              <p>SEMBUH</p>
+            </div>
+            <div class="meninggal text-white text-center py-4 rounded-lg">
+              <p class="text-2xl font-bold" v-if="indo_Casess.total">{{jumlah_meninggal.value}}</p>
+              <p class="text-xl" v-if="indo_Casess.total">{{jumlah_meninggal.persentase}}%</p>
+              <p>MENINGGAL</p>
+            </div>
+            <div class="meninggal text-white text-center py-4 rounded-lg">VAKSINASI KE-1</div>
+            <div class="meninggal text-white text-center py-4 rounded-lg">VAKSINASI KE-2</div>
+            <!-- <div class="tiga bg-blue-500 text-white text-center py-4 rounded-lg sm:col-span-2 md:col-span-1">7</div> -->
           </div>
         </div>
         
@@ -45,6 +64,97 @@ export default {
     const global_Recovered = ref([])
     const global_Deaths = ref([])
     const global_Cases = ref({})
+    const indo_Casess = ref([])
+
+    const jumlah_positif = computed(() => {
+
+      var bilangan = indo_Casess.value?.total?.jumlah_positif ;
+      console.log('bilangan', bilangan)
+      var	number_string = bilangan.toString()
+      let sisa 	= number_string.length % 3
+      let rupiah 	= number_string.substr(0, sisa)
+      let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+          
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      return rupiah
+    })
+
+    const jumlah_dirawat = computed(() => {
+
+      var bilangan = indo_Casess.value?.total?.jumlah_dirawat ;
+      console.log('bilangan', bilangan)
+      var	number_string = bilangan.toString()
+      let sisa 	= number_string.length % 3
+      let rupiah 	= number_string.substr(0, sisa)
+      let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+          
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      let persen = (indo_Casess.value?.total?.jumlah_dirawat/indo_Casess.value?.total?.jumlah_positif)*100
+
+      let data = {
+        value : rupiah,
+        persentase : persen.toString().substring(0, 4)
+      }
+
+      return data
+    })
+
+    const jumlah_sembuh = computed(() => {
+
+      var bilangan = indo_Casess.value?.total?.jumlah_sembuh ;
+      console.log('bilangan', bilangan)
+      var	number_string = bilangan.toString()
+      let sisa 	= number_string.length % 3
+      let rupiah 	= number_string.substr(0, sisa)
+      let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+          
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      let persen = (indo_Casess.value?.total?.jumlah_sembuh/indo_Casess.value?.total?.jumlah_positif)*100
+
+      let data = {
+        value : rupiah,
+        persentase : persen.toString().substring(0, 4)
+      }
+
+      return data
+    })
+
+    const jumlah_meninggal = computed(() => {
+
+      var bilangan = indo_Casess.value?.total?.jumlah_meninggal ;
+      console.log('bilangan', bilangan)
+      var	number_string = bilangan.toString()
+      let sisa 	= number_string.length % 3
+      let rupiah 	= number_string.substr(0, sisa)
+      let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+          
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      let persen = (indo_Casess.value?.total?.jumlah_meninggal/indo_Casess.value?.total?.jumlah_positif)*100
+
+      let data = {
+        value : rupiah,
+        persentase : persen.toString().substring(0, 4)
+      }
+
+      return data
+    })
+
 
     const series= [
       {
@@ -121,10 +231,16 @@ export default {
     }
     // globalCases()
     indoCases()
+    // vaksinasi()
     return {
       series,
       chartOptions,
       global_Cases,
+      indo_Casess,
+      jumlah_positif,
+      jumlah_dirawat,
+      jumlah_sembuh,
+      jumlah_meninggal,
       global_Confirmed,
       global_Recovered,
       global_Deaths,
@@ -135,21 +251,44 @@ export default {
     }
 
     async function cek(){
-      console.log("11"+1);
-      console.log("11"-1);
+      // var bilangan = 23456789;
+	
+      // var	number_string = bilangan.toString()
+      // let sisa 	= number_string.length % 3
+      // let rupiah 	= number_string.substr(0, sisa)
+      // let ribuan 	= number_string.substr(sisa).match(/\d{3}/g)
+          
+      // if (ribuan) {
+      //   let separator = sisa ? '.' : '';
+      //   rupiah += separator + ribuan.join('.');
+      // }
+
+      console.log('jumlah_positif', jumlah_positif.value)
     }
 
     async function indoCases(){
       try{
-        const url = `https://data.covid19.go.id/public/api/update.json`
+        const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid`
         const result = await axios.get(url);
-        // global_Cases.value = result.data
-
-        console.log('result', result)
+        indo_Casess.value = result.data
+        console.log('indo_Casess.value', indo_Casess.value)
       } catch (err){
         console.log('err', err)
       }
     }
+
+    async function vaksinasi(){
+      try{
+        const url = `https://ngodingbentar-be.herokuapp.com/api/v1/vaksinasi`
+        const result = await axios.get(url);
+        // global_Cases.value = result.data
+
+        console.log('vaksinasi', result)
+      } catch (err){
+        console.log('err', err)
+      }
+    }
+    
 
     async function globalCases(){
       try{
@@ -244,9 +383,14 @@ export default {
   @apply w-full;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   .tiga{
     @apply col-span-2;
+  }
+}
+@media (max-width: 500px) {
+  .case-card{
+    @apply grid-cols-1;
   }
 }
 </style>
