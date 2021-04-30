@@ -257,7 +257,7 @@
               <div class="font-bold">with Coinview Earn!</div>
               <div class="py-4 text-lg">Learn about different cryptocurrencies and earn them for free!</div>
               <div class="pt-6 pb-4">
-                <button class="btn-earn bg-blue text-xl text-black font-bold px-6 py-2 rounded-2xl ">Earn now</button>
+                <button class="btn-earn bg-bluec text-xl text-black font-bold px-6 py-2 rounded-2xl ">Earn now</button>
               </div>
             </div>
           </div>

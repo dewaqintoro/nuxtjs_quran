@@ -9,6 +9,20 @@
           <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
       </ClientOnly>
+
+      <!-- <div class="flex" v-if="global_Cases.confirmed">
+      <div class="case bg-gray-200">confirmed: {{global_Cases.confirmed.value}}</div>
+      <div class="case bg-gray-400">recovered: {{global_Cases.recovered.value}}</div>
+      <div class="case bg-gray-700">deaths: {{global_Cases.deaths.value}}</div>
+    </div> -->
+    <!-- <div class="myChart">
+      <ClientOnly>
+        <div id="chart">
+          <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+        </div>
+      </ClientOnly>
+    </div> -->
+
     </div>
   </div>
 </template>
