@@ -271,7 +271,7 @@
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 
 export default {
-  name: 'Quran',
+  name: 'Crypto',
   components: {
   },
   setup(_, {emit}){

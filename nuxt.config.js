@@ -31,6 +31,7 @@ export default {
     {src: '@/plugins/axios' },
     {src: '@/plugins/global.ts', ssr: false},
     {src: '@/plugins/pagination.ts', ssr: false},
+    {src: '@/plugins/chart.ts', ssr: false},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
