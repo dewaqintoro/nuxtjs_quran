@@ -1,6 +1,6 @@
 <template class="place-items-center">
   <div class="main">
-    <div class="one">
+    <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -19,18 +19,12 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div>
+    </div> -->
     <div class="two p-8">
-      <!-- <button @click="cek">cek</button> -->
-      <CovidChart :daysDate="daysDate" :daysData="daysData"  />
+      <button @click="cek">cek</button>
+      <CovidChart :daysDate="daysDate" :daysData="daysData" :daysDeath="daysDeath"  />
     </div>
     <div class="flex">
-      <!-- <div>
-        <p v-for="(item, index) in daysDate" :key="index">{{item.day}}</p>
-      </div>
-      <div>
-        <p v-for="(item, index) in daysData" :key="index">{{item.positif}}</p>
-      </div> -->
     </div>
   </div>
 </template>
@@ -76,6 +70,10 @@ export default {
       return {
         positif: p.jumlah_positif,
       }
+    })
+
+    const daysDeath = daily.map((p) => {
+      return p.jumlah_meninggal.value
     })
 
     const daysDate = daily.map((p) => {
@@ -159,12 +157,13 @@ export default {
       }
     }
     
-    indoCases()
-    vaksinasi()
-    globalCases()
+    // indoCases()
+    // vaksinasi()
+    // globalCases()
     return {
       daysDate,
       daysData,
+      daysDeath,
       series,
       chartOptions,
       global_Cases,
@@ -189,33 +188,8 @@ export default {
     }
 
     async function cek(){
-      // const places = daily.map((p) => {
-      //   var date = new Date(p.key_as_string)
-      //   return {
-      //     days: date.toISOString().substring(0, 10),
-      //   }
-      // })
       console.log('daily', daily)
-
-
-      // let datesArray = ['2017-12-09T00:00:00' ,'2017-12-13T00:00:00' ,'2017-12-02T00:00:00' ,'2017-12-16T00:00:00'];
-      // let diffDate = Infinity;
-      // let now = Date.now();
-          
-      // for (let i = 0, len = datesArray.length; i < len; i++) {
-      //   let closest = new Date(datesArray[i]); 
-      //   if (closest > now && closest < diffDate) {
-      //     diffDate = closest;
-      //   }
-      // }
-      // console.log(diffDate.toISOString());
-
-      // var d = new Date();
-      // var n = d.toISOString();
-      // console.log('n', n)
-
-      // var date = new Date("2013-03-10T02:00:00Z");
-      // console.log(date.toISOString().substring(0, 10))
+      console.log('daysDeath', daysDeath)
     }
 
     async function indoCases(){

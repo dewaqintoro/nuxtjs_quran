@@ -1,23 +1,13 @@
 <template>
   <div class="analitik">
-    <!-- <AnalitikDropdown /> -->
-    <!-- <div class="chart-title">Analitik</div>
-    <button @click="cek">cek</button> -->
+    <div class="chart-title">Analitik</div>
+    <button @click="cek">cek</button>
     <div class="myChart">
       <ClientOnly>
         <div id="chart">
-          <!-- <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart> -->
           <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
       </ClientOnly>
-
-    <!-- <div class="myChart">
-      <ClientOnly>
-        <div id="chart">
-          <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
-        </div>
-      </ClientOnly>
-    </div> -->
 
     </div>
   </div>
@@ -45,6 +35,10 @@ export default {
       type: Array,
       required: true,
     },
+    daysDeath: {
+      type: Array,
+      required: true,
+    },
   },
   setup(props, {emit}){
     const { app, store } = useContext()
@@ -54,10 +48,20 @@ export default {
     const myData = props.daysData.map((p) => {
       return p.positif.value
     })
-    const series= [{
-      name: "Kasus",
-      data: myData
-    }]
+    // const series= [{
+    //   name: "Kasus",
+    //   data: myData
+    // }]
+    const series= [
+      {
+        name: "Positif",
+        data: myData
+      },
+      {
+        name: "Meninggal",
+        data: props.daysDeath
+      }
+    ]
     const chartOptions= {
       chart: {
         height: 350,
@@ -72,10 +76,10 @@ export default {
       stroke: {
         curve: 'straight'
       },
-      title: {
-        text: 'Perkembangan Kasus Terkonfirmasi Positif Covid-19 Per-Hari',
-        align: 'left'
-      },
+      // title: {
+      //   text: 'Perkembangan Kasus Terkonfirmasi Positif Covid-19 Per-Hari',
+      //   align: 'left'
+      // },
       grid: {
         row: {
           colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
@@ -94,8 +98,8 @@ export default {
       cek
     }
     function cek(){
-      console.log('myDate', myDate)
-      console.log('myData', myData)
+      // console.log('myDate', myDate)
+      console.log('props.daysDeath', props.daysDeath)
     }
 
   }
