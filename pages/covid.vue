@@ -1,6 +1,6 @@
 <template class="place-items-center">
   <div class="main">
-    <!-- <div class="one">
+    <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -19,11 +19,11 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div> -->
+    </div>
     <div class="two px-4 py-8">
       <!-- <button @click="cek">cek</button> -->
-      <!-- <CovidChart :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  /> -->
-      <CovidBar :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      <CovidChart :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      <CovidBar class="mt-4" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
     </div>
     <div class="flex">
     </div>
