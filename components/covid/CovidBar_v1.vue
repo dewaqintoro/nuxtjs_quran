@@ -2,18 +2,15 @@
   <div class="analitik">
     <div class="chart-title">Bar</div>
     <!-- <button @click="cek">cek</button> -->
-    
+    <button @click="showAll">All</button>
+    <hr/>
+    <button @click="showTen">showTen</button>
     <div class="myChart">
       <ClientOnly>
         <div id="chart">
           <!-- <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart> -->
           <apexchart v-if="isLimit" type="bar" height="600" :options="limitChartOptions" :series="limitSeries"></apexchart>
-          <apexchart v-else type="bar" height="650" :options="chartOptions" :series="series"></apexchart>
-        </div>
-        <div class="flex place-items-center">
-          <!-- <button class="switch" :class="{isTen: tenActive}" @click="showTen">15 Data</button>
-          <button class="switch" :class="{isAll: allActive}" @click="showAll">Semua Data</button> -->
-          <button :class="{isAll: allActive, isTen: tenActive}" @click="updateShowData" class="switch">{{btnShow}}</button>
+          <apexchart v-else type="bar" height="1000" :options="chartOptions" :series="series"></apexchart>
         </div>
       </ClientOnly>
 
@@ -88,60 +85,146 @@ export default {
 
     const isLimit = ref(true)
     
-    const limitSeries= [
-      {
-        name: 'Positif',
-        data: limitCases.value
-      }
-    ]
-    const limitChartOptions= {
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 4,
-          horizontal: true,
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      xaxis: {
-        categories: limitProv.value,
-      }
-    }
-
     const series= [
       {
         name: 'Positif',
         data: cases
+      },
+      {
+        name: 'Sembuh',
+        data: recovered
+      },
+      {
+        name: 'Dirawat',
+        data: treated
+      },
+      {
+        name: 'Meninggal',
+        data: deaths
       }
     ]
     const chartOptions= {
       chart: {
         type: 'bar',
-        height: 350
+        height: 350,
+        stacked: true,
+        zoom: {
+          enabled: true
+        }
       },
       plotOptions: {
         bar: {
-          borderRadius: 4,
           horizontal: true,
-        }
+        },
       },
-      dataLabels: {
-        enabled: false
+      stroke: {
+        width: 1,
+        colors: ['#fff']
+      },
+      title: {
+        text: 'Perbandingan Kasus di Provinsi'
       },
       xaxis: {
         categories: prov,
+        labels: {
+          formatter: function (val) {
+            return val
+          }
+        }
       },
+      yaxis: {
+        title: {
+          text: undefined
+        },
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + " Kasus"
+          }
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left',
+        offsetX: 40
+      }
     }
 
-    const tenActive= ref(true)
-    const allActive= ref(false)
-    const btnShow = ref('Semua Data')
+    const limitSeries= [
+      {
+        name: 'Positif',
+        data: thisCases.value
+      },
+      {
+        name: 'Sembuh',
+        data: thisRecovered.value
+      },
+      {
+        name: 'Dirawat',
+        data: thisTreated.value
+      },
+      {
+        name: 'Meninggal',
+        data: thisDeaths.value
+      }
+    ]
+    const limitChartOptions= {
+      chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+        zoom: {
+          enabled: true
+        }
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      stroke: {
+        width: 1,
+        colors: ['#fff']
+      },
+      title: {
+        text: 'Perbandingan Kasus di Provinsi'
+      },
+      xaxis: {
+        categories: thisProv.value,
+        labels: {
+          formatter: function (val) {
+            return val
+          }
+        }
+      },
+      yaxis: {
+        title: {
+          text: undefined
+        },
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + " Kasus"
+          }
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left',
+        offsetX: 40
+      }
+    }
+
     
+
     setLimitCases()
     return {
       isLimit,
@@ -151,30 +234,11 @@ export default {
       limitChartOptions,
       showAll,
       showTen,
-      tenActive,
-      allActive,
-      cek,
-      updateShowData,
-      btnShow
-    }
-
-    function updateShowData(){
-      isLimit.value = !isLimit.value
-      if(btnShow.value === 'Semua Data'){
-        btnShow.value = '15 Data'
-        tenActive.value = true
-        allActive.value = false
-      } else {
-        btnShow.value = 'Semua Data'
-        allActive.value = true
-        tenActive.value = false
-      }
+      cek
     }
 
     async function showAll(){
       isLimit.value = false
-      allActive.value = true
-      tenActive.value = false
       // thisProv.value = prov
       // thisCases.value = cases
       // thisDeaths.value = deaths
@@ -184,8 +248,6 @@ export default {
 
     async function showTen(){
       isLimit.value = true
-      tenActive.value = true
-      allActive.value = false
       // thisProv.value = limitProv.value
       // thisCases.value = limitCases.value
       // thisDeaths.value = limitDeaths.value
@@ -195,38 +257,43 @@ export default {
     
     async function setLimitCases(){
       prov.map((p) => {
-        if(limitProv.value.length < 15 ){
+        if(limitProv.value.length < 10 ){
           limitProv.value.push(p)
+          console.log('p', p)
         }
       })
 
       cases.map((p) => {
-        if(limitCases.value.length < 15 ){
+        if(limitCases.value.length < 10 ){
           limitCases.value.push(p)
+          console.log('p', p)
         }
       })
 
       deaths.map((p) => {
-        if(limitDeaths.value.length < 15 ){
+        if(limitDeaths.value.length < 10 ){
           limitDeaths.value.push(p)
+          console.log('p', p)
         }
       })
 
       recovered.map((p) => {
-        if(limitRecovered.value.length < 15 ){
+        if(limitRecovered.value.length < 10 ){
           limitRecovered.value.push(p)
+          console.log('p', p)
         }
       })
 
       treated.map((p) => {
-        if(limitTreated.value.length < 15 ){
+        if(limitTreated.value.length < 10 ){
           limitTreated.value.push(p)
+          console.log('p', p)
         }
       })
 
     }
     async function cek(){
-      console.log('cases.value', cases.value)
+      console.log('dew.value', dew.value)
     }
 
   }
@@ -234,17 +301,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.switch {
-  @apply px-4 py-2 text-center m-auto focus:outline-none rounded-xl;
-}
-.isTen {
-  background: rgb(168, 8, 142) ;
-  color: white;
-}
-.isAll {
-  background: rgb(90, 90, 255) ;
-  color: white;
-}
 .analitik {
   .chart-title {
     @apply py-4;
