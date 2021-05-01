@@ -45,11 +45,11 @@ export default {
     '@nuxtjs/composition-api',
     '@nuxtjs/fontawesome',
     '@nuxt/typescript-build',
-    '@nuxtjs/pwa',
+    '@nuxtjs/pwa'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['cookie-universal-nuxt', '@nuxtjs/axios',],
+  modules: ['cookie-universal-nuxt', '@nuxtjs/axios'],
 
   // axios: {},
   http: {

@@ -1,6 +1,6 @@
 <template class="place-items-center">
   <div class="main">
-    <div class="one">
+    <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -19,10 +19,11 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div>
+    </div> -->
     <div class="two px-4 py-8">
       <!-- <button @click="cek">cek</button> -->
-      <CovidChart :daysDate="daysDate" :daysData="daysData" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      <!-- <CovidChart :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  /> -->
+      <CovidBar :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
     </div>
     <div class="flex">
     </div>
@@ -35,6 +36,7 @@ import axios from 'axios'
 import Loading from '@/components/Loading.vue'
 import CovidStatistik from '@/components/covid/CovidStatistik.vue'
 import CovidChart from '@/components/covid/CovidChart.vue'
+import CovidBar from '@/components/covid/CovidBar.vue'
 import dataJson from '~/data/update.json'
 
 export default {
@@ -42,7 +44,8 @@ export default {
   components: {
     Loading,
     CovidStatistik,
-    CovidChart
+    CovidChart,
+    CovidBar
   },
   setup(_, {emit}){
     const { app, store } = useContext()
@@ -70,6 +73,10 @@ export default {
       return {
         positif: p.jumlah_positif,
       }
+    })
+
+    const daysPositif = daily.map((p) => {
+      return p.jumlah_positif.value
     })
 
     const daysDeath = daily.map((p) => {
@@ -160,6 +167,9 @@ export default {
         offsetX: -5
       }
     }
+
+    const dew = ref([])
+    cekDew()
     
     indoCases()
     vaksinasi()
@@ -167,6 +177,7 @@ export default {
     return {
       daysDate,
       daysData,
+      daysPositif,
       daysDeath,
       daysRecovered,
       series,
@@ -189,9 +200,16 @@ export default {
       cek,
     }
 
+    async function cekDew(){
+      daysPositif.map((p) => {
+        if(dew.value.length < 10 ){
+          dew.value.push(p)
+          console.log('p', p)
+        }
+      })
+    }
     async function cek(){
-      console.log('daily', daily)
-      console.log('daysRecovered', daysRecovered)
+      console.log('dew.value', dew.value)
     }
 
     async function indoCases(){

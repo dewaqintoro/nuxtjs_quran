@@ -31,7 +31,7 @@ export default {
       type: Array,
       required: true,
     },
-    daysData: {
+    daysPositif: {
       type: Array,
       required: true,
     },
@@ -50,9 +50,6 @@ export default {
     const myDate = props.daysDate.map((p) => {
       return p.day
     })
-    const myData = props.daysData.map((p) => {
-      return p.positif.value
-    })
     // const series= [{
     //   name: "Kasus",
     //   data: myData
@@ -60,7 +57,7 @@ export default {
     const series= [
       {
         name: "Positif",
-        data: myData
+        data: props.daysPositif
       },
       {
         name: "Sembuh",
