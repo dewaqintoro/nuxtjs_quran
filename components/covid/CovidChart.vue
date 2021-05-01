@@ -1,11 +1,11 @@
 <template>
   <div class="analitik">
     <div class="chart-title">Analitik</div>
-    <button @click="cek">cek</button>
+    <!-- <button @click="cek">cek</button> -->
     <div class="myChart">
       <ClientOnly>
         <div id="chart">
-          <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+          <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
       </ClientOnly>
 
@@ -39,6 +39,11 @@ export default {
       type: Array,
       required: true,
     },
+    daysRecovered: {
+      type: Array,
+      required: true,
+    },
+    
   },
   setup(props, {emit}){
     const { app, store } = useContext()
@@ -56,6 +61,10 @@ export default {
       {
         name: "Positif",
         data: myData
+      },
+      {
+        name: "Sembuh",
+        data: props.daysRecovered
       },
       {
         name: "Meninggal",

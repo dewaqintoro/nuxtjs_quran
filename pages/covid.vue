@@ -1,6 +1,6 @@
 <template class="place-items-center">
   <div class="main">
-    <!-- <div class="one">
+    <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -19,10 +19,10 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div> -->
-    <div class="two p-8">
-      <button @click="cek">cek</button>
-      <CovidChart :daysDate="daysDate" :daysData="daysData" :daysDeath="daysDeath"  />
+    </div>
+    <div class="two px-4 py-8">
+      <!-- <button @click="cek">cek</button> -->
+      <CovidChart :daysDate="daysDate" :daysData="daysData" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
     </div>
     <div class="flex">
     </div>
@@ -74,6 +74,10 @@ export default {
 
     const daysDeath = daily.map((p) => {
       return p.jumlah_meninggal.value
+    })
+
+    const daysRecovered= daily.map((p) => {
+      return p.jumlah_sembuh.value
     })
 
     const daysDate = daily.map((p) => {
@@ -157,13 +161,14 @@ export default {
       }
     }
     
-    // indoCases()
-    // vaksinasi()
-    // globalCases()
+    indoCases()
+    vaksinasi()
+    globalCases()
     return {
       daysDate,
       daysData,
       daysDeath,
+      daysRecovered,
       series,
       chartOptions,
       global_Cases,
@@ -189,7 +194,7 @@ export default {
 
     async function cek(){
       console.log('daily', daily)
-      console.log('daysDeath', daysDeath)
+      console.log('daysRecovered', daysRecovered)
     }
 
     async function indoCases(){
