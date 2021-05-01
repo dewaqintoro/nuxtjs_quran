@@ -2,8 +2,17 @@
   <div class="analitik">
     <div class="chart-title">Bar</div>
     <!-- <button @click="cek">cek</button> -->
+
+    <div class="flex place-items-center">
+      <div class="place-items-center m-auto">
+        <button class="switch" :class="{positifActive: isPositif}" @click="showPositif">Positif</button>
+        <button class="switch" :class="{recoveredActive: isRecoverd}" @click="showRecovered">Sembuh</button>
+        <button class="switch" :class="{deathActive: isDeath}" @click="showDeath">Meninggal</button>
+        <button class="switch" :class="{treatedActive: isTreated}" @click="showTreated">Dirawat</button>
+      </div>
+    </div>
     
-    <div class="myChart">
+    <div v-if="isPositif" class="myChart">
       <ClientOnly>
         <div id="chart">
           <!-- <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart> -->
@@ -16,8 +25,11 @@
           <button :class="{isAll: allActive, isTen: tenActive}" @click="updateShowData" class="switch">{{btnShow}}</button>
         </div>
       </ClientOnly>
-
     </div>
+
+    <div v-if="isRecoverd" >Sembuh</div>
+    <div v-if="isDeath" >isDeath</div>
+    <div v-if="isTreated" >isTreated</div>
   </div>
 </template>
 
@@ -140,7 +152,15 @@ export default {
 
     const tenActive= ref(true)
     const allActive= ref(false)
+    const positifActive= ref(true)
+    const recoveredActive= ref(false)
     const btnShow = ref('Semua Data')
+    const classAktif = ref('positif')
+    const isPositif = ref(true)
+    const isRecoverd = ref(false)
+    const isDeath = ref(false)
+    const isTreated = ref(false)
+    
     
     setLimitCases()
     return {
@@ -153,9 +173,47 @@ export default {
       showTen,
       tenActive,
       allActive,
+      positifActive,
+      recoveredActive,
       cek,
       updateShowData,
-      btnShow
+      btnShow,
+      classAktif,
+      showPositif,
+      showRecovered,
+      showDeath,
+      showTreated,
+      isPositif,
+      isRecoverd,
+      isDeath,
+      isTreated
+    }
+
+    function showPositif(){
+      isPositif.value = true
+      isRecoverd.value = false
+      isDeath.value = false
+      isTreated.value = false
+    }
+
+    function showRecovered(){
+      isPositif.value = false
+      isRecoverd.value = true
+      isDeath.value = false
+      isTreated.value = false
+    }
+
+    function showDeath(){
+      isPositif.value = false
+      isRecoverd.value = false
+      isDeath.value = true
+      isTreated.value = false
+    }
+    function showTreated(){
+      isPositif.value = false
+      isRecoverd.value = false
+      isDeath.value = false
+      isTreated.value = true
     }
 
     function updateShowData(){
@@ -242,6 +300,10 @@ export default {
   color: white;
 }
 .isAll {
+  background: rgb(90, 90, 255) ;
+  color: white;
+}
+.recoveredActive, .positifActive, .deathActive, .treatedActive {
   background: rgb(90, 90, 255) ;
   color: white;
 }
