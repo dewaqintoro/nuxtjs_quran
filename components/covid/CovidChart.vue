@@ -55,7 +55,7 @@ export default {
       return p.positif.value
     })
     const series= [{
-      name: "Desktops",
+      name: "Kasus",
       data: myData
     }]
     const chartOptions= {
@@ -63,7 +63,7 @@ export default {
         height: 350,
         type: 'line',
         zoom: {
-          enabled: false
+          enabled: true
         }
       },
       dataLabels: {
@@ -73,7 +73,7 @@ export default {
         curve: 'straight'
       },
       title: {
-        text: 'Product Trends by Month',
+        text: 'Perkembangan Kasus Terkonfirmasi Positif Covid-19 Per-Hari',
         align: 'left'
       },
       grid: {
@@ -83,9 +83,10 @@ export default {
         },
       },
       xaxis: {
-        // categories: myDate,
+        type: 'datetime',
         categories: myDate,
-      }
+        tickAmount: 6,
+      },
     }
     return {
       series,
