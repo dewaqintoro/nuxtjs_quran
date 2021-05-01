@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[16],{566:function(c,n,e){e(59).get("http://api.weatherstack.com/current",{params:{access_key:"260d5d4d9750bca976a2fca0d279b280",query:"Magetan"}}).then((function(c){var n=c.data;console.log("apiResponse",n)})).catch((function(c){console.log(c)}))}}]);
