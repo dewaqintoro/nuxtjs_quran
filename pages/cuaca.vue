@@ -194,7 +194,6 @@ export default {
           result.map(hasil => {
             if(hasil.name.length === data.length){
               selectedCity.value = result
-              console.log('hasil', selectedCity.value)
               cekCuaca()
             } else {
               ifError.value = true

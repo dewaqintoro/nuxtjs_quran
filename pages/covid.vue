@@ -187,9 +187,6 @@ export default {
       isLoadingIndo,
       isLoadingGlobal,
       cek,
-      globalConfirmed,
-      globalRecovered,
-      globalDeaths,
     }
 
     async function cek(){
@@ -202,8 +199,6 @@ export default {
         const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid`
         const result = await axios.get(url);
         indo_Casess.value = result.data
-        // daily.value = result.data?.harian
-        console.log('result.data',result.data)
         setJumlahPositif()
         setJumlahDirawat()
         setJumlahSembuh()
@@ -467,41 +462,6 @@ export default {
         console.log('err', err)
       }
     }
-    
-
-    
-
-    async function globalConfirmed(){
-      try{
-        const url = `https://covid19.mathdro.id/api/confirmed`
-        const result = await axios.get(url);
-        // global_Confirmed.value = result.data
-      } catch (err){
-        console.log('err', err)
-      }
-    }
-
-    async function globalRecovered(){
-      try{
-        const url = `https://covid19.mathdro.id/api/recovered`
-        const result = await axios.get(url);
-        global_Recovered.value = result.data
-        console.log('global_Recovered.value', global_Recovered.value)
-      } catch (err){
-        console.log('err', err)
-      }
-    }
-
-    async function globalDeaths(){
-      try{
-        const url = `https://covid19.mathdro.id/api/deaths`
-        const result = await axios.get(url);
-        global_Deaths.value = result.data
-        console.log('global_Deaths.value', global_Deaths.value)
-      } catch (err){
-        console.log('err', err)
-      }
-    }
 
   }
 }
@@ -562,8 +522,8 @@ export default {
 }
 .one {
   @apply text-white ;
-  border-bottom-right-radius: 50px;
-  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
   min-height: 300px;
   /* background: #273c75; */
   background: #346791;

@@ -1,6 +1,5 @@
 <template>
   <div class="analitik">
-    <!-- <AnalitikDropdown /> -->
     <div class="chart-title">Analitik 2</div>
     <button @click="cek">cek</button>
     
@@ -9,13 +8,6 @@
       <div>recovered: {{global_Cases.recovered.value}}</div>
       <div>deaths: {{global_Cases.deaths.value}}</div>
     </div>
-    <!-- <div class="myChart">
-      <ClientOnly>
-        <div id="chart">
-          <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
-        </div>
-      </ClientOnly>
-    </div> -->
   </div>
 </template>
 

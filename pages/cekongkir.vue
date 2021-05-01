@@ -2,21 +2,6 @@
 <span>
   <Navbar :theme="myTheme" />
   <div class="main-menu">
-    <!-- <div class="bg-white">
-      <header class="text-gray-600 body-font">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            <span class="ml-3 text-xl">
-              <nuxt-link to="/">Ngoding Bentar</nuxt-link>
-            </span>
-            <span class="ml-3 text-xl">Cek Ongkir</span>
-          </a>
-        </div>
-      </header>
-    </div> -->
     <div class="section lg:flex">
       <div class="section-input lg:w-4/6">
         <div class="bg-white p-8 rounded-3xl">
@@ -74,17 +59,8 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="berat flex flex-wrap mb-2">
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                  <label class="block tracking-wide text-black text-xs font-bold mb-2" for="grid-city">
-                    Berat (gram)
-                  </label>
-                  <input v-model="berat" @change="cek($event)"  class="appearance-none block w-full text-black border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="1000">
-                </div>
-              </div> -->
             </form>
           </div>
-          <!-- <hr class="mt-2"/> -->
           <div class="berat flex flex-wrap mb-2 pt-4">
                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                   <label class="block tracking-wide text-black text-xs font-bold mb-2" for="grid-city">
@@ -105,21 +81,18 @@
           </div>
           <div class="mt-4 text-white font-semibold overflow-y-auto section-kurir">
             <div v-for="(x, index) in biayaJne" :key="index" class="kurir flex mb-4 p-2 rounded-xl">
-              <!-- <input type="radio" :id="x.service" :value="x.cost[0].value" class="my-auto" v-model="picked"> -->
               <label for="one" class="ml-4">
                 <h1>JNE</h1>
                 <p>{{x.service}} : {{x.cost[0].value}}</p>
               </label>
             </div>
             <div v-for="(x, index) in biayaPos" :key="index" class="kurir flex mb-4 p-2 rounded-xl">
-              <!-- <input type="radio" :id="x.service" :value="x.cost[0].value" class="my-auto" v-model="picked"> -->
               <label for="one" class="ml-4">
                 <h1>POS</h1>
                 <p>{{x.service}} : {{x.cost[0].value}}</p>
               </label>
             </div>
             <div v-for="(x, index) in biayaTiki" :key="index" class="kurir flex mb-4 p-2 rounded-xl">
-              <!-- <input type="radio" :id="x.service" :value="x.cost[0].value" class="my-auto" v-model="picked"> -->
               <label for="one" class="ml-4">
                 <h1>Tiki</h1>
                 <p>{{x.service}} : {{x.cost[0].value}}</p>
