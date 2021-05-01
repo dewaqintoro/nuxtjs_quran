@@ -7,10 +7,10 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <nuxt-link :to="item.route" v-for="(item, index) in dataDoa" :key="index">
+        <nuxt-link :to="item.route" v-for="item in dataDoa" :key="item.id">
           <Cardcomp class="content" :theme="storeTheme" :item="item"/>
         </nuxt-link>
-        <a :href="item.route" target="_blank" v-for="(item, index) in extIndex" :key="index">
+        <a :href="item.route" target="_blank" v-for="item in extIndex" :key="item.id">
           <Cardcomp class="content" :theme="storeTheme" :item="item"/>
         </a>
       </div>

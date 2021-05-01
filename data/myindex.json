@@ -8,7 +8,7 @@
       "icon": ""
     },
     {
-      "id": 3,
+      "id": 2,
       "title": "Cuaca",
       "route" : "cuaca",
       "description": "",
@@ -32,6 +32,13 @@
       "id": 5,
       "title": "Dashboard Crypto (Desktop)",
       "route" : "crypto",
+      "description": "",
+      "icon": ""
+    },
+    {
+      "id": 6,
+      "title": "Covid-19",
+      "route" : "covid",
       "description": "",
       "icon": ""
     }

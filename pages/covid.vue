@@ -3,7 +3,6 @@
     <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
-        <button @click="cek">cek</button>
         <p class="text-xl">Statistik</p>
       </div>
       <CovidStatistik
@@ -22,7 +21,16 @@
       />
     </div>
     <div class="two p-8">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum, temporibus, magnam itaque nihil maiores aspernatur exercitationem pariatur voluptatibus id fuga aliquid, debitis quia odit! Perferendis, facilis rerum fuga consequatur et non magnam! Eius tempora minima, soluta numquam perspiciatis sequi dolorum, repellendus fugit ducimus, iure nihil! Ratione aperiam sint, nesciunt corrupti aut harum at qui veniam ullam nihil culpa reiciendis id, assumenda vero enim ducimus tenetur accusantium in cum odit quam! Excepturi quo totam debitis expedita distinctio molestiae fugit, autem explicabo cupiditate culpa necessitatibus nesciunt accusantium nihil veniam obcaecati nobis atque placeat similique nisi facere maxime? Doloremque eum optio quae consequuntur.
+      <!-- <button @click="cek">cek</button> -->
+      <CovidChart :daysDate="daysDate" :daysData="daysData"  />
+    </div>
+    <div class="flex">
+      <!-- <div>
+        <p v-for="(item, index) in daysDate" :key="index">{{item.day}}</p>
+      </div>
+      <div>
+        <p v-for="(item, index) in daysData" :key="index">{{item.positif}}</p>
+      </div> -->
     </div>
   </div>
 </template>
@@ -32,19 +40,24 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import Loading from '@/components/Loading.vue'
 import CovidStatistik from '@/components/covid/CovidStatistik.vue'
+import CovidChart from '@/components/covid/CovidChart.vue'
+import dataJson from '~/data/update.json'
+
 export default {
   name: 'Chart',
   components: {
     Loading,
-    CovidStatistik
+    CovidStatistik,
+    CovidChart
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const isIndo = ref(true)
     const global_Confirmed = ref('')
     const global_Recovered = ref('')
     const global_Deaths = ref('')
     const global_Active = ref('')
+    // const daily = ref([])
+    const daily = dataJson.update.harian
 
     const global_Cases = ref({})
     const indo_Casess = ref([])
@@ -58,6 +71,19 @@ export default {
     const jumlah_meninggal = ref({})
     const isLoadingIndo = ref(true)
     const isLoadingGlobal= ref(true)
+
+    const daysData = daily.map((p) => {
+      return {
+        positif: p.jumlah_positif,
+      }
+    })
+
+    const daysDate = daily.map((p) => {
+      var date = new Date(p.key_as_string)
+      return {
+        day: date.toISOString().substring(0, 10),
+      }
+    })
 
     const series= [
       {
@@ -132,14 +158,15 @@ export default {
         offsetX: -5
       }
     }
-    // globalCases()
+    
     indoCases()
     vaksinasi()
     globalCases()
     return {
+      daysDate,
+      daysData,
       series,
       chartOptions,
-      isIndo,
       global_Cases,
       indo_Casess,
       indo_Vaksinasi,
@@ -159,17 +186,36 @@ export default {
       globalConfirmed,
       globalRecovered,
       globalDeaths,
-      update
     }
 
-    function update(e) {
-      isIndo.value = !isIndo.value
-      console.log('isIndo.value', isIndo.value)
-      // if (e.srcElement.checked === true) {
-      //   console.log('on')
-      // } else {
-      //   console.log('off')
+    async function cek(){
+      // const places = daily.map((p) => {
+      //   var date = new Date(p.key_as_string)
+      //   return {
+      //     days: date.toISOString().substring(0, 10),
+      //   }
+      // })
+      console.log('daily', daily)
+
+
+      // let datesArray = ['2017-12-09T00:00:00' ,'2017-12-13T00:00:00' ,'2017-12-02T00:00:00' ,'2017-12-16T00:00:00'];
+      // let diffDate = Infinity;
+      // let now = Date.now();
+          
+      // for (let i = 0, len = datesArray.length; i < len; i++) {
+      //   let closest = new Date(datesArray[i]); 
+      //   if (closest > now && closest < diffDate) {
+      //     diffDate = closest;
+      //   }
       // }
+      // console.log(diffDate.toISOString());
+
+      // var d = new Date();
+      // var n = d.toISOString();
+      // console.log('n', n)
+
+      // var date = new Date("2013-03-10T02:00:00Z");
+      // console.log(date.toISOString().substring(0, 10))
     }
 
     async function indoCases(){
@@ -177,6 +223,8 @@ export default {
         const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid`
         const result = await axios.get(url);
         indo_Casess.value = result.data
+        // daily.value = result.data?.harian
+        console.log('result.data',result.data)
         setJumlahPositif()
         setJumlahDirawat()
         setJumlahSembuh()
@@ -426,9 +474,7 @@ export default {
       }
     }
 
-    async function cek(){
-      console.log('jumlah_positif.value', jumlah_positif.value)
-    }
+    
 
 
     async function vaksinasi(){

@@ -143,11 +143,9 @@ export default {
       update,
       myTheme
     }
-
-
+    
     function update(e) {
       isIndo.value = !isIndo.value
-      console.log('isIndo.value', isIndo.value)
     }
 
   }
@@ -184,7 +182,7 @@ export default {
   height: 40px;
   border: 1px solid gray;
   position: absolute;
-  top: 15%;
+  top: 80px;
   left: calc(50% - 125px);
   border-radius: 100px;
   background: #4884b6;
