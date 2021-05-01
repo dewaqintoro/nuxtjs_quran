@@ -20,16 +20,17 @@
           <apexchart v-else type="bar" height="650" :options="chartOptions" :series="series"></apexchart>
         </div>
         <div class="flex place-items-center">
-          <!-- <button class="switch" :class="{isTen: tenActive}" @click="showTen">15 Data</button>
-          <button class="switch" :class="{isAll: allActive}" @click="showAll">Semua Data</button> -->
           <button :class="{isAll: allActive, isTen: tenActive}" @click="updateShowData" class="switch">{{btnShow}}</button>
         </div>
       </ClientOnly>
     </div>
 
-    <div v-if="isRecoverd" >Sembuh</div>
-    <div v-if="isDeath" >isDeath</div>
-    <div v-if="isTreated" >isTreated</div>
+    <!-- <div v-if="isRecoverd" >Sembuh</div> -->
+    <CovidBarRecovered v-if="isRecoverd" />
+    <!-- <div v-if="isDeath" >isDeath</div> -->
+    <CovidBarDeath v-if="isDeath" />
+    <CovidBarTreated v-if="isTreated" />
+    <!-- <div v-if="isTreated" >isTreated</div> -->
   </div>
 </template>
 
@@ -39,6 +40,9 @@ import axios from 'axios'
 import Loading from '@/components/Loading.vue'
 import CovidStatistik from '@/components/covid/CovidStatistik.vue'
 import CovidChart from '@/components/covid/CovidChart.vue'
+import CovidBarDeath from '@/components/covid/CovidBarDeath.vue'
+import CovidBarRecovered from '@/components/covid/CovidBarRecovered.vue'
+import CovidBarTreated from '@/components/covid/CovidBarTreated.vue'
 import dataJson from '~/data/prov.json'
 
 export default {
@@ -46,7 +50,10 @@ export default {
   components: {
     Loading,
     CovidStatistik,
-    CovidChart
+    CovidChart,
+    CovidBarDeath,
+    CovidBarRecovered,
+    CovidBarTreated
   },
   props: {
     daysDate: {
@@ -169,8 +176,6 @@ export default {
       limitSeries,
       chartOptions,
       limitChartOptions,
-      showAll,
-      showTen,
       tenActive,
       allActive,
       positifActive,
@@ -229,28 +234,6 @@ export default {
       }
     }
 
-    async function showAll(){
-      isLimit.value = false
-      allActive.value = true
-      tenActive.value = false
-      // thisProv.value = prov
-      // thisCases.value = cases
-      // thisDeaths.value = deaths
-      // thisRecovered.value = recovered
-      // thisTreated.value = treated
-    }
-
-    async function showTen(){
-      isLimit.value = true
-      tenActive.value = true
-      allActive.value = false
-      // thisProv.value = limitProv.value
-      // thisCases.value = limitCases.value
-      // thisDeaths.value = limitDeaths.value
-      // thisRecovered.value = limitRecovered.value
-      // thisTreated.value = limitTreated.value
-    }
-    
     async function setLimitCases(){
       prov.map((p) => {
         if(limitProv.value.length < 15 ){
