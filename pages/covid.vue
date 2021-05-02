@@ -1,5 +1,6 @@
 <template class="place-items-center">
   <div class="main">
+    <button @click="cek">cek</button>
     <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
@@ -21,9 +22,9 @@
       />
     </div> -->
     <div class="two px-4 py-8">
-      <!-- <button @click="cek">cek</button> -->
-      <!-- <CovidChart :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  /> -->
-      <CovidBar class="mt-4" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      
+      <CovidChart v-if="!loadingChart" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      <CovidBar v-if="!loadingChart"  class="mt-4" />
     </div>
     <div class="flex">
     </div>
@@ -53,11 +54,12 @@ export default {
     const global_Recovered = ref('')
     const global_Deaths = ref('')
     const global_Active = ref('')
-    // const daily = ref([])
-    const daily = dataJson.update.harian
+    
+    // const daily = dataJson.update.harian
 
     const global_Cases = ref({})
-    const indo_Casess = ref([])
+    const indo_Cases = ref([])
+    const daily = ref([])
     const indo_Vaksinasi = ref([])
     // const vaksinasi_tahap_1 = computed(() => indo_Vaksinasi.value?.vaksinasi?.total?.jumlah_vaksinasi_1)
     const vaksinasi_tahap_1 = ref('')
@@ -69,23 +71,26 @@ export default {
     const isLoadingIndo = ref(true)
     const isLoadingGlobal= ref(true)
 
-    const daysData = daily.map((p) => {
-      return {
-        positif: p.jumlah_positif,
-      }
-    })
+    // const daysPositif = daily.map((p) => {
+    //   if(p.jumlah_positif.value!== 'undefined'){
+    //     return p.jumlah_positif.value
+    //   }
+    // })
 
-    const daysPositif = daily.map((p) => {
-      return p.jumlah_positif.value
-    })
+    const daysPositif = ref([])
+    const daysDeath = ref([])
+    const daysRecovered = ref([])
+    const daysDate = ref([])
+    const loadingChart = ref(true)
+    const loadingBar = ref(true)
 
-    const daysDeath = daily.map((p) => {
-      return p.jumlah_meninggal.value
-    })
+    // const daysDeath = daily.map((p) => {
+    //   return p.jumlah_meninggal.value
+    // })
 
-    const daysRecovered= daily.map((p) => {
-      return p.jumlah_sembuh.value
-    })
+    // const daysRecovered= daily.map((p) => {
+    //   return p.jumlah_sembuh.value
+    // })
 
     // const daysDate = daily.map((p) => {
     //   var date = new Date(p.key_as_string)
@@ -94,23 +99,25 @@ export default {
     //   }
     // })
 
-    const daysDate = daily.map((p) => {
-      var date = new Date(p.key_as_string)
-      return date.toISOString().substring(0, 10)
-    })
+    // const daysDate = daily.map((p) => {
+    //   var date = new Date(p.key_as_string)
+    //   return date.toISOString().substring(0, 10)
+    // })
 
     
     indoCases()
     vaksinasi()
     globalCases()
     return {
+      loadingChart,
+      loadingBar,
+      daily,
       daysDate,
-      daysData,
       daysPositif,
       daysDeath,
       daysRecovered,
       global_Cases,
-      indo_Casess,
+      indo_Cases,
       indo_Vaksinasi,
       vaksinasi_tahap_1,
       vaksinasi_tahap_2,
@@ -128,14 +135,18 @@ export default {
     }
 
     async function cek(){
-      console.log('dew.value', dew.value)
+      // console.log('daily', daily.value.length)
+      console.log('daysDate.value', daysDate.value)
+      
     }
 
     async function indoCases(){
       try{
         const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid`
         const result = await axios.get(url);
-        indo_Casess.value = result.data
+        indo_Cases.value = result.data
+        daily.value =  result.data?.harian
+        console.log('result.data', result.data)
         setJumlahPositif()
         setJumlahDirawat()
         setJumlahSembuh()
@@ -152,8 +163,15 @@ export default {
 
     async function setJumlahPositif(){
       try {
-        var bilangan = await indo_Casess.value?.total?.jumlah_positif ;
+        var bilangan = await indo_Cases.value?.total?.jumlah_positif ;
         if(typeof bilangan === 'number'){
+          daysPositif.value = daily.value.map((p) => {
+            return p.jumlah_positif.value
+          })
+          daysDate.value = daily.value.map((p) => {
+            var date = new Date(p.key_as_string)
+            return date.toISOString().substring(0, 10)
+          })
           var	number_string = bilangan.toString()
           let sisa 	= number_string.length % 3
           let rupiah 	= number_string.substr(0, sisa)
@@ -165,6 +183,7 @@ export default {
           }
     
           jumlah_positif.value =  rupiah
+          loadingChart.value = false
         }
       } catch(err){
         console.log(err)
@@ -172,7 +191,7 @@ export default {
     }
 
     async function setJumlahDirawat (){
-      var bilangan = await indo_Casess.value?.total?.jumlah_dirawat ;
+      var bilangan = await indo_Cases.value?.total?.jumlah_dirawat ;
       if(typeof bilangan === 'number'){
         var	number_string = bilangan.toString()
         let sisa 	= number_string.length % 3
@@ -184,7 +203,7 @@ export default {
           rupiah += separator + ribuan.join('.');
         }
   
-        let persen = (indo_Casess.value?.total?.jumlah_dirawat/indo_Casess.value?.total?.jumlah_positif)*100
+        let persen = (indo_Cases.value?.total?.jumlah_dirawat/indo_Cases.value?.total?.jumlah_positif)*100
   
         let data = {
           value : rupiah,
@@ -196,8 +215,11 @@ export default {
     }
 
     async function setJumlahSembuh(){
-      var bilangan = indo_Casess.value?.total?.jumlah_sembuh ;
+      var bilangan = indo_Cases.value?.total?.jumlah_sembuh ;
       if(typeof bilangan === 'number'){
+        daysRecovered.value = daily.value.map((p) => {
+          return p.jumlah_sembuh.value
+        })
         var	number_string = bilangan.toString()
         let sisa 	= number_string.length % 3
         let rupiah 	= number_string.substr(0, sisa)
@@ -208,7 +230,7 @@ export default {
           rupiah += separator + ribuan.join('.');
         }
   
-        let persen = (indo_Casess.value?.total?.jumlah_sembuh/indo_Casess.value?.total?.jumlah_positif)*100
+        let persen = (indo_Cases.value?.total?.jumlah_sembuh/indo_Cases.value?.total?.jumlah_positif)*100
   
         let data = {
           value : rupiah,
@@ -220,9 +242,12 @@ export default {
     }
 
     async function setJumlahMeninggal(){
-      var bilangan = indo_Casess.value?.total?.jumlah_meninggal ;
+      var bilangan = indo_Cases.value?.total?.jumlah_meninggal ;
 
       if(typeof bilangan === 'number'){
+        daysDeath.value = daily.value.map((p) => {
+          return p.jumlah_meninggal.value
+        })
         var	number_string = bilangan.toString()
         let sisa 	= number_string.length % 3
         let rupiah 	= number_string.substr(0, sisa)
@@ -233,7 +258,7 @@ export default {
           rupiah += separator + ribuan.join('.');
         }
   
-        let persen = (indo_Casess.value?.total?.jumlah_meninggal/indo_Casess.value?.total?.jumlah_positif)*100
+        let persen = (indo_Cases.value?.total?.jumlah_meninggal/indo_Cases.value?.total?.jumlah_positif)*100
   
         let data = {
           value : rupiah,

@@ -33,7 +33,6 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import axios from 'axios'
 import Loading from '@/components/Loading.vue'
 import CovidStatistik from '@/components/covid/CovidStatistik.vue'
 import CovidChart from '@/components/covid/CovidChart.vue'
@@ -52,21 +51,21 @@ export default {
     CovidBarRecovered,
     CovidBarTreated
   },
-  props: {
-    daysPositif: {
-      type: Array,
-      required: true,
-    },
-    daysDeath: {
-      type: Array,
-      required: true,
-    },
-    daysRecovered: {
-      type: Array,
-      required: true,
-    },
+  // props: {
+  //   daysPositif: {
+  //     type: Array,
+  //     required: true,
+  //   },
+  //   daysDeath: {
+  //     type: Array,
+  //     required: true,
+  //   },
+  //   daysRecovered: {
+  //     type: Array,
+  //     required: true,
+  //   },
     
-  },
+  // },
   setup(props, {emit}){
     const { app, store } = useContext()
     const myProv = dataJson.list_data
