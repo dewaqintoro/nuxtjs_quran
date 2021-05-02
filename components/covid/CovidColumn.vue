@@ -1,11 +1,14 @@
 <template>
-  <div class="analitik">
+  <div class="analitik mt-8">
+    <p>Jenis Kelamin Positif Covid-19</p>
+    <div class="myChart">
       <ClientOnly>
         <!-- <button @click="cek">cek col</button> -->
         <div id="chart">
           <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
       </ClientOnly>
+    </div>
   </div>
 </template>
 
