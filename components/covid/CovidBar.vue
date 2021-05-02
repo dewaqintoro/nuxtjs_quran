@@ -1,6 +1,6 @@
 <template>
   <div class="analitik">
-    <div class="chart-title">Bar (Last Update : {{dataProv.last_date}})</div>
+    <div class="chart-title">Bar</div>
     <!-- <button @click="cek">cek</button> -->
 
     <div class="flex place-items-center">
@@ -39,7 +39,6 @@ import CovidChart from '@/components/covid/CovidChart.vue'
 import CovidBarDeath from '@/components/covid/CovidBarDeath.vue'
 import CovidBarRecovered from '@/components/covid/CovidBarRecovered.vue'
 import CovidBarTreated from '@/components/covid/CovidBarTreated.vue'
-import dataJson from '~/data/prov.json'
 
 export default {
   name: 'Bar',
@@ -81,13 +80,6 @@ export default {
     const limitDeaths = ref([])
     const limitRecovered = ref([])
     const limitTreated = ref([])
-
-    const thisProv = ref(limitProv.value)
-    const thisCases = ref(limitCases.value)
-    const thisDeaths = ref(limitDeaths.value)
-    const thisRecovered  = ref(limitRecovered.value)
-    const thisTreated = ref(limitTreated.value)
-
     const isLimit = ref(true)
     
     const limitSeries= [

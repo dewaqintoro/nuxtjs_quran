@@ -1,10 +1,12 @@
 <template class="place-items-center">
   <div class="main">
-    <button @click="cek">cek</button>
-    <!-- <div class="one">
+    <!-- <button @click="cek">cek</button> -->
+    
+    <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
+        <p v-if="indo_Cases.penambahan" class="text-sm font-normal"><i>( Last Update : {{indo_Cases.penambahan.tanggal}} )</i></p>
       </div>
       <CovidStatistik
         :jumlah_positif="jumlah_positif"
@@ -20,7 +22,7 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div> -->
+    </div>
     <div class="two px-4 py-8">
       
       <CovidChart v-if="!loadingChart" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
@@ -54,14 +56,12 @@ export default {
     const global_Recovered = ref('')
     const global_Deaths = ref('')
     const global_Active = ref('')
-    
-    // const daily = dataJson.update.harian
+
 
     const global_Cases = ref({})
     const indo_Cases = ref([])
     const daily = ref([])
     const indo_Vaksinasi = ref([])
-    // const vaksinasi_tahap_1 = computed(() => indo_Vaksinasi.value?.vaksinasi?.total?.jumlah_vaksinasi_1)
     const vaksinasi_tahap_1 = ref('')
     const vaksinasi_tahap_2 = ref('')
     const jumlah_positif = ref('')
@@ -71,12 +71,6 @@ export default {
     const isLoadingIndo = ref(true)
     const isLoadingGlobal= ref(true)
 
-    // const daysPositif = daily.map((p) => {
-    //   if(p.jumlah_positif.value!== 'undefined'){
-    //     return p.jumlah_positif.value
-    //   }
-    // })
-
     const daysPositif = ref([])
     const daysDeath = ref([])
     const daysRecovered = ref([])
@@ -84,27 +78,6 @@ export default {
     const dataProv = ref([])
     const loadingChart = ref(true)
     const loadingBar = ref(true)
-
-    // const daysDeath = daily.map((p) => {
-    //   return p.jumlah_meninggal.value
-    // })
-
-    // const daysRecovered= daily.map((p) => {
-    //   return p.jumlah_sembuh.value
-    // })
-
-    // const daysDate = daily.map((p) => {
-    //   var date = new Date(p.key_as_string)
-    //   return {
-    //     day: date.toISOString().substring(0, 10),
-    //   }
-    // })
-
-    // const daysDate = daily.map((p) => {
-    //   var date = new Date(p.key_as_string)
-    //   return date.toISOString().substring(0, 10)
-    // })
-
     
     indoCases()
     vaksinasi()
@@ -151,7 +124,7 @@ export default {
         dataProv.value = resultProv.data
         indo_Cases.value = result.data
         daily.value =  result.data?.harian
-        console.log('resultProv', resultProv.data)
+        console.log('result', indo_Cases.value.penambahan.tanggal)
         setJumlahPositif()
         setJumlahDirawat()
         setJumlahSembuh()
