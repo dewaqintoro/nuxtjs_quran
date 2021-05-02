@@ -3,12 +3,12 @@
     <div class="inner container">
       <div class="start box" :style="{ boxShadow: storeTheme.boxShadow }">
         <nuxt-link class="btn-setting" to="/">
-          <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
+          <font-awesome-icon :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
       <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
         <button class="btn-setting focus:outline-none" @click="doSetting()">
-          <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
+          <font-awesome-icon :icon="['fas', 'cog']" />
         </button>
       </div>
       <Transition name="drawer">

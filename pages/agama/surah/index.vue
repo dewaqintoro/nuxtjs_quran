@@ -4,8 +4,11 @@
   <Navbar />
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>
-    <div class="item text-center">
+    <div class="item text-center flex justify-between">
       <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
+      <button class="question focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }" @click="doSetting()">
+        <font-awesome-icon class="icon-question" :icon="['fas', 'question']" />
+      </button>
     </div>
     <div class=" min-h-screen font-arabic">
       <div v-if="loading">
@@ -35,6 +38,10 @@
           <jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
         </div>
       </div>
+
+      <Transition name="drawer">
+        <About :source="source" :theme="storeTheme" v-if="isSetting" @close="closeModal" />
+      </Transition>
 
     </div>
   </div>
@@ -66,6 +73,8 @@ export default {
     const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
+    const isSetting = ref(false)
+    const source = 'https://quran.kemenag.go.id'
     const bgId = computed(() => {
       if(storeTheme.value?.darktheme){
         return 'darkTheme'
@@ -90,20 +99,31 @@ export default {
 
     searchFilter(search.value)
     return {
+      source,
       data,
       search,
       allSurah,
       dataFields,
       bgId,
+      isSetting,
       pageOfItems,
       loading,
       cek,
       searchFilter,
       onChangePage,
       loadingTheme,
-      storeTheme
+      storeTheme,
+      closeModal,
+      doSetting
     }
     async function cek(){
+    }
+
+    function closeModal() {
+      isSetting.value = false
+    }
+    function doSetting() {
+      isSetting.value = true
     }
 
     function onChangePage(data = any){
@@ -130,6 +150,14 @@ export default {
 .sum {
   @apply py-2 px-4 rounded-lg;
   width: 100px;
+}
+.question {
+  @apply p-2 rounded-full place-items-center justify-center flex;
+  .icon-question {
+    @apply p-1;
+    width: 25px;
+    height: 25px;
+  }
 }
 .darkTheme{
   /* color: rgb(61, 81, 94); */

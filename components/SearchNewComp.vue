@@ -58,6 +58,9 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.cari {
+  @apply my-4;
+}
 .dew {
   @apply m-auto px-6 rounded-lg;
   max-width: 400px;
