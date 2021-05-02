@@ -1,7 +1,6 @@
 <template>
   <div class="analitik">
     <div class="chart-title">Analitik</div>
-    <!-- <button @click="cek">cek</button> -->
     <div class="myChart">
       <ClientOnly>
         <div id="chart">
@@ -15,17 +14,10 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import axios from 'axios'
-import Loading from '@/components/Loading.vue'
-import CovidStatistik from '@/components/covid/CovidStatistik.vue'
-import CovidChart from '@/components/covid/CovidChart.vue'
 export default {
   name: 'Chart',
-  components: {
-    Loading,
-    CovidStatistik,
-    CovidChart
-  },
+  // components: {
+  // },
   props: {
     daysDate: {
       type: Array,
@@ -47,13 +39,6 @@ export default {
   },
   setup(props, {emit}){
     const { app, store } = useContext()
-    const myDate = props.daysDate.map((p) => {
-      return p.day
-    })
-    // const series= [{
-    //   name: "Kasus",
-    //   data: myData
-    // }]
     const series= [
       {
         name: "Positif",
@@ -82,19 +67,15 @@ export default {
       stroke: {
         curve: 'straight'
       },
-      // title: {
-      //   text: 'Perkembangan Kasus Terkonfirmasi Positif Covid-19 Per-Hari',
-      //   align: 'left'
-      // },
       grid: {
         row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          colors: ['#f3f3f3', 'transparent'],
           opacity: 0.5
         },
       },
       xaxis: {
         type: 'datetime',
-        categories: myDate,
+        categories: props.daysDate,
         tickAmount: 6,
       },
     }
@@ -104,7 +85,6 @@ export default {
       cek
     }
     function cek(){
-      // console.log('myDate', myDate)
       console.log('props.daysDeath', props.daysDeath)
     }
 

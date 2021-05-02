@@ -1,6 +1,6 @@
 <template class="place-items-center">
   <div class="main">
-    <div class="one">
+    <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -19,11 +19,11 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div>
+    </div> -->
     <div class="two px-4 py-8">
       <!-- <button @click="cek">cek</button> -->
-      <CovidChart :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
-      <CovidBar class="mt-4" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      <!-- <CovidChart :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  /> -->
+      <CovidBar class="mt-4" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
     </div>
     <div class="flex">
     </div>
@@ -87,89 +87,18 @@ export default {
       return p.jumlah_sembuh.value
     })
 
+    // const daysDate = daily.map((p) => {
+    //   var date = new Date(p.key_as_string)
+    //   return {
+    //     day: date.toISOString().substring(0, 10),
+    //   }
+    // })
+
     const daysDate = daily.map((p) => {
       var date = new Date(p.key_as_string)
-      return {
-        day: date.toISOString().substring(0, 10),
-      }
+      return date.toISOString().substring(0, 10)
     })
 
-    const series= [
-      {
-        name: "High - 2013",
-        data: [28, 29, 33, 36, 32, 32, 33]
-      },
-      {
-        name: "med - 2013",
-        data: [12, 11, 14, 18, 17, 13, 13]
-      },
-      {
-        name: "Low - 2013",
-        data: [21, 15, 24, 12, 27, 23, 13]
-      }
-    ]
-
-    const chartOptions= {
-      chart: {
-        height: 350,
-        type: 'line',
-        dropShadow: {
-          enabled: true,
-          color: '#000',
-          top: 18,
-          left: 7,
-          blur: 10,
-          opacity: 0.2
-        },
-        toolbar: {
-          show: false
-        }
-      },
-      colors: ['#77B6EA', '#545454'],
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-      title: {
-        text: 'Average High & Low Temperature',
-        align: 'left'
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
-        },
-      },
-      markers: {
-        size: 1
-      },
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        title: {
-          text: 'Month'
-        }
-      },
-      yaxis: {
-        title: {
-          text: 'Temperature'
-        },
-        min: 5,
-        max: 40
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'right',
-        floating: true,
-        offsetY: -25,
-        offsetX: -5
-      }
-    }
-
-    const dew = ref([])
-    cekDew()
     
     indoCases()
     vaksinasi()
@@ -180,8 +109,6 @@ export default {
       daysPositif,
       daysDeath,
       daysRecovered,
-      series,
-      chartOptions,
       global_Cases,
       indo_Casess,
       indo_Vaksinasi,
@@ -200,13 +127,6 @@ export default {
       cek,
     }
 
-    async function cekDew(){
-      daysPositif.map((p) => {
-        if(dew.value.length < 10 ){
-          dew.value.push(p)
-        }
-      })
-    }
     async function cek(){
       console.log('dew.value', dew.value)
     }

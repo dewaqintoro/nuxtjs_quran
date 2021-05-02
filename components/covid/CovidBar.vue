@@ -25,12 +25,9 @@
       </ClientOnly>
     </div>
 
-    <!-- <div v-if="isRecoverd" >Sembuh</div> -->
     <CovidBarRecovered v-if="isRecoverd" />
-    <!-- <div v-if="isDeath" >isDeath</div> -->
     <CovidBarDeath v-if="isDeath" />
     <CovidBarTreated v-if="isTreated" />
-    <!-- <div v-if="isTreated" >isTreated</div> -->
   </div>
 </template>
 
@@ -56,10 +53,6 @@ export default {
     CovidBarTreated
   },
   props: {
-    daysDate: {
-      type: Array,
-      required: true,
-    },
     daysPositif: {
       type: Array,
       required: true,
