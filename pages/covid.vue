@@ -1,12 +1,7 @@
 <template class="place-items-center">
   <div class="main">
-    <button @click="cek">cek</button>
-    <select v-if="prov" v-model="selected" name="top" id="top" class="focus:outline-none">
-      <option value="NASIONAL">NASIONAL</option>
-      <option v-for="(item, index) in prov" :key="index" :value="item">{{item}}</option>
-    </select>
-    <p>{{selected}}</p>
-    
+    <!-- <button @click="cek">cek</button> -->
+
     <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
@@ -28,10 +23,10 @@
         :isLoadingGlobal="isLoadingGlobal"
       />
     </div> -->
-    <!-- <div class="two px-4 py-8">
-      <CovidChart v-if="!loadingChart" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
-      <CovidBar v-if="!loadingChart" :dataProv="dataProv"  class="mt-4" />
-    </div> -->
+    <div class="two px-4 py-8">
+      <CovidChart v-if="!loadingChart" :prov="prov" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
+      <!-- <CovidBar v-if="!loadingChart" :dataProv="dataProv"  class="mt-4" /> -->
+    </div>
   </div>
 </template>
 
@@ -82,7 +77,7 @@ export default {
     const loadingBar = ref(true)
 
     const prov = ref([])
-    const selected = ref('')
+    const selected = ref('NASIONAL')
     
     indoCases()
     vaksinasi()
@@ -127,6 +122,11 @@ export default {
 
     async function indoCases(){
       try{
+        if(selected.value === 'NASIONAL'){
+          console.log('case nasional')
+        } else {
+          console.log('bukan')
+        }
         const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid`
         const result = await axios.get(url);
         const urlProv = 'https://ngodingbentar-be.herokuapp.com/api/v1/covid/prov'
