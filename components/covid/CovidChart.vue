@@ -2,7 +2,7 @@
   <div class="analitik">
     <div class="chart-title">Perkembangan Kasus Terkonfirmasi Positif Covid-19 Per-Hari</div>
     <p>{{selected}}</p>
-    <!-- <button @click="cek">cek</button> -->
+    <button @click="cek">cek</button>
     <select v-if="prov" v-model="selected" @change="seleckProv()" name="top" id="top" class="focus:outline-none">
       <option value="NASIONAL">NASIONAL</option>
       <option v-for="(item, index) in prov" :key="index" :value="item">{{item}}</option>
@@ -10,11 +10,12 @@
 
     <div class="myChart">
       <ClientOnly>
-        <div v-if="!loadingChart" id="chart">
-          <p class="font-normal text-sm " v-if="dataProv && (selected !== 'NASIONAL')">Jumlah kasus : <b>{{dataProv.kasus_total}}</b>, Sembuh : <b>{{dataProv.sembuh_dengan_tgl}}</b>, Meninggal <b>{{dataProv.meninggal_dengan_tgl}}</b></p>
+        <!-- <div v-if="!loadingChart" id="chart">
+          <p class="font-normal text-sm " v-if="ProvFull && (selected !== 'NASIONAL')">Jumlah kasus : <b>{{ProvFull.kasus_total}}</b>, Sembuh : <b>{{ProvFull.sembuh_dengan_tgl}}</b>, Meninggal <b>{{ProvFull.meninggal_dengan_tgl}}</b></p>
           <apexchart v-if="isProv" type="area" height="350" :options="chartOptionsProv" :series="seriesProv"></apexchart>
           <apexchart v-else type="area" height="350" :options="chartOptions" :series="series"></apexchart>
-        </div>
+        </div> -->
+        <CovidColumn :ProvData="ProvData" />
       </ClientOnly>
 
     </div>
@@ -23,11 +24,14 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import CovidColumn from '@/components/covid/CovidColumn.vue'
+
 import axios from 'axios'
 export default {
   name: 'Chart',
-  // components: {
-  // },
+  components: {
+    CovidColumn
+  },
   props: {
     daysDate: {
       type: Array,
@@ -57,7 +61,8 @@ export default {
     const provPositif = ref([])
     const provSembuh = ref([])
     const provMeninggal = ref([])
-    const dataProv = ref([])
+    const ProvFull = ref([])
+    const ProvData = ref([])
     const isProv = ref(false)
     const series= computed(() => 
       [
@@ -146,10 +151,12 @@ export default {
     }
 
     const selected = ref('NASIONAL')
+    const dataJatim = ref([])
     seleckProv()
     
     return {
-      dataProv,
+      ProvFull,
+      ProvData,
       isProv,
       series,
       seriesProv,
@@ -161,25 +168,9 @@ export default {
       cek
     }
     function cek(){
-      console.log('dataProv.value', dataProv.value.kasus_total)
+      console.log('ProvData.value', typeof ProvData.value)
     }
 
-    async function getData(){
-      loadingChart.value = true
-      if(selected.value !== 'NASIONAL'){
-        isProv.value = true
-        setTimeout(function () {
-          loadingChart.value = false
-        }, 1000);
-        // loadingChart.value = false
-      }else {
-        isProv.value = false
-        setTimeout(function () {
-          loadingChart.value = false
-        }, 1000);
-        // loadingChart.value = false
-      }
-    }
     async function seleckProv(){
       loadingChart.value = true
       var str = selected.value 
@@ -194,7 +185,8 @@ export default {
           const result = await axios.get(url);
           console.log('result', result);
           const listPerkembangan = result.data?.result?.list_perkembangan
-          dataProv.value = result.data.result
+          ProvFull.value = result.data.result
+          ProvData.value = result.data.result?.data
 
           provPositif.value = listPerkembangan.map((p) => {
             return p.KASUS
@@ -214,8 +206,9 @@ export default {
 
       }else {
         isProv.value = false
-        loadingChart.value = false
-        console.log('e')
+        setTimeout(function () {
+          loadingChart.value = false
+        }, 200);
       }
       // getData()
     }

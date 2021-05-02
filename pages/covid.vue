@@ -2,7 +2,7 @@
   <div class="main">
     <!-- <button @click="cek">cek</button> -->
 
-    <div class="one">
+    <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -22,10 +22,11 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div>
+    </div> -->
     <div class="two px-4 py-8">
+      <!-- <CovidBar v-if="!loadingChart" :dataProv="dataProv"  class="mt-4" /> -->
       <CovidChart v-if="!loadingChart" :prov="prov" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
-      <CovidBar v-if="!loadingChart" :dataProv="dataProv"  class="mt-4" />
+      
     </div>
   </div>
 </template>
@@ -37,7 +38,6 @@ import Loading from '@/components/Loading.vue'
 import CovidStatistik from '@/components/covid/CovidStatistik.vue'
 import CovidChart from '@/components/covid/CovidChart.vue'
 import CovidBar from '@/components/covid/CovidBar.vue'
-import dataJson from '~/data/update.json'
 
 export default {
   name: 'Chart',
