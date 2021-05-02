@@ -1,6 +1,6 @@
 <template>
   <div class="analitik">
-    <div class="chart-title">Bar</div>
+    <div class="chart-title">Bar (Last Update : {{dataProv.last_date}})</div>
     <!-- <button @click="cek">cek</button> -->
 
     <div class="flex place-items-center">
@@ -51,37 +51,28 @@ export default {
     CovidBarRecovered,
     CovidBarTreated
   },
-  // props: {
-  //   daysPositif: {
-  //     type: Array,
-  //     required: true,
-  //   },
-  //   daysDeath: {
-  //     type: Array,
-  //     required: true,
-  //   },
-  //   daysRecovered: {
-  //     type: Array,
-  //     required: true,
-  //   },
-    
-  // },
+  props: {
+    dataProv: {
+      type: Object,
+      required: true,
+    }
+  },
   setup(props, {emit}){
     const { app, store } = useContext()
-    const myProv = dataJson.list_data
-    const prov = myProv.map((p) => {
+    const myProv = computed(() => props.dataProv.list_data)
+    const prov = myProv.value.map((p) => {
       return p.key
     })
-    const cases = myProv.map((p) => {
+    const cases = myProv.value.map((p) => {
       return p.jumlah_kasus
     })
-    const deaths = myProv.map((p) => {
+    const deaths = myProv.value.map((p) => {
       return p.jumlah_meninggal
     })
-    const recovered = myProv.map((p) => {
+    const recovered = myProv.value.map((p) => {
       return p.jumlah_sembuh
     })
-    const treated = myProv.map((p) => {
+    const treated = myProv.value.map((p) => {
       return p.jumlah_dirawat
     })
     

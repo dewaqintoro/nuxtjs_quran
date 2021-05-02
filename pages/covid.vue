@@ -24,7 +24,7 @@
     <div class="two px-4 py-8">
       
       <CovidChart v-if="!loadingChart" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
-      <CovidBar v-if="!loadingChart"  class="mt-4" />
+      <CovidBar v-if="!loadingChart" :dataProv="dataProv"  class="mt-4" />
     </div>
     <div class="flex">
     </div>
@@ -81,6 +81,7 @@ export default {
     const daysDeath = ref([])
     const daysRecovered = ref([])
     const daysDate = ref([])
+    const dataProv = ref([])
     const loadingChart = ref(true)
     const loadingBar = ref(true)
 
@@ -111,6 +112,7 @@ export default {
     return {
       loadingChart,
       loadingBar,
+      dataProv,
       daily,
       daysDate,
       daysPositif,
@@ -144,9 +146,12 @@ export default {
       try{
         const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid`
         const result = await axios.get(url);
+        const urlProv = 'https://ngodingbentar-be.herokuapp.com/api/v1/covid/prov'
+        const resultProv = await axios.get(urlProv);
+        dataProv.value = resultProv.data
         indo_Cases.value = result.data
         daily.value =  result.data?.harian
-        console.log('result.data', result.data)
+        console.log('resultProv', resultProv.data)
         setJumlahPositif()
         setJumlahDirawat()
         setJumlahSembuh()
