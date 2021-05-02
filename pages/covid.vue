@@ -1,8 +1,13 @@
 <template class="place-items-center">
   <div class="main">
-    <!-- <button @click="cek">cek</button> -->
+    <button @click="cek">cek</button>
+    <select v-if="prov" v-model="selected" name="top" id="top" class="focus:outline-none">
+      <option value="NASIONAL">NASIONAL</option>
+      <option v-for="(item, index) in prov" :key="index" :value="item">{{item}}</option>
+    </select>
+    <p>{{selected}}</p>
     
-    <div class="one">
+    <!-- <div class="one">
       <div class="header font-bold px-8">
         <div class="text-center text-3xl">Covid</div>
         <p class="text-xl">Statistik</p>
@@ -22,14 +27,11 @@
         :isLoadingIndo="isLoadingIndo"
         :isLoadingGlobal="isLoadingGlobal"
       />
-    </div>
-    <div class="two px-4 py-8">
-      
+    </div> -->
+    <!-- <div class="two px-4 py-8">
       <CovidChart v-if="!loadingChart" :daysDate="daysDate" :daysPositif="daysPositif" :daysDeath="daysDeath" :daysRecovered="daysRecovered"  />
       <CovidBar v-if="!loadingChart" :dataProv="dataProv"  class="mt-4" />
-    </div>
-    <div class="flex">
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -78,6 +80,9 @@ export default {
     const dataProv = ref([])
     const loadingChart = ref(true)
     const loadingBar = ref(true)
+
+    const prov = ref([])
+    const selected = ref('')
     
     indoCases()
     vaksinasi()
@@ -86,6 +91,8 @@ export default {
       loadingChart,
       loadingBar,
       dataProv,
+      prov,
+      selected,
       daily,
       daysDate,
       daysPositif,
@@ -107,12 +114,15 @@ export default {
       isLoadingIndo,
       isLoadingGlobal,
       cek,
+      seleckProv
     }
 
     async function cek(){
-      // console.log('daily', daily.value.length)
-      console.log('daysDate.value', daysDate.value)
-      
+      console.log('prov', prov.value)
+    }
+
+    async function seleckProv(e){
+      console.log('e', e)
     }
 
     async function indoCases(){
@@ -121,10 +131,14 @@ export default {
         const result = await axios.get(url);
         const urlProv = 'https://ngodingbentar-be.herokuapp.com/api/v1/covid/prov'
         const resultProv = await axios.get(urlProv);
-        dataProv.value = resultProv.data
+        if(result.data){
+          dataProv.value = resultProv.data
+          prov.value = resultProv.data.list_data.map((p) => {
+            return p.key
+          })
+        }
         indo_Cases.value = result.data
         daily.value =  result.data?.harian
-        console.log('result', indo_Cases.value.penambahan.tanggal)
         setJumlahPositif()
         setJumlahDirawat()
         setJumlahSembuh()
@@ -150,6 +164,7 @@ export default {
             var date = new Date(p.key_as_string)
             return date.toISOString().substring(0, 10)
           })
+          
           var	number_string = bilangan.toString()
           let sisa 	= number_string.length % 3
           let rupiah 	= number_string.substr(0, sisa)
