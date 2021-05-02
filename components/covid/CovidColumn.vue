@@ -1,7 +1,7 @@
 <template>
   <div class="analitik">
       <ClientOnly>
-        <button @click="cek">cek</button>
+        <!-- <button @click="cek">cek col</button> -->
         <div id="chart">
           <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
@@ -25,17 +25,24 @@ export default {
   setup(props, {emit}){
     const { app, store } = useContext()
 
-    const PositifL = computed(() => props.ProvData?.kasus?.jenis_kelamin?.list_data[0].doc_count)
+    const PositifL = computed(() => props.ProvData?.kasus?.jenis_kelamin?.list_data[0].doc_count || '')
+    const PositifP = computed(() => props.ProvData?.kasus?.jenis_kelamin?.list_data[1].doc_count || '')
+    const MeninggalL = computed(() => props.ProvData?.meninggal?.jenis_kelamin?.list_data[0].doc_count || '')
+    const MeninggalP = computed(() => props.ProvData?.meninggal?.jenis_kelamin?.list_data[1].doc_count || '')
+    const SembuhL = computed(() => props.ProvData?.sembuh?.jenis_kelamin?.list_data[0].doc_count || '')
+    const SembuhP = computed(() => props.ProvData?.sembuh?.jenis_kelamin?.list_data[1].doc_count || '')
 
-    const series=[
-      {
-        name: 'Laki',
-        data: [44, 55, 57]
-      }, {
-        name: 'Perempuan',
-        data: [76, 85, 101]
-      }
-    ]
+    const series= computed(() => 
+      [
+        {
+          name: 'Laki',
+          data: [PositifL.value.toString().substring(0, 4) , SembuhL.value.toString().substring(0, 4), MeninggalL.value.toString().substring(0, 4)]
+        }, {
+          name: 'Perempuan',
+          data: [PositifP.value.toString().substring(0, 4), SembuhP.value.toString().substring(0, 4), MeninggalP.value.toString().substring(0, 4)]
+        }
+      ]
+    )
     const chartOptions = {
       chart: {
         type: 'bar',
@@ -61,7 +68,7 @@ export default {
       },
       yaxis: {
         title: {
-          text: '$ (thousands)'
+          text: 'Dalam %'
         }
       },
       fill: {
@@ -70,7 +77,7 @@ export default {
       tooltip: {
         y: {
           formatter: function (val) {
-            return "$ " + val + " thousands"
+            return val + "%"
           }
         }
       }
@@ -80,6 +87,8 @@ export default {
     return {
       series,
       chartOptions,
+      PositifL,
+      PositifP,
       cek
     }
     async function cek(){

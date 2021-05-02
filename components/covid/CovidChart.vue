@@ -2,7 +2,7 @@
   <div class="analitik">
     <div class="chart-title">Perkembangan Kasus Terkonfirmasi Positif Covid-19 Per-Hari</div>
     <p>{{selected}}</p>
-    <button @click="cek">cek</button>
+    <!-- <button @click="cek">cek</button> -->
     <select v-if="prov" v-model="selected" @change="seleckProv()" name="top" id="top" class="focus:outline-none">
       <option value="NASIONAL">NASIONAL</option>
       <option v-for="(item, index) in prov" :key="index" :value="item">{{item}}</option>
@@ -10,11 +10,11 @@
 
     <div class="myChart">
       <ClientOnly>
-        <!-- <div v-if="!loadingChart" id="chart">
+        <div v-if="!loadingChart" id="chart">
           <p class="font-normal text-sm " v-if="ProvFull && (selected !== 'NASIONAL')">Jumlah kasus : <b>{{ProvFull.kasus_total}}</b>, Sembuh : <b>{{ProvFull.sembuh_dengan_tgl}}</b>, Meninggal <b>{{ProvFull.meninggal_dengan_tgl}}</b></p>
           <apexchart v-if="isProv" type="area" height="350" :options="chartOptionsProv" :series="seriesProv"></apexchart>
           <apexchart v-else type="area" height="350" :options="chartOptions" :series="series"></apexchart>
-        </div> -->
+        </div>
         <CovidColumn :ProvData="ProvData" />
       </ClientOnly>
 
@@ -205,6 +205,10 @@ export default {
         }
 
       }else {
+        const url = `https://ngodingbentar-be.herokuapp.com/api/v1/covid/data`
+        const result = await axios.get(url);
+        console.log('result', result.data?.result);
+        ProvData.value = result.data?.result
         isProv.value = false
         setTimeout(function () {
           loadingChart.value = false
