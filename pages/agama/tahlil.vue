@@ -2,7 +2,7 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <SearchComp @search="searchFilter" />
+    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
     <div class="font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -30,7 +30,7 @@ import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/tahlil.json'
 import Cardcomp from '~/components/doa/harianCardComp.vue'
-import SearchComp from '~/components/SearchComp.vue'
+import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {
   name: 'Quran',
@@ -44,6 +44,7 @@ export default {
     const { app, store } = useContext()
     const dataDoa = dataJson
     const search = ref('')
+    const dataFields= {value: 'title'}
     const allData = ref([])
     const pageOfItems = ref([])
     const loadingTheme = computed(() => store.state.loadingTheme)
@@ -70,6 +71,7 @@ export default {
     searchFilter(search.value)
 
     return {
+      dataFields,
       search,
       allData,
       storeTheme,
@@ -83,6 +85,9 @@ export default {
     }
 
     function searchFilter(dataSearch){
+      if(dataSearch === null ){
+        dataSearch = ''
+      }
       setTimeout(function () {
         const result = dataDoa.data.filter(doa =>
           doa.title.toLowerCase().includes(dataSearch.toLowerCase())

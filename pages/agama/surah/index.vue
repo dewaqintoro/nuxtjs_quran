@@ -3,7 +3,6 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <!-- <SearchComp @search="searchFilter" /> -->
     <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>
     <div class="item text-center">
       <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
