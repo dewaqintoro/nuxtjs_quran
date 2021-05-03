@@ -7,7 +7,7 @@
       <button @click="cekResi()">cek resi</button>
     </div> -->
     <div v-if="isCekResi" class="cek-resi">
-      cek resi
+      <CekResi />
     </div>
     <div v-else class="section lg:flex">
       <div class="section-input lg:w-4/6">
@@ -116,11 +116,13 @@
 <script>
 import { ref } from '@nuxtjs/composition-api'
 import Navbar from '~/components/GlobalNavbar'
+import CekResi from '~/components/ongkir/CekResi.vue'
 import axios from 'axios'
 export default {
   name: 'CekOngkir',
   components: {
     Navbar,
+    CekResi
   },
   setup(){
     const berat = ref(1000)
