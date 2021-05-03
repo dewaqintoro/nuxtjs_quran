@@ -1,19 +1,85 @@
 <template>
   <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <button @click="show()" class="btn-show focus:outline-none">
-      <p class="font-bold text-lg">Jadwal</p>
-      <!-- <div v-if="isShow" class="content">
-        <div class="arabic">
-          <p>{{doa.arabic}}</p>
-        </div>
-        <div class="text-left mt-4 text-xl">
-          <p v-if="doa.latin"><i>( {{doa.latin}} )</i></p>
-          <div v-if="subStore === 'On'">
-            <p class="font-bold pt-4">Terjemahan :</p>
-            <p>{{doa.translation}}</p>
+      <p class="font-bold text-lg">{{jadwal.tanggal}}</p>
+      <div v-if="isShow" class="content">
+        <div class="item flex justify-between">
+          <div>
+            <p class="title">Imsak</p>
+            <p>{{jadwal.imsak}}</p>
+          </div>
+          <div>
+            <p class="title">Subuh</p>
+            <p>{{jadwal.subuh}}</p>
+          </div>
+          <div>
+            <p class="title">Terbit</p>
+            <p>{{jadwal.terbit}}</p>
           </div>
         </div>
-      </div> -->
+        <div class="item flex justify-between py-6">
+          <div>
+            <p class="title">Dhuha</p>
+            <p>{{jadwal.dhuha}}</p>
+          </div>
+          <div>
+            <p class="title">Dzuhur</p>
+            <p>{{jadwal.dzuhur}}</p>
+          </div>
+          <div>
+            <p class="title">Ashar</p>
+            <p>{{jadwal.ashar}}</p>
+          </div>
+        </div>
+        <div class="item flex justify-evenly">
+          <div>
+            <p class="title">Maghrib</p>
+            <p>{{jadwal.maghrib}}</p>
+          </div>
+          <div>
+            <p class="title">Isya</p>
+            <p>{{jadwal.isya}}</p>
+          </div>
+        </div>
+        <!-- <div class="satu">
+          <div class="item">
+            <p class="title">Imsak</p>
+            <p>{{jadwal.imsak}}</p>
+          </div>
+          <div class="item">
+            <p class="title">Dhuha</p>
+            <p>{{jadwal.dhuha}}</p>
+          </div>
+          <div class="item">
+            <p class="title">Maghrib</p>
+            <p>{{jadwal.maghrib}}</p>
+          </div>
+        </div>
+        <div class="dua">
+          <div class="item">
+            <p class="title">Subuh</p>
+            <p>{{jadwal.subuh}}</p>
+          </div>
+          <div class="item">
+            <p class="title">Dzuhur</p>
+            <p>{{jadwal.dzuhur}}</p>
+          </div>
+          <div class="item">
+            <p class="title">Isya</p>
+            <p>{{jadwal.isya}}</p>
+          </div>
+        </div>
+        <div class="tiga">
+          <div class="item">
+            <p class="title">Terbit</p>
+            <p>{{jadwal.terbit}}</p>
+          </div>
+          <div class="item">
+            <p class="title">Ashar</p>
+            <p>{{jadwal.ashar}}</p>
+          </div>
+        </div> -->
+      </div>
     </button>
   </div>
 </template>
@@ -27,7 +93,7 @@ export default {
       type: Object,
       required: false,
     },
-    doa: {
+    jadwal: {
       type: Object,
       required: false,
     },
@@ -70,6 +136,12 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.item {
+  /* @apply my-2 ; */
+}
+.title {
+  @apply text-xl text-left;
+}
 .darkTheme:hover{
   background: rgb(61, 81, 94) !important;
 }

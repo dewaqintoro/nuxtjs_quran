@@ -55,7 +55,6 @@ export default {
       console.log('props', props.data)
     }
     async function searchFilter(){
-      console.log('search', search)
       emit('search', search.value)
     }
 

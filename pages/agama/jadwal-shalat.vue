@@ -9,10 +9,10 @@
     <SearchComp :placeholder="placeholder" @search="searchFilter" :fields='dataFields' :data='provJson'/>
     <div class="py-4 px-8 flex justify-center">
       <!-- <button @click="cek">cek</button> -->
-      <select v-model="monthSelected" @change="selectMonth()" name="month" id="month" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
+      <select v-model="monthSelected" name="month" id="month" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
         <option v-for="(item, index) in bulanAll" :key="index" :value="item.id">{{item.title}}</option>
       </select>
-      <select v-model="yearSelected" @change="selectYear()" name="year" id="year" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
+      <select v-model="yearSelected" name="year" id="year" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
         <option value="2021">2021</option>
         <option value="2022">2022</option>
         <option value="2023">2023</option>
@@ -32,9 +32,8 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <div class="item" v-for="(doa, index) in jadwalAll" :key="index">
-          <p>{{doa.tanggal}}</p>
-          <!-- <Cardcomp :theme="storeTheme" :doa="doa" :index="index+1" /> -->
+        <div class="item" v-for="(jadwal, index) in jadwalAll" :key="index">
+          <Cardcomp :theme="storeTheme" :jadwal="jadwal" :index="index+1" />
         </div>
       </div>
     </div>
@@ -133,12 +132,12 @@ export default {
 
 
     async function selectMonth(){
-      console.log('selectMonth')
-      console.log('monthSelected.value', monthSelected.value)
+      // console.log('selectMonth')
+      // console.log('monthSelected.value', monthSelected.value)
     }
     async function selectYear(){
-      console.log('selectYear')
-      console.log('yearSelected.value', yearSelected.value)
+      // console.log('selectYear')
+      // console.log('yearSelected.value', yearSelected.value)
     }
 
     function searchFilter(dataSearch){
@@ -168,7 +167,6 @@ export default {
     }
 
     async function getJadwal(){
-      console.log('getJadwal')
       try {
         const url = `https://api.myquran.com/v1/sholat/jadwal/${provSelected.value}/${yearSelected.value}/${monthSelected.value}`
         const result = await axios.get(`${url}`);
