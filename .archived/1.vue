@@ -7,6 +7,8 @@
     <p>https://data.covid19.go.id/public/api/pemeriksaan-vaksinasi.json</p>
     <p>https://data.covid19.go.id/public/api/update.json</p>
     <p>https://data.covid19.go.id/public/api/prov_detail_JAWA_BARAT.json</p>
+    <a href='https://www.freepik.com/vectors/cartoon'>Cartoon vector created by brgfx - www.freepik.com</a>
+<a href='https://www.freepik.com/vectors/food'>Food vector created by jcomp - www.freepik.com</a>
     <div class="myChart">
       <ClientOnly>
         <div id="chart">

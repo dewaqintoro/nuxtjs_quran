@@ -1,10 +1,20 @@
 <template>
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: theme.background, color: theme.color }">
     <div class="inner container">
-      <div class="start box" :style="{ boxShadow: theme.boxShadow }">
-        <nuxt-link class="btn-setting" to="/">
-          <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
-        </nuxt-link>
+      <div class="start">
+        <div class="box " :style="{ boxShadow: theme.boxShadow }">
+          <nuxt-link class="btn-setting" to="/">
+            <font-awesome-icon class="" :icon="['fas', 'home']" />
+          </nuxt-link>
+        </div>
+        <span v-if="menu" class="flex">
+          <div v-for="(item, index) in menu" :key="index" class="square" :style="{ boxShadow: theme.boxShadow }">
+            <button class="focus:outline-none" @click="$emit(item.action)">{{item.title}}</button>
+          </div>
+        </span>
+        <!-- <div v-if="menu" class="square" :style="{ boxShadow: theme.boxShadow }">
+          <button class="focus:outline-none" @click="$emit(menu[1].action)">{{menu[1].title}}</button>
+        </div> -->
       </div>
       <!-- <div class="end box" :style="{ boxShadow: theme.boxShadow }">
         <button class="btn-setting focus:outline-none" @click="doSetting()">
@@ -24,8 +34,12 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    menu: {
+      type: Array,
+      required: false,
+    },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const { store, route, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
@@ -58,6 +72,11 @@ export default defineComponent({
       cekData,
       closeModal,
       doSetting,
+      cek
+    }
+
+    function cek(){
+      console.log('props', props.menu)
     }
     
     function closeModal() {
@@ -73,12 +92,23 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.box {
-  @apply rounded-full;
-  padding: 8px;
+
+.square {
+  @apply rounded-xl flex justify-center px-4 ml-4;
+  /* padding: 8px; */
   font-size: 18px;
   place-items: center;
   text-align: center;
+  height: 45px;
+}
+.box {
+  @apply rounded-full flex justify-center;
+  /* padding: 8px; */
+  font-size: 18px;
+  place-items: center;
+  text-align: center;
+  width: 45px;
+  height: 45px;
 }
 
 .btn-setting {
@@ -101,7 +131,7 @@ export default defineComponent({
   height: var(--header-height);
   min-width: 320px;
   .inner {
-    @apply flex flex-wrap justify-between h-full text-xl;
+    @apply h-full text-xl;
     @apply px-8;
   }
   .start {

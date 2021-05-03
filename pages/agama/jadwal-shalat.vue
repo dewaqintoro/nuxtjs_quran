@@ -67,7 +67,7 @@ export default {
     const search = ref('')
     const jadwalAll = ref([])
     const jadwalData = ref([])
-    const placeholder = 'Cari Provinsi. . .'
+    const placeholder = 'Cari Wilayah. . .'
     const provList = ref([])
     const provSelected = ref('1504')
     const monthSelected = ref('5')

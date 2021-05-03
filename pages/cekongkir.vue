@@ -1,8 +1,15 @@
 <template>
 <span>
-  <Navbar :theme="myTheme" />
+  <Navbar :theme="myTheme" :menu="menu" @cekOngkir="cekOngkir" @cekResi="cekResi" />
   <div class="main-menu">
-    <div class="section lg:flex">
+    <!-- <div class="flex justify-center mt-4 bg-red-200">
+      <button @click="cekOngkir()">cek ongkir</button>
+      <button @click="cekResi()">cek resi</button>
+    </div> -->
+    <div v-if="isCekResi" class="cek-resi">
+      cek resi
+    </div>
+    <div v-else class="section lg:flex">
       <div class="section-input lg:w-4/6">
         <div class="bg-white p-8 rounded-3xl">
           <div class="main">
@@ -14,7 +21,7 @@
                     Pilih Provinsi
                   </label>
                   <div class="relative">
-                    <select v-model="asalProv" @change="setAsalCity()" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <select v-model="asalProv" @change="setAsalCity()" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="asal-prov">
                       <option v-for="(prov, index) in province" :key="index" :value="prov.province_id">{{prov.province}}</option>
                     </select>
                   </div>
@@ -26,7 +33,7 @@
                     Pilih Kota
                   </label>
                   <div class="relative">
-                    <select v-model="asalCity" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <select v-model="asalCity" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="asal-kota">
                       <option v-for="(x, index) in cityAsal" :key="index" :value="x.city_id">{{x.city_name}}</option>
                     </select>
                   </div>
@@ -41,7 +48,7 @@
                     Pilih Provinsi
                   </label>
                   <div class="relative">
-                    <select v-model="selectedProv" @change="setCity()" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <select v-model="selectedProv" @change="setCity()" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="tujuan-prov">
                       <option v-for="(prov, index) in province" :key="index" :value="prov.province_id">{{prov.province}}</option>
                     </select>
                   </div>
@@ -53,7 +60,7 @@
                     Pilih Kota
                   </label>
                   <div class="relative">
-                    <select v-model="selectedCity" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <select v-model="selectedCity" class="block appearance-none w-full border border-gray-200 text-black py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="tujuan-kota">
                       <option v-for="(x, index) in city" :key="index" :value="x.city_id">{{x.city_name}}</option>
                     </select>
                   </div>
@@ -102,6 +109,7 @@
         </div>
       </div>
     </div>
+    
   </div>
 </span>
 </template>
@@ -116,6 +124,16 @@ export default {
   },
   setup(){
     const berat = ref(1000)
+    const menu = [
+      {
+        title: "Cek Ongkir",
+        action: "cekOngkir"
+      },
+      {
+        title: "Cek Resi",
+        action: "cekResi"
+      }
+    ]
     const provinceAsal = ref([])
     const cityAsal = ref([])
     const province = ref([])
@@ -128,6 +146,7 @@ export default {
     const biayaPos = ref('')
     const biayaTiki = ref('')
     const picked = ref('')
+    const isCekResi = ref(false)
     const myTheme = {
       background: 'rgb(241, 241, 241)',
       color: 'black',
@@ -137,6 +156,8 @@ export default {
     setProv()
 
     return {
+      menu,
+      isCekResi,
       berat,
       province,
       city,
@@ -154,8 +175,19 @@ export default {
       setProv,
       setCity,
       setAsalCity,
-      cekBiaya
+      cekBiaya,
+      cekResi,
+      cekOngkir
     }
+
+    function cekResi(){
+      isCekResi.value = true
+    }
+    function cekOngkir(){
+      isCekResi.value = false
+    }
+    
+
 
     function cek() {
       console.log('asal',asalCity.value)
