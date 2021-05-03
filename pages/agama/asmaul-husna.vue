@@ -35,7 +35,7 @@ import Cardcomp from '~/components/wirid/WiridComp'
 import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {
-  name: 'Quran',
+  name: 'AsmaulHusna',
   components: {
     Navbar,
     Loading,

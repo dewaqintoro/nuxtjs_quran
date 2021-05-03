@@ -24,7 +24,7 @@ import dataJson from '~/data/wirid.json'
 import Cardcomp from '~/components/wirid/WiridComp'
 
 export default {
-  name: 'Quran',
+  name: 'Wirid',
   components: {
     Navbar,
     Loading,

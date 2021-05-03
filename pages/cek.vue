@@ -1,13 +1,15 @@
 <template>
 <div>
   <button @click="cek">cek</button>
-  <div id="chart">
+  <!-- <div id="chart">
     <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
-  </div>
+  </div> -->
 </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Shorten',
   components: {
@@ -80,10 +82,16 @@ export default {
       cek
     }
 
-    function cek(){
+    function Replace(){
       var str = 'KALIMANTAN TIMUR';
       str = str.replace(/\s+/g, '_');
       console.log(str);
+    }
+
+    async function cek(){
+      const url = `https://api.myquran.com/v1/sholat/jadwal/1609/2021/05`
+      const data = await axios.get(`${url}`);
+      console.log('data', data)
     }
 
   }
