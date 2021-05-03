@@ -2,12 +2,31 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <SearchComp @search="searchFilter" :fields='dataFields' :data='provJson'/>
-    <p>Jadwal Shalat</p>
-    <button @click="cek">cek</button>
-    <div class="item text-center">
-      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{jadwalAll.length}} Jadwal</p>
+    <div class="pb-2">
+      <p>Jadwal Shalat</p>
+      <p>{{jadwalData.lokasi}} - {{jadwalData.daerah}}</p>
     </div>
+    <SearchComp :placeholder="placeholder" @search="searchFilter" :fields='dataFields' :data='provJson'/>
+    <div class="py-4 px-8 flex justify-center">
+      <!-- <button @click="cek">cek</button> -->
+      <select v-model="monthSelected" @change="selectMonth()" name="month" id="month" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
+        <option v-for="(item, index) in bulanAll" :key="index" :value="item.id">{{item.title}}</option>
+      </select>
+      <select v-model="yearSelected" @change="selectYear()" name="year" id="year" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+      </select>
+      <div class="text-center">
+        <button @click="getJadwal" class="sum focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }">Cari</button>
+      </div>
+    </div>
+    <hr/>
+    <!-- <button @click="getJadwal" class="focus:outline-none">Cari</button> -->
+    
+    <!-- <div class="item text-center">
+      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{jadwalAll.length}} Jadwal</p>
+    </div> -->
     <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -28,6 +47,7 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/jadwal-shalat/semua_kota.json'
+import bulanJson from '~/data/jadwal-shalat/bulan.json'
 import Cardcomp from '~/components/jadwal/jadwalCardComp.vue'
 // import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
@@ -44,10 +64,15 @@ export default {
   setup(_, {emit}){
     const { app, store } = useContext()
     const provJson = dataJson
+    const bulanAll = bulanJson.data
     const search = ref('')
     const jadwalAll = ref([])
+    const jadwalData = ref([])
+    const placeholder = 'Cari Provinsi. . .'
     const provList = ref([])
-    const provSelected = ref({})
+    const provSelected = ref('1504')
+    const monthSelected = ref('5')
+    const yearSelected = ref('2021')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
@@ -74,40 +99,64 @@ export default {
       loading.value = false
     }, 500);
 
-    searchFilter(search.value)
+    // searchFilter(search.value)
+    getJadwal()
 
     return {
+      placeholder,
+      bulanAll,
+      yearSelected,
+      monthSelected,
       search,
       provJson,
+      jadwalData,
       jadwalAll,
       provList,
       dataFields,
       storeTheme,
       loadingTheme,
       loading,
+      bgId,
       cek,
+      getJadwal,
       onChangePage,
       searchFilter,
-      bgId
+      selectMonth,
+      selectYear
+    }
+
+    async function cek(){
+      console.log('jadwalData.value', jadwalData.value)
+      // console.log('monthSelected.value', monthSelected.value)
+      
+    }
+
+
+    async function selectMonth(){
+      console.log('selectMonth')
+      console.log('monthSelected.value', monthSelected.value)
+    }
+    async function selectYear(){
+      console.log('selectYear')
+      console.log('yearSelected.value', yearSelected.value)
     }
 
     function searchFilter(dataSearch){
       if((dataSearch === null) || (dataSearch === '') ){
         dataSearch = 'all'
-        console.log('dataSearch 1', dataSearch)
       } else if(dataSearch !== 'all'){
         const result = provJson.filter(doa =>
           doa.lokasi.toLowerCase().includes(dataSearch.toLowerCase())
         );
-        // console.log('result', result)
+        // console.log('result', result[0].id)
         if(result.length === 1){
-          provSelected.value = result
-          getJadwal()
+          provSelected.value = result[0].id
+          // getJadwal()
         } else {
           result.map(hasil => {
             if(hasil.lokasi.length === dataSearch.length){
-              provSelected.value = result
-              getJadwal()
+              provSelected.value = result[0].id
+              // getJadwal()
             } else {
               console.log('Pilih data yang spesifik')
             }
@@ -115,26 +164,23 @@ export default {
         }
       } else {
         console.log('All prov')
-        console.log('dataSearch 2', dataSearch)
       }
     }
 
     async function getJadwal(){
       console.log('getJadwal')
       try {
-        const url = `https://api.myquran.com/v1/sholat/jadwal/${provSelected.value[0].id}/2021/05`
+        const url = `https://api.myquran.com/v1/sholat/jadwal/${provSelected.value}/${yearSelected.value}/${monthSelected.value}`
         const result = await axios.get(`${url}`);
-        console.log('result', result?.data?.data?.jadwal)
+        // console.log('result', result?.data?.data?.jadwal)
+        jadwalData.value = result?.data?.data
         jadwalAll.value = result?.data?.data?.jadwal
       } catch(err){
         console.log(err)
       }
     }
 
-    async function cek(){
-      console.log('provSelected.value', provSelected.value)
-    }
-
+    
     function onChangePage(data = any){
       window.smoothscroll()
     }

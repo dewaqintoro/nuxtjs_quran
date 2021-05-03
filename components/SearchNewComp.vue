@@ -2,7 +2,7 @@
   <div class="cari" :class="bgId">
     <!-- <button @click="cek">cek</button> -->
     <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
-      <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='data' :fields='fields' placeholder="Search. . ." :highlight="true" >
+      <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='data' :fields='fields' :placeholder="placeholder" :highlight="true" >
       </ejs-autocomplete>
     </div>
   </div>
@@ -25,6 +25,11 @@ export default {
       required: false,
       default: {},
     },
+    placeholder: {
+      type: String,
+      required: false,
+      default: 'Search. . .'
+    }
   },
   setup(props, {emit}){
     const { app, store } = useContext()

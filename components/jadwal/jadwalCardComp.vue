@@ -34,7 +34,7 @@ export default {
     index: {
       type: Number,
       required: false,
-    },
+    }
   },
   setup(props){
     const { route, store, app } = useContext()
