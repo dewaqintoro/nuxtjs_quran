@@ -4,8 +4,9 @@
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <SearchComp @search="searchFilter" :fields='dataFields' :data='provJson'/>
     <p>Jadwal Shalat</p>
-    <!-- <div class="item text-center">
-      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{jadwalAll.length}} data</p>
+    <button @click="cek">cek</button>
+    <div class="item text-center">
+      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{jadwalAll.length}} Jadwal</p>
     </div>
     <div class="min-h-screen font-arabic">
       <div v-if="loading">
@@ -13,10 +14,11 @@
       </div>
       <div v-else>
         <div class="item" v-for="(doa, index) in jadwalAll" :key="index">
-          <Cardcomp :theme="storeTheme" :doa="doa" :index="index+1" />
+          <p>{{doa.tanggal}}</p>
+          <!-- <Cardcomp :theme="storeTheme" :doa="doa" :index="index+1" /> -->
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </span>
 </template>
@@ -29,6 +31,7 @@ import dataJson from '~/data/jadwal-shalat/semua_kota.json'
 import Cardcomp from '~/components/jadwal/jadwalCardComp.vue'
 // import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
+import axios from 'axios'
 
 export default {
   name: 'JadwalShalat',
@@ -44,6 +47,7 @@ export default {
     const search = ref('')
     const jadwalAll = ref([])
     const provList = ref([])
+    const provSelected = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
@@ -88,14 +92,47 @@ export default {
     }
 
     function searchFilter(dataSearch){
-      if(dataSearch === null ){
-        dataSearch = ''
+      if((dataSearch === null) || (dataSearch === '') ){
+        dataSearch = 'all'
+        console.log('dataSearch 1', dataSearch)
+      } else if(dataSearch !== 'all'){
+        const result = provJson.filter(doa =>
+          doa.lokasi.toLowerCase().includes(dataSearch.toLowerCase())
+        );
+        // console.log('result', result)
+        if(result.length === 1){
+          provSelected.value = result
+          getJadwal()
+        } else {
+          result.map(hasil => {
+            if(hasil.lokasi.length === dataSearch.length){
+              provSelected.value = result
+              getJadwal()
+            } else {
+              console.log('Pilih data yang spesifik')
+            }
+          })
+        }
+      } else {
+        console.log('All prov')
+        console.log('dataSearch 2', dataSearch)
       }
-      console.log('dataSearch', dataSearch)
+    }
+
+    async function getJadwal(){
+      console.log('getJadwal')
+      try {
+        const url = `https://api.myquran.com/v1/sholat/jadwal/${provSelected.value[0].id}/2021/05`
+        const result = await axios.get(`${url}`);
+        console.log('result', result?.data?.data?.jadwal)
+        jadwalAll.value = result?.data?.data?.jadwal
+      } catch(err){
+        console.log(err)
+      }
     }
 
     async function cek(){
-      console.log('search.value', search.value)
+      console.log('provSelected.value', provSelected.value)
     }
 
     function onChangePage(data = any){
@@ -109,7 +146,7 @@ export default {
 <style lang="postcss" scoped>
 .sum {
   @apply py-2 px-4 rounded-lg;
-  width: 100px;
+  max-width: 120px;
 }
 .main {
   @apply pt-24 min-h-screen;
