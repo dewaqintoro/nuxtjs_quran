@@ -193,7 +193,7 @@ export default {
   max-width: 120px;
 }
 .main {
-  @apply pt-24 min-h-screen;
+  @apply pt-24 min-h-screen pb-8;
 }
 @font-face {
   font-family: "lpmq";
