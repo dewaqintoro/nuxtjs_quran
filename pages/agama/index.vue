@@ -164,7 +164,7 @@ export default {
 }
 @screen mobile {
   .main {
-    @apply pt-16 px-2;
+    @apply pt-10 px-2;
   }
 }
 </style>

@@ -1,11 +1,15 @@
 <template>
   <div>
-    <div v-if="$nuxt.isOffline">You are offline</div>
+    <div class="offline" v-if="$nuxt.isOffline">You are offline</div>
     <Nuxt />
   </div>
 </template>
 
 <style>
+.offline{
+  background: transparent;
+  position: absolute;
+}
 html {
   font-family:
     'Source Sans Pro',
