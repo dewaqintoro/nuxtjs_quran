@@ -6,9 +6,9 @@
     <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>
     <div class="item text-center flex justify-between">
       <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
-      <button class="question focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }" @click="doSetting()">
+      <!-- <button class="question focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }" @click="doSetting()">
         <font-awesome-icon class="icon-question" :icon="['fas', 'question']" />
-      </button>
+      </button> -->
     </div>
     <div class=" min-h-screen font-arabic">
       <div v-if="loading">
