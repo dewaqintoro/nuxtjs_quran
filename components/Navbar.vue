@@ -77,15 +77,9 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .box {
-<<<<<<< HEAD
   @apply rounded-full flex justify-center;
   padding: 10px;
   font-size: 20px;
-=======
-  @apply rounded-full;
-  padding: 8px;
-  font-size: 18px;
->>>>>>> f0d8b7b9cba9cfc6c52117c353f366bcff5a1592
   place-items: center;
   text-align: center;
 }
