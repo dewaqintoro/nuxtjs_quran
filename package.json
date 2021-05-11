@@ -1,5 +1,5 @@
 {
-  "name": "quran-ngodingbentar",
+  "name": "ngodingbentar",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "@dafcoe/vue-notification": "^0.1.6",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/composition-api": "^0.22.4",
+    "@nuxtjs/pwa": "^3.3.5",
     "@syncfusion/ej2-vue-dropdowns": "^19.1.57",
     "apexcharts": "^3.26.1",
     "body-scroll-lock": "^3.1.5",
@@ -31,7 +32,6 @@
     "@nuxt/types": "^2.15.4",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/fontawesome": "^1.1.2",
-    "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/tailwindcss": "^4.0.1",
     "@types/body-scroll-lock": "^2.6.1",
     "postcss": "^8.2.8"

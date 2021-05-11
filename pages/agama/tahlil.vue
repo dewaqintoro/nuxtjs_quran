@@ -94,7 +94,7 @@ export default {
         );
         allData.value = result
         loading.value = false
-      }, 200);
+      }, 1000);
       
     }
 

@@ -40,7 +40,7 @@ export default {
     Navbar,
     Loading,
     Cardcomp,
-    SearchComp
+    SearchComp,
   },
   setup(_, {emit}){
     const { app, store } = useContext()
