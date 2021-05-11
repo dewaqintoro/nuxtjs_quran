@@ -2,7 +2,7 @@
   <span>
     <Navbar />
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
-    <SearchComp class="py-4" @search="searchFilter" />
+    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
     <div v-if="loading">
       <Loading :theme="storeTheme" />
     </div>
@@ -32,14 +32,15 @@ import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/asmaul-husna.json'
 import Cardcomp from '~/components/wirid/WiridComp'
-import SearchComp from '~/components/SearchComp.vue'
+import SearchComp from '~/components/SearchNewComp.vue'
+
 export default {
-  name: 'Quran',
+  name: 'AsmaulHusna',
   components: {
     Navbar,
     Loading,
     Cardcomp,
-    SearchComp
+    SearchComp,
   },
   setup(_, {emit}){
     const { app, store } = useContext()
@@ -49,6 +50,7 @@ export default {
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
     const search = ref('')
+    const dataFields= {value: 'latin'}
     const bgId = computed(() => {
       if(storeTheme.value?.darktheme){
         return 'darkTheme'
@@ -65,6 +67,7 @@ export default {
       allData,
       bgId,
       search,
+      dataFields,
       loadingTheme,
       loading,
       dataDoa,
@@ -73,6 +76,9 @@ export default {
     }
 
     function searchFilter(dataSearch){
+      if(dataSearch === null ){
+        dataSearch = ''
+      }
       setTimeout(function () {
         const result = dataDoa.filter(doa =>
           doa.latin.toLowerCase().includes(dataSearch.toLowerCase())
@@ -208,7 +214,7 @@ html {
 }
 @screen mobile {
   .main {
-    @apply pt-16 px-2;
+    @apply pt-10 px-2;
   }
   .container {
     grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));

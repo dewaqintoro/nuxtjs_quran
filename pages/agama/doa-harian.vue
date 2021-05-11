@@ -37,7 +37,7 @@ import Cardcomp from '~/components/doa/harianCardComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {
-  name: 'Quran',
+  name: 'DoaHarian',
   components: {
     Navbar,
     Loading,

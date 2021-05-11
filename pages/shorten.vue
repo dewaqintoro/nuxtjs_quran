@@ -1,27 +1,29 @@
 <template>
+<span>
+  <Navbar :theme="myTheme" />
   <div class="section">
     <div class="main">
-      <div class="head">Short links</div>
+      <div class="head">Url Shortener</div>
       <transition name="toast">
         <Toast class="text-center m-auto w-full" v-if="showToast" />
       </transition>
-      <div class="search flex text-center">
-        <input class="input-search focus:outline-none" id="username" type="search" v-model="search" placeholder="Place link. . .">
-
+      <div class="search">
+        <!-- <input class="input-search focus:outline-none" id="username" type="text" v-model="search" placeholder="Paste long url and shorten it."> -->
+        <input class="input-search focus:outline-none" id="username" type="text" v-model="search" @focus="clearSearch" placeholder="Paste long url and shorten it.">
+          <!-- <font-awesome-icon class="iconTheme" :icon="['fas', 'times']" /> -->
         <button @click="searchFilter()" class="btn-search focus:outline-none" type="button">
           Shorten
         </button>
       </div>
       <div class="short-url">
-        <p class="mx-2 py-2 px-4 text-white">{{myLink.shortUrl || '-'}}</p>
-        <!-- <p class="mx-2 py-2 px-4 text-white w-full">wadudu</p> -->
+        <input class="copy-text text-center focus:outline-none" :value="myLink.shortUrl || '-'" />
         <button class="focus:outline-none mx-2 bg-gray-100 py-2 px-4 rounded-lg" @click="copy">
           Copy
         </button>
       </div>
     </div>
-    
   </div>
+</span>
 </template>
 
 <script>
@@ -29,39 +31,48 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 // import Loading from '@/components/Loading.vue'
 // import { VueNotificationList } from '@dafcoe/vue-notification'
 import Toast from '@/components//Toast'
+import Navbar from '~/components/GlobalNavbar'
 
 import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
-    Toast
+    Toast,
+    Navbar
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
-    const storeTheme = computed(() => store.state.theme)
+  setup(){
     const search = ref('')
-    const short = ref('')
     const myLink = ref([])
     const myText = ref('wadudu')
     const isCopied = ref(false)
-
     const showToast = ref(false)
     const triggerToast = () => {
       showToast.value = true;
       setTimeout(() => showToast.value = false, 3000)
+    }
+    const myTheme = {
+      background: '#088b71',
+      color: 'white',
+      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     }
 
     return {
       search,
       myLink,
       myText,
-      storeTheme,
+      myTheme,
       isCopied,
       searchFilter,
       cek,
       copy,
       outFunc,
-      showToast, triggerToast
+      showToast,
+      triggerToast,
+      clearSearch,
+    }
+
+    function clearSearch(){
+      console.log('clearSearch')
     }
 
     function outFunc() {
@@ -99,8 +110,6 @@ export default {
 <style lang="postcss" scoped>
 .short-url {
   background: #05725c;
-  /* height: 200px */
-  /* @apply flex justify-center w-full py-2 mt-4; */
   @apply flex justify-center w-full py-2 mt-4 rounded-lg;
 }
   /* enter transitions */
@@ -130,7 +139,7 @@ export default {
 
 .section {
   @apply min-h-screen flex w-full;
-  background: #00b894;
+  /* background: #00b894; */
 }
 
 .main {
@@ -144,7 +153,7 @@ export default {
 }
 
 .search {
-  @apply mt-8 text-xl;
+  @apply mt-8 text-xl flex text-center;
 }
 
 .input-search {
@@ -161,6 +170,12 @@ export default {
 
 }
 
+.copy-text{
+  /* @apply mx-2 py-2 px-4 text-white w-full; */
+  background: transparent;
+  color: white;
+}
+
 @screen tablet {
 }
 @screen mobile {
@@ -168,10 +183,10 @@ export default {
     max-width: 80vw;
   }
   .input-search {
-    @apply my-2;
+    @apply my-2 text-lg;
   }
   .btn-search {
-    @apply my-2;
+    @apply my-2 text-lg font-semibold;
   }
   .input-search {
     @apply px-4;

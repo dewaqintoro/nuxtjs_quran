@@ -33,6 +33,12 @@
             <p>Wirid</p>
           </div>
         </nuxt-link>
+        <nuxt-link to="/agama/jadwal-shalat" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+          <div class="content items-center">
+            <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
+            <p>Jadwal Shalat</p>
+          </div>
+        </nuxt-link>
       </div>
       <div class="footer"></div>
     </div>
@@ -48,10 +54,6 @@ export default {
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const search = ref('')
-    const allSurah = ref([])
-    const pageOfItems = ref([])
-    const loading = ref(true)
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const bgId = computed(() => {
@@ -139,6 +141,10 @@ export default {
   grid-row: span 2;
 }
 .container .box:nth-child(5){
+}
+.container .box:nth-child(6){
+  grid-column: span 2;
+  grid-row: span 1;
 }
 
 .footer {

@@ -2,13 +2,13 @@
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
       <div class="start box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <nuxt-link class="btn-setting" to="/agama/al-quran">
-          <font-awesome-icon class="iconTheme" :icon="['fas', 'home']" />
+        <nuxt-link class="btn-setting" to="/agama">
+          <font-awesome-icon :icon="['fas', 'home']" />
         </nuxt-link>
       </div>
       <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
         <button class="btn-setting focus:outline-none" @click="doSetting()">
-          <font-awesome-icon class="iconTheme" :icon="['fas', 'cog']" />
+          <font-awesome-icon :icon="['fas', 'cog']" />
         </button>
       </div>
       <Transition name="drawer">
@@ -77,16 +77,22 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .box {
+<<<<<<< HEAD
   @apply rounded-full flex justify-center;
   padding: 10px;
   font-size: 20px;
+=======
+  @apply rounded-full;
+  padding: 8px;
+  font-size: 18px;
+>>>>>>> f0d8b7b9cba9cfc6c52117c353f366bcff5a1592
   place-items: center;
   text-align: center;
 }
 
 .btn-setting {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 }
 
 @font-face {

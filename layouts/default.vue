@@ -1,10 +1,43 @@
 <template>
   <div>
+    <div class="offline" v-if="$nuxt.isOffline">You are offline</div>
     <Nuxt />
+    <footer-comp v-if="!isAgama"/>
   </div>
 </template>
 
+<script lang="ts">
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+export default defineComponent({
+  name: 'Footer',
+  props: {
+    // theme: {
+    //   type: Object,
+    //   required: true,
+    // },
+  },
+  setup(_, { emit }) {
+    const { store, route, app } = useContext()
+    console.log('route', route.value)
+
+    const isAgama = computed(() => {
+      if(route.value.name === 'agama'){
+        return true
+      }
+    })
+
+    return {
+      isAgama
+    }
+  },
+})
+</script>
+
 <style>
+.offline{
+  background: transparent;
+  position: absolute;
+}
 html {
   font-family:
     'Source Sans Pro',

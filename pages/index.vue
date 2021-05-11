@@ -1,117 +1,14 @@
 <template>
-<span >
-  <Navbar />
-  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
-      </div>
-      <div v-else>
-        <div class="item" v-for="(item, index) in dataDoa" :key="index">
-          <Cardcomp :theme="storeTheme" :item="item"/>
-        </div>
-      </div>
-    </div>
-  </div>
-</span>
+  <div></div>
 </template>
 
-<script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
-import Loading from '@/components/Loading.vue'
-import dataJson from '~/data/myindex.json'
-import Cardcomp from '@/components/GlobalCardComp'
-
-export default {
-  name: 'Quran',
-  components: {
-    Navbar,
-    Loading,
-    Cardcomp,
+<script lang="ts">
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
+export default defineComponent({
+  name: 'Index',
+  setup() {
+    const { redirect } = useContext()
+      redirect('/agama')
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
-    const dataDoa = dataJson.data
-    const loadingTheme = computed(() => store.state.loadingTheme)
-    const loading = ref(true)
-    const storeTheme = computed(() => store.state.theme)
-
-    setLoading()
-
-    return {
-      storeTheme,
-      loadingTheme,
-      loading,
-      dataDoa,
-      cek,
-    }
-
-    function setLoading(){
-      setTimeout(function () {
-        loading.value = false
-      }, 200);
-    }
-
-    async function cek(search){
-      console.log('dew', search)
-    }
-
-  }
-}
+})
 </script>
-
-<style lang="postcss" scoped>
-.darkTheme{
-  /* color: rgb(61, 81, 94); */
-  .card:hover{
-    background: rgb(61, 81, 94);
-  }
-}
-.lightTheme{
-  .card:hover {
-    background: #f1f1f1;
-  }
-}
-.main {
-  @apply pt-24 min-h-screen pb-8;
-}
-@font-face {
-  font-family: "lpmq";
-  src: url(/fonts/lpmq.otf) format("opentype");
-  font-display: swap;
-}
-html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-.font-arabic{
-  font-family: "lpmq", Arial, sans-serif;
-  line-height: 2;
-}
-.item {
-  @apply px-8 mx-36 my-4;
-}
-.card {
-  @apply text-3xl p-4 rounded-lg;
-}
-@screen tablet {
-  .main {
-    @apply pt-28;
-  }
-}
-@screen mobile {
-  .main {
-    @apply pt-20;
-  }
-  .item {
-    @apply mx-2 px-2;
-  }
-}
-</style>
