@@ -137,7 +137,7 @@ export default {
 
     async function sendEmail(){
       try{
-        const url = `http://www.back-end.my.id/api/v1/mailgun`
+        const url = `https://ngodingbentar-be.herokuapp.com/api/v1/mailgun`
         const data = {
           from: fromV.value,
           to: toV.value,
