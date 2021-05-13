@@ -5,3 +5,4 @@ declare module '*.vue' {
 
 declare module 'body-scroll-lock'
 declare module 'jw-vue-pagination'
+declare module 'vue-instantsearch'

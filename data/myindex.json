@@ -41,6 +41,20 @@
       "route" : "covid",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 7,
+      "title": "Algolia",
+      "route" : "algolia",
+      "description": "",
+      "icon": ""
+    },
+    {
+      "id": 8,
+      "title": "Mailgun",
+      "route" : "mailgun",
+      "description": "",
+      "icon": ""
     }
   ]
 }

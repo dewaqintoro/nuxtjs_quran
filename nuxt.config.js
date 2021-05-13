@@ -1,4 +1,8 @@
 export default {
+  env: {
+    algoliaAppId: process.env.ALGOLIA_APP_ID || 'http://localhost:3000',
+    algoliaPublicKey: process.env.ALGOLIA_PUBLIC_KEY || 'http://localhost:3000'
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   configureWebpack: config => {
       config.output.globalObject = "this"
@@ -32,6 +36,7 @@ export default {
     {src: '@/plugins/global.ts', ssr: false},
     {src: '@/plugins/pagination.ts', ssr: false},
     {src: '@/plugins/chart.ts', ssr: false},
+    {src: '@/plugins/instanSearch', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -98,6 +103,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile:['vue-instantsearch', 'instantsearch.js/es'],
     loaders: {
       vue: {
         transformAssetUrls: {

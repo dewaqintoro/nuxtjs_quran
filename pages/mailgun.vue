@@ -119,6 +119,16 @@ export default {
     const priceThree = ref(300000)
     const isSuccess = ref(false)
 
+    if (process.browser){
+      window.smoothscroll = () => {
+        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        if (currentScroll > 0) {
+          window.requestAnimationFrame(window.smoothscroll)
+          window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
+        }
+      }
+    }
+
     return {
       fromV,
       toV,
@@ -154,6 +164,7 @@ export default {
         const result = await axios.post(url, data)
         if(result.data){
           isSuccess.value = true
+          window.smoothscroll()
           setTimeout(function(){
             isSuccess.value = false
           }, 5000)

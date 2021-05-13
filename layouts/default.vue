@@ -18,7 +18,6 @@ export default defineComponent({
   },
   setup(_, { emit }) {
     const { store, route, app } = useContext()
-    console.log('route', route.value)
 
     const isAgama = computed(() => {
       if(route.value.name === 'agama'){
