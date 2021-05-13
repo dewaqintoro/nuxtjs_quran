@@ -4,7 +4,7 @@
   <div class="pt-16 px-8">
     <ais-instant-search :search-client="searchClient" index-name="wilayah">
       <p class="pt-8 text-center font-bold text-2xl">Algolia</p>
-      <button @click="cek">cek</button>
+      <!-- <button @click="cek">cek</button> -->
       <ais-search-box class="pb-8 pt-4" />
       <div class="min-h-screen">
         <ais-hits>
