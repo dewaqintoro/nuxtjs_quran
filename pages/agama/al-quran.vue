@@ -39,6 +39,12 @@
             <p>Jadwal Shalat</p>
           </div>
         </nuxt-link>
+        <nuxt-link to="/agama/kisah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+          <div class="content items-center">
+            <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
+            <p>Kisah Nabi & Rasul</p>
+          </div>
+        </nuxt-link>
       </div>
       <div class="footer"></div>
     </div>
