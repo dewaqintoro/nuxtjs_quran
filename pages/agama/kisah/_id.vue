@@ -15,8 +15,8 @@
       <div v-else class="content" :style="{ boxShadow: storeTheme.boxShadow }">
         <!-- <button @click="cek">cek</button> -->
         <p>Nama : {{nabi.nama}}</p>
-        <p>Lahir : {{nabi.lahir}}</p>
-        <p>Tempat : {{nabi.tempat}}</p>
+        <!-- <p>Lahir : {{nabi.lahir}}</p> -->
+        <p>Tempat diutus: {{nabi.tempat}}</p>
         <br/>
         <hr/>
         <div class="kisah">
