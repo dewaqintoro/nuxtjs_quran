@@ -14,12 +14,12 @@
       </div>
       <div v-else class="content" :style="{ boxShadow: storeTheme.boxShadow }">
         <!-- <button @click="cek">cek</button> -->
-        <p>Nama : {{nabi.nama}}</p>
+        <p class="text-2xl font-bold">Nama : {{nabi.nama}}</p>
         <!-- <p>Lahir : {{nabi.lahir}}</p> -->
-        <p>Tempat diutus: {{nabi.tempat}}</p>
+        <p class="text-xl font-bold">Tempat diutus: {{nabi.tempat}}</p>
         <br/>
         <hr/>
-        <div class="kisah">
+        <div class="kisah text-xl">
           {{nabi.kisah}}
         </div>
       </div>
