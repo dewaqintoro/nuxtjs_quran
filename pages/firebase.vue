@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen">
+    <Navbar :theme="myTheme" />
     <div class="h-screen w-full items-center justify-center text-center ">
       <div class="flex items-center justify-center">
         <label class="upload-icon w-64 flex flex-col items-center px-4 py-6 bg-blue-400  text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-500 text-white">
@@ -20,11 +21,6 @@
         <div v-for="(item, index) in myImg" :key="index">
           <p class="link">{{item}}</p>
         </div>
-        <!-- <div class="text-center">
-          <p class="link">linkkk</p>
-          <p class="link">linkkk</p>
-        </div> -->
-        <!-- <p>{{myImg}}</p> -->
       </div>
     </div>
     <!-- <p>{{myImg}}</p> -->
@@ -33,16 +29,27 @@
 
 <script>
 import { defineComponent, ref } from '@vue/composition-api'
+import Navbar from '~/components/GlobalNavbar'
+
 import axios from 'axios'
 export default defineComponent({
+  components: {
+    Navbar
+  },
   setup() {
     const myImg = ref([])
     const loading = ref(false)
     const errorSize = ref(false)
+    const myTheme = {
+      background: '#f7f7f7',
+      color: 'black',
+      boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+    }
     return{
       myImg,
       loading,
       errorSize,
+      myTheme,
       uploadFileHandler
     }
 
@@ -80,7 +87,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .upload-icon{
-  margin-top: 30%;
+  margin-top: 30vh;
 }
 
 .section-loader {
