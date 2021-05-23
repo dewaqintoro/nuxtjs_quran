@@ -9,7 +9,7 @@
       </transition>
       <div class="search">
         <!-- <input class="input-search focus:outline-none" id="username" type="text" v-model="search" placeholder="Paste long url and shorten it."> -->
-        <input class="input-search focus:outline-none" id="username" type="text" v-model="search" @focus="clearSearch" placeholder="Paste long url and shorten it.">
+        <input class="input-search focus:outline-none" id="username" type="search" v-model="search" @focus="clearSearch" placeholder="Paste long url and shorten it.">
           <!-- <font-awesome-icon class="iconTheme" :icon="['fas', 'times']" /> -->
         <button @click="searchFilter()" class="btn-search focus:outline-none" type="button">
           Shorten

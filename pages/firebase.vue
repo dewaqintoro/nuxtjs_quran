@@ -54,15 +54,15 @@ export default defineComponent({
     }
 
     async function uploadFileHandler(event){
-      loading.value = true
       try{
         const file = event.target.files[0];
         if(file.size > 100000){
           errorSize.value = true
           setTimeout(() => {
             errorSize.value = false
-          }, 1000)
+          }, 3000)
         } else {
+          loading.value = true
           const bodyFormData = new FormData();
           bodyFormData.append('image', file);
           console.log('bodyFormData', bodyFormData)

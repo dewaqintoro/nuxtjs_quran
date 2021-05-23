@@ -1,0 +1,123 @@
+<template>
+<div class="min-h-screen">
+  <Navbar :theme="myTheme" />
+  <div class="section">
+    <div class="main">
+      <div class="head">KBBI - Unofficial</div>
+      <div class="search">
+        <input class="input-search focus:outline-none" id="username" type="search" v-model="search" placeholder="Paste long url and shorten it.">
+        <button @click="searchFilter()" class="btn-search focus:outline-none" type="button">
+          <font-awesome-icon :icon="['fas', 'search']" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div v-if="means" class="means">
+    <p class="text-2xl font-bold">Arti</p>
+    <div class="text-left" v-for="(mean, index) in means" :key="index">
+      <p class="text-xl my-2">{{index+1}} - {{mean}}</p>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import Navbar from '~/components/GlobalNavbar'
+
+import axios from 'axios'
+export default {
+  name: 'Shorten',
+  components: {
+    Navbar
+  },
+  setup(){
+    const means = ref([])
+    const lema = ref('')
+    const search = ref('')
+    const myTheme = {
+      background: '#8854d0',
+      color: 'white',
+      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+    }
+
+    return {
+      means,
+      lema,
+      search,
+      myTheme,
+      searchFilter,
+    }
+
+    async function searchFilter(){
+      const url = `https://kbbi-api-zhirrr.vercel.app/api/kbbi?text=${search.value}`
+      const result = await axios.get(url);
+      means.value = result?.data?.arti
+      lema.value = result?.data?.lema
+    }
+
+  }
+}
+</script>
+
+<style lang="postcss" scoped>
+.section {
+  @apply flex w-full;
+  padding-top: 100px;
+  /* background: #00b894; */
+}
+
+.main {
+  /* background: #0edfb5; */
+  @apply text-center mx-auto w-full;
+  max-width: 60vw;
+}
+
+.means {
+  max-width: 60vw;
+  @apply pt-4 mx-auto text-center 
+}
+
+.head {
+  @apply text-4xl font-bold;
+}
+
+.search {
+  @apply mt-8 text-xl flex text-center;
+}
+
+.input-search {
+  @apply appearance-none border py-2 px-4 w-full text-gray-700 leading-tight rounded-l-lg;
+}
+.btn-search {
+  background-color: #8854d0;
+  @apply text-white font-bold py-2 px-4 rounded-r-lg;
+}
+.btn-search:hover {
+  background-color: #7b41cc;
+
+}
+
+.copy-text{
+  /* @apply mx-2 py-2 px-4 text-white w-full; */
+  background: transparent;
+  color: white;
+}
+
+@screen tablet {
+}
+@screen mobile {
+  .main,.means {
+    max-width: 80vw;
+  }
+  .input-search {
+    @apply my-2 text-lg;
+  }
+  .btn-search {
+    @apply my-2 text-lg font-semibold;
+  }
+  .input-search {
+    @apply px-4;
+  }
+}
+</style>

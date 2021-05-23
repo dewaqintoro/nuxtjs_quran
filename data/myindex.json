@@ -62,6 +62,13 @@
       "route" : "firebase",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 10,
+      "title": "KBBI - Unofficial",
+      "route" : "kbbi",
+      "description": "",
+      "icon": ""
     }
   ]
 }
