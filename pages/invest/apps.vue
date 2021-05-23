@@ -2,13 +2,11 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <BackComp :theme="storeTheme" route="/invest" />
     <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
-
     <div class="item text-center">
       <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allData.length}} data</p>
     </div>
-    <div class="min-h-screen font-arabic">
+    <!-- <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
@@ -25,7 +23,7 @@
         <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
       </div>
         
-    </div>
+    </div> -->
   </div>
 </span>
 </template>
@@ -38,7 +36,6 @@ import dataJson from '~/data/reksadana.json'
 import Cardcomp from '~/components/invest/reksadanaCardComp.vue'
 // import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
-import BackComp from '@/components/BackComp'
 
 export default {
   name: 'DoaHarian',
@@ -46,8 +43,7 @@ export default {
     Navbar,
     Loading,
     Cardcomp,
-    SearchComp,
-    BackComp
+    SearchComp
   },
   setup(_, {emit}){
     const { app, store } = useContext()

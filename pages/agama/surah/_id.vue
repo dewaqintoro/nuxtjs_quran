@@ -6,16 +6,17 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="content">
+      <BackComp :theme="storeTheme" route="/agama/surah" class="mb-4" />
 
-        <div class="back">
+        <!-- <div class="back">
           <div class="btn-back" :style="{ boxShadow: storeTheme.boxShadow }">
             <nuxt-link to="/agama/surah">
               <font-awesome-icon :icon="['fas', 'arrow-left']" />
             </nuxt-link>
           </div>
-        </div>
+        </div> -->
 
-        <Headerquran :surah="surah" :theme="storeTheme"/>
+        <Headerquran :surah="surah" :theme="storeTheme" />
       <!-- <button @click="cek()">cek</button> -->
         <div class="text-center flex justify-center">
         </div>
@@ -45,13 +46,15 @@ import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
+import BackComp from '@/components/BackComp'
 export default {
   name: 'Surah',
   components: {
     Headerquran,
     Navbar,
     Cardcomp,
-    Loading
+    Loading,
+    BackComp
   },
   setup(){
     
@@ -137,17 +140,8 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-.back {
-  @apply ml-32 pb-8;
-  font-size:22px;
-}
-.btn-back {
-  @apply items-center text-center justify-center rounded-full;
-  width: 40px;
-  height: 40px;
-}
 .main {
-  @apply min-h-screen pb-20 pt-28;
+  @apply min-h-screen pb-20 pt-20;
 }
 @font-face {
   font-family: "lpmq";
@@ -174,7 +168,7 @@ html {
 }
 @screen tablet {
   .content {
-    @apply pt-20;
+    @apply pt-4;
   }
 }
 @screen mobile {
@@ -185,10 +179,7 @@ html {
     @apply mx-2 px-2;
   }
   .content {
-    @apply pt-16;
-  }
-  .back {
-    @apply ml-4;
+    @apply pt-12;
   }
 }
 </style>

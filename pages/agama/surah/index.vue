@@ -3,6 +3,7 @@
 <span >
   <Navbar />
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
+    <BackComp :theme="storeTheme" route="/agama" />
     <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>
     <div class="item text-center flex justify-between">
       <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
@@ -54,14 +55,15 @@ import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
 import json from '~/data/surah-info.json'
 import SearchComp from '~/components/SearchNewComp.vue'
-
+import BackComp from '@/components/BackComp'
 
 export default {
   name: 'Quran',
   components: {
     Navbar,
     Loading,
-    SearchComp
+    SearchComp,
+    BackComp
   },
   setup(_, {emit}){
     const { app, store } = useContext()
