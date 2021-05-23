@@ -69,6 +69,13 @@
       "route" : "kbbi",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 11,
+      "title": "Reksadana",
+      "route" : "invest/reksadana",
+      "description": "",
+      "icon": ""
     }
   ]
 }

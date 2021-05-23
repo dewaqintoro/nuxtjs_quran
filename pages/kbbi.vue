@@ -12,8 +12,11 @@
       </div>
     </div>
   </div>
-  <div v-if="means" class="means">
-    <p class="text-2xl font-bold">Arti</p>
+  <div class="means">
+    <p v-if="means.length > 0" class="text-2xl font-bold">Arti</p>
+    <div class="section-loader items-center justify-center">
+      <div v-if="loading" class="loader"></div>
+    </div>
     <div class="text-left" v-for="(mean, index) in means" :key="index">
       <p class="text-xl my-2">{{index+1}} - {{mean}}</p>
     </div>
@@ -34,6 +37,7 @@ export default {
   setup(){
     const means = ref([])
     const lema = ref('')
+    const loading = ref(false)
     const search = ref('')
     const myTheme = {
       background: '#8854d0',
@@ -45,13 +49,18 @@ export default {
       means,
       lema,
       search,
+      loading,
       myTheme,
       searchFilter,
     }
 
     async function searchFilter(){
+      loading.value = true
       const url = `https://kbbi-api-zhirrr.vercel.app/api/kbbi?text=${search.value}`
       const result = await axios.get(url);
+      if(result?.data){
+        loading.value = false
+      }
       means.value = result?.data?.arti
       lema.value = result?.data?.lema
     }
@@ -98,11 +107,32 @@ export default {
 
 }
 
-.copy-text{
-  /* @apply mx-2 py-2 px-4 text-white w-full; */
-  background: transparent;
-  color: white;
+.section-loader {
+  height: 35px;
+  /* background: blanchedalmond; */
 }
+.loader {
+  margin: auto;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 0.8s linear infinite; /* Safari */
+  animation: spin 0.8s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 @screen tablet {
 }
