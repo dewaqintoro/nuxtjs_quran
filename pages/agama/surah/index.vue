@@ -1,7 +1,7 @@
 <template>
 <!-- <span></span> -->
 <span >
-  <Navbar />
+  <Navbar to="/agama" />
   <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <BackComp :theme="storeTheme" route="/agama" />
     <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>

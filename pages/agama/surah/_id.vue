@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Navbar />
+    <Navbar to="/agama" />
     <div v-if="!loadingTheme" class="main font-arabic" :style="{ background: storeTheme.background, color: storeTheme.color }">
       <div v-if="loading">
         <Loading :theme="storeTheme" />

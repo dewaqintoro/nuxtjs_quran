@@ -1,19 +1,18 @@
 <template>
 <span >
-  <Navbar />
+  <Navbar route="/invest" />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
+    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.apps'/>
     <div class="item text-center">
       <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allData.length}} data</p>
     </div>
-    <!-- <div class="min-h-screen font-arabic">
+    <div class="min-h-screen font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
         <div class="item" v-for="(item, index) in pageOfItems" :key="index">
-          <Cardcomp :theme="storeTheme" :item="item" :index="index+1" />
-          <!-- <p>{{item.name}}</p> -->
+          <Cardcomp product="apps" :theme="storeTheme" :item="item" />
         </div>
       </div>
       <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
@@ -23,7 +22,7 @@
         <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
       </div>
         
-    </div> -->
+    </div>
   </div>
 </span>
 </template>
@@ -32,7 +31,7 @@
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
-import dataJson from '~/data/reksadana.json'
+import dataJson from '~/data/apps.json'
 import Cardcomp from '~/components/invest/reksadanaCardComp.vue'
 // import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
@@ -47,7 +46,7 @@ export default {
   },
   setup(_, {emit}){
     const { app, store } = useContext()
-    const dataDoa = dataJson
+    const dataDoa = dataJson.data
     const search = ref('')
     const allData = ref([])
     const pageOfItems = ref([])
@@ -100,7 +99,7 @@ export default {
         data = ''
       }
       // setTimeout(function () {
-        const result = dataDoa.data.filter(item =>
+        const result = dataDoa.apps.filter(item =>
           item.name.toLowerCase().includes(data.toLowerCase())
         );
         allData.value = result

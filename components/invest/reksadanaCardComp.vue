@@ -1,6 +1,6 @@
 <template>
   <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-    <button @click="show()" class="btn-show focus:outline-none">
+    <!-- <button v-if="product == 'reksadana'" @click="show()" class="btn-show focus:outline-none">
       <p class="font-bold text-lg">{{item.name}}</p>
       <div v-if="isShow" class="content">
         <table :style="{ borderColor: theme.color }">
@@ -18,7 +18,46 @@
           </tr>
         </table>
       </div>
-    </button>
+    </button> -->
+    <div v-if="product == 'reksadana'">
+      <div class="flex justify-between">
+        <p class="font-bold text-lg">{{item.name}}</p>
+        <button @click="show()" class="focus:outline-none">
+          <font-awesome-icon class="icon-show" v-if="isShow" :icon="['fas', 'eye']"/>
+          <font-awesome-icon class="icon-show" v-else :icon="['fas', 'eye-slash']"/>
+        </button>
+      </div>
+      <div v-if="isShow" class="content">
+        <table :style="{ borderColor: theme.color }">
+          <tr>
+            <th class="border-2">Management</th>
+            <td class="border-2">{{item.management}}</td>
+          </tr>
+          <tr>
+            <th class="border-2">Bank Kustodian</th>
+            <td class="border-2">{{item.custodian}}</td>
+          </tr>
+          <tr>
+            <th class="border-2">Tipe</th>
+            <td class="border-2">{{item.type}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div v-if="product == 'apps'">
+      <div class="flex justify-between">
+        <p class="font-bold text-lg">{{item.name}}</p>
+        <button @click="show()" class="focus:outline-none">
+          <font-awesome-icon class="icon-show" v-if="isShow" :icon="['fas', 'eye']"/>
+          <font-awesome-icon class="icon-show" v-else :icon="['fas', 'eye-slash']"/>
+        </button>
+      </div>
+      <div v-if="isShow" class="content">
+        <p><b>URL</b> : {{item.url}}</p>
+        <!-- <button @click="doRedirect(item.url)">{{item.url}}</button> -->
+        <p><b>Owner</b> : {{item.owner}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,12 +74,13 @@ export default {
       type: Object,
       required: true,
     },
-    index: {
-      type: Number,
-      required: true,
-    },
+    product: {
+      type: String,
+      required: false,
+    }
   },
   setup(props){
+    // console.log(props.item)
     const { store } = useContext()
     const isShow = ref(false)
     const subStore = computed(() => store.state.sub)
@@ -57,9 +97,17 @@ export default {
       isShow,
       subStore,
       cek,
-      show
+      show,
+      doRedirect
     }
 
+    // redirect: function (link, target = '_blank') {
+    //         window.open(link, target);
+    //     }
+
+    function doRedirect(link, target = '_blank'){
+      window.open(link, target);
+    }
     function show(){
       if(isShow.value === true){
         isShow.value = false
@@ -91,6 +139,11 @@ export default {
 }
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+}
+
+.icon-show{
+  width: 20px;
+  margin-left: 10px;
 }
 
 /* table */

@@ -1,13 +1,22 @@
 <template>
   <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
-      <div class="start box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <nuxt-link class="btn-setting" to="/">
-          <font-awesome-icon :icon="['fas', 'home']" />
-        </nuxt-link>
+      <div class="start">
+        <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+          <nuxt-link class="btn-nav" to="/">
+            <img class="img-nav" src="/iconNew.png" />
+          </nuxt-link>
+        </div>
+
+        <div v-if="enable" class="box ml-4" :style="{ boxShadow: storeTheme.boxShadow }">
+          <nuxt-link class="btn-nav" :to="route">
+            <font-awesome-icon :icon="['fas', 'home']" />
+          </nuxt-link>
+        </div>
+        
       </div>
       <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <button class="btn-setting focus:outline-none" @click="doSetting()">
+        <button class="btn-nav focus:outline-none" @click="doSetting()">
           <font-awesome-icon :icon="['fas', 'cog']" />
         </button>
       </div>
@@ -23,12 +32,18 @@ import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-
 export default defineComponent({
   name: 'Navbar',
   props: {
-    // theme: {
-    //   type: Object,
-    //   required: true,
-    // },
+    route: {
+      type: String,
+      required: false,
+      default: '/'
+    },
+    enable: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const { store, route, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
@@ -61,6 +76,11 @@ export default defineComponent({
       cekData,
       closeModal,
       doSetting,
+      cek
+    }
+
+    function cek(){
+      console.log(props)
     }
     
     function closeModal() {
@@ -84,10 +104,13 @@ export default defineComponent({
   text-align: center;
 }
 
-.btn-setting {
+.btn-nav {
   width: 25px;
   height: 25px;
 }
+/* img.img-nav{
+  width: 22px;
+} */
 
 @font-face {
   font-family: "lpmq";

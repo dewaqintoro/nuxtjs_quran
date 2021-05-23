@@ -1,6 +1,6 @@
 <template >
   <span>
-    <Navbar />
+    <Navbar to="/agama" />
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
     <div class="p-4">
       <div class="box p-4" :style="{ boxShadow: storeTheme.boxShadow }">

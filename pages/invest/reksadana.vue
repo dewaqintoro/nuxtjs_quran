@@ -1,8 +1,8 @@
 <template>
 <span >
-  <Navbar />
+  <Navbar route="/invest" />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <BackComp :theme="storeTheme" route="/invest" />
+    <!-- <BackComp :theme="storeTheme" route="/invest" /> -->
     <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
 
     <div class="item text-center">
@@ -14,7 +14,7 @@
       </div>
       <div v-else>
         <div class="item" v-for="(item, index) in pageOfItems" :key="index">
-          <Cardcomp :theme="storeTheme" :item="item" :index="index+1" />
+          <Cardcomp product="reksadana" :theme="storeTheme" :item="item" :index="index+1" />
           <!-- <p>{{item.name}}</p> -->
         </div>
       </div>

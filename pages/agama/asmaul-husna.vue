@@ -1,6 +1,6 @@
 <template >
   <span>
-    <Navbar />
+    <Navbar to="/agama" />
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
     <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
     <div v-if="loading">

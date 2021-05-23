@@ -1,6 +1,6 @@
 <template>
 <span >
-  <Navbar />
+  <Navbar to="/agama" />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="pb-2">
       <p>Jadwal Shalat</p>

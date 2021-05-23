@@ -1,6 +1,6 @@
 <template>
 <span >
-  <Navbar />
+  <Navbar :enable="false" />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="">
       <div v-if="loading">

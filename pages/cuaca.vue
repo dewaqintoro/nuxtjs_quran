@@ -179,12 +179,10 @@ export default {
       if(data === null ){
         data = ''
       }
-      console.log('data', data)
 
       const result = dataCity.filter(doa =>
         doa.name.toLowerCase().includes(data.toLowerCase())
       );
-      console.log('result', result)
       allData.value = result
       if(result.length === 1){
         selectedCity.value = result

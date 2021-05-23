@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Navbar />
+    <Navbar route="/invest" />
     <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <div class="container" :class="bgId">
         <nuxt-link to="/invest/reksadana" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
