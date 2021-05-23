@@ -54,8 +54,45 @@
       </div>
       <div v-if="isShow" class="content">
         <p><b>URL</b> : {{item.url}}</p>
-        <!-- <button @click="doRedirect(item.url)">{{item.url}}</button> -->
         <p><b>Owner</b> : {{item.owner}}</p>
+      </div>
+    </div>
+    <div v-if="product == 'ilegal'">
+      <div class="flex justify-between">
+        <p class="font-bold text-lg">{{item.name}}</p>
+        <button @click="show()" class="focus:outline-none">
+          <font-awesome-icon class="icon-show" v-if="isShow" :icon="['fas', 'eye']"/>
+          <font-awesome-icon class="icon-show" v-else :icon="['fas', 'eye-slash']"/>
+        </button>
+      </div>
+      <div v-if="isShow" class="content">
+        <table :style="{ borderColor: theme.color }">
+          <tr>
+            <th class="border-2">Alamat</th>
+            <td class="border-2">{{item.address}}</td>
+          </tr>
+          <tr>
+            <th class="border-2">Tipe</th>
+            <td class="border-2">{{item.type}}</td>
+          </tr>
+          <tr>
+            <th class="border-2">URL</th>
+            <td class="border-2">
+              <p v-for="(url, index) in item.urls" :key="index">
+                {{url}}
+              </p>
+            </td>
+          </tr>
+        </table>
+        <!-- <p><b>Alamat</b> : {{item.address}}</p>
+        <p><b>Type</b> : {{item.type}}</p>
+        <div>
+          URL :
+          <p v-for="(url, index) in item.urls" :key="index">
+            {{url}}
+          </p>
+        </div> -->
+        
       </div>
     </div>
   </div>

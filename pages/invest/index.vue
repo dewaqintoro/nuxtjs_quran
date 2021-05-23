@@ -5,44 +5,20 @@
       <div class="container" :class="bgId">
         <nuxt-link to="/invest/reksadana" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/quran2.png" alt="https://www.freepik.com" />
+            <img class="m-auto" src="/invest/growth.png" alt="https://www.freepik.com" />
             <p>Daftar Reksadana</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/invest/apps" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
-            <img class="m-auto" src="/allah.png" alt="https://www.freepik.com" />
+            <img class="m-auto" src="/invest/stocks.png" alt="https://www.freepik.com" />
             <p>Daftar Aplikasi Manajemen Reksa Dana </p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/agama/doa-harian" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+        <nuxt-link to="/invest/ilegal" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <div class="content items-center">
             <img class="m-auto" src="/praying.png" alt="https://www.freepik.com" />
-            <p>Doa Harian</p>
-          </div>
-        </nuxt-link>
-        <nuxt-link to="/agama/tahlil" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-          <div class="content items-center">
-            <img class="m-auto" src="/pray.png" alt="https://www.freepik.com" />
-            <p>Doa Tahlil</p>
-          </div>
-        </nuxt-link>
-        <nuxt-link to="/agama/wirid" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-          <div class="content items-center">
-            <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
-            <p>Wirid</p>
-          </div>
-        </nuxt-link>
-        <nuxt-link to="/agama/jadwal-shalat" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-          <div class="content items-center">
-            <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
-            <p>Jadwal Shalat</p>
-          </div>
-        </nuxt-link>
-        <nuxt-link to="/agama/kisah" class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-          <div class="content items-center">
-            <img class="m-auto" src="/beads.png" alt="https://www.freepik.com"/>
-            <p>Kisah Nabi & Rasul</p>
+            <p>Investasi Ilegal</p>
           </div>
         </nuxt-link>
       </div>
