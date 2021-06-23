@@ -13,6 +13,13 @@
       "route" : "https://yt-ngodingbentar.herokuapp.com",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 102,
+      "title": "Task Management",
+      "route" : "https://board-ngodingbentar.vercel.app",
+      "description": "",
+      "icon": ""
     }
   ]
 }
