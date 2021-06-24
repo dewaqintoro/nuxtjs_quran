@@ -20,6 +20,7 @@
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
+          <button @click="cek">cek</button>
           <div class="item" v-for="blog in blogs" :key="blog._id">
             <nuxt-link :to="'/blog/'+blog._id">
               <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
@@ -55,7 +56,8 @@ export default {
     Navbar
   },
   setup(){
-    const { app, store } = useContext()
+    const { app, store, route } = useContext()
+    const myQuery = route.value?.query?.category || ''
     const blogs= ref([])
     const userInfo = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
@@ -81,7 +83,12 @@ export default {
       storeTheme,
       loading,
       bgId,
+      cek,
       getData
+    }
+
+    function cek(){
+      console.log('route.value', route.value)
     }
 
     async function local(){
@@ -94,7 +101,7 @@ export default {
 
     async function getData(){
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${myQuery}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
         console.log('result', result.data)

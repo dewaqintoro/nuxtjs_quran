@@ -80,7 +80,7 @@
     {
       "id": 12,
       "title": "Rich Text",
-      "route" : "editor",
+      "route" : "blog/editor",
       "description": "",
       "icon": ""
     },

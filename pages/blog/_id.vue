@@ -16,7 +16,7 @@
             <div class="blog-img">
               <img :src="blog.banner" />
             </div>
-            <p class="mt-8" v-html="blog.body"></p>
+            <span class="mt-8 blog-content" v-html="blog.body"></span>
           </div>
           <button @click="backToTop" class="btn-totop text-3xl my-4 focus:outline-none">
             <font-awesome-icon :icon="['fas', 'arrow-up']" />
@@ -92,7 +92,7 @@ export default {
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog/${idParams}`
         const result = await axios.get(`${url}`);
         blog.value = result.data
-        console.log('result', result.data)
+        // console.log('result', result.data)
         loading.value = false
       }catch(err){
         console.log(err)
@@ -126,6 +126,15 @@ img.banner{
   line-height: 1.6em;
 }
 
+.blog-content{
+  background: red;
+}
+
+.body-img{
+  justify-content: center;
+  margin: auto;
+  max-width: 100px !important; 
+}
 .darkTheme{
   /* color: rgb(61, 81, 94); */
   .box:hover{
