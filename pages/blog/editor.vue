@@ -1,7 +1,28 @@
 <template>
 <div>
   <button @click="cek">cek</button>
-  <vue-editor v-model="series">dew</vue-editor>
+  <div>
+    <label htmlFor="imageFile">Image File</label>
+    <input
+      type="file"
+      id="imageFile"
+      label="Choose Image"
+      @change="uploadFileHandler"
+    />
+  </div>
+  <p>{{myimg}}</p>
+
+  <div>
+    <label>Title</label>
+    <input
+      type="text"
+      v-model="values.title"
+    />
+  </div>
+
+  <vue-editor v-model="values.body"></vue-editor>
+  <!-- <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="body"> </vue-editor> -->
+  <button @click="submit">submit</button>
 </div>
 </template>
 
@@ -14,17 +35,113 @@ export default {
   components: {
   },
   setup(){
-    const series= ref('data')
+    const title = ref('title')
+    const body = ref('body')
+    const userInfo = ref({})
+    const myimg = ref('')
+
+    const values = ref({
+      title: 'dew',
+      body: 'ssss',
+    })
+
+    local()
 
     return {
-      series,
-      cek
+      title,
+      body,
+      myimg,
+      values,
+      cek,
+      uploadFileHandler,
+      handleImageAdded,
+      submit
+    }
+
+    async function submit(){
+      // console.log('decodedText', values.value.body.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&'))
+      const bodyEncode = values.value.body.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+      
+      const newValues = ref({
+        title: 'dew',
+        body: bodyEncode
+      })
+      console.log('newValues', newValues)
+      try{
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
+        const result = await axios.post(url, newValues.value);
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    async function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+      // An example of using FormData
+      // NOTE: Your key could be different such as:
+      // formData.append('file', file)
+
+      var formData = new FormData();
+      formData.append("image", file);
+      console.log('fil',file)
+      
+
+      // axios({
+      //   url: "https://fakeapi.yoursite.com/images",
+      //   method: "POST",
+      //   data: formData
+      // })
+      //   .then(result => {
+      //     let url = result.data.url; // Get url from response
+      //     Editor.insertEmbed(cursorLocation, "image", url);
+      //     resetUploader();
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+    }
+
+    async function uploadFileHandler(e){
+      // console.log(e.target.files[0])
+      const file = e.target.files[0];
+      const userInfoNB = localStorage.getItem('userInfoNB') ?
+        JSON.parse(localStorage.getItem('userInfoNB')) :
+        null
+
+      if(file){
+        console.log(file.size)
+        if(file.size < 500000){
+          const bodyFormData = new FormData();
+          bodyFormData.append('image', file);
+          axios
+            .post('https://ap-v3.herokuapp.com/api/uploads/s3', bodyFormData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${userInfoNB.token}`,
+              },
+            })
+            .then((response) => {
+              myimg.value =response.data
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+        } else {
+          alert('lebih besar 500kb')
+        }
+      }
     }
 
     async function cek(){
       // const url = `https://api.myquran.com/v1/sholat/jadwal/1609/2021/05`
       // const data = await axios.get(`${url}`);
-      console.log('series', series.value)
+      console.log('values', values.value)
+    }
+
+    async function local(){
+      const userInfoNB = localStorage.getItem('userInfoNB') ?
+        JSON.parse(localStorage.getItem('userInfoNB')) :
+        null
+      userInfo.value = userInfoNB
     }
 
   }

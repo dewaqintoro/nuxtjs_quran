@@ -1,6 +1,7 @@
 <template>
 <div>
-  <button @click="cek">cek</button>
+  <button @click="getData">getData</button>
+  <p>{{userInfo}}</p>
   <!-- <div>{{series}}</div> -->
   <span v-for="serie in series" :key="serie._id">
     <span v-html="serie.title"></span>
@@ -19,13 +20,26 @@ export default {
   },
   setup(){
     const series= ref([])
+    const userInfo = ref({})
+
+    local()
+    getData()
 
     return {
       series,
-      cek
+      userInfo,
+      getData
     }
 
-    async function cek(){
+    async function local(){
+      const userInfoNB = localStorage.getItem('userInfoNB') ?
+        JSON.parse(localStorage.getItem('userInfoNB')) :
+        null
+      userInfo.value = userInfoNB
+    }
+
+
+    async function getData(){
       try{
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
         const result = await axios.get(`${url}`);

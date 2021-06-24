@@ -2,13 +2,9 @@
   <div>
     <div class="container">
       <div class="wrapper">
-        <div class="flex">
-          <div class="w-1/2">
-            <p class="mt-2 ml-2">
-              Tentang <br />
-              Kita
-            </p>
-          </div>
+        <div class="text-center">
+          <p class="text-2xl font-bold">LOGIN</p>
+          <p>Ngodingbentar</p>
         </div>
         <form class="form">
           <div class="field mb-2">
@@ -36,16 +32,7 @@
         <div>
           <button class="signin mt-4 focus:outline-none" @click="login">Masuk</button>
         </div>
-        <div>
-          <label htmlFor="imageFile">Image File</label>
-          <input
-            type="file"
-            id="imageFile"
-            label="Choose Image"
-            @change="uploadFileHandler"
-          />
-        </div>
-        <p>{{myimg}}</p>
+        
         
       </div>
     </div>
@@ -58,26 +45,18 @@ import axios from 'axios'
 export default {
   name: 'SignIn',
   setup() {
-    const { store, route } = useContext()
-    const email = ref('')
-    const password = ref('')
-    const myimg = ref('')
-    
-
-
     const values = ref({
       email: 'dew',
       password: 'ssss',
     })
 
-    return { login, values, email, password , myimg, uploadFileHandler}
+    return { values , login}
 
     async function login() {
       try{
         const url = `https://ap-v3.herokuapp.com/api/users/signin`
         const result = await axios.post(url, values.value);
         if(result.status === 200){
-          console.log('berhasil', result.data)
           localStorage.setItem('userInfoNB', JSON.stringify(result.data));
         }
       }catch(err){
@@ -85,37 +64,7 @@ export default {
       }
     }
 
-    async function uploadFileHandler(e){
-      // console.log(e.target.files[0])
-      const file = e.target.files[0];
-      const userInfoNB = localStorage.getItem('userInfoNB') ?
-        JSON.parse(localStorage.getItem('userInfoNB')) :
-        null
-
-      // console.log('userInfoNB', userInfoNB)
-      if(file){
-        console.log(file.size)
-        if(file.size < 500000){
-          const bodyFormData = new FormData();
-          bodyFormData.append('image', file);
-          axios
-            .post('https://ap-v3.herokuapp.com/api/uploads/s3', bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${userInfoNB.token}`,
-              },
-            })
-            .then((response) => {
-              myimg.value =response.data
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
-        } else {
-          alert('lebih besar 500kb')
-        }
-      }
-    }
+    
   },
 }
 </script>
