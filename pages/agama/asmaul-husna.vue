@@ -2,25 +2,25 @@
   <span>
     <Navbar to="/agama" />
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
-    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
-    <div v-if="loading">
-      <Loading :theme="storeTheme" />
-    </div>
-    <div v-else class="flex">
-      <div class="container" :class="bgId">
-        <div class="item" v-for="(doa, index) in allData" :key="index">
-          <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-            <div class="content items-center">
-              <p class="font-arabic text-3xl">{{doa.arabic}}</p>
-              <p class="my-4">{{doa.latin}}</p>
-              <hr class="garis"/>
-              <p class="arti text-lg"><i>{{doa.translation_id}}</i></p>
+      <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
+      <div v-if="loading">
+        <Loading :theme="storeTheme" />
+      </div>
+      <div v-else class="flex">
+        <div class="container" :class="bgId">
+          <div class="item" v-for="(doa, index) in allData" :key="index">
+            <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+              <div class="content items-center">
+                <p class="font-arabic text-3xl">{{doa.arabic}}</p>
+                <p class="my-4">{{doa.latin}}</p>
+                <hr class="garis"/>
+                <p class="arti text-lg"><i>{{doa.translation_id}}</i></p>
+              </div>
             </div>
           </div>
         </div>
+        <div class="footer"></div>
       </div>
-      <div class="footer"></div>
-    </div>
     </div>
   </span>
 </template>
