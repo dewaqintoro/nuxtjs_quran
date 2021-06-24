@@ -1,38 +1,14 @@
 <template>
-<!-- <div>
-  <Navbar route="/blog" />
-  <button @click="getData">getData</button>
-  <div class="mt-24">
-    <span v-for="blog in blogs" :key="blog._id">
-      <MainCardComp :blog="blog" />
-      <span v-html="blog.title"></span>
-      <span v-html="blog.body"></span>
-    </span>
-  </div>
-</div> -->
 
   <span>
     <Navbar route="/blog" />
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
-      <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
-          <div class="item" v-for="blog in blogs" :key="blog._id">
-            <nuxt-link :to="'/blog/'+blog._id">
-              <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-                <div class="content items-center">
-                  <img class="banner" :src="blog.banner" />
-                  <p class="text-3xl font-bold text-left mt-4">{{blog.title}}</p>
-                  <p class="my-4 text-left" v-html="blog.body"></p>
-                  <!-- <hr class="garis"/> -->
-                  <!-- <p class="arti text-lg"><i>{{doa.translation_id}}</i></p> -->
-                </div>
-              </div>
-            </nuxt-link>
-          </div>
+          {{blog.title}}
         </div>
         <div class="footer"></div>
       </div>
@@ -54,8 +30,9 @@ export default {
     Navbar
   },
   setup(){
-    const { app, store } = useContext()
-    const blogs= ref([])
+    const { route, store, app } = useContext()
+    const idParams = route.value?.params?.id
+    const blog= ref({})
     const userInfo = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
@@ -69,12 +46,12 @@ export default {
       }
     })
 
-    local()
+    // local()
     getData()
     // searchFilter(search.value)
 
     return {
-      blogs,
+      blog,
       userInfo,
       loadingTheme,
       storeTheme,
@@ -93,9 +70,9 @@ export default {
 
     async function getData(){
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog/${idParams}`
         const result = await axios.get(`${url}`);
-        blogs.value = result.data
+        blog.value = result.data
         console.log('result', result.data)
         loading.value = false
       }catch(err){
