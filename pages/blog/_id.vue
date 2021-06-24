@@ -6,9 +6,18 @@
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
-      <div v-else class="flex">
-        <div class="container" :class="bgId">
-          {{blog.title}}
+      <div v-else>
+        <div class="container px-8" :class="bgId">
+          <div>
+            <p class="font-bold text-3xl">{{blog.title}}</p>
+            <p class="text-left">{{blog.createdAt.substring(0, 10)}} - Ngodingbentar</p>
+          </div>
+          <div class="blog-body mt-8">
+            <div class="blog-img">
+              <img :src="blog.banner" />
+            </div>
+            <p class="mt-8" v-html="blog.body"></p>
+          </div>
         </div>
         <div class="footer"></div>
       </div>
@@ -90,6 +99,19 @@ img.banner{
   @apply rounded-xl ;
 }
 
+.blog-img{
+  justify-content: center;
+  justify-items: center;
+  display: flex;
+  margin: auto;
+  /* text-align: center; */
+}
+
+.blog-body p{
+  font-weight: 400;
+  line-height: 1.6em;
+}
+
 .darkTheme{
   /* color: rgb(61, 81, 94); */
   .box:hover{
@@ -123,79 +145,19 @@ img.banner{
   max-width: 95%;
 }
 
-.container {
-  position: relative;
-  max-width: 100%;
-  display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); */
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  grid-template-rows: repeat(minmax(100px, auto));
-  margin: 40px;
-  grid-auto-flow: dense;
-  grid-gap: 20px;
-}
-
-.container .box {
-  @apply rounded-2xl;
-  padding: 20px;
-  display: grid;
-  font-size: 20px;
-  place-items: center;
-  text-align: center;
-}
-
-
-/* .container .box img {
-  position: relative;
-  max-width: 50px;
-  margin-bottom: 10px;
-} */
-
-.container {
-  margin: 20px;
-}
-.container .box:nth-child(1){
-  grid-column: span 2;
-  grid-row: span 1;
-}
-.container .box:nth-child(2){
-  grid-column: span 1;
-  grid-row: span 1;
-  
-}
-.container .box:nth-child(3){
-  grid-column: span 1;
-  grid-row: span 2;
-  
-}
-.container .box:nth-child(4){
-  grid-column: span 1;
-  grid-row: span 2;
-}
-.container .box:nth-child(5){
-}
 
 .footer {
   height: 70px;
 }
 
 @screen tablet {
-.container {
-    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  }
 }
 @screen mobile {
   .main {
     @apply pt-10 px-2;
   }
-  .container {
-    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
-  }
 }
 
 @media only screen and (max-width: 420px) {
-  .container {
-    grid-template-columns: repeat(auto-fill, minmax(80%, 1fr));
-  }
 }
 </style>

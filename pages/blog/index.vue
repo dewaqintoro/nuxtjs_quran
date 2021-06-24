@@ -26,7 +26,7 @@
                 <div class="content items-center">
                   <img class="banner" :src="blog.banner" />
                   <p class="text-3xl font-bold text-left mt-4">{{blog.title}}</p>
-                  <p class="my-4 text-left" v-html="blog.body"></p>
+                  <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p>
                   <!-- <hr class="garis"/> -->
                   <!-- <p class="arti text-lg"><i>{{doa.translation_id}}</i></p> -->
                 </div>
