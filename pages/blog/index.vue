@@ -12,7 +12,8 @@
 </div> -->
 
   <span>
-    <Navbar route="/blog" />
+    <NavbarComp route="/blog" @tutorial="tutorial" />
+    
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
       <div v-if="loading">
@@ -20,7 +21,8 @@
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
-          <button @click="cek">cek</button>
+          <!-- <button @click="cek">cek</button> -->
+          
           <div class="item" v-for="blog in blogs" :key="blog._id">
             <nuxt-link :to="'/blog/'+blog._id">
               <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
@@ -47,13 +49,13 @@
 import axios from 'axios'
 import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import MainCardComp from '~/components/blog/MainCardComp.vue'
-import Navbar from '~/components/Navbar.vue'
+import NavbarComp from '~/components/blog/NavbarComp.vue'
 
 export default {
   name: 'Editor',
   components: {
     MainCardComp,
-    Navbar
+    NavbarComp
   },
   setup(){
     const { app, store, route } = useContext()
@@ -73,7 +75,7 @@ export default {
     })
 
     local()
-    getData()
+    getData(myQuery)
     // searchFilter(search.value)
 
     return {
@@ -84,7 +86,13 @@ export default {
       loading,
       bgId,
       cek,
-      getData
+      getData,
+      tutorial
+    }
+
+    function tutorial(e){
+      console.log('tutorial', e)
+      getData(e)
     }
 
     function cek(){
@@ -99,12 +107,12 @@ export default {
     }
 
 
-    async function getData(){
+    async function getData(query){
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${myQuery}`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
-        console.log('result', result.data)
+        // console.log('result', result.data)
         loading.value = false
       }catch(err){
         console.log(err)
@@ -116,6 +124,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+
+
+
 img.banner{
   width: 100%;
   @apply rounded-xl ;
