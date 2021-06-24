@@ -1,16 +1,7 @@
 <template>
 <div>
   <button @click="cek">cek</button>
-  <div>
-    <label htmlFor="imageFile">Image File</label>
-    <input
-      type="file"
-      id="imageFile"
-      label="Choose Image"
-      @change="uploadFileHandler"
-    />
-  </div>
-  <p>{{myimg}}</p>
+  
 
   <div>
     <label>Title</label>
@@ -19,6 +10,17 @@
       v-model="values.title"
     />
   </div>
+
+  <div>
+    <label htmlFor="imageFile">Banner</label>
+    <input
+      type="file"
+      id="imageFile"
+      label="Choose Image"
+      @change="uploadFileHandler"
+    />
+  </div>
+  <p>{{myimg}}</p>
 
   <vue-editor v-model="values.body"></vue-editor>
   <!-- <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="body"> </vue-editor> -->
@@ -41,8 +43,9 @@ export default {
     const myimg = ref('')
 
     const values = ref({
-      title: 'dew',
-      body: 'ssss',
+      title: 'Title',
+      banner: '',
+      body: 'Data',
     })
 
     local()
@@ -63,13 +66,18 @@ export default {
       const bodyEncode = values.value.body.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
       
       const newValues = ref({
-        title: 'dew',
+        title: values.value.title,
+        banner: values.value.banner,
         body: bodyEncode
       })
-      console.log('newValues', newValues)
       try{
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
         const result = await axios.post(url, newValues.value);
+        if(result.data.message === 'New Blog Created'){
+          values.value.title = 'Title'
+          values.value.banner = '' 
+          values.value.body = 'Data' 
+        }
       }catch(err){
         console.log(err)
       }
@@ -101,14 +109,12 @@ export default {
     }
 
     async function uploadFileHandler(e){
-      // console.log(e.target.files[0])
       const file = e.target.files[0];
       const userInfoNB = localStorage.getItem('userInfoNB') ?
         JSON.parse(localStorage.getItem('userInfoNB')) :
         null
 
       if(file){
-        console.log(file.size)
         if(file.size < 500000){
           const bodyFormData = new FormData();
           bodyFormData.append('image', file);
@@ -121,6 +127,7 @@ export default {
             })
             .then((response) => {
               myimg.value =response.data
+              values.value.banner = response.data
             })
             .catch((err) => {
               console.log(err.message);

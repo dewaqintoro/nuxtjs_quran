@@ -7,7 +7,7 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <div class="container px-8" :class="bgId">
+        <div class="container rounded-lg p-8" :class="bgId" :style="{ boxShadow: storeTheme.boxShadow }">
           <div>
             <p class="font-bold text-3xl">{{blog.title}}</p>
             <p class="text-left">{{blog.createdAt.substring(0, 10)}} - Ngodingbentar</p>
@@ -18,6 +18,10 @@
             </div>
             <p class="mt-8" v-html="blog.body"></p>
           </div>
+          <button @click="backToTop" class="btn-totop text-3xl my-4 focus:outline-none">
+            <font-awesome-icon :icon="['fas', 'arrow-up']" />
+            <!-- <p>dew</p> -->
+          </button>
         </div>
         <div class="footer"></div>
       </div>
@@ -55,9 +59,17 @@ export default {
       }
     })
 
-    // local()
     getData()
-    // searchFilter(search.value)
+
+    if (process.browser){
+      window.smoothscroll = () => {
+        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        if (currentScroll > 0) {
+          window.requestAnimationFrame(window.smoothscroll)
+          window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
+        }
+      }
+    }
 
     return {
       blog,
@@ -66,14 +78,12 @@ export default {
       storeTheme,
       loading,
       bgId,
-      getData
+      getData,
+      backToTop
     }
 
-    async function local(){
-      const userInfoNB = localStorage.getItem('userInfoNB') ?
-        JSON.parse(localStorage.getItem('userInfoNB')) :
-        null
-      userInfo.value = userInfoNB
+    function backToTop(){
+      window.smoothscroll()
     }
 
 
@@ -94,6 +104,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.btn-totop{
+  display: flex;
+  margin-left: auto;
+}
 img.banner{
   width: 100%;
   @apply rounded-xl ;

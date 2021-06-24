@@ -23,12 +23,13 @@
           <div class="item" v-for="blog in blogs" :key="blog._id">
             <nuxt-link :to="'/blog/'+blog._id">
               <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-                <div class="content items-center">
-                  <img class="banner" :src="blog.banner" />
-                  <p class="text-3xl font-bold text-left mt-4">{{blog.title}}</p>
+                <!-- <div class="content items-center"> -->
+                  <div class="content-img">
+                    <img class="banner" :src="blog.banner" />
+                  </div>
+                <div class="content">
+                  <p class="text-xl font-bold text-left mt-4">{{blog.title}}</p>
                   <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p>
-                  <!-- <hr class="garis"/> -->
-                  <!-- <p class="arti text-lg"><i>{{doa.translation_id}}</i></p> -->
                 </div>
               </div>
             </nuxt-link>
@@ -113,6 +114,13 @@ img.banner{
   @apply rounded-xl ;
 }
 
+.content-img{
+  justify-content: center;
+  justify-items: center;
+  display: flex;
+  margin: auto;
+  /* text-align: center; */
+}
 .darkTheme{
   /* color: rgb(61, 81, 94); */
   .box:hover{
@@ -163,7 +171,7 @@ img.banner{
   padding: 20px;
   display: grid;
   font-size: 20px;
-  place-items: center;
+  /* place-items: center; */
   text-align: center;
 }
 
