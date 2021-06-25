@@ -1,7 +1,7 @@
 <template>
 <div>
   <button @click="cek">cek</button>
-  
+  <p> img src='https://aruspinggir-bucket.s3.ap-southeast-1.amazonaws.com/Capture2a.PNG' style='margin: auto;'</p>
 
   <div>
     <label>Title</label>
@@ -83,7 +83,7 @@ export default {
       const url = `https://vercel-be-v2.vercel.app/api/v1/category`
       const result = await axios.get(`${url}`);
       categories.value = result.data
-      console.log('result', result)
+      // console.log('result', result)
     }
 
     async function submit(){

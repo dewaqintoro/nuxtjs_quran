@@ -16,7 +16,7 @@
             <div class="blog-img">
               <img :src="blog.banner" />
             </div>
-            <span class="mt-8 blog-content" v-html="blog.body"></span>
+            <div class="mt-8 blog-content" v-html="blog.body"></div>
           </div>
           <button @click="backToTop" class="btn-totop text-3xl my-4 focus:outline-none">
             <font-awesome-icon :icon="['fas', 'arrow-up']" />
@@ -126,8 +126,12 @@ img.banner{
   line-height: 1.6em;
 }
 
-.blog-content{
-  background: red;
+img{
+  margin: auto;
+  max-width: 20px !important;
+  text-align: center !important ;
+  justify-content: center !important ;
+  justify-items: center !important ;
 }
 
 .body-img{
