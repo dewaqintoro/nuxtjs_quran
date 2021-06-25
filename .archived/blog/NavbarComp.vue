@@ -7,11 +7,40 @@
             <img class="img-nav" src="/iconNew.png" />
           </nuxt-link>
         </div>
+        <!-- <div v-if="enable" class="box ml-4" :style="{ boxShadow: storeTheme.boxShadow }">
+          <nuxt-link class="btn-nav" :to="route">
+            <font-awesome-icon :icon="['fas', 'home']" />
+          </nuxt-link>
+        </div> -->
         <div v-if="enable" class="mx-2">
           <nuxt-link :to="route">
             Home
           </nuxt-link>
         </div>
+
+        <!-- <div class="dropdown" v-if="isblogid">
+          <button class="dropbtn font-bold mx-2">Tutorial</button>
+          <div class="dropdown-content">
+            <nuxt-link to="/blog">
+              Semua
+            </nuxt-link>
+            <nuxt-link to="/blog?category=MERN">
+              MERN
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Mongodb">
+              Mongodb
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Expressjs">
+              Expressjs
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Reactjs">
+              Reactjs
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Nodejs">
+              Nodejs
+            </nuxt-link>
+          </div>
+        </div> -->
         
         <div class="dropdown">
           <button class="dropbtn font-bold mx-2">Tutorial</button>
@@ -43,32 +72,15 @@
         <button @click="cek">cek</button>
       </div> -->
 
-      <!-- <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <button class="btn-nav focus:outline-none" @click="doSetting()">
-          <font-awesome-icon :icon="['fas', 'cog']" />
-        </button>
-      </div> -->
-      
-
-      <div class="end">
-        <button class="btn-nav focus:outline-none" @click="doSetting()">
-          <font-awesome-icon :icon="['fas', 'search']" />
-        </button>
-        <div class="item-mode flex justify-between">
-          <div>Dark Mode</div>
-          <div class="flex justify-center">
-            <label class="switch">
-              <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
-              <span class="slider round"></span>
-            </label>
-          </div>
+      <div class="item flex justify-between end">
+        <div>Dark Mode</div>
+        <div class="flex justify-center mt-1">
+          <label class="switch">
+            <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
+            <span class="slider round"></span>
+          </label>
         </div>
       </div>
-
-      <Transition name="drawer">
-        <SearchModalComp :theme="storeTheme" v-if="isSetting" @close="closeModal" />
-      </Transition>
-
 
     </div>
   </header>
@@ -76,13 +88,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import SearchComp from '~/components/SearchComp.vue'
-
 export default defineComponent({
   name: 'NavbarComp',
-  components: {
-    SearchComp,
-  },
   props: {
     route: {
       type: String,
@@ -147,24 +154,8 @@ export default defineComponent({
       doSetting,
       cek,
       setTutorial,
-      changetheme,
+      changetheme
     }
-
-    // async function getData(query){
-    //   try{
-    //     const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
-    //     const result = await axios.get(`${url}`);
-    //     blogs.value = result.data
-    //     if(result.data.length === 0){
-    //       isEmpty.value = true
-    //     } else {
-    //       isEmpty.value = false
-    //     }
-    //     loading.value = false
-    //   }catch(err){
-    //     console.log(err)
-    //   }
-    // }
 
     function changetheme(){
       store.dispatch('changeTheme')
@@ -245,8 +236,8 @@ input:checked + .slider::before {
   -ms-transform: translateX(24px);
   transform: translateX(24px);
 }
-.item-mode {
-  /* @apply py-2;  */
+.item {
+  @apply py-2; 
 }
 
 
@@ -346,7 +337,6 @@ input:checked + .slider::before {
   }
   .end {
     /* @apply grid grid-flow-col gap-4; */
-    @apply flex items-center;
   }
   .line {
     @apply block w-px opacity-50 mr-3;

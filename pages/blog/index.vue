@@ -109,7 +109,6 @@ export default {
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
-        // console.log('result', result.data.length)
         if(result.data.length === 0){
           isEmpty.value = true
         } else {
