@@ -17,15 +17,10 @@
             Home
           </nuxt-link>
         </div>
-        <!-- <div v-if="isblogid" class="mx-2">
-          <nuxt-link :to="routeId">
-            isblogid
-          </nuxt-link>
-        </div> -->
-        <div class="dropdown" v-if="isblogid">
+
+        <!-- <div class="dropdown" v-if="isblogid">
           <button class="dropbtn font-bold mx-2">Tutorial</button>
           <div class="dropdown-content">
-            <!-- <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p> -->
             <nuxt-link to="/blog">
               Semua
             </nuxt-link>
@@ -45,8 +40,9 @@
               Nodejs
             </nuxt-link>
           </div>
-        </div>
-        <div class="dropdown" v-if="!isblogid">
+        </div> -->
+        
+        <div class="dropdown">
           <button class="dropbtn font-bold mx-2">Tutorial</button>
           <div class="dropdown-content">
             <nuxt-link to="/blog" @click="setTutorial('')">
@@ -71,15 +67,21 @@
         </div>
         
       </div>
-      <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <button class="btn-nav focus:outline-none" @click="doSetting()">
-          <font-awesome-icon :icon="['fas', 'cog']" />
-        </button>
+
+      <!-- <div>
+        <button @click="cek">cek</button>
+      </div> -->
+
+      <div class="item flex justify-between end">
+        <div>Dark Mode</div>
+        <div class="flex justify-center mt-1">
+          <label class="switch">
+            <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
+            <span class="slider round"></span>
+          </label>
+        </div>
       </div>
-      
-      <Transition name="drawer">
-        <Setting :theme="storeTheme" v-if="isSetting" @close="closeModal" />
-      </Transition>
+
     </div>
   </header>
 </template>
@@ -115,6 +117,15 @@ export default defineComponent({
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
+    // const isChecked = ref(false)
+
+    const isChecked = computed(() => {
+      if(storeTheme.value.darktheme){
+        return true
+      }else {
+        return false
+      }
+    })
 
     if(!thisSub){
       store.dispatch('setSub', 'On')
@@ -137,11 +148,17 @@ export default defineComponent({
       loadingTheme,
       isSetting,
       routeId,
+      isChecked,
       cekData,
       closeModal,
       doSetting,
       cek,
-      setTutorial
+      setTutorial,
+      changetheme
+    }
+
+    function changetheme(){
+      store.dispatch('changeTheme')
     }
 
     async function setTutorial(e:any){
@@ -150,7 +167,8 @@ export default defineComponent({
     }
 
     function cek(){
-      console.log(props)
+      // console.log(props)
+      console.log('storeTheme',storeTheme)
     }
     
     function closeModal() {
@@ -166,6 +184,64 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+
+.switch {
+  @apply mx-2;
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 21.76px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.slider::before {
+  position: absolute;
+  content: '';
+  height: 16.64px;
+  width: 16.64px;
+  left: 3.20px;
+  bottom: 3.20px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.round {
+  border-radius: 21.76px;
+}
+.round::before {
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #1f2937;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #1f2937;
+}
+input:checked + .slider::before {
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
+}
+.item {
+  @apply py-2; 
+}
+
+
+
 /* Style The Dropdown Button */
 .dropbtn {
   /* background-color: #4CAF50; */

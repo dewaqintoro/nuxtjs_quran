@@ -163,6 +163,8 @@ input:checked + .slider::before {
   -ms-transform: translateX(24px);
   transform: translateX(24px);
 }
+
+
 .containerCustom {
   margin: 0 auto;
   display: flex;
