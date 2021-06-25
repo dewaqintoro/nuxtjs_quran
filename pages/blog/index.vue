@@ -30,7 +30,10 @@
             </nuxt-link>
           </div>
         </div>
-        <div class="footer"></div>
+      </div>
+
+      <div v-if="isEmpty" class="text-center">
+        <p class="font-bold text-2xl ">-- Tidak ada hasil --</p>
       </div>
     </div>
   </span>
@@ -58,6 +61,7 @@ export default {
     const storeTheme = computed(() => store.state.theme)
     const search = ref('')
     const loading = ref(true)
+    const isEmpty = ref(false)
     const bgId = computed(() => {
       if(storeTheme.value?.darktheme){
         return 'darkTheme'
@@ -77,6 +81,7 @@ export default {
       storeTheme,
       loading,
       bgId,
+      isEmpty,
       cek,
       getData,
       tutorial
@@ -104,7 +109,12 @@ export default {
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
-        // console.log('result', result.data)
+        // console.log('result', result.data.length)
+        if(result.data.length === 0){
+          isEmpty.value = true
+        } else {
+          isEmpty.value = false
+        }
         loading.value = false
       }catch(err){
         console.log(err)

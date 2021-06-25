@@ -25,23 +25,48 @@
         <div class="dropdown" v-if="isblogid">
           <button class="dropbtn font-bold mx-2">Tutorial</button>
           <div class="dropdown-content">
-            <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
-            <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
-            <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
-            <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
-            <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
-            <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
+            <!-- <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p> -->
+            <nuxt-link to="/blog">
+              Semua
+            </nuxt-link>
+            <nuxt-link to="/blog?category=MERN">
+              MERN
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Mongodb">
+              Mongodb
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Expressjs">
+              Expressjs
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Reactjs">
+              Reactjs
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Nodejs">
+              Nodejs
+            </nuxt-link>
           </div>
         </div>
         <div class="dropdown" v-if="!isblogid">
           <button class="dropbtn font-bold mx-2">Tutorial</button>
           <div class="dropdown-content">
-            <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
-            <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
-            <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
-            <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
-            <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
-            <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
+            <nuxt-link to="/blog" @click="setTutorial('')">
+              <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
+            </nuxt-link>
+            <nuxt-link to="/blog?category=MERN" @click="setTutorial('MERN')">
+              <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Mongodb" @click="setTutorial('Mongodb')">
+              <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Expressjs" @click="setTutorial('Expressjs')">
+              <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Reactjs" @click="setTutorial('Reactjs')">
+              <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
+            </nuxt-link>
+            <nuxt-link to="/blog?category=Nodejs" @click="setTutorial('Nodejs')">
+              <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
+            </nuxt-link>
           </div>
         </div>
         
@@ -155,10 +180,10 @@ export default defineComponent({
   cursor: pointer;
 }
 
-.dropdown-item:hover{
+/* .dropdown-item:hover{
   background: gray;
   color: white;
-}
+} */
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
