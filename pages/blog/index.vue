@@ -1,7 +1,7 @@
 <template>
 
   <span>
-    <NavbarComp route="/blog" @tutorial="tutorial" />
+    <NavbarComp route="/blog" @tutorial="tutorial" @dosearch="dosearch" />
     
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
@@ -55,6 +55,7 @@ export default {
   setup(){
     const { app, store, route } = useContext()
     const myQuery = route.value?.query?.category || ''
+    const searchTitle = ref(route.value?.query?.q || '')
     const blogs= ref([])
     const userInfo = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
@@ -71,7 +72,7 @@ export default {
     })
 
     local()
-    getData(myQuery)
+    getData('')
     // searchFilter(search.value)
 
     return {
@@ -84,7 +85,15 @@ export default {
       isEmpty,
       cek,
       getData,
-      tutorial
+      tutorial,
+      dosearch
+    }
+
+    
+    function dosearch(e){
+      console.log('tutorial', e)
+      searchTitle.value = e
+      getData('')
     }
 
     function tutorial(e){
@@ -106,7 +115,7 @@ export default {
 
     async function getData(query){
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}&q=${searchTitle.value}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
         if(result.data.length === 0){

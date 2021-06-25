@@ -80,6 +80,8 @@ export default defineComponent({
 
     async function searchData(){
       console.log('search', search)
+      emit('dosearch', search.value)
+      emit('close')
     }
     async function changesub(){
       store.dispatch('changeSub')

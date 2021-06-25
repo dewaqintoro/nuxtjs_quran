@@ -66,7 +66,7 @@
       </div>
 
       <Transition name="drawer">
-        <SearchModalComp :theme="storeTheme" v-if="isSetting" @close="closeModal" />
+        <SearchModalComp :theme="storeTheme" v-if="isSetting" @close="closeModal" @dosearch="dosearch" />
       </Transition>
 
 
@@ -148,6 +148,7 @@ export default defineComponent({
       cek,
       setTutorial,
       changetheme,
+      dosearch,
     }
 
     // async function getData(query){
@@ -171,9 +172,14 @@ export default defineComponent({
     }
 
     async function setTutorial(e:any){
-      console.log(e)
       emit('tutorial', e)
     }
+
+    async function dosearch(e:any){
+      // console.log('dosearch', e)
+      emit('dosearch', e)
+    }
+
 
     function cek(){
       // console.log(props)
