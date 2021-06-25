@@ -1,7 +1,7 @@
 <template>
 
   <span>
-    <Navbar route="/blog" />
+    <NavbarComp route="/blog" :isblogid="true" />
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
@@ -34,13 +34,14 @@
 import axios from 'axios'
 import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import MainCardComp from '~/components/blog/MainCardComp.vue'
-import Navbar from '~/components/Navbar.vue'
+// import Navbar from '~/components/Navbar.vue'
+import NavbarComp from '~/components/blog/NavbarComp.vue'
 
 export default {
   name: 'Editor',
   components: {
     MainCardComp,
-    Navbar
+    NavbarComp
   },
   setup(){
     const { route, store, app } = useContext()
@@ -124,14 +125,6 @@ img.banner{
 .blog-body p{
   font-weight: 400;
   line-height: 1.6em;
-}
-
-img{
-  margin: auto;
-  max-width: 20px !important;
-  text-align: center !important ;
-  justify-content: center !important ;
-  justify-items: center !important ;
 }
 
 .body-img{

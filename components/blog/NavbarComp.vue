@@ -7,13 +7,34 @@
             <img class="img-nav" src="/iconNew.png" />
           </nuxt-link>
         </div>
-        <div v-if="enable" class="box ml-4" :style="{ boxShadow: storeTheme.boxShadow }">
+        <!-- <div v-if="enable" class="box ml-4" :style="{ boxShadow: storeTheme.boxShadow }">
           <nuxt-link class="btn-nav" :to="route">
             <font-awesome-icon :icon="['fas', 'home']" />
           </nuxt-link>
+        </div> -->
+        <div v-if="enable" class="mx-2">
+          <nuxt-link :to="route">
+            Home
+          </nuxt-link>
         </div>
-        <div class="dropdown">
-          <button class="dropbtn">Tutorial</button>
+        <!-- <div v-if="isblogid" class="mx-2">
+          <nuxt-link :to="routeId">
+            isblogid
+          </nuxt-link>
+        </div> -->
+        <div class="dropdown" v-if="isblogid">
+          <button class="dropbtn font-bold mx-2">Tutorial</button>
+          <div class="dropdown-content">
+            <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
+            <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
+            <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
+            <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
+            <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
+            <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
+          </div>
+        </div>
+        <div class="dropdown" v-if="!isblogid">
+          <button class="dropbtn font-bold mx-2">Tutorial</button>
           <div class="dropdown-content">
             <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
             <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
@@ -53,6 +74,11 @@ export default defineComponent({
       required: false,
       default: true
     },
+    isblogid: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
   },
   setup(props, { emit }) {
     const { store, route, app } = useContext()
@@ -63,6 +89,7 @@ export default defineComponent({
     const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
+    const routeId = '/blog?category=MERN'
 
     if(!thisSub){
       store.dispatch('setSub', 'On')
@@ -84,6 +111,7 @@ export default defineComponent({
       storeTheme,
       loadingTheme,
       isSetting,
+      routeId,
       cekData,
       closeModal,
       doSetting,
@@ -116,7 +144,7 @@ export default defineComponent({
 /* Style The Dropdown Button */
 .dropbtn {
   /* background-color: #4CAF50; */
-  color: white;
+  /* color: white; */
   /* padding: 16px;
   font-size: 16px; */
   border: none;
@@ -164,10 +192,9 @@ export default defineComponent({
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
+/* .dropdown:hover .dropbtn {
   background-color: #3e8e41;
-}
+} */
 
 
 .box {

@@ -1,15 +1,4 @@
 <template>
-<!-- <div>
-  <Navbar route="/blog" />
-  <button @click="getData">getData</button>
-  <div class="mt-24">
-    <span v-for="blog in blogs" :key="blog._id">
-      <MainCardComp :blog="blog" />
-      <span v-html="blog.title"></span>
-      <span v-html="blog.body"></span>
-    </span>
-  </div>
-</div> -->
 
   <span>
     <NavbarComp route="/blog" @tutorial="tutorial" />
@@ -26,13 +15,16 @@
           <div class="item" v-for="blog in blogs" :key="blog._id">
             <nuxt-link :to="'/blog/'+blog._id">
               <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-                <!-- <div class="content items-center"> -->
-                  <div class="content-img">
-                    <img class="banner" :src="blog.banner" />
-                  </div>
+                <div class="content-img">
+                  <img class="banner" :src="blog.banner" />
+                </div>
                 <div class="content">
                   <p class="text-xl font-bold text-left mt-4">{{blog.title}}</p>
                   <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p>
+                </div>
+                <div class="text-left">
+                  <!-- <p class="bg-gray-300 w-full">{{blog.category}}</p> -->
+                  <button class="bg-green-500 text-white px-2 rounded-md">{{blog.category}}</button>
                 </div>
               </div>
             </nuxt-link>
