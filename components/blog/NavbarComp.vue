@@ -38,7 +38,7 @@
         </div> -->
 
         <div class="dropdown">
-          <button class="dropbtn font-bold mx-2">Tutorial</button>
+          <button class="dropbtn font-bold mx-2 focus:outline-none">Tutorial</button>
           <div class="dropdown-content">
             <nuxt-link to="/blog/search">
               <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
@@ -196,9 +196,9 @@ export default defineComponent({
       store.dispatch('changeTheme')
     }
 
-    async function setTutorial(e:any){
-      emit('tutorial', e)
-      console.log('setTutorial')
+    async function setTutorial(c:any){
+      emit('tutorial', c)
+      // console.log('setTutorial nav', c)
     }
 
     // async function dosearch(e:any){
@@ -206,7 +206,7 @@ export default defineComponent({
     //   emit('dosearch', e)
     // }
 
-    async function dosearch(e){
+    async function dosearch(e:any){
       console.log('dosearch navbar')
       emit('dosearch', e)
     }

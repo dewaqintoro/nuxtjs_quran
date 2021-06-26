@@ -4,7 +4,7 @@
       <div class="wrapper">
         <div class="flex my-search">
           <input v-model="search" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
-          <button class="" @click="searchData">
+          <button class="focus:outline-none" @click="searchData">
             <font-awesome-icon :icon="['fas', 'search']" />
           </button>
         </div>

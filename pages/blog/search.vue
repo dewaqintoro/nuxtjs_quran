@@ -58,7 +58,7 @@ export default {
   },
   setup(){
     const { app, store, route } = useContext()
-    const myQuery = route.value?.query?.category || ''
+    const myQuery = ref(route.value?.query?.category || '')
     const searchTitle = ref(route.value?.query?.q || '')
     const blogs= ref([])
     const userInfo = ref({})
@@ -77,7 +77,7 @@ export default {
     const searchvalue = computed(() => store.state.searchvalue || '')
 
     local()
-    getData(searchTitle.value)
+    getData(myQuery.value , searchTitle.value)
     // searchFilter(search.value)
 
     return {
@@ -98,15 +98,15 @@ export default {
       // console.log('dosearch search page')
       // searchTitle.value = e
       // console.log('getData dosearch',searchvalue.value)
-      getData(e)
+      getData('', e)
       // setTimeout(() =>{
       //   getData(e)
       // }, 200)
     }
 
-    function tutorial(e){
-      console.log('tutorial', e)
-      getData()
+    function tutorial(c){
+      console.log('tutorial c', c)
+      getData(c, '')
     }
 
     function cek(){
@@ -121,11 +121,11 @@ export default {
     }
 
 
-    async function getData(e){
-      console.log('getData e',e)
+    async function getData(c, e){
+      const mysearch = e ? e : ''
         // const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}&q=${searchvalue.value}`
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?q=${e}`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${c}&q=${mysearch}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
         if(result.data.length === 0){
