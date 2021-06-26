@@ -5,12 +5,16 @@
     
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
+      <div class="text-center">
+        <p>Menampilkan Postingan</p>
+      </div>
+      <button @click="cek">cek</button>
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
-          <!-- <button @click="cek">cek</button> -->
+          
           
           <div class="item" v-for="blog in blogs" :key="blog._id">
             <nuxt-link :to="'/blog/'+blog._id">
@@ -70,9 +74,10 @@ export default {
         return 'lightTheme'
       }
     })
+    const searchvalue = computed(() => store.state.searchvalue || '')
 
     local()
-    getData()
+    getData(searchTitle.value)
     // searchFilter(search.value)
 
     return {
@@ -88,21 +93,24 @@ export default {
       tutorial,
       dosearch
     }
-
     
     function dosearch(e){
-      console.log('tutorial', e)
-      searchTitle.value = e
-      getData('')
+      // console.log('dosearch search page')
+      // searchTitle.value = e
+      // console.log('getData dosearch',searchvalue.value)
+      getData(e)
+      // setTimeout(() =>{
+      //   getData(e)
+      // }, 200)
     }
 
     function tutorial(e){
       console.log('tutorial', e)
-      // getData(e)
+      getData()
     }
 
     function cek(){
-      console.log('route.value', route.value)
+      console.log('searchvalue', searchvalue.value)
     }
 
     async function local(){
@@ -113,9 +121,11 @@ export default {
     }
 
 
-    async function getData(){
+    async function getData(e){
+      console.log('getData e',e)
+        // const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}&q=${searchvalue.value}`
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?q=${e}`
         const result = await axios.get(`${url}`);
         blogs.value = result.data
         if(result.data.length === 0){

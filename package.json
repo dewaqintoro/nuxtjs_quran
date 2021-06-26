@@ -21,7 +21,6 @@
     "body-scroll-lock": "^3.1.5",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.9.1",
-    "firebase": "^8.4.2",
     "instantsearch.css": "^7.4.5",
     "jw-vue-pagination": "^1.0.3",
     "nuxt": "^2.15.3",

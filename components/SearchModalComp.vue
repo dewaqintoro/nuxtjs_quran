@@ -38,7 +38,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { app, store } = useContext()
+    const { app, store, route } = useContext()
+    const thisRoute = route.value
     const isLoading = ref(true)
     const size = ref('small')
     const subStore = computed(() => store.state.sub)
@@ -79,8 +80,13 @@ export default defineComponent({
     }
 
     async function searchData(){
-      console.log('search', search)
-      emit('dosearch', search.value)
+      if(thisRoute.path === "/blog/search"){
+        // console.log('thisRoute sama', thisRoute.path)
+        emit('dosearch', search.value)
+      }
+      // console.log('search', search)
+      app.router?.push(`/blog/search?q=${search.value}`)
+      store.commit('setSearchValue', search.value)
       emit('close')
     }
     async function changesub(){

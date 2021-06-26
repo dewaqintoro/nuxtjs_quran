@@ -13,25 +13,49 @@
           </nuxt-link>
         </div>
         
+        <!-- <div class="dropdown">
+          <button class="dropbtn font-bold mx-2">Tutorial</button>
+          <div class="dropdown-content">
+            <nuxt-link to="/blog/search" @click="setTutorial('')">
+              <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
+            </nuxt-link>
+            <nuxt-link to="/blog/search?category=MERN" @click="setTutorial('MERN')">
+              <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
+            </nuxt-link>
+            <nuxt-link to="/blog/search?category=Mongodb" @click="setTutorial('Mongodb')">
+              <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
+            </nuxt-link>
+            <nuxt-link to="/blog/search?category=Expressjs" @click="setTutorial('Expressjs')">
+              <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
+            </nuxt-link>
+            <nuxt-link to="/blog/search?category=Reactjs" @click="setTutorial('Reactjs')">
+              <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
+            </nuxt-link>
+            <nuxt-link to="/blog/search?category=Nodejs" @click="setTutorial('Nodejs')">
+              <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
+            </nuxt-link>
+          </div>
+        </div> -->
+
         <div class="dropdown">
           <button class="dropbtn font-bold mx-2">Tutorial</button>
           <div class="dropdown-content">
-            <nuxt-link to="/blog" @click="setTutorial('')">
+            <nuxt-link to="/blog/search">
               <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
             </nuxt-link>
-            <nuxt-link to="/blog?category=MERN" @click="setTutorial('MERN')">
+            <nuxt-link to="/blog/search?category=MERN">
               <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
             </nuxt-link>
-            <nuxt-link to="/blog?category=Mongodb" @click="setTutorial('Mongodb')">
+            <nuxt-link to="/blog/search?category=Mongodb">
               <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
             </nuxt-link>
-            <nuxt-link to="/blog?category=Expressjs" @click="setTutorial('Expressjs')">
+            <nuxt-link to="/blog/search?category=Expressjs">
               <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
             </nuxt-link>
-            <nuxt-link to="/blog?category=Reactjs" @click="setTutorial('Reactjs')">
+            <nuxt-link to="/blog/search?category=Reactjs">
               <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
             </nuxt-link>
-            <nuxt-link to="/blog?category=Nodejs" @click="setTutorial('Nodejs')">
+            <nuxt-link to="/blog/search?category=Nodejs">
               <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
             </nuxt-link>
           </div>
@@ -102,6 +126,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { store, route, app } = useContext()
+    console.log('NavbarComp 2')
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
@@ -173,10 +198,16 @@ export default defineComponent({
 
     async function setTutorial(e:any){
       emit('tutorial', e)
+      console.log('setTutorial')
     }
 
-    async function dosearch(e:any){
-      // console.log('dosearch', e)
+    // async function dosearch(e:any){
+    //   console.log('dosearch navbar', e)
+    //   emit('dosearch', e)
+    // }
+
+    async function dosearch(e){
+      console.log('dosearch navbar')
       emit('dosearch', e)
     }
 

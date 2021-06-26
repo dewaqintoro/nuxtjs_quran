@@ -12,6 +12,7 @@ export const state = () => ({
   loadingTheme: true,
   loadingAudio: false,
   loadingweather: true,
+  searchvalue: '',
 })
 
 export const actions = {
@@ -124,5 +125,8 @@ export const mutations = {
     for (const [key, value] of Object.entries(params)) {
       state[key] = value
     }
+  },
+  setSearchValue(state, params) {
+    state.searchvalue = params
   },
 }
