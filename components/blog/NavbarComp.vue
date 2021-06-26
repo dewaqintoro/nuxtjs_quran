@@ -1,5 +1,5 @@
 <template>
-  <header v-if="!loadingTheme" class="app-header font-arabic font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
+  <header v-if="!loadingTheme" class="app-header font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
     <div class="inner container">
       <div class="start">
         <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
@@ -75,18 +75,22 @@
       
 
       <div class="end">
-        <button class="btn-nav focus:outline-none" @click="doSetting()">
+        <button class="btn-nav focus:outline-none mr-3" @click="doSetting()">
           <font-awesome-icon :icon="['fas', 'search']" />
         </button>
-        <div class="item-mode flex justify-between">
-          <div>Dark Mode</div>
+        <button class="btn-nav focus:outline-none" @click="changetheme()" >
+          <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
+          <font-awesome-icon v-else :icon="['fas', 'sun']" />
+        </button>
+        <!-- <div class="item-mode flex justify-between">
+          <div>Dark </div>
           <div class="flex justify-center">
             <label class="switch">
               <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
               <span class="slider round"></span>
             </label>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <Transition name="drawer">
@@ -193,6 +197,7 @@ export default defineComponent({
     // }
 
     function changetheme(){
+      console.log('changetheme')
       store.dispatch('changeTheme')
     }
 
@@ -391,6 +396,11 @@ input:checked + .slider::before {
   }
 }
 @screen mobile {
+  .app-header {
+    .inner{
+      @apply text-sm;
+    }
+  }
 }
 @screen sm {
 }
@@ -398,6 +408,9 @@ input:checked + .slider::before {
   .app-header {
     @apply flex-shrink-0;
     /* @apply relative; */
+    /* .inner{
+      @apply text-sm;
+    } */
   }
 }
 </style>

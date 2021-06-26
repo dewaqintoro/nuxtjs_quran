@@ -5,10 +5,12 @@
     
     <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
-      <div class="text-center">
-        <p>Menampilkan Postingan</p>
+      <div class="text-left m-4 px-2">
+        <p v-if="searchKey">Menampilkan pencarian : <b>{{searchKey}}</b> </p>
+        <p v-else>Menampilkan kategori : <b>{{categoryKey || 'Semua'}}</b></p>
+        <p>{{blogs.length || 0}} hasil</p>
       </div>
-      <button @click="cek">cek</button>
+      <!-- <button @click="cek">cek</button> -->
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
@@ -64,7 +66,8 @@ export default {
     const userInfo = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-    const search = ref('')
+    const searchKey = ref('')
+    const categoryKey = ref('')
     const loading = ref(true)
     const isEmpty = ref(false)
     const bgId = computed(() => {
@@ -88,6 +91,8 @@ export default {
       loading,
       bgId,
       isEmpty,
+      searchKey,
+      categoryKey,
       cek,
       getData,
       tutorial,
@@ -122,7 +127,10 @@ export default {
 
 
     async function getData(c, e){
+      loading.value = true
       const mysearch = e ? e : ''
+      searchKey.value = mysearch
+      categoryKey.value = c
         // const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}&q=${searchvalue.value}`
       try{
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${c}&q=${mysearch}`
