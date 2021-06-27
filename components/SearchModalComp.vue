@@ -1,5 +1,5 @@
 <template>
-  <AppModal title="Search" :theme="theme" :show-header="true" :size="size" @close="$emit('close')">
+  <AppModal title="Pencarian" :theme="theme" :show-header="true" :size="size" @close="$emit('close')">
     <div class="containerCustom" :style="{ background: theme.background, color: theme.color }">
       <div class="wrapper">
         <div class="flex my-search">
@@ -111,7 +111,7 @@ export default defineComponent({
   
 }
 .input-search{
-  max-width: 80%;
+  width: 90%;
   padding: 5px 7px;
   margin-right: 10px;
   border-radius: 20px;

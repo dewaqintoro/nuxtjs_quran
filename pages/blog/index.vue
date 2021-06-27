@@ -20,7 +20,7 @@
                 </div>
                 <div class="content">
                   <p class="text-xl font-bold text-left mt-4">{{blog.title}}</p>
-                  <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p>
+                  <!-- <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p> -->
                 </div>
                 <div class="text-left">
                   <!-- <p class="bg-gray-300 w-full">{{blog.category}}</p> -->
@@ -30,6 +30,11 @@
             </nuxt-link>
           </div>
         </div>
+      </div>
+      <div class="text-center">
+        <span v-for="i in pages" :key="i">
+          <button class="btn-page" :class="{ active: i === page}" @click="changePage(i)">{{i}}</button>
+        </span>
       </div>
 
       <div v-if="isEmpty" class="text-center">
@@ -56,11 +61,14 @@ export default {
     const { app, store, route } = useContext()
     const myQuery = route.value?.query?.category || ''
     const searchTitle = ref(route.value?.query?.q || '')
+    const pageNumber = ref(route.value?.query?.pageNumber || 1)
     const blogs= ref([])
     const userInfo = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const search = ref('')
+    const pages = ref(0)
+    const page = ref(0)
     const loading = ref(true)
     const isEmpty = ref(false)
     const bgId = computed(() => {
@@ -72,7 +80,7 @@ export default {
     })
 
     local()
-    getData()
+    getData(pageNumber.value)
     // searchFilter(search.value)
 
     return {
@@ -83,12 +91,19 @@ export default {
       loading,
       bgId,
       isEmpty,
+      pages,
+      page,
       cek,
       getData,
       tutorial,
-      dosearch
+      dosearch,
+      changePage
     }
 
+    function changePage(e){
+      app.router?.push(`/blog?pageNumber=${e}`)
+      getData(e)
+    }
     
     function dosearch(e){
       console.log('tutorial', e)
@@ -102,7 +117,7 @@ export default {
     }
 
     function cek(){
-      console.log('route.value', route.value)
+      console.log('blogs.value', blogs.value)
     }
 
     async function local(){
@@ -113,12 +128,16 @@ export default {
     }
 
 
-    async function getData(){
+    async function getData(e){
+      console.log('e', e)
       try{
-        const url = `https://vercel-be-v2.vercel.app/api/v1/blog`
+        const url = `https://vercel-be-v2.vercel.app/api/v1/blog?pageNumber=${e}`
         const result = await axios.get(`${url}`);
-        blogs.value = result.data
-        if(result.data.length === 0){
+        blogs.value = result.data.blogs
+        pages.value = result.data.pages
+        page.value = result.data.page
+        // console.log('result.data', result.data)
+        if(result.data.blogs.length === 0){
           isEmpty.value = true
         } else {
           isEmpty.value = false
@@ -135,7 +154,13 @@ export default {
 
 <style lang="postcss" scoped>
 
+.active{
+  background: blueviolet;
+}
 
+.btn-page{
+  @apply focus:outline-none px-3 py-2 rounded-md;
+}
 
 img.banner{
   width: 100%;
