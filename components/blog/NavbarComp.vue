@@ -40,7 +40,7 @@
         <div class="dropdown">
           <button class="dropbtn font-bold mx-2 focus:outline-none">Tutorial</button>
           <div class="dropdown-content">
-            <nuxt-link to="/blog/search">
+            <nuxt-link to="/blog/search" class="top">
               <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=MERN">
@@ -55,7 +55,7 @@
             <nuxt-link to="/blog/search?category=Reactjs">
               <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
             </nuxt-link>
-            <nuxt-link to="/blog/search?category=Nodejs">
+            <nuxt-link to="/blog/search?category=Nodejs" class="under">
               <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
             </nuxt-link>
           </div>
@@ -338,7 +338,18 @@ input:checked + .slider::before {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-content a.top:hover {
+  border-radius: 10px 10px 0 0;
+}
+
+.dropdown-content a.under:hover {
+  border-radius: 0 0 10px 10px;
+}
+
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
