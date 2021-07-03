@@ -3,26 +3,24 @@
   <Navbar :theme="myTheme" />
   <div class="section">
     <div class="main">
-      <div class="head">Url Shortener</div>
-      <!-- <transition name="toast">
-        <Toast class="text-center m-auto w-full" v-if="showToast" />
-      </transition>
-      <div class="search">
-        <input class="input-search focus:outline-none" id="username" type="search" v-model="search" @focus="clearSearch" placeholder="Paste long url and shorten it.">
-        <button @click="searchFilter()" class="btn-search focus:outline-none" type="button">
-          Shorten
-        </button>
+      <div class="top-global">
+        <div>
+          <div>
+            <div>1</div>
+            <div>1</div>
+            <div>1</div>
+          </div>
+        </div>
       </div>
-      <div class="short-url">
-        <input class="copy-text text-center focus:outline-none" :value="myLink.shortUrl || '-'" />
-        <button class="focus:outline-none mx-2 bg-gray-100 py-2 px-4 rounded-lg" @click="copy">
-          Copy
-        </button>
-      </div> -->
-
+      <!-- <button @click="getDiscoveryID()" class="btn-search focus:outline-none" type="button">
+        getDiscoveryID
+      </button>
+      <button @click="getGlobalTop20()" class="btn-search focus:outline-none" type="button">
+        getGlobalTop20
+      </button>
       <button @click="cek()" class="btn-search focus:outline-none" type="button">
         cek
-      </button>
+      </button> -->
     </div>
   </div>
 </span>
@@ -33,7 +31,7 @@ import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 // import Loading from '@/components/Loading.vue'
 // import { VueNotificationList } from '@dafcoe/vue-notification'
 import Toast from '@/components//Toast'
-import Navbar from '~/components/GlobalNavbar'
+import Navbar from '~/components/music/NavbarComp'
 
 import axios from 'axios'
 export default {
@@ -44,7 +42,9 @@ export default {
   },
   setup(){
     const search = ref('')
-    const myLink = ref([])
+    const discoveryID = ref([])
+    const discoveryID_error = ref('')
+    const globalTop20 = ref([])
     const myText = ref('wadudu')
     const isCopied = ref(false)
     const showToast = ref(false)
@@ -60,55 +60,46 @@ export default {
 
     return {
       search,
-      myLink,
+      discoveryID,
       myText,
       myTheme,
       isCopied,
-      searchFilter,
+      discoveryID_error,
       cek,
-      copy,
-      outFunc,
-      showToast,
       triggerToast,
-      clearSearch,
-    }
-
-    function clearSearch(){
-      console.log('clearSearch')
-    }
-
-    function outFunc() {
-      var tooltip = document.getElementById("myTooltip");
-      tooltip.innerHTML = "Copy to clipboard";
-    }
-
-    function copy(){
-      try {
-        navigator.clipboard.writeText(myLink.value?.shortUrl)
-        triggerToast()
-      } catch (e){
-        throw e
-      }
-    }
-    async function searchFilter(){
-      const params = {
-        longUrl : search.value
-      }
-
-      const url = `https://www.nuxt.my.id/api/v1/shorten`
-      const result = await axios.post(url, params);
-      myLink.value = result?.data
-      console.log('result', result)
+      getDiscoveryID,
+      getGlobalTop20,
     }
 
     async function cek(){
-      // console.log('myLink', myLink.value)
+      console.log('discoveryID', discoveryID.value)
+    }
+
+    async function getGlobalTop20(){
       try {
-        const url = `http://localhost:5000/api/v1/music/discovery/id`
+        const url = `https://www.nuxt.my.id/api/v1/music/top20/global`
         const result = await axios.get(url);
         console.log('result', result)
+        if(result?.status === 200){
+          globalTop20.value = result?.data?.tracks
+        }
       } catch (e){
-        throw e
+        console.log(e)
+        discoveryID_error.value = "Gagal memuat data"
+      }
+    }
+
+    async function getDiscoveryID(){
+      try {
+        const url = `https://www.nuxt.my.id/api/v1/music/discovery/IDx`
+        const result = await axios.get(url);
+        console.log('result', result)
+        if(result?.status === 200){
+          discoveryID.value = result?.data?.tracks
+        }
+      } catch (e){
+        console.log(e)
+        discoveryID_error.value = "Gagal memuat data"
       }
     }
 
@@ -138,14 +129,12 @@ export default {
   }
 
 .section {
-  @apply min-h-screen flex w-full;
-  /* background: #00b894; */
+  @apply mt-20 min-h-screen w-full;
 }
 
 .main {
   /* background: #0edfb5; */
-  @apply text-center m-auto w-full;
-  max-width: 60vw;
+  @apply text-center mx-auto w-full;
 }
 
 .head {
@@ -179,9 +168,6 @@ export default {
 @screen tablet {
 }
 @screen mobile {
-  .main {
-    max-width: 80vw;
-  }
   .input-search {
     @apply my-2 text-lg;
   }
