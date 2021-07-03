@@ -1,18 +1,100 @@
 <template>
 <span>
   <Navbar :theme="myTheme" />
-  <div class="section">
+  <div class="main container">
+    <div class="top-global">
+      <div class="dew">
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div class="flex m-2" v-if="index < 3">
+              <div class="number">
+                <p>{{index+1}}</p>
+              </div>
+              <div>
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div>
+              <div class="item-title">
+                <p class="font-bold">{{item.title}}</p>
+                <p>{{item.subtitle}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div v-if="index > 2 && index < 6">
+              {{item.title}}
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div v-if="index > 5 && index < 9">
+              <div>
+                {{index+1}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div v-if="index > 8 && index < 12">
+              {{item.title}}
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div v-if="index > 11 && index < 15">
+              {{item.title}}
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div v-if="index > 14 && index < 18">
+              {{item.title}}
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div v-if="index > 17 && index < 21">
+              {{item.title}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- <div class="section mt-20">
     <div class="main">
       <div class="top-global">
-        <div>
-          <div>
-            <div>1</div>
+        <div class="items">
+          <div class="item bg-green-100 ">
+            <div>1a</div>
             <div>1</div>
             <div>1</div>
           </div>
+          <div class="item bg-blue-200 ">
+            <div>2</div>
+            <div>2</div>
+            <div>2</div>
+          </div>
+          <div class="item bg-blue-200 ">
+            <div>2</div>
+            <div>2</div>
+            <div>2</div>
+          </div>
+          <div class="item bg-blue-200 ">
+            <div>2</div>
+            <div>2</div>
+            <div>2</div>
+          </div>
         </div>
       </div>
-      <!-- <button @click="getDiscoveryID()" class="btn-search focus:outline-none" type="button">
+      <button @click="getDiscoveryID()" class="btn-search focus:outline-none" type="button">
         getDiscoveryID
       </button>
       <button @click="getGlobalTop20()" class="btn-search focus:outline-none" type="button">
@@ -20,9 +102,9 @@
       </button>
       <button @click="cek()" class="btn-search focus:outline-none" type="button">
         cek
-      </button> -->
+      </button>
     </div>
-  </div>
+  </div> -->
 </span>
 </template>
 
@@ -58,9 +140,13 @@ export default {
       boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     }
 
+    // getDiscoveryID()
+    getGlobalTop20()
+
     return {
       search,
       discoveryID,
+      globalTop20,
       myText,
       myTheme,
       isCopied,
@@ -91,7 +177,7 @@ export default {
 
     async function getDiscoveryID(){
       try {
-        const url = `https://www.nuxt.my.id/api/v1/music/discovery/IDx`
+        const url = `https://www.nuxt.my.id/api/v1/music/discovery/ID`
         const result = await axios.get(url);
         console.log('result', result)
         if(result?.status === 200){
@@ -108,64 +194,38 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.short-url {
-  background: #05725c;
-  @apply flex justify-center w-full py-2 mt-4 rounded-lg;
+.main{
+  @apply mt-20;
 }
-  /* enter transitions */
-  .toast-enter-from {
-    opacity: 0;
-    transform: translateY(-60px);
-  }
-  .toast-enter-active {
-    transition: all 0.3s ease;
-  }
-  .toast-leave-to {
-    opacity: 0;
-    transform: translateY(-60px);
-  }
-  .toast-leave-active {
-    transition: all 0.3s ease;
-  }
-
-.section {
-  @apply mt-20 min-h-screen w-full;
+.top-global{
+  overflow-x: scroll;
+}
+.dew{
+  @apply flex;
 }
 
-.main {
-  /* background: #0edfb5; */
-  @apply text-center mx-auto w-full;
+.item{
+  margin: 10px;
+  min-width: 500px;
+  max-width: 800px;
+  background: rgb(245, 186, 24);
 }
 
-.head {
-  @apply text-4xl font-bold;
+img.img-top{
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+}
+.number{
+  @apply justify-items-center my-auto mx-2;
+  max-width: 10px;
 }
 
-.search {
-  @apply mt-8 text-xl flex text-center;
+.item-title{
+  margin-left: 10px;
+  @apply my-auto justify-items-center;
 }
-
-.input-search {
-  @apply appearance-none border py-2 px-4 w-full text-gray-700 leading-tight rounded-l-lg;
-}
-.btn-search {
-  background-color: #076e5a;
-  @apply text-white font-bold py-2 px-4 rounded-r-lg;
-  /* background-color: #4497eb; */
-}
-.btn-search:hover {
-  /* background-color: #2187ec; */
-  background-color: #0e836c;
-
-}
-
-.copy-text{
-  /* @apply mx-2 py-2 px-4 text-white w-full; */
-  background: transparent;
-  color: white;
-}
-
-@screen tablet {
+/* @screen tablet {
 }
 @screen mobile {
   .input-search {
@@ -177,5 +237,5 @@ export default {
   .input-search {
     @apply px-4;
   }
-}
+} */
 </style>

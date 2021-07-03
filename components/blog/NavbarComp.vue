@@ -130,7 +130,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { store, route, app } = useContext()
-    console.log('NavbarComp 2')
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
