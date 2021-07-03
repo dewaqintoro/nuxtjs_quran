@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar :theme="myTheme" />
+    <button @click="cek" class="mt-36">cek</button>
   </div>
 </template>
 
@@ -37,11 +38,28 @@ export default {
     })
 
     return {
-      myTheme
+      myTheme,
+      cek
+    }
+
+    function getUnique(array){
+        var uniqueArray = [];
+        
+        // Loop through array values
+        var i = 0
+        for(i; i < array.length; i++){
+            if(uniqueArray.indexOf(array[i]) === -1) {
+                uniqueArray.push(array[i]);
+            }
+        }
+        return uniqueArray;
     }
 
     function cek(){
-      console.log('audioStore',audioStore)
+      var names = ["John", "Peter", "Clark", "Harry", "John", "Alice"];
+      var uniqueNames = getUnique(names);
+      console.log(uniqueNames);
+      // console.log('audioStore',audioStore)
     }
   }
 }

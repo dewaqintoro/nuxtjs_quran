@@ -5,6 +5,7 @@
     <div class="top-global">
       <div class="dew">
         <div class="item">
+          <button @click="cek">cek</button>
           <div v-for="(item, index) in globalTop20" :key="index">
             <nuxt-link :to="`music/`+item.key">
               <div class="flex m-2" v-if="index < 3">
@@ -149,6 +150,31 @@
 
       </div>
     </div>
+
+    <div class="top-global">
+      <div class="dew">
+        <div class="item">
+          <div v-for="(item, index) in artisGlobal" :key="index">
+            <div class="flex m-2">
+              <div class="number">
+                <p>{{index+1}}</p>
+              </div>
+              <!-- <div>
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div> -->
+              <div class="item-title">
+                <!-- <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p> -->
+                <p>{{item.subtitle}}</p>
+                <!-- <button @click="play(item)">play</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
     
   </div>
   <div v-if="musicOn" class="sec-audio">
@@ -221,6 +247,7 @@ export default {
     const discoveryID = ref([])
     const discoveryID_error = ref('')
     const globalTop20 = ref([])
+    const artisGlobal = ref([])
     const myText = ref('wadudu')
     const myTrack = ref([])
     const myAudio = ref('')
@@ -239,6 +266,9 @@ export default {
       boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     }
 
+    // var uniqueArray = [];
+    const myuniqueArray = ref([])
+
     // getDiscoveryID()
     getGlobalTop20()
 
@@ -246,6 +276,7 @@ export default {
       search,
       discoveryID,
       globalTop20,
+      artisGlobal,
       myText,
       myTheme,
       isCopied,
@@ -263,7 +294,46 @@ export default {
     }
 
     async function cek(){
-      console.log('discoveryID', discoveryID.value)
+      console.log('artisGlobal', artisGlobal.value)
+    }
+
+    function getUnique(array){
+        var uniqueArray = [];
+        var dataDew = [];
+        // console.log('array',array)
+        
+        var i = 0
+        for(i; i < array.length; i++){
+            if(uniqueArray.indexOf(array[i].subtitle) === -1) {
+                uniqueArray.push(array[i].subtitle);
+                dataDew.push(array[i]);
+            }
+        }
+        return dataDew;
+    }
+
+    function setArtis(artis){
+      // console.log('artis', artis)
+      myuniqueArray.value.map((a) => {
+        if(a === artis.subtitle){
+          console.log('sama', artis)
+        }
+        // console.log('a', a.subtitle)
+      })
+    }
+
+    function getArtis(){
+      // var names = [globalTop20.value.subtitle];
+      // var names = ["John", "Peter", "Clark", "Harry", "John", "Alice"];
+      // console.log('names', names)
+      var uniqueNames = getUnique(globalTop20.value);
+      // var uniqueNames = getUnique(names);
+      artisGlobal.value = uniqueNames
+      // console.log('uniqueNames',uniqueNames);
+      // globalTop20.value.map((a) => {
+      //   myuniqueArray.value.push(a.subtitle);
+      //   setArtis(a)
+      // })
     }
 
     async function play(item){
@@ -282,6 +352,11 @@ export default {
         console.log('result', result)
         if(result?.status === 200){
           globalTop20.value = result?.data?.tracks
+
+          // result?.data?.tracks.map((a) => {
+          //   console.log('a', a)
+          // })
+          getArtis()
         }
       } catch (e){
         console.log(e)
