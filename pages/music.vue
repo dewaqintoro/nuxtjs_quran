@@ -14,8 +14,11 @@
                 <img class="img-top" :src="item.images.coverart" alt="img" />
               </div>
               <div class="item-title">
-                <p class="font-bold">{{item.title}}</p>
-                <p>{{item.subtitle}}</p>
+                <p v-if="item.title.length > 30" class="font-bold">{{item.title.substring(0, 30)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 30">{{item.subtitle.substring(0, 30)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
+                <button @click="play(item)">play</button>
               </div>
             </div>
           </div>
@@ -65,6 +68,18 @@
           </div>
         </div>
 
+      </div>
+    </div>
+    
+  </div>
+  <div v-if="musicOn" class="sec-audio">
+    <div class="this-audio">
+      <div>
+        <div>
+          <p><b>{{myTitle}}</b></p>
+          <p>{{mySubTitle}}</p>
+        </div>
+        <audio :src="myAudio" controls autoplay class="my-audio"></audio>
       </div>
     </div>
   </div>
@@ -128,6 +143,11 @@ export default {
     const discoveryID_error = ref('')
     const globalTop20 = ref([])
     const myText = ref('wadudu')
+    const myTrack = ref([])
+    const myAudio = ref('')
+    const myTitle = ref('')
+    const mySubTitle = ref('')
+    const musicOn = ref(false)
     const isCopied = ref(false)
     const showToast = ref(false)
     const triggerToast = () => {
@@ -151,14 +171,29 @@ export default {
       myTheme,
       isCopied,
       discoveryID_error,
+      myTrack,
+      myAudio,
+      mySubTitle,
+      myTitle,
+      musicOn,
       cek,
       triggerToast,
       getDiscoveryID,
       getGlobalTop20,
+      play
     }
 
     async function cek(){
       console.log('discoveryID', discoveryID.value)
+    }
+
+    async function play(item){
+      console.log('play', item)
+      musicOn.value = true
+      myTrack.value = item
+      mySubTitle.value = item.subtitle
+      myTitle.value = item.title
+      myAudio.value = item?.hub?.actions[1]?.uri
     }
 
     async function getGlobalTop20(){
@@ -194,6 +229,20 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.sec-audio{
+  @apply absolute bottom-0 px-0 mb-0 w-full;
+  /* background: red; */
+}
+.this-audio{
+  @apply justify-items-center mx-auto items-center text-center justify-center flex;
+}
+
+.my-audio{
+  @apply mb-4;
+  width: 80vw;
+  /* height: 35px; */
+}
+
 .main{
   @apply mt-20;
 }
@@ -224,6 +273,26 @@ img.img-top{
 .item-title{
   margin-left: 10px;
   @apply my-auto justify-items-center;
+}
+
+
+@media (max-width: 700px) {
+}
+@media (max-width: 500px) {
+  .item{
+    min-width: 400px;
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 450px) {
+  .item{
+    min-width: 380px;
+    max-width: 400px;
+  }
+  .my-audio{
+    height: 35px;
+  }
 }
 /* @screen tablet {
 }
