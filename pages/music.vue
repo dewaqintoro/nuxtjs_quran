@@ -104,7 +104,7 @@ export default {
     async function cek(){
       // console.log('myLink', myLink.value)
       try {
-        const url = `https://www.shazam.com/shazam/v3/en-US/ID/web/-/tracks/risers-country-chart-ID?pageSize=20&startFrom=0`
+        const url = `http://localhost:5000/api/v1/music/discovery/id`
         const result = await axios.get(url);
         console.log('result', result)
       } catch (e){
