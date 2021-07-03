@@ -6,7 +6,35 @@
       <div class="dew">
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
-            <div class="flex m-2" v-if="index < 3">
+            <nuxt-link :to="`music/`+item.key">
+              <div class="flex m-2" v-if="index < 3">
+                <div class="number">
+                  <p>{{index+1}}</p>
+                </div>
+                <div>
+                  <img class="img-top" :src="item.images.coverart" alt="img" />
+                </div>
+                <div class="item-title besar">
+                  <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
+                  <p v-else class="font-bold">{{item.title}}</p>
+                  <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
+                  <p v-else>{{item.subtitle}}</p>
+                  <button @click="play(item)">play</button>
+                </div>
+                <div class="item-title kecil">
+                  <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                  <p v-else class="font-bold">{{item.title}}</p>
+                  <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                  <p v-else>{{item.subtitle}}</p>
+                  <button @click="play(item)">play</button>
+                </div>
+              </div>
+            </nuxt-link>
+          </div>
+        </div>
+        <div class="item">
+          <div v-for="(item, index) in globalTop20" :key="index">
+            <div class="flex m-2" v-if="index > 2 && index < 6">
               <div class="number">
                 <p>{{index+1}}</p>
               </div>
@@ -14,9 +42,9 @@
                 <img class="img-top" :src="item.images.coverart" alt="img" />
               </div>
               <div class="item-title">
-                <p v-if="item.title.length > 30" class="font-bold">{{item.title.substring(0, 30)}}</p>
+                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
                 <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 30">{{item.subtitle.substring(0, 30)}}...</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
                 <p v-else>{{item.subtitle}}</p>
                 <button @click="play(item)">play</button>
               </div>
@@ -25,45 +53,96 @@
         </div>
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
-            <div v-if="index > 2 && index < 6">
-              {{item.title}}
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            <div v-if="index > 5 && index < 9">
+            <div class="flex m-2" v-if="index > 5 && index < 9">
+              <div class="number">
+                <p>{{index+1}}</p>
+              </div>
               <div>
-                {{index+1}}
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div>
+              <div class="item-title">
+                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
+                <button @click="play(item)">play</button>
               </div>
             </div>
           </div>
         </div>
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
-            <div v-if="index > 8 && index < 12">
-              {{item.title}}
+            <div class="flex m-2" v-if="index > 8 && index < 12">
+              <div class="numberTwo">
+                <p>{{index+1}}</p>
+              </div>
+              <div>
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div>
+              <div class="item-title">
+                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
+                <button @click="play(item)">play</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
-            <div v-if="index > 11 && index < 15">
-              {{item.title}}
+            <div class="flex m-2" v-if="index > 11 && index < 15">
+              <div class="numberTwo">
+                <p>{{index+1}}</p>
+              </div>
+              <div>
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div>
+              <div class="item-title">
+                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
+                <button @click="play(item)">play</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
-            <div v-if="index > 14 && index < 18">
-              {{item.title}}
+            <div class="flex m-2" v-if="index > 14 && index < 18">
+              <div class="numberTwo">
+                <p>{{index+1}}</p>
+              </div>
+              <div>
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div>
+              <div class="item-title">
+                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
+                <button @click="play(item)">play</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
-            <div v-if="index > 17 && index < 21">
-              {{item.title}}
+            <div class="flex m-2" v-if="index > 17 && index < 21">
+              <div class="numberTwo">
+                <p>{{index+1}}</p>
+              </div>
+              <div>
+                <img class="img-top" :src="item.images.coverart" alt="img" />
+              </div>
+              <div class="item-title">
+                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+                <p v-else class="font-bold">{{item.title}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
+                <button @click="play(item)">play</button>
+              </div>
             </div>
           </div>
         </div>
@@ -229,6 +308,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.kecil{
+  display: none
+}
 .sec-audio{
   @apply absolute bottom-0 px-0 mb-0 w-full;
   /* background: red; */
@@ -257,22 +339,27 @@ export default {
   margin: 10px;
   min-width: 500px;
   max-width: 800px;
-  background: rgb(245, 186, 24);
+  /* background: rgb(245, 186, 24); */
 }
 
 img.img-top{
-  width: 80px;
-  height: 80px;
+  /* width: 100%; */
+  max-width: 80px;
+  max-height: 80px;
   border-radius: 10px;
 }
 .number{
   @apply justify-items-center my-auto mx-2;
   max-width: 10px;
 }
+.numberTwo{
+  @apply justify-items-center my-auto ml-2 mr-4;
+  max-width: 10px;
+}
 
 .item-title{
   margin-left: 10px;
-  @apply my-auto justify-items-center;
+  @apply my-auto justify-items-center w-full;
 }
 
 
@@ -287,11 +374,19 @@ img.img-top{
 
 @media (max-width: 450px) {
   .item{
-    min-width: 380px;
+    min-width: 320px;
     max-width: 400px;
   }
   .my-audio{
     height: 35px;
+  }
+  .besar{
+    /* visibility:hidden ; */
+    display: none;
+  }
+  .kecil{
+    /* visibility:visible ; */
+    display: block;
   }
 }
 /* @screen tablet {
