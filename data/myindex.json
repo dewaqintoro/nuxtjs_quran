@@ -90,6 +90,13 @@
       "route" : "blog",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 14,
+      "title": "Music",
+      "route" : "music",
+      "description": "",
+      "icon": ""
     }
   ]
 }
