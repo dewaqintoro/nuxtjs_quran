@@ -2,58 +2,30 @@
 <span>
   <Navbar :theme="myTheme" />
   <div class="main container">
+          <!-- <button @click="cek">cek2</button> -->
     <div class="top-global">
       <div class="dew">
+
         <div class="item">
-          <button @click="cek">cek</button>
           <div v-for="(item, index) in globalTop20" :key="index">
             
-              <div class="flex m-2" v-if="index < 3">
-                <div class="number">
-                  <p>{{index+1}}</p>
-                </div>
-                <nuxt-link :to="`music/`+item.key">
-                  <div>
-                    <img class="img-top" :src="item.images.coverart" alt="img" />
-                  </div>
-                </nuxt-link>
-                <div class="item-title besar">
-                  <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
-                  <p v-else class="font-bold">{{item.title}}</p>
-                  <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
-                  <p v-else>{{item.subtitle}}</p>
-                  <button @click="play(item)">play</button>
-                </div>
-                <div class="item-title kecil">
-                  <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                  <p v-else class="font-bold">{{item.title}}</p>
-                  <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                  <p v-else>{{item.subtitle}}</p>
-                  <button @click="play(item)">play</button>
-                </div>
+              <div class="m-2" v-if="index < 3">
+                <GlobalComp :item="item" :index="index" @play="play"/>
               </div>
             
           </div>
         </div>
+
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
+
             <div class="flex m-2" v-if="index > 2 && index < 6">
-              <div class="number">
-                <p>{{index+1}}</p>
-              </div>
-              <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div>
-              <div class="item-title">
-                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
-                <button @click="play(item)">play</button>
-              </div>
+              <GlobalComp :item="item" :index="index" @play="play"/>
             </div>
+
           </div>
         </div>
+
         <div class="item">
           <div v-for="(item, index) in globalTop20" :key="index">
             <div class="flex m-2" v-if="index > 5 && index < 9">
@@ -213,17 +185,16 @@
 
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-// import Loading from '@/components/Loading.vue'
-// import { VueNotificationList } from '@dafcoe/vue-notification'
-import Toast from '@/components//Toast'
 import Navbar from '~/components/music/NavbarComp'
+import GlobalComp from '~/components/music/GlobalComp'
+
 
 import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
-    Toast,
-    Navbar
+    Navbar,
+    GlobalComp
   },
   setup(){
     const { store, route, app } = useContext()
@@ -238,6 +209,7 @@ export default {
     const myTitle = ref('')
     const mySubTitle = ref('')
     const musicOn = ref(false)
+    const isPlay = ref(false)
     const isCopied = ref(false)
     const showToast = ref(false)
     const storeTheme = computed(() => store.state.theme)
@@ -271,6 +243,7 @@ export default {
       mySubTitle,
       myTitle,
       musicOn,
+      isPlay,
       storeTheme,
       cek,
       triggerToast,
@@ -338,7 +311,7 @@ export default {
     }
 
     async function play(item){
-      console.log('play', item)
+      isPlay.value = !isPlay.value
       musicOn.value = true
       myTrack.value = item
       mySubTitle.value = item.subtitle
