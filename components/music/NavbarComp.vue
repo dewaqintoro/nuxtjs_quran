@@ -41,13 +41,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import SearchComp from '~/components/SearchComp.vue'
 
 export default defineComponent({
   name: 'NavbarComp',
-  components: {
-    SearchComp,
-  },
   props: {
     route: {
       type: String,

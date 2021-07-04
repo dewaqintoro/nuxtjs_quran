@@ -7,14 +7,16 @@
         <div class="item">
           <button @click="cek">cek</button>
           <div v-for="(item, index) in globalTop20" :key="index">
-            <nuxt-link :to="`music/`+item.key">
+            
               <div class="flex m-2" v-if="index < 3">
                 <div class="number">
                   <p>{{index+1}}</p>
                 </div>
-                <div>
-                  <img class="img-top" :src="item.images.coverart" alt="img" />
-                </div>
+                <nuxt-link :to="`music/`+item.key">
+                  <div>
+                    <img class="img-top" :src="item.images.coverart" alt="img" />
+                  </div>
+                </nuxt-link>
                 <div class="item-title besar">
                   <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
                   <p v-else class="font-bold">{{item.title}}</p>
@@ -30,7 +32,7 @@
                   <button @click="play(item)">play</button>
                 </div>
               </div>
-            </nuxt-link>
+            
           </div>
         </div>
         <div class="item">
@@ -151,33 +153,31 @@
       </div>
     </div>
 
-    <div class="top-global">
+    <div class="artis-global">
       <div class="dew">
-        <div class="item">
-          <div v-for="(item, index) in artisGlobal" :key="index">
+        <div class="artis-item" v-for="(item, index) in artisGlobal" :key="index">
+          <div>
             <div class="flex m-2">
               <div class="number">
                 <p>{{index+1}}</p>
               </div>
-              <!-- <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div> -->
               <div class="item-title">
-                <!-- <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p> -->
+                <div class="image-container">
+                  <img :src="item.images.background" alt="img" />
+                </div>
                 <p>{{item.subtitle}}</p>
-                <!-- <button @click="play(item)">play</button> -->
               </div>
             </div>
           </div>
         </div>
 
+
       </div>
     </div>
+
     
   </div>
-  <div v-if="musicOn" class="sec-audio">
+  <!-- <div v-if="musicOn" class="sec-audio">
     <div class="this-audio">
       <div>
         <div>
@@ -187,44 +187,27 @@
         <audio :src="myAudio" controls autoplay class="my-audio"></audio>
       </div>
     </div>
-  </div>
-  <!-- <div class="section mt-20">
-    <div class="main">
-      <div class="top-global">
-        <div class="items">
-          <div class="item bg-green-100 ">
-            <div>1a</div>
-            <div>1</div>
-            <div>1</div>
+  </div> -->
+  <div class="sikel">
+    <div v-if="musicOn" class="sec-audio">
+      <div class="this-audio">
+        <div>
+          <div>
+            <button @click="playAudio" type="button">Play Audio</button>
+              <button @click="pauseAudio" type="button">Pause Audio</button> 
+            <p><b>{{myTitle}}</b></p>
+            <p>{{mySubTitle}}</p>
           </div>
-          <div class="item bg-blue-200 ">
-            <div>2</div>
-            <div>2</div>
-            <div>2</div>
-          </div>
-          <div class="item bg-blue-200 ">
-            <div>2</div>
-            <div>2</div>
-            <div>2</div>
-          </div>
-          <div class="item bg-blue-200 ">
-            <div>2</div>
-            <div>2</div>
-            <div>2</div>
-          </div>
+          <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
         </div>
       </div>
-      <button @click="getDiscoveryID()" class="btn-search focus:outline-none" type="button">
-        getDiscoveryID
-      </button>
-      <button @click="getGlobalTop20()" class="btn-search focus:outline-none" type="button">
-        getGlobalTop20
-      </button>
-      <button @click="cek()" class="btn-search focus:outline-none" type="button">
-        cek
-      </button>
     </div>
-  </div> -->
+  </div>
+
+  <!-- <Transition name="drawer">
+    <MusicPlay v-if="musicOn" :theme="storeTheme" />
+  </Transition> -->
+  
 </span>
 </template>
 
@@ -243,6 +226,7 @@ export default {
     Navbar
   },
   setup(){
+    const { store, route, app } = useContext()
     const search = ref('')
     const discoveryID = ref([])
     const discoveryID_error = ref('')
@@ -256,6 +240,7 @@ export default {
     const musicOn = ref(false)
     const isCopied = ref(false)
     const showToast = ref(false)
+    const storeTheme = computed(() => store.state.theme)
     const triggerToast = () => {
       showToast.value = true;
       setTimeout(() => showToast.value = false, 3000)
@@ -286,16 +271,32 @@ export default {
       mySubTitle,
       myTitle,
       musicOn,
+      storeTheme,
       cek,
       triggerToast,
       getDiscoveryID,
       getGlobalTop20,
-      play
+      play,
+      playAudio,
+      pauseAudio
     }
 
     async function cek(){
       console.log('artisGlobal', artisGlobal.value)
+      console.log('globalTop20', globalTop20.value)
     }
+
+    
+
+    function playAudio() { 
+      var x = document.getElementById("myAudio"); 
+      x.play(); 
+    } 
+
+    function pauseAudio() { 
+      var x = document.getElementById("myAudio"); 
+      x.pause(); 
+    } 
 
     function getUnique(array){
         var uniqueArray = [];
@@ -349,7 +350,7 @@ export default {
       try {
         const url = `https://www.nuxt.my.id/api/v1/music/top20/global`
         const result = await axios.get(url);
-        console.log('result', result)
+        // console.log('result', result)
         if(result?.status === 200){
           globalTop20.value = result?.data?.tracks
 
@@ -383,11 +384,19 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.sikel {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #e5e7eb;
+   text-align: center;
+}
 .kecil{
   display: none
 }
 .sec-audio{
-  @apply absolute bottom-0 px-0 mb-0 w-full;
+  /* @apply absolute bottom-0 px-0 mb-0 w-full; */
   /* background: red; */
 }
 .this-audio{
@@ -406,6 +415,9 @@ export default {
 .top-global{
   overflow-x: scroll;
 }
+.artis-global{
+  overflow-x: scroll;
+}
 .dew{
   @apply flex;
 }
@@ -415,6 +427,25 @@ export default {
   min-width: 500px;
   max-width: 800px;
   /* background: rgb(245, 186, 24); */
+}
+
+.artis-item{
+  margin: 10px;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.image-container{
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  border: solid 1px rgba(12,12,12,.1);
+  overflow: hidden;
+}
+.image-container img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 img.img-top{
