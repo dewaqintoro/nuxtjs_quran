@@ -10,7 +10,7 @@
           <div v-for="(item, index) in globalTop20" :key="index">
             
               <div class="m-2" v-if="index < 3">
-                <GlobalComp :item="item" :index="index" @play="play"/>
+                <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
               </div>
             
           </div>
@@ -317,6 +317,9 @@ export default {
       mySubTitle.value = item.subtitle
       myTitle.value = item.title
       myAudio.value = item?.hub?.actions[1]?.uri
+      setTimeout(() => {
+        playAudio()
+      }, 100)
     }
 
     async function getGlobalTop20(){

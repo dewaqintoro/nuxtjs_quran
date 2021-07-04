@@ -57,7 +57,14 @@ export default {
     }
 
     async function play(){
-      emit('play', props.item)
+      if(isPlay.value === true){
+        isPlay.value = false
+        emit('pauseAudio')
+      }else{
+        emit('play', props.item)
+        // emit('playAudio')
+        isPlay.value = true
+      }
     }
 
   }
