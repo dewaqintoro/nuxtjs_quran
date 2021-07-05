@@ -37,6 +37,7 @@ export default {
     {src: '@/plugins/editor.ts', ssr: false},
     {src: '@/plugins/pagination.ts', ssr: false},
     {src: '@/plugins/chart.ts', ssr: false},
+    {src: '@/plugins/color.ts', ssr: false},
     {src: '@/plugins/instanSearch', ssr: false },
   ],
 

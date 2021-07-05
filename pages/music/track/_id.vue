@@ -1,8 +1,28 @@
 <template>
   <div>
     <Navbar :theme="myTheme" />
-    <button @click="cek" class="mt-36">cek</button>
-    <p>track</p>
+    <div class="main">
+      <div class="section one">
+        <div class="batas"></div>
+        <div class="container">
+          <div class="track-cover">
+            <button @click="cek">cek</button>
+            <div>
+              <img src="https://is3-ssl.mzstatic.com/image/thumb/Music125/v4/aa/02/57/aa025710-a0c6-90e9-4a18-2881efad4855/190296614316.jpg/400x400cc.jpg" />
+            </div>
+            <div class="ml-4">
+              <div>
+                <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
+                <p>{{myTrack.subtitle}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section two">
+        b
+      </div>
+    </div>
   </div>
 </template>
 
@@ -10,6 +30,7 @@
 import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
 import axios from 'axios'
+import ColorThief from 'colorthief'
 
 export default {
   name: 'MusicId',
@@ -32,6 +53,7 @@ export default {
 
     return {
       myTheme,
+      myTrack,
       cek
     }
 
@@ -59,49 +81,37 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-.darkTheme:hover{
-  background: rgb(61, 81, 94) !important;
+.main{
+  @apply pt-20;
+  background: rgb(247, 247, 247);
 }
-.lightTheme:hover{
-  background: #f1f1f1 !important;
+.one{
+  background: rgb(87, 241, 120);
 }
-
-.card {
-  @apply px-4 pb-4 pt-4 rounded-lg my-8;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
-  .idSurah {
-    @apply items-center justify-center flex font-bold rounded-full;
-    width: 40px;
-    height: 40px;
-  }
-  .nameSurah {
-    @apply px-4 w-full;
+.one{
+  .batas{
+    height: 120px;
+    background: rgb(247, 247, 247);
   }
 }
-.card:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+.two{
+  background: rgb(204, 61, 218);
 }
-.surat {
-  @apply text-right text-3xl mt-2;
-  line-height: 4rem !important;
+.section-top2{
+  background: cadetblue;
+  height: 270px;
+  /* @apply pt-16; */
 }
-.my-audio{
-  @apply mt-4;
-  max-width: 100%;
-  height: 35px;
+.track-cover{
+  margin-top: -70px;
+  background: rgb(241, 230, 230);
+  @apply flex w-full;
 }
-@screen mobile {
-  .surat {
-    @apply text-2xl;
-  }
-  .idSurah {
-    @apply text-sm;
-    width: 30px;
-    height: 30px;
-  }
-  .my-audio{
-    max-width: 80%;
-    height: 35px;
-  }
+.track-cover img{
+  min-width: 120px;
+  max-width: 200px;
+  border-radius: 10px;
+  box-shadow: 10px 10px;
+  @apply shadow-2xl ;
 }
 </style>
