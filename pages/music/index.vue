@@ -4,25 +4,30 @@
   <div class="main container">
           <!-- <button @click="cek">cek2</button> -->
     <div class="top-global">
-      <TopGlobal :globalTop20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
+      <div class="flex justify-between mx-2 mb-2">
+        <p class="text-xl font-bold ">Global Top 200 Chart</p>
+        <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>
+      </div>
+      <hr/>
+      <div class="top-global-main">
+        <TopGlobal :globalTop20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
+      </div>
     </div>
 
     <div class="artis-global">
       <div class="dew">
         <div class="artis-item" v-for="(item, index) in artisGlobal" :key="index">
-          <div>
+          <nuxt-link :to="'music/artist/'+item.key">
             <div class="flex m-2">
-              <div class="number">
-                <p>{{index+1}}</p>
-              </div>
               <div class="item-title">
                 <div class="image-container">
                   <img :src="item.images.background" alt="img" />
                 </div>
-                <p>{{item.subtitle}}</p>
+                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+                <p v-else>{{item.subtitle}}</p>
               </div>
             </div>
-          </div>
+          </nuxt-link>
         </div>
 
 
@@ -36,8 +41,6 @@
       <div class="this-audio">
         <div>
           <div>
-            <button @click="playAudio" type="button">Play Audio</button>
-              <button @click="pauseAudio" type="button">Pause Audio</button> 
             <p><b>{{myTitle}}</b></p>
             <p>{{mySubTitle}}</p>
           </div>
@@ -179,10 +182,6 @@ export default {
         // console.log('result', result)
         if(result?.status === 200){
           globalTop20.value = result?.data?.tracks
-
-          // result?.data?.tracks.map((a) => {
-          //   console.log('a', a)
-          // })
           getArtis()
         }
       } catch (e){
@@ -231,7 +230,7 @@ export default {
 .main{
   @apply mt-20;
 }
-.top-global{
+.top-global-main{
   overflow-x: scroll;
 }
 .artis-global{
@@ -243,9 +242,9 @@ export default {
 
 
 .artis-item{
-  margin: 10px;
-  min-width: 200px;
-  max-width: 300px;
+  /* margin: 10px; */
+  min-width: 150px;
+  max-width: 200px;
 }
 
 .image-container{
@@ -274,7 +273,6 @@ img.img-top{
 
 
 .item-title{
-  margin-left: 10px;
   @apply my-auto justify-items-center w-full;
 }
 

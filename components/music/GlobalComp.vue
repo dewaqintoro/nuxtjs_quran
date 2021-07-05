@@ -3,7 +3,7 @@
     <div class="number">
       <p>{{index+1}}</p>
     </div>
-    <nuxt-link :to="`music/`+item.key">
+    <nuxt-link :to="`music/track/`+item.key">
       <div>
         <img class="img-top" :src="item.images.coverart" alt="img" />
       </div>
