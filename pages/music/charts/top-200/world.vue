@@ -1,10 +1,41 @@
 <template>
   <div>
     <Navbar :theme="myTheme" />
-    <button @click="cek" class="mt-36">cek</button>
-    <p>top-200 world d</p>
-    <div>
-      <TopGlobal :globalTop200="globalTop200" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
+    <!-- <button @click="cek" class="mt-36 mb-16">cekAsu</button> -->
+    <div class="main">
+      <div class="section one">
+        aaaa
+      </div>
+      <div class="section">
+        <div class="dew">
+
+          <div class="item">
+            <div v-for="(item, index) in globalTop200" :key="index">
+              
+                <Top200Global :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="section two">
+        b
+        
+      </div>
+    </div>
+    <div class="sikel">
+      <div v-if="musicOn" class="sec-audio">
+        <div class="this-audio">
+          <div>
+            <div>
+              <p><b>{{myTitle}}</b></p>
+              <p>{{mySubTitle}}</p>
+            </div>
+            <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -12,21 +43,30 @@
 <script>
 import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
-import TopGlobal from '~/components/music/Top200Global'
+import Top200Global from '~/components/music/Top200Global'
 import axios from 'axios'
 
 export default {
   name: 'MusicId',
   components: {
     Navbar,
-    TopGlobal
+    Top200Global
   },
   setup(props){
     
     const { route, store, app } = useContext()
     const idSurah = ref('')
     const idAyat = ref('')
+    const isDOne = ref(false)
+    const isPlay = ref(false)
+    const musicOn = ref(false)
+    const myAudio = ref('')
+    const myTitle = ref('')
+    const mySubTitle = ref('')
+    const myTrack = ref([])
 
+
+    const globalTop20 = ref([])
     const globalTop200 = ref([])
 
     const myTheme = {
@@ -43,18 +83,28 @@ export default {
       }
     })
 
+    // getGlobalTop20()
     getGlobalTop200()
 
     return {
       myTheme,
+      globalTop20,
       globalTop200,
+      isDOne,
+      isPlay,
+      myTrack,
+      myAudio,
+      mySubTitle,
+      myTitle,
+      musicOn,
       cek,
       playAudio,
       pauseAudio,
       play
     }
     function cek(){
-      // console.log('audioStore',audioStore)
+      console.log('globalTop20.value ',globalTop20.value[0].images?.coverart )
+      // console.log('globalTop200.value ',globalTop200.value[0] )
     }
 
     async function getGlobalTop200(){
@@ -72,66 +122,71 @@ export default {
     }
 
     function playAudio() { 
-      // var x = document.getElementById("myAudio"); 
-      // x.play(); 
+      var x = document.getElementById("myAudio"); 
+      x.play(); 
     } 
 
     function pauseAudio() { 
-      // var x = document.getElementById("myAudio"); 
-      // x.pause(); 
+      var x = document.getElementById("myAudio"); 
+      x.pause(); 
     }
 
-    function play() { 
-      // var x = document.getElementById("myAudio"); 
-      // x.pause(); 
+    async function play(item){
+      isPlay.value = !isPlay.value
+      musicOn.value = true
+      myTrack.value = item
+      mySubTitle.value = item.subtitle
+      myTitle.value = item.title
+      myAudio.value = item?.hub?.actions[1]?.uri
+      setTimeout(() => {
+        playAudio()
+      }, 100)
     }
   }
 }
 </script>
 <style lang="postcss" scoped>
-.darkTheme:hover{
-  background: rgb(61, 81, 94) !important;
+.main{
+  @apply mt-20 flex p-2;
 }
-.lightTheme:hover{
-  background: #f1f1f1 !important;
+.section{
+  @apply w-1/2;
+}
+.one{
+  display: none;
 }
 
-.card {
-  @apply px-4 pb-4 pt-4 rounded-lg my-8;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.15); */
-  .idSurah {
-    @apply items-center justify-center flex font-bold rounded-full;
-    width: 40px;
-    height: 40px;
-  }
-  .nameSurah {
-    @apply px-4 w-full;
-  }
+.sikel {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #e5e7eb;
+   text-align: center;
 }
-.card:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+.this-audio{
+  @apply justify-items-center mx-auto items-center text-center justify-center flex;
 }
-.surat {
-  @apply text-right text-3xl mt-2;
-  line-height: 4rem !important;
-}
+
 .my-audio{
-  @apply mt-4;
-  max-width: 100%;
-  height: 35px;
+  @apply mb-4;
+  width: 80vw;
+  /* height: 35px; */
 }
-@screen mobile {
-  .surat {
-    @apply text-2xl;
+
+
+@media (max-width: 450px) {
+  .main{
+    @apply block;
   }
-  .idSurah {
-    @apply text-sm;
-    width: 30px;
-    height: 30px;
+  .section{
+    @apply w-full;
   }
-  .my-audio{
-    max-width: 80%;
-    height: 35px;
+  .two{
+    display: none;
+  }
+  .one{
+    display: block;
   }
 }
 </style>

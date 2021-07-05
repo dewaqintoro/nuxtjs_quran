@@ -166,7 +166,7 @@ export default {
     async function play(item){
       isPlay.value = !isPlay.value
       musicOn.value = true
-      myTrack.value = item
+      // myTrack.value = item
       mySubTitle.value = item.subtitle
       myTitle.value = item.title
       myAudio.value = item?.hub?.actions[1]?.uri

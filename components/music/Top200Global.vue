@@ -1,18 +1,41 @@
 <template>
-  <div class="dew">
-
-    <div class="item">
-      <div v-for="(item, index) in globalTop200" :key="index">
-        
-          <div class="m-2">
-            <!-- <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" /> -->
-            <p>{{item.subtitle}}</p>
+    <div class="m-2">
+      <!-- <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" /> -->
+      <!-- <p>{{item.subtitle}}</p> -->
+      <span class="flex">
+        <div class="number">
+          <p>{{index+1}}</p>
+        </div>
+        <div class="btn-play">
+          <button class="focus:outline-none" @click="play(item)" >
+            <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
+            <font-awesome-icon v-else :icon="['fas', 'play']" />
+          </button>
+        </div>
+        <nuxt-link :to="`../../track/`+item.key">
+          <div class="item-title besar">
+            <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
+            <p v-else class="font-bold">{{item.title}}</p>
+            <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
+            <p v-else>{{item.subtitle}}</p>
+            <!-- <button class="btn-nav focus:outline-none" @click="play(item)" >
+              <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
+              <font-awesome-icon v-else :icon="['fas', 'play']" />
+            </button> -->
           </div>
-        
-      </div>
+        </nuxt-link>
+        <!-- <div class="item-title kecil">
+          <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+          <p v-else class="font-bold">{{item.title}}</p>
+          <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+          <p v-else>{{item.subtitle}}</p>
+          <button class="btn-nav focus:outline-none" @click="play" >
+            <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
+            <font-awesome-icon v-else :icon="['fas', 'play']" />
+          </button>
+        </div> -->
+      </span>
     </div>
-
-  </div>
 </template>
 
 <script>
@@ -25,8 +48,12 @@ export default {
     GlobalComp,
   },
   props: {
-    globalTop200: {
-      type: Array,
+    item: {
+      type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
       required: true,
     }
   },
@@ -42,8 +69,15 @@ export default {
       pauseAudio
     }
 
-    async function play(item){
-      emit('play', item)
+    async function play(){
+      if(isPlay.value === true){
+        isPlay.value = false
+        emit('pauseAudio')
+      }else{
+        emit('play', props.item)
+        // emit('playAudio')
+        isPlay.value = true
+      }
     }
 
     function playAudio() {
@@ -58,17 +92,29 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-/* 
-.dew{
-  @apply flex;
+.kecil{
+  display: none
 }
 
-.item{
-  margin: 10px;
-  min-width: 500px;
-  max-width: 800px;
-} */
+img.img-top{
+  /* width: 100%; */
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 10px;
+}
+.number{
+  @apply justify-items-center my-auto mx-2;
+  max-width: 10px;
+}
 
+.btn-play{
+  @apply justify-items-center my-auto mx-2;
+}
+
+.item-title{
+  margin-left: 10px;
+  @apply my-auto justify-items-center w-full;
+}
 
 @media (max-width: 700px) {
 }
