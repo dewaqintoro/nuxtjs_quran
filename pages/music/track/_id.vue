@@ -5,23 +5,34 @@
       <div class="section one">
         <div class="batas"></div>
         <div class="container">
-          <div class="track-cover">
-            <button @click="cek">cek</button>
-            <div>
-              <img src="https://is3-ssl.mzstatic.com/image/thumb/Music125/v4/aa/02/57/aa025710-a0c6-90e9-4a18-2881efad4855/190296614316.jpg/400x400cc.jpg" />
+          <div v-if="isDOne" class="track-cover">
+            <!-- <button @click="cek">cek</button> -->
+            <div class="img-cover">
+              <img :src="myTrack.images.coverart" />
             </div>
-            <div class="ml-4">
+            <div class="track-title">
               <div>
                 <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
-                <p>{{myTrack.subtitle}}</p>
+                <p class="font-bold">{{myTrack.subtitle}}</p>
+                <p>{{myTrack.genres.primary}} - {{trackCount}} Shazams</p>
+              </div>
+              <div class="section-btn-full">
+                <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
+                  <div class="btn-full">
+                    <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" />
+                    <div class="text-playfull">
+                      <p>Play Full Song</p>
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="section two">
+      <!-- <div class="section two">
         b
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -42,6 +53,8 @@ export default {
     const { route, store, app } = useContext()
     const idMusic = ref(route.value.params.id)
     const myTrack = ref([])
+    const isDOne = ref(false)
+    const trackCount = ref(0)
 
     const myTheme = {
       background: '#088b71',
@@ -50,28 +63,42 @@ export default {
     }
 
     getMusic()
+    getTrackCount()
 
     return {
       myTheme,
       myTrack,
+      isDOne,
+      trackCount,
       cek
     }
 
     function cek(){
-      console.log('myTrack',myTrack.value)
+      console.log('myTrack',myTrack.value.hub.options[0].actions[0].uri)
     }
 
     async function getMusic(){
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/${idMusic.value}`
         const result = await axios.get(url);
-        console.log('result', result)
         if(result?.status === 200){
           myTrack.value = result?.data
-          // imgTop.value = result?.data?.tracks[0]
-          // setTimeout(() => {
-          //   isDOne.value = true
-          // }, 300)
+          setTimeout(() => {
+            isDOne.value = true
+          }, 100)
+        }
+      } catch (e){
+        console.log(e)
+      }
+    }
+
+    async function getTrackCount(){
+      try {
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/count/${idMusic.value}`
+        const result = await axios.get(url);
+        console.log('result', result)
+        if(result?.status === 200){
+          trackCount.value = result?.data?.total
         }
       } catch (e){
         console.log(e)
@@ -81,12 +108,32 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.btn-full{
+  background-color: #242424;
+  cursor: pointer;
+  color: white;
+  border-radius: 25px;
+  @apply flex p-1 mt-6;
+}
+.text-playfull{
+  letter-spacing: .5px;
+  margin-top: 3px;
+  text-transform: uppercase;
+  @apply flex justify-items-center mx-auto pr-4 ml-2;
+}
+.btn-full img{
+  max-width: 30px !important;
+  height: 30px !important;
+}
 .main{
   @apply pt-20;
   background: rgb(247, 247, 247);
 }
+.track-title{
+  @apply ml-4;
+}
 .one{
-  background: rgb(87, 241, 120);
+  background: white;
 }
 .one{
   .batas{
@@ -103,15 +150,33 @@ export default {
   /* @apply pt-16; */
 }
 .track-cover{
-  margin-top: -70px;
-  background: rgb(241, 230, 230);
+  margin-top: -90px;
+  /* background: rgb(241, 230, 230); */
   @apply flex w-full;
 }
-.track-cover img{
+.img-cover img{
   min-width: 120px;
   max-width: 200px;
   border-radius: 10px;
   box-shadow: 10px 10px;
   @apply shadow-2xl ;
+}
+
+@media (max-width: 450px) {
+  .track-cover{
+    /* margin-top: -90px; */
+    @apply block;
+  }
+  .img-cover img{
+    @apply flex justify-items-center mx-auto text-center;
+  }
+  .track-title{
+    @apply justify-items-center mx-auto text-center mt-4;
+  }
+  .btn-full{
+    width: 50%;
+    @apply justify-items-center mx-auto text-center;
+
+  }
 }
 </style>
