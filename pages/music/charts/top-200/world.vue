@@ -2,9 +2,17 @@
   <div>
     <Navbar :theme="myTheme" />
     <!-- <button @click="cek" class="mt-36 mb-16">cekAsu</button> -->
-    <div class="main">
+    <div class="main container">
       <div class="section one">
-        aaaa
+        <div v-if="isDOne" class="two-top">
+         <!-- <img :src="imgTop.images.coverart" /> -->
+         <img :src="getMyImg()" />
+         <div class="px-8 py-4">
+           <p><b>#1</b> Top 200</p>
+           <p class="text-xl font-bold">{{imgTop.title}}</p>
+           <p>{{imgTop.subtitle}}</p>
+         </div>
+        </div>
       </div>
       <div class="section">
         <div class="dew">
@@ -20,7 +28,15 @@
         </div>
       </div>
       <div class="section two">
-        b
+        <div v-if="isDOne" class="two-top">
+         <!-- <img :src="imgTop.images.coverart" /> -->
+         <img :src="getMyImg()" />
+         <div class="px-8 py-4">
+           <p><b>#1</b> Top 200</p>
+           <p class="text-xl font-bold">{{imgTop.title}}</p>
+           <p>{{imgTop.subtitle}}</p>
+         </div>
+        </div>
         
       </div>
     </div>
@@ -56,7 +72,7 @@ export default {
     
     const { route, store, app } = useContext()
     const idSurah = ref('')
-    const idAyat = ref('')
+    const imgTop = ref([])
     const isDOne = ref(false)
     const isPlay = ref(false)
     const musicOn = ref(false)
@@ -97,14 +113,23 @@ export default {
       mySubTitle,
       myTitle,
       musicOn,
+      imgTop,
       cek,
       playAudio,
       pauseAudio,
-      play
+      play,
+      getMyImg
     }
     function cek(){
-      console.log('globalTop20.value ',globalTop20.value[0].images?.coverart )
+      console.log('imgTop.value ',imgTop.value )
       // console.log('globalTop200.value ',globalTop200.value[0] )
+    }
+
+    function getMyImg(){
+      const myImg = globalTop200.value[0].images.coverart || 'https://is3-ssl.mzstatic.com/image/thumb/Music125/v4/aa/02/57/aa025710-a0c6-90e9-4a18-2881efad4855/190296614316.jpg/400x400cc.jpg'
+
+      console.log('myImg', myImg)
+      return myImg
     }
 
     async function getGlobalTop200(){
@@ -114,6 +139,11 @@ export default {
         // console.log('result', result)
         if(result?.status === 200){
           globalTop200.value = result?.data?.tracks
+          imgTop.value = result?.data?.tracks[0]
+          setTimeout(() => {
+            isDOne.value = true
+          }, 300)
+          // console.log(result?.data?.tracks[0].images.coverart)
         }
       } catch (e){
         console.log(e)
@@ -152,8 +182,24 @@ export default {
 .section{
   @apply w-1/2;
 }
+
 .one{
   display: none;
+}
+
+.two-top{
+  background-color: #616e73;
+  color: white;
+  min-height: 300px;
+  width: 90%;
+  border-radius: 20px;
+  @apply pt-8;
+}
+
+.two-top img{
+  max-width: 200px;
+  border-radius: 10px;
+  @apply justify-items-center flex mx-auto;
 }
 
 .sikel {
@@ -187,6 +233,10 @@ export default {
   }
   .one{
     display: block;
+    @apply mb-4;
+  }
+  .two-top{
+    width: 100%;
   }
 }
 </style>

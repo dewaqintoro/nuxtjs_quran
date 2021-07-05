@@ -103,7 +103,7 @@ img.img-top{
   border-radius: 10px;
 }
 .number{
-  @apply justify-items-center my-auto mx-2;
+  @apply justify-items-center my-auto mx-2 font-bold ;
   max-width: 10px;
 }
 
