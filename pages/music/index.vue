@@ -4,125 +4,7 @@
   <div class="main container">
           <!-- <button @click="cek">cek2</button> -->
     <div class="top-global">
-      <div class="dew">
-
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            
-              <div class="m-2" v-if="index < 3">
-                <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-              </div>
-            
-          </div>
-        </div>
-
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-
-            <div class="flex m-2" v-if="index > 2 && index < 6">
-              <GlobalComp :item="item" :index="index" @play="play"/>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            <div class="flex m-2" v-if="index > 5 && index < 9">
-              <div class="number">
-                <p>{{index+1}}</p>
-              </div>
-              <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div>
-              <div class="item-title">
-                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
-                <button @click="play(item)">play</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            <div class="flex m-2" v-if="index > 8 && index < 12">
-              <div class="numberTwo">
-                <p>{{index+1}}</p>
-              </div>
-              <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div>
-              <div class="item-title">
-                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
-                <button @click="play(item)">play</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            <div class="flex m-2" v-if="index > 11 && index < 15">
-              <div class="numberTwo">
-                <p>{{index+1}}</p>
-              </div>
-              <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div>
-              <div class="item-title">
-                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
-                <button @click="play(item)">play</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            <div class="flex m-2" v-if="index > 14 && index < 18">
-              <div class="numberTwo">
-                <p>{{index+1}}</p>
-              </div>
-              <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div>
-              <div class="item-title">
-                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
-                <button @click="play(item)">play</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div v-for="(item, index) in globalTop20" :key="index">
-            <div class="flex m-2" v-if="index > 17 && index < 21">
-              <div class="numberTwo">
-                <p>{{index+1}}</p>
-              </div>
-              <div>
-                <img class="img-top" :src="item.images.coverart" alt="img" />
-              </div>
-              <div class="item-title">
-                <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-                <p v-else class="font-bold">{{item.title}}</p>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
-                <button @click="play(item)">play</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <TopGlobal :globalTop20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
     </div>
 
     <div class="artis-global">
@@ -149,17 +31,6 @@
 
     
   </div>
-  <!-- <div v-if="musicOn" class="sec-audio">
-    <div class="this-audio">
-      <div>
-        <div>
-          <p><b>{{myTitle}}</b></p>
-          <p>{{mySubTitle}}</p>
-        </div>
-        <audio :src="myAudio" controls autoplay class="my-audio"></audio>
-      </div>
-    </div>
-  </div> -->
   <div class="sikel">
     <div v-if="musicOn" class="sec-audio">
       <div class="this-audio">
@@ -175,10 +46,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <Transition name="drawer">
-    <MusicPlay v-if="musicOn" :theme="storeTheme" />
-  </Transition> -->
   
 </span>
 </template>
@@ -187,14 +54,15 @@
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
 import GlobalComp from '~/components/music/GlobalComp'
-
+import TopGlobal from '~/components/music/TopGlobal'
 
 import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
     Navbar,
-    GlobalComp
+    GlobalComp,
+    TopGlobal
   },
   setup(){
     const { store, route, app } = useContext()
@@ -286,28 +154,10 @@ export default {
         return dataDew;
     }
 
-    function setArtis(artis){
-      // console.log('artis', artis)
-      myuniqueArray.value.map((a) => {
-        if(a === artis.subtitle){
-          console.log('sama', artis)
-        }
-        // console.log('a', a.subtitle)
-      })
-    }
 
     function getArtis(){
-      // var names = [globalTop20.value.subtitle];
-      // var names = ["John", "Peter", "Clark", "Harry", "John", "Alice"];
-      // console.log('names', names)
       var uniqueNames = getUnique(globalTop20.value);
-      // var uniqueNames = getUnique(names);
       artisGlobal.value = uniqueNames
-      // console.log('uniqueNames',uniqueNames);
-      // globalTop20.value.map((a) => {
-      //   myuniqueArray.value.push(a.subtitle);
-      //   setArtis(a)
-      // })
     }
 
     async function play(item){
@@ -368,13 +218,6 @@ export default {
    background-color: #e5e7eb;
    text-align: center;
 }
-.kecil{
-  display: none
-}
-.sec-audio{
-  /* @apply absolute bottom-0 px-0 mb-0 w-full; */
-  /* background: red; */
-}
 .this-audio{
   @apply justify-items-center mx-auto items-center text-center justify-center flex;
 }
@@ -398,12 +241,6 @@ export default {
   @apply flex;
 }
 
-.item{
-  margin: 10px;
-  min-width: 500px;
-  max-width: 800px;
-  /* background: rgb(245, 186, 24); */
-}
 
 .artis-item{
   margin: 10px;
@@ -434,10 +271,7 @@ img.img-top{
   @apply justify-items-center my-auto mx-2;
   max-width: 10px;
 }
-.numberTwo{
-  @apply justify-items-center my-auto ml-2 mr-4;
-  max-width: 10px;
-}
+
 
 .item-title{
   margin-left: 10px;
@@ -448,27 +282,11 @@ img.img-top{
 @media (max-width: 700px) {
 }
 @media (max-width: 500px) {
-  .item{
-    min-width: 400px;
-    max-width: 480px;
-  }
 }
 
 @media (max-width: 450px) {
-  .item{
-    min-width: 320px;
-    max-width: 400px;
-  }
   .my-audio{
     height: 35px;
-  }
-  .besar{
-    /* visibility:hidden ; */
-    display: none;
-  }
-  .kecil{
-    /* visibility:visible ; */
-    display: block;
   }
 }
 /* @screen tablet {
