@@ -9,6 +9,7 @@
 <script>
 import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
+import axios from 'axios'
 
 export default {
   name: 'MusicId',
@@ -18,11 +19,8 @@ export default {
   setup(props){
     
     const { route, store, app } = useContext()
-    const idSurah = ref('')
-    const idAyat = ref('')
-    const subStore = computed(() => store.state.sub)
-    const audioStore = computed(() => store.state.audio)
-    const loadingAudio = computed(() => store.state.loadingAudio)
+    const idMusic = ref(route.value.params.id)
+    const myTrack = ref([])
 
     const myTheme = {
       background: '#088b71',
@@ -30,37 +28,32 @@ export default {
       boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     }
 
-    const bgId = computed(() => {
-      if(props.theme?.darktheme){
-        return 'darkTheme'
-      } else {
-        return 'lightTheme'
-      }
-    })
+    getMusic()
 
     return {
       myTheme,
       cek
     }
 
-    function getUnique(array){
-        var uniqueArray = [];
-        
-        // Loop through array values
-        var i = 0
-        for(i; i < array.length; i++){
-            if(uniqueArray.indexOf(array[i]) === -1) {
-                uniqueArray.push(array[i]);
-            }
-        }
-        return uniqueArray;
+    function cek(){
+      console.log('myTrack',myTrack.value)
     }
 
-    function cek(){
-      var names = ["John", "Peter", "Clark", "Harry", "John", "Alice"];
-      var uniqueNames = getUnique(names);
-      console.log(uniqueNames);
-      // console.log('audioStore',audioStore)
+    async function getMusic(){
+      try {
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/${idMusic.value}`
+        const result = await axios.get(url);
+        console.log('result', result)
+        if(result?.status === 200){
+          myTrack.value = result?.data
+          // imgTop.value = result?.data?.tracks[0]
+          // setTimeout(() => {
+          //   isDOne.value = true
+          // }, 300)
+        }
+      } catch (e){
+        console.log(e)
+      }
     }
   }
 }

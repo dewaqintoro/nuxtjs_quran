@@ -237,7 +237,7 @@ export default {
   overflow-x: scroll;
 }
 .dew{
-  @apply flex;
+  @apply flex my-2;
 }
 
 

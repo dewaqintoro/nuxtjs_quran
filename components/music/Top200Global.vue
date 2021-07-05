@@ -1,7 +1,5 @@
 <template>
     <div class="m-2">
-      <!-- <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" /> -->
-      <!-- <p>{{item.subtitle}}</p> -->
       <span class="flex">
         <div class="number">
           <p>{{index+1}}</p>
@@ -18,22 +16,8 @@
             <p v-else class="font-bold">{{item.title}}</p>
             <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
             <p v-else>{{item.subtitle}}</p>
-            <!-- <button class="btn-nav focus:outline-none" @click="play(item)" >
-              <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
-              <font-awesome-icon v-else :icon="['fas', 'play']" />
-            </button> -->
           </div>
         </nuxt-link>
-        <!-- <div class="item-title kecil">
-          <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
-          <p v-else class="font-bold">{{item.title}}</p>
-          <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-          <p v-else>{{item.subtitle}}</p>
-          <button class="btn-nav focus:outline-none" @click="play" >
-            <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
-            <font-awesome-icon v-else :icon="['fas', 'play']" />
-          </button>
-        </div> -->
       </span>
     </div>
 </template>

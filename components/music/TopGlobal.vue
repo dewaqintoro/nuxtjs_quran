@@ -109,7 +109,7 @@ export default {
 }
 
 .item{
-  margin: 10px;
+  /* margin: 10px; */
   min-width: 500px;
   max-width: 800px;
   /* background: rgb(245, 186, 24); */
@@ -129,6 +129,12 @@ export default {
   .item{
     min-width: 320px;
     max-width: 400px;
+  }
+}
+@media (max-width: 380px) {
+  .item{
+    min-width: 280px;
+    max-width: 340px;
   }
 }
 </style>

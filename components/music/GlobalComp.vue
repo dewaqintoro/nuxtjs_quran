@@ -11,7 +11,7 @@
     <div class="item-title besar">
       <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
       <p v-else class="font-bold">{{item.title}}</p>
-      <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
+      <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}} ...</p>
       <p v-else>{{item.subtitle}}</p>
       <button class="btn-nav focus:outline-none" @click="play(item)" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
@@ -19,9 +19,9 @@
       </button>
     </div>
     <div class="item-title kecil">
-      <p v-if="item.title.length > 20" class="font-bold">{{item.title.substring(0, 20)}}</p>
+      <p v-if="item.title.length > 15" class="font-bold">{{item.title.substring(0, 15)}}</p>
       <p v-else class="font-bold">{{item.title}}</p>
-      <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
+      <p v-if="item.subtitle.length > 15">{{item.subtitle.substring(0, 15)}} ...</p>
       <p v-else>{{item.subtitle}}</p>
       <button class="btn-nav focus:outline-none" @click="play" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
@@ -105,6 +105,15 @@ img.img-top{
   }
   .kecil{
     display: block;
+  }
+}
+
+@media (max-width: 380px) {
+  img.img-top{
+    /* width: 100%; */
+    max-width: 70px;
+    max-height: 70px;
+    border-radius: 10px;
   }
 }
 

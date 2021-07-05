@@ -48,7 +48,7 @@ export default defineComponent({
     route: {
       type: String,
       required: false,
-      default: '/'
+      default: '/music'
     },
     enable: {
       type: Boolean,
