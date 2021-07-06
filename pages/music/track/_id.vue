@@ -3,32 +3,59 @@
     <Navbar :theme="myTheme" />
     <div class="main">
       <div class="section one">
-        <div class="batas"></div>
-        <div class="container">
-          <div v-if="isDOne" class="track-cover">
-            <!-- <button @click="cek">cek</button> -->
-            <div class="img-cover">
-              <img :src="myTrack.images.coverart" />
-            </div>
-            <div class="track-title">
-              <div>
-                <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
-                <p class="font-bold">{{myTrack.subtitle}}</p>
-                <p>{{myTrack.genres.primary}} - {{trackCount}} Shazams</p>
+        a 
+        <button @click="cek">cek</button>
+        <div class="be container">
+          <!-- <img class="be-img" src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" /> -->
+          <div v-if="isDOne" class="img-cover">
+            <!-- <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" /> -->
+            <img class="-mt-16" :src="myTrack.images.coverart" />
+          </div>
+
+          <div class="ml-36">
+            dfdf
+          </div>
+        </div>
+        <div class="ce">
+          c
+          <div class="container">
+            d
+          </div>
+        </div>
+
+        <!-- <div class="batas"></div>
+        <div class="atas">
+
+          <div class="container">
+            <div v-if="isDOne" class="track-cover">
+              <button @click="cek">cek</button>
+              <div class="img-cover">
+                <img :src="myTrack.images.coverart" />
               </div>
-              <div class="section-btn-full">
-                <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
-                  <div class="btn-full">
-                    <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" />
-                    <div class="text-playfull">
-                      <p>Play Full Song</p>
+              <div class="track-title">
+                <div>
+                  <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
+                  <p class="font-bold">{{myTrack.subtitle}}</p>
+                  <p>{{myTrack.genres.primary}} - {{trackCount}} Shazams</p>
+                </div>
+                <div class="section-btn-full">
+                  <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
+                    <div class="btn-full">
+                      <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" />
+                      <div class="text-playfull">
+                        <p>Play Full Song</p>
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          
+        </div> -->
+
+
+
       </div>
       <!-- <div class="section two">
         b
@@ -74,7 +101,7 @@ export default {
     }
 
     function cek(){
-      console.log('myTrack',myTrack.value.hub.options[0].actions[0].uri)
+      console.log('myTrack',myTrack.value)
     }
 
     async function getMusic(){
@@ -108,6 +135,17 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.be{
+  background: blue;
+  @apply mt-28;
+}
+.be-img{
+  margin-top: 80px;
+  position: absolute;
+}
+.ce{
+  background: rgb(16, 195, 207);
+}
 .btn-full{
   background-color: #242424;
   cursor: pointer;
@@ -134,32 +172,34 @@ export default {
   @apply ml-4;
 }
 .one{
-  background: white;
-}
-.one{
-  .batas{
-    height: 120px;
-    background: rgb(247, 247, 247);
-  }
-}
-.two{
   background: rgb(204, 61, 218);
+}
+.batas{
+    height: 120px;
+    background: #f7f7f7;
+  }
+.two{
+  background: rgb(61, 168, 218);
 }
 .section-top2{
   background: cadetblue;
   height: 270px;
   /* @apply pt-16; */
 }
+.atas{
+  @apply flex w-full;
+}
 .track-cover{
   /* margin-top: -90px; */
-  /* background: rgb(241, 230, 230); */
-  @apply flex w-full -mt-20;
+  background: rgb(247, 85, 85);
+  @apply flex w-full;
 }
 .img-cover img{
   min-width: 120px;
   max-width: 200px;
   border-radius: 10px;
   box-shadow: 10px 10px;
+  position: absolute;
   @apply shadow-2xl ;
 }
 
