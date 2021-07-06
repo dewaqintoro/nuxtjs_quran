@@ -5,9 +5,7 @@
       <div class="section one">
         <!-- <button @click="cek">cek</button> -->
         <div class="be container">
-          <!-- <img class="be-img" src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" /> -->
           <div v-if="isDOne" class="img-cover">
-            <!-- <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" /> -->
             <img :src="myTrack.images.coverart" />
           </div>
 
@@ -19,6 +17,7 @@
             </div>
           </div>
         </div>
+
         <div v-if="isDOne" class="ce">
           <div class="container">
             <div class="track-text">
@@ -36,43 +35,11 @@
           </div>
         </div>
 
-        <!-- <div class="batas"></div>
-        <div class="atas">
-
-          <div class="container">
-            <div v-if="isDOne" class="track-cover">
-              <button @click="cek">cek</button>
-              <div class="img-cover">
-                <img :src="myTrack.images.coverart" />
-              </div>
-              <div class="track-title">
-                <div>
-                  <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
-                  <p class="font-bold">{{myTrack.subtitle}}</p>
-                  <p>{{myTrack.genres.primary}} - {{trackCount}} Shazams</p>
-                </div>
-                <div class="section-btn-full">
-                  <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
-                    <div class="btn-full">
-                      <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" />
-                      <div class="text-playfull">
-                        <p>Play Full Song</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-        </div> -->
-
-
 
       </div>
-      <!-- <div class="section two">
-        b
-      </div> -->
+      <div class="section two container">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ipsa dolorem velit, laudantium quidem tempore aliquam nostrum cupiditate asperiores voluptatibus nesciunt reiciendis, possimus at consequuntur dolore omnis soluta illum magnam cum cumque alias explicabo. Libero earum perferendis fuga neque eos expedita, officia commodi in. Repellendus asperiores beatae placeat, obcaecati corporis eveniet sunt optio expedita commodi excepturi maiores odit veniam fugit voluptatem! Doloremque accusantium officiis, exercitationem aperiam eveniet, dolore praesentium ipsa ex a fugit placeat eum dolor aliquam voluptas! Sint consequuntur, modi et accusamus ipsum vero, voluptatem iusto, omnis qui fugit velit molestiae praesentium laborum unde deleniti sit asperiores nihil reiciendis.
+      </div>
     </div>
   </div>
 </template>
@@ -147,20 +114,17 @@ export default {
   }
 }
 </script>
+
+
 <style lang="postcss" scoped>
 .be{
-  /* background: blue; */
   @apply pt-20;
 }
-/* .be-img{
-  margin-top: 80px;
-  position: absolute;
-} */
 .track-text{
   padding-left: 220px;
 }
 .ce{
-  background: rgb(16, 195, 207);
+  background: white;
 }
 .btn-full{
   background-color: #242424;
@@ -191,20 +155,15 @@ export default {
 .one{
   background: #f7f7f7;
 }
-/* .batas{
-  height: 120px;
-  background: #f7f7f7;
-} */
 .two{
-  background: rgb(61, 168, 218);
+  background: white;
+  @apply mt-16;
 }
 
 .atas{
   @apply flex w-full;
 }
 .track-cover{
-  /* margin-top: -90px; */
-  background: rgb(247, 85, 85);
   @apply flex w-full;
 }
 .img-cover img{
