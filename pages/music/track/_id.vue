@@ -3,7 +3,7 @@
     <Navbar :theme="myTheme" />
     <div class="main">
       <div class="section one">
-        <!-- <button @click="cek">cek</button> -->
+        
         <div class="be container">
           <div v-if="isDOne" class="img-cover">
             <img :src="myTrack.images.coverart" />
@@ -38,6 +38,7 @@
 
       </div>
       <div class="section two container">
+        <button @click="cek">cek</button>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ipsa dolorem velit, laudantium quidem tempore aliquam nostrum cupiditate asperiores voluptatibus nesciunt reiciendis, possimus at consequuntur dolore omnis soluta illum magnam cum cumque alias explicabo. Libero earum perferendis fuga neque eos expedita, officia commodi in. Repellendus asperiores beatae placeat, obcaecati corporis eveniet sunt optio expedita commodi excepturi maiores odit veniam fugit voluptatem! Doloremque accusantium officiis, exercitationem aperiam eveniet, dolore praesentium ipsa ex a fugit placeat eum dolor aliquam voluptas! Sint consequuntur, modi et accusamus ipsum vero, voluptatem iusto, omnis qui fugit velit molestiae praesentium laborum unde deleniti sit asperiores nihil reiciendis.
       </div>
     </div>
@@ -80,8 +81,17 @@ export default {
       cek
     }
 
-    function cek(){
-      console.log('myTrack',myTrack.value)
+    async function cek(){
+      console.log('myTrack',myTrack.value?.sections[2])
+      if(myTrack.value?.sections[2]?.type === 'VIDEO'){
+        try {
+          const url = myTrack.value?.sections[2]?.youtubeurl
+          const result = await axios.get(url);
+          console.log('result', result)
+        } catch (e){
+          console.log(e)
+        }
+      }
     }
 
     async function getMusic(){
@@ -145,7 +155,7 @@ export default {
   height: 30px !important;
 }
 .main{
-  @apply pt-20;
+  @apply pt-16;
   min-height: 100vh;
   background: white;
 }
@@ -172,7 +182,7 @@ export default {
   border-radius: 10px;
   box-shadow: 10px 10px;
   position: absolute;
-  @apply shadow-2xl -mt-8;
+  @apply shadow-xl -mt-8;
 }
 
 @media (max-width: 450px) {
@@ -181,6 +191,7 @@ export default {
     @apply block;
   }
   .img-cover img{
+    position: relative;
     @apply flex justify-items-center mx-auto text-center;
   }
   .track-title{
@@ -189,7 +200,10 @@ export default {
   .btn-full{
     width: 50%;
     @apply justify-items-center mx-auto text-center;
-
+  }
+  .track-text{
+    padding-left: 0px;
+    @apply justify-items-center mx-auto text-center mt-8;
   }
 }
 </style>
