@@ -127,7 +127,8 @@ export default {
 }
 .main{
   @apply pt-20;
-  background: rgb(247, 247, 247);
+  min-height: 100vh;
+  background: white;
 }
 .track-title{
   @apply ml-4;
@@ -150,9 +151,9 @@ export default {
   /* @apply pt-16; */
 }
 .track-cover{
-  margin-top: -90px;
+  /* margin-top: -90px; */
   /* background: rgb(241, 230, 230); */
-  @apply flex w-full;
+  @apply flex w-full -mt-20;
 }
 .img-cover img{
   min-width: 120px;
