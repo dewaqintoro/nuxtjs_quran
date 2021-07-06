@@ -48,7 +48,15 @@
                 <!-- <img :src="song.images.coverart" />
                 {{song.title}} -->
                 <!-- <Top200Global :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" /> -->
-                <GlobalComp :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+                <GlobalComp v-if="index < 5 && isLess" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" />
+
+                <GlobalComp v-if="isMore" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" />
+              </div>
+              <div class="text-center mt-4">
+                <button class="btn-more" @click="setMore()">
+                  <p v-if="isMore">Show Less</p>
+                  <p v-else>Show More</p>
+                </button>
               </div>
             </div>
           </div>
@@ -113,6 +121,9 @@ export default {
     const myTitle = ref('')
     const mySubTitle = ref('')
 
+    const isMore = ref(false)
+    const isLess = ref(true)
+
     const myTheme = {
       background: '#088b71',
       color: 'white',
@@ -138,15 +149,35 @@ export default {
       myTitle,
       playTrack,
       musicOn,
+      isMore,
+      isLess,
       cek,
       playAudio,
       pauseAudio,
-      play
+      play,
+      setMore
     }
+    
 
     async function cek(){
       console.log('myTrack',myTrack.value)
       console.log('artistTopTracks',artistTopTracks.value)
+    }
+
+    function setMore() {
+      if(isMore.value === true){
+        isMore.value = false
+        isLess.value = true
+      } else{
+        isMore.value = true
+        isLess.value = false
+      }
+      
+    }
+
+    function setLess() {
+      isMore.value = true
+      isLess.value = false
     }
 
     function playAudio() { 
@@ -297,6 +328,11 @@ export default {
 
 .second-right {
   @apply w-2/6;
+}
+
+.btn-more{
+  background: #08f;
+  @apply px-4 py-2 rounded-2xl font-bold text-white focus:outline-none;
 }
 
 .sikel {

@@ -3,7 +3,8 @@
     <div class="number">
       <p>{{index+1}}</p>
     </div>
-    <nuxt-link :to="`music/track/`+item.key">
+    <!-- <nuxt-link :to="`music/track/`+item.key"> -->
+    <nuxt-link :to="routeLink">
       <div>
         <img class="img-top" :src="item.images.coverart" alt="img" />
       </div>
@@ -44,6 +45,11 @@ export default {
     index: {
       type: Number,
       required: true,
+    },
+    routeLink: {
+      type: String,
+      required: true,
+      default: '/'
     }
   },
   setup(props, {emit}){

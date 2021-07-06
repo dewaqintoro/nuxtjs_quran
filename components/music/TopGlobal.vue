@@ -5,7 +5,7 @@
       <div v-for="(item, index) in globalTop20" :key="index">
         
           <div class="m-2" v-if="index < 3">
-            <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+            <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key" />
           </div>
         
       </div>
@@ -15,7 +15,7 @@
       <div v-for="(item, index) in globalTop20" :key="index">
 
         <div class="flex m-2" v-if="index > 2 && index < 6">
-          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key" />
         </div>
 
       </div>
@@ -24,35 +24,35 @@
     <div class="item">
       <div v-for="(item, index) in globalTop20" :key="index">
         <div class="flex m-2" v-if="index > 5 && index < 9">
-          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key"/>
         </div>
       </div>
     </div>
     <div class="item">
       <div v-for="(item, index) in globalTop20" :key="index">
         <div class="flex m-2" v-if="index > 8 && index < 12">
-          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key"/>
         </div>
       </div>
     </div>
     <div class="item">
       <div v-for="(item, index) in globalTop20" :key="index">
         <div class="flex m-2" v-if="index > 11 && index < 15">
-          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key"/>
         </div>
       </div>
     </div>
     <div class="item">
       <div v-for="(item, index) in globalTop20" :key="index">
         <div class="flex m-2" v-if="index > 14 && index < 18">
-          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key"/>
         </div>
       </div>
     </div>
     <div class="item">
       <div v-for="(item, index) in globalTop20" :key="index">
         <div class="flex m-2" v-if="index > 17 && index < 21">
-          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          <GlobalComp :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="'music/track/'+item.key" />
         </div>
       </div>
     </div>
