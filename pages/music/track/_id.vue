@@ -38,12 +38,23 @@
 
       </div>
       <div class="section two container">
-        <button @click="cek">cek</button>
+        <!-- <button @click="cek">cek</button> -->
 
-        <div class="flex">
-          <div class="w-4/6">sdsd</div>
-          <div class="w-2/6">
+        <div class="second">
+          <div class="second-left">
+            <div v-if="topTracksDone">
+              <p class="font-bold text-xl">Top Songs By {{myTrack.subtitle}}</p>
+              <div class="my-2" v-for="(song, index) in artistTopTracks" :key="index">
+                <!-- <img :src="song.images.coverart" />
+                {{song.title}} -->
+                <!-- <Top200Global :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" /> -->
+                <GlobalComp :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+              </div>
+            </div>
+          </div>
+          <div class="second-right">
             <div v-if="isLyric">
+              <p class="font-bold text-xl">Lyrics</p>
               <p v-for="(lyric, index) in myLyrics" :key="index">{{lyric}}</p>
             </div>
           </div>
@@ -60,11 +71,15 @@ import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
 import axios from 'axios'
 import ColorThief from 'colorthief'
+import Top200Global from '~/components/music/Top200Global'
+import GlobalComp from '~/components/music/GlobalComp'
 
 export default {
   name: 'MusicId',
   components: {
-    Navbar
+    Navbar,
+    Top200Global,
+    GlobalComp
   },
   setup(props){
     
@@ -72,7 +87,9 @@ export default {
     const idMusic = ref(route.value.params.id)
     const myTrack = ref([])
     const myLyrics = ref([])
+    const artistTopTracks = ref([])
     const isDOne = ref(false)
+    const topTracksDone = ref(false)
     const isLyric = ref(false)
     const trackCount = ref(0)
 
@@ -92,12 +109,40 @@ export default {
       isLyric,
       myLyrics,
       trackCount,
-      cek
+      artistTopTracks,
+      topTracksDone,
+      cek,
+      playAudio,
+      pauseAudio,
+      play
     }
 
     async function cek(){
       console.log('myTrack',myTrack.value)
-      console.log('myLyrics',myLyrics.value)
+      console.log('artistTopTracks',artistTopTracks.value)
+    }
+
+    function playAudio() { 
+      var x = document.getElementById("myAudio"); 
+      x.play(); 
+    } 
+
+    function pauseAudio() { 
+      var x = document.getElementById("myAudio"); 
+      x.pause(); 
+    }
+
+    async function play(item){
+      console.log('item', item)
+      // isPlay.value = !isPlay.value
+      // musicOn.value = true
+      // myTrack.value = item
+      // mySubTitle.value = item.subtitle
+      // myTitle.value = item.title
+      // myAudio.value = item?.hub?.actions[1]?.uri
+      // setTimeout(() => {
+      //   playAudio()
+      // }, 100)
     }
 
     async function getMusic(){
@@ -114,6 +159,7 @@ export default {
           }
           setTimeout(() => {
             isDOne.value = true
+            getArtistTopTracks()
           }, 100)
         }
       } catch (e){
@@ -125,9 +171,26 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/count/${idMusic.value}`
         const result = await axios.get(url);
-        console.log('result', result)
+        // console.log('result', result)
         if(result?.status === 200){
           trackCount.value = result?.data?.total
+        }
+      } catch (e){
+        console.log(e)
+      }
+    }
+
+    async function getArtistTopTracks(){
+      try {
+        const idArtist = myTrack.value?.artists[0]?.id
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/artisttoptracks/${idArtist}`
+        const result = await axios.get(url);
+        // console.log('result', result)
+        if(result?.status === 200){
+          artistTopTracks.value = result?.data?.tracks
+          setTimeout(() => {
+            topTracksDone.value = true
+          }, 100)
         }
       } catch (e){
         console.log(e)
@@ -197,6 +260,18 @@ export default {
   @apply shadow-xl -mt-8;
 }
 
+.second{
+  @apply flex;
+}
+
+.second-left {
+  @apply w-4/6;
+}
+
+.second-right {
+  @apply w-2/6;
+}
+
 @media (max-width: 450px) {
   .track-cover{
     /* margin-top: -90px; */
@@ -216,6 +291,17 @@ export default {
   .track-text{
     padding-left: 0px;
     @apply justify-items-center mx-auto text-center mt-8;
+  }
+  .second{
+    @apply block px-2;
+  }
+
+  .second-left {
+    @apply w-full;
+  }
+
+  .second-right {
+    @apply w-full mt-8 border-t-2;
   }
 }
 </style>
