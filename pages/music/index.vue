@@ -126,6 +126,9 @@ export default {
     }
 
     async function cek(){
+      // const id = ["385334817", "438794466", "560227366", "559146249", "410291747"]
+      // const url = 'track?id=385334817&id=438794466&id=560227366&id=559146249&id=410291747'
+
       console.log('artisGlobal', artisGlobal.value)
       console.log('globalTop20', globalTop20.value)
     }
@@ -228,7 +231,7 @@ export default {
 }
 
 .main{
-  @apply mt-20;
+  @apply mt-20 min-h-full ;
 }
 .top-global-main{
   overflow-x: scroll;

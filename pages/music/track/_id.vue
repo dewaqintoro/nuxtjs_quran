@@ -42,15 +42,14 @@
 
         <div class="second">
           <div class="second-left">
-            <div v-if="topTracksDone">
-              <p class="font-bold text-xl">Top Songs By {{myTrack.subtitle}}</p>
-              <div class="my-2" v-for="(song, index) in artistTopTracks" :key="index">
-                <!-- <img :src="song.images.coverart" />
-                {{song.title}} -->
-                <!-- <Top200Global :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" /> -->
-                <GlobalComp v-if="index < 5 && isLess" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" />
 
-                <GlobalComp v-if="isMore" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" />
+
+            <div v-if="topTracksDone">
+              <p class="section-title">Top Songs By {{myTrack.subtitle}}</p>
+              <hr class="my-4"/>
+              <div class="my-4" v-for="(song, index) in artistTopTracks" :key="index">
+                <GlobalComp v-if="index < 5 && isLess" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
+                <GlobalComp v-if="isMore" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
               </div>
               <div class="text-center mt-4">
                 <button class="btn-more" @click="setMore()">
@@ -59,10 +58,25 @@
                 </button>
               </div>
             </div>
+
+            <div v-if="similaritiesDone">
+              <p class="section-title mt-8">Similar Songs</p>
+              <hr class="my-4"/>
+              <div class="my-4" v-for="(song, index) in similaritiesTrack" :key="index">
+                <GlobalComp v-if="index < 5 && isLessSimilar" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
+                <GlobalComp v-if="isMoreSimilar" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
+              </div>
+              <div class="text-center mt-4">
+                <button class="btn-more" @click="setMoreSimilar()">
+                  <p v-if="isMoreSimilar">Show Less</p>
+                  <p v-else>Show More</p>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="second-right">
             <div v-if="isLyric">
-              <p class="font-bold text-xl">Lyrics</p>
+              <p class="section-title">Lyrics</p>
               <p v-for="(lyric, index) in myLyrics" :key="index">{{lyric}}</p>
             </div>
           </div>
@@ -91,7 +105,6 @@
 import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
 import axios from 'axios'
-import ColorThief from 'colorthief'
 import Top200Global from '~/components/music/Top200Global'
 import GlobalComp from '~/components/music/GlobalComp'
 
@@ -110,8 +123,10 @@ export default {
     const playTrack = ref([])
     const myLyrics = ref([])
     const artistTopTracks = ref([])
+    const similaritiesTrack = ref([])
     const isDOne = ref(false)
     const topTracksDone = ref(false)
+    const similaritiesDone = ref(false)
     const isLyric = ref(false)
     const trackCount = ref(0)
 
@@ -124,6 +139,9 @@ export default {
     const isMore = ref(false)
     const isLess = ref(true)
 
+    const isMoreSimilar = ref(false)
+    const isLessSimilar = ref(true)
+
     const myTheme = {
       background: '#088b71',
       color: 'white',
@@ -132,6 +150,7 @@ export default {
 
     getMusic()
     getTrackCount()
+    getSimilar()
 
     return {
       myTheme,
@@ -141,7 +160,9 @@ export default {
       myLyrics,
       trackCount,
       artistTopTracks,
+      similaritiesTrack,
       topTracksDone,
+      similaritiesDone,
       isPlay,
       myTrack,
       myAudio,
@@ -151,17 +172,36 @@ export default {
       musicOn,
       isMore,
       isLess,
+      isMoreSimilar,
+      isLessSimilar,
       cek,
       playAudio,
       pauseAudio,
       play,
-      setMore
+      setMore,
+      setMoreSimilar
     }
     
 
     async function cek(){
-      console.log('myTrack',myTrack.value)
-      console.log('artistTopTracks',artistTopTracks.value)
+      // console.log('myTrack',myTrack.value)
+      console.log('similaritiesTracks',similaritiesTracks.value)
+    }
+
+    async function getSimilar(){
+      try {
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/similarities/${idMusic.value}`
+        const result = await axios.get(url);
+        console.log('result', result)
+        if(result?.status === 200){
+          similaritiesTrack.value = result?.data?.tracks
+          setTimeout(() => {
+            similaritiesDone.value = true
+          }, 100)
+        }
+      } catch (e){
+        console.log(e)
+      }
     }
 
     function setMore() {
@@ -172,12 +212,16 @@ export default {
         isMore.value = true
         isLess.value = false
       }
-      
     }
 
-    function setLess() {
-      isMore.value = true
-      isLess.value = false
+    function setMoreSimilar() {
+      if(isMoreSimilar.value === true){
+        isMoreSimilar.value = false
+        isLessSimilar.value = true
+      } else{
+        isMoreSimilar.value = true
+        isLessSimilar.value = false
+      }
     }
 
     function playAudio() { 
@@ -254,6 +298,7 @@ export default {
         console.log(e)
       }
     }
+
   }
 }
 </script>
@@ -292,6 +337,11 @@ export default {
   min-height: 100vh;
   background: white;
 }
+
+.section-title {
+  @apply font-bold text-2xl;
+}
+
 .track-title{
   @apply ml-4;
 }
@@ -358,6 +408,9 @@ export default {
   .track-cover{
     /* margin-top: -90px; */
     @apply block;
+  }
+  .section-title {
+    @apply text-xl;
   }
   .img-cover img{
     position: relative;

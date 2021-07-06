@@ -33,12 +33,11 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {src: '@/plugins/axios' },
-    {src: '@/plugins/global.ts', ssr: false},
-    {src: '@/plugins/editor.ts', ssr: false},
-    {src: '@/plugins/pagination.ts', ssr: false},
-    {src: '@/plugins/chart.ts', ssr: false},
-    {src: '@/plugins/color.ts', ssr: false},
-    {src: '@/plugins/instanSearch', ssr: false },
+    // {src: '@/plugins/global.ts', ssr: false},
+    // {src: '@/plugins/editor.ts', ssr: false},
+    // {src: '@/plugins/pagination.ts', ssr: false},
+    // {src: '@/plugins/chart.ts', ssr: false},
+    // {src: '@/plugins/instanSearch', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

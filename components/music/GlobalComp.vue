@@ -1,6 +1,6 @@
 <template>
   <span class="flex">
-    <div class="number">
+    <div v-if="showIndex" class="number">
       <p>{{index+1}}</p>
     </div>
     <!-- <nuxt-link :to="`music/track/`+item.key"> -->
@@ -50,6 +50,11 @@ export default {
       type: String,
       required: true,
       default: '/'
+    },
+    showIndex: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   setup(props, {emit}){
