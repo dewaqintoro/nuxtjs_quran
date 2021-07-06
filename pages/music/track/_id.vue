@@ -63,6 +63,19 @@
         
       </div>
     </div>
+    <div class="sikel">
+      <div v-if="musicOn" class="sec-audio">
+        <div class="this-audio">
+          <div>
+            <div>
+              <p><b>{{myTitle}}</b></p>
+              <p>{{mySubTitle}}</p>
+            </div>
+            <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,12 +99,19 @@ export default {
     const { route, store, app } = useContext()
     const idMusic = ref(route.value.params.id)
     const myTrack = ref([])
+    const playTrack = ref([])
     const myLyrics = ref([])
     const artistTopTracks = ref([])
     const isDOne = ref(false)
     const topTracksDone = ref(false)
     const isLyric = ref(false)
     const trackCount = ref(0)
+
+    const isPlay = ref(false)
+    const musicOn = ref(false)
+    const myAudio = ref('')
+    const myTitle = ref('')
+    const mySubTitle = ref('')
 
     const myTheme = {
       background: '#088b71',
@@ -111,6 +131,13 @@ export default {
       trackCount,
       artistTopTracks,
       topTracksDone,
+      isPlay,
+      myTrack,
+      myAudio,
+      mySubTitle,
+      myTitle,
+      playTrack,
+      musicOn,
       cek,
       playAudio,
       pauseAudio,
@@ -133,16 +160,16 @@ export default {
     }
 
     async function play(item){
-      console.log('item', item)
-      // isPlay.value = !isPlay.value
-      // musicOn.value = true
-      // myTrack.value = item
-      // mySubTitle.value = item.subtitle
-      // myTitle.value = item.title
-      // myAudio.value = item?.hub?.actions[1]?.uri
-      // setTimeout(() => {
-      //   playAudio()
-      // }, 100)
+      // console.log('item', item)
+      isPlay.value = !isPlay.value
+      musicOn.value = true
+      playTrack.value = item
+      mySubTitle.value = item.subtitle
+      myTitle.value = item.title
+      myAudio.value = item?.hub?.actions[1]?.uri
+      setTimeout(() => {
+        playAudio()
+      }, 100)
     }
 
     async function getMusic(){
@@ -271,6 +298,25 @@ export default {
 .second-right {
   @apply w-2/6;
 }
+
+.sikel {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #e5e7eb;
+   text-align: center;
+}
+.this-audio{
+  @apply justify-items-center mx-auto items-center text-center justify-center flex;
+}
+
+.my-audio{
+  @apply mb-4;
+  width: 80vw;
+  /* height: 35px; */
+}
+
 
 @media (max-width: 450px) {
   .track-cover{
