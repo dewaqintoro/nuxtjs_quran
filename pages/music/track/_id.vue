@@ -142,6 +142,9 @@ export default {
     const isMoreSimilar = ref(false)
     const isLessSimilar = ref(true)
 
+    const sumSimilar = ref([])
+
+
     const myTheme = {
       background: '#088b71',
       color: 'white',
@@ -184,8 +187,23 @@ export default {
     
 
     async function cek(){
-      // console.log('myTrack',myTrack.value)
-      console.log('similaritiesTracks',similaritiesTracks.value)
+      console.log('sumSimilar',sumSimilar.value)
+      // console.log('similaritiesTracks',similaritiesTracks.value)
+
+    }
+
+    async function dew(){
+      console.log('sumSimilar',sumSimilar.value)
+      // console.log('similaritiesTracks',similaritiesTracks.value)
+
+      const id = ["1","2","3"]
+      let myUrl = 'track?'
+      let url = sumSimilar.value.map(idNya => {
+        console.log('idNya', idNya)
+        return `id=${idNya}`
+      }).join('&')
+      console.log('url', myUrl+url)
+
     }
 
     async function getSimilar(){
@@ -195,6 +213,10 @@ export default {
         console.log('result', result)
         if(result?.status === 200){
           similaritiesTrack.value = result?.data?.tracks
+
+          // result?.data?.tracks.map((track => {
+          //   sumSimilar.value.push(track.key)
+          // }))
           setTimeout(() => {
             similaritiesDone.value = true
           }, 100)
@@ -420,7 +442,7 @@ export default {
     @apply justify-items-center mx-auto text-center mt-4;
   }
   .btn-full{
-    width: 50%;
+    max-width: 55%;
     @apply justify-items-center mx-auto text-center;
   }
   .track-text{
