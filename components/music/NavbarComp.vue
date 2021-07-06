@@ -13,9 +13,9 @@
           </nuxt-link>
         </div>
         
-        <div class="dropdown">
+        <!-- <div class="dropdown">
           <button class="dropbtn font-bold mx-2 focus:outline-none">Tutorial</button>
-        </div>
+        </div> -->
         
       </div>
       

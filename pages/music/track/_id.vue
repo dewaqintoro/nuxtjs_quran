@@ -3,23 +3,36 @@
     <Navbar :theme="myTheme" />
     <div class="main">
       <div class="section one">
-        a 
-        <button @click="cek">cek</button>
+        <!-- <button @click="cek">cek</button> -->
         <div class="be container">
           <!-- <img class="be-img" src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" /> -->
           <div v-if="isDOne" class="img-cover">
             <!-- <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" /> -->
-            <img class="-mt-16" :src="myTrack.images.coverart" />
+            <img :src="myTrack.images.coverart" />
           </div>
 
-          <div class="ml-36">
-            dfdf
+          <div class="track-text">
+            <div v-if="isDOne">
+              <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
+              <p class="font-bold">{{myTrack.subtitle}}</p>
+              <p>{{myTrack.genres.primary}} - {{trackCount}} Shazams</p>
+            </div>
           </div>
         </div>
-        <div class="ce">
-          c
+        <div v-if="isDOne" class="ce">
           <div class="container">
-            d
+            <div class="track-text">
+              <div class="section-btn-full">
+                  <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
+                    <div class="btn-full">
+                      <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" />
+                      <div class="text-playfull">
+                        <p>Play Full Song</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+            </div>
           </div>
         </div>
 
@@ -136,12 +149,15 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .be{
-  background: blue;
-  @apply mt-28;
+  /* background: blue; */
+  @apply pt-20;
 }
-.be-img{
+/* .be-img{
   margin-top: 80px;
   position: absolute;
+} */
+.track-text{
+  padding-left: 220px;
 }
 .ce{
   background: rgb(16, 195, 207);
@@ -151,6 +167,7 @@ export default {
   cursor: pointer;
   color: white;
   border-radius: 25px;
+  max-width: 200px;
   @apply flex p-1 mt-6;
 }
 .text-playfull{
@@ -172,20 +189,16 @@ export default {
   @apply ml-4;
 }
 .one{
-  background: rgb(204, 61, 218);
+  background: #f7f7f7;
 }
-.batas{
-    height: 120px;
-    background: #f7f7f7;
-  }
+/* .batas{
+  height: 120px;
+  background: #f7f7f7;
+} */
 .two{
   background: rgb(61, 168, 218);
 }
-.section-top2{
-  background: cadetblue;
-  height: 270px;
-  /* @apply pt-16; */
-}
+
 .atas{
   @apply flex w-full;
 }
@@ -200,7 +213,7 @@ export default {
   border-radius: 10px;
   box-shadow: 10px 10px;
   position: absolute;
-  @apply shadow-2xl ;
+  @apply shadow-2xl -mt-8;
 }
 
 @media (max-width: 450px) {
