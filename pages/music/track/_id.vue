@@ -39,7 +39,17 @@
       </div>
       <div class="section two container">
         <button @click="cek">cek</button>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ipsa dolorem velit, laudantium quidem tempore aliquam nostrum cupiditate asperiores voluptatibus nesciunt reiciendis, possimus at consequuntur dolore omnis soluta illum magnam cum cumque alias explicabo. Libero earum perferendis fuga neque eos expedita, officia commodi in. Repellendus asperiores beatae placeat, obcaecati corporis eveniet sunt optio expedita commodi excepturi maiores odit veniam fugit voluptatem! Doloremque accusantium officiis, exercitationem aperiam eveniet, dolore praesentium ipsa ex a fugit placeat eum dolor aliquam voluptas! Sint consequuntur, modi et accusamus ipsum vero, voluptatem iusto, omnis qui fugit velit molestiae praesentium laborum unde deleniti sit asperiores nihil reiciendis.
+
+        <div class="flex">
+          <div class="w-4/6">sdsd</div>
+          <div class="w-2/6">
+            <div v-if="isLyric">
+              <p v-for="(lyric, index) in myLyrics" :key="index">{{lyric}}</p>
+            </div>
+          </div>
+        </div>
+        
+        
       </div>
     </div>
   </div>
@@ -61,7 +71,9 @@ export default {
     const { route, store, app } = useContext()
     const idMusic = ref(route.value.params.id)
     const myTrack = ref([])
+    const myLyrics = ref([])
     const isDOne = ref(false)
+    const isLyric = ref(false)
     const trackCount = ref(0)
 
     const myTheme = {
@@ -77,21 +89,15 @@ export default {
       myTheme,
       myTrack,
       isDOne,
+      isLyric,
+      myLyrics,
       trackCount,
       cek
     }
 
     async function cek(){
-      console.log('myTrack',myTrack.value?.sections[2])
-      if(myTrack.value?.sections[2]?.type === 'VIDEO'){
-        try {
-          const url = myTrack.value?.sections[2]?.youtubeurl
-          const result = await axios.get(url);
-          console.log('result', result)
-        } catch (e){
-          console.log(e)
-        }
-      }
+      console.log('myTrack',myTrack.value)
+      console.log('myLyrics',myLyrics.value)
     }
 
     async function getMusic(){
@@ -100,6 +106,12 @@ export default {
         const result = await axios.get(url);
         if(result?.status === 200){
           myTrack.value = result?.data
+          if(result?.data?.sections[1].text){
+            myLyrics.value = result?.data?.sections[1].text
+            setTimeout(() => {
+              isLyric.value = true
+            }, 100)
+          }
           setTimeout(() => {
             isDOne.value = true
           }, 100)
