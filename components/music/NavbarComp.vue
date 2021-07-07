@@ -21,13 +21,25 @@
       
 
       <div class="end">
-        <button class="btn-nav focus:outline-none mr-3" @click="doSearch()">
+        <!-- <button class="btn-nav focus:outline-none mr-3" @click="doSearch()">
           <font-awesome-icon :icon="['fas', 'search']" />
-        </button>
-        <button class="btn-nav focus:outline-none" @click="changetheme()" >
+        </button> -->
+        <div class="flex my-search mr-2">
+          <input v-model="search" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
+          <button class="focus:outline-none" @click="searchData">
+            <font-awesome-icon :icon="['fas', 'search']" />
+          </button>
+        </div>
+        <div class="flex my-search">
+          <button class="focus:outline-none" @click="changetheme()">
+            <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
+            <font-awesome-icon v-else :icon="['fas', 'sun']" />
+          </button>
+        </div>
+        <!-- <button class="btn-nav focus:outline-none" @click="changetheme()" >
           <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
           <font-awesome-icon v-else :icon="['fas', 'sun']" />
-        </button>
+        </button> -->
       </div>
 
       <Transition name="drawer">
@@ -71,6 +83,8 @@ export default defineComponent({
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
+    const search = ref('')
+
     // const isChecked = ref(false)
 
     const isChecked = computed(() => {
@@ -103,6 +117,7 @@ export default defineComponent({
       isSearch,
       routeId,
       isChecked,
+      search,
       cekData,
       closeModal,
       doSearch,
@@ -110,6 +125,10 @@ export default defineComponent({
       setTutorial,
       changetheme,
       dosearch,
+      searchData
+    }
+
+    async function searchData(){
     }
 
     // async function getData(query){
@@ -167,6 +186,19 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.my-search{
+  justify-content: center;
+  justify-items: center;
+  margin: auto;
+  
+}
+.input-search{
+  width: 90%;
+  padding: 5px 7px;
+  margin-right: 10px;
+  border-radius: 20px;
+  color: black;
+}
 
 .switch {
   @apply mx-2;
