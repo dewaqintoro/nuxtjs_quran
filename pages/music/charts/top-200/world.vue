@@ -4,9 +4,11 @@
     <!-- <button @click="cek" class="mt-36 mb-16">cekAsu</button> -->
     
     <div class="header">
-      <p>GLOBAL</p>
-      <P>Top 200</P>
-      <P>The most Shazamed tracks in the world this week</P>
+      <div class="container p-4">
+        <p><b>GLOBAL</b></p>
+        <p class="text-2xl font-bold">Top 200</p>
+        <p>The most Shazamed tracks in the world this week</p>
+      </div>
     </div>
     <div class="main container">
       <div class="content">
