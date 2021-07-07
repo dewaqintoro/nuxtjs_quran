@@ -6,7 +6,7 @@
         
         <div class="be container">
           <div v-if="isDOne" class="img-cover">
-            <img :src="myTrack.images.coverart" />
+            <img class="track-img" :src="myTrack.images.coverart" alt="img" />
           </div>
 
           <div class="track-text">
@@ -24,7 +24,7 @@
               <div class="section-btn-full">
                   <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
                     <div class="btn-full">
-                      <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" />
+                      <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" alt="img" />
                       <div class="text-playfull">
                         <p>Play Full Song</p>
                       </div>
@@ -43,9 +43,26 @@
         <div class="second">
           <div class="second-left">
 
+            <div>
+              <p class="section-title">Featured In</p>
+              <hr class="my-4"/>
+              <div class="artis-global">
+                <div v-if="albumDone" class="dew">
+                  <div class="artis-item" v-for="(item, index) in albumfeaturedin" :key="index">
+                    <a :href="item.attributes.url" target="_blank">
+                      <img :src="getImg(item)" alt="img" />
+                      <p class="uppercase ">{{item.type}}</p>
+                      <p class="text-lg "><b>{{item.attributes.name}}</b></p>
+                      <p class="text-sm">{{item.attributes.curatorName}}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div v-if="topTracksDone">
-              <p class="section-title">Top Songs By {{myTrack.subtitle}}</p>
+              <p class="section-title mt-8">Top Songs By {{myTrack.subtitle}}</p>
               <hr class="my-4"/>
               <div class="my-4" v-for="(song, index) in artistTopTracks" :key="index">
                 <GlobalComp v-if="index < 5 && isLess" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
@@ -73,6 +90,9 @@
                 </button>
               </div>
             </div>
+
+            
+
           </div>
           <div class="second-right">
             <div v-if="isLyric">
@@ -124,8 +144,10 @@ export default {
     const myLyrics = ref([])
     const artistTopTracks = ref([])
     const similaritiesTrack = ref([])
+    const albumfeaturedin = ref([])
     const isDOne = ref(false)
     const topTracksDone = ref(false)
+    const albumDone = ref(false)
     const similaritiesDone = ref(false)
     const isLyric = ref(false)
     const trackCount = ref(0)
@@ -164,8 +186,10 @@ export default {
       trackCount,
       artistTopTracks,
       similaritiesTrack,
+      albumfeaturedin,
       topTracksDone,
       similaritiesDone,
+      albumDone,
       isPlay,
       myTrack,
       myAudio,
@@ -182,14 +206,30 @@ export default {
       pauseAudio,
       play,
       setMore,
-      setMoreSimilar
+      setMoreSimilar,
+      getImg
     }
     
 
     async function cek(){
-      console.log('sumSimilar',sumSimilar.value)
+      // console.log('albumfeaturedin',albumfeaturedin.value)
       // console.log('similaritiesTracks',similaritiesTracks.value)
+      let str = "https://is4-ssl.mzstatic.com/image/thumb/Features125/v4/b5/0e/bd/b50ebdc6-fd92-d166-9fc7-224df3cca02e/source/{w}x{h}SC.DN01.jpeg?l=en-GB";
+      let stre = str.replace("{w}", "400");
+      let dew = stre.replace("{h}", "400");
 
+
+
+      console.log(dew);
+    }
+
+    function getImg(item){
+      // console.log('item',item.attributes.artwork.url)
+      // console.log('similaritiesTracks',similaritiesTracks.value)
+      let str = item.attributes.artwork.url
+      let stre = str.replace("{w}", "400");
+      let dew = stre.replace("{h}", "400");
+      return dew
     }
 
     async function dew(){
@@ -206,11 +246,27 @@ export default {
 
     }
 
+    async function getAlbumfeaturedin(){
+      try {
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/albumfeaturedin/${myTrack.value.albumadamid}`
+        const result = await axios.get(url);
+        console.log('result', result)
+        if(result?.status === 200){
+          albumfeaturedin.value = result?.data
+          setTimeout(() => {
+            albumDone.value = true
+          }, 100)
+        }
+      } catch (e){
+        console.log(e)
+      }
+    }
+
     async function getSimilar(){
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/similarities/${idMusic.value}`
         const result = await axios.get(url);
-        console.log('result', result)
+        // console.log('result', result)
         if(result?.status === 200){
           similaritiesTrack.value = result?.data?.tracks
 
@@ -284,6 +340,7 @@ export default {
           setTimeout(() => {
             isDOne.value = true
             getArtistTopTracks()
+            getAlbumfeaturedin()
           }, 100)
         }
       } catch (e){
@@ -327,6 +384,22 @@ export default {
 
 
 <style lang="postcss" scoped>
+.artis-global{
+  overflow-x: scroll;
+}
+.dew{
+  @apply flex my-2;
+}
+.artis-item{
+  margin: 0 5px;
+  min-width: 180px;
+  max-width: 220px;
+}
+
+.artis-item img{
+  border-radius: 10px;
+}
+
 .be{
   @apply pt-20;
 }
@@ -425,6 +498,15 @@ export default {
   /* height: 35px; */
 }
 
+.track-img{
+  transition: transform 0.8s;
+}
+
+.track-img:hover {
+  -ms-transform: scale(1.02); /* IE 9 */
+  -webkit-transform: scale(1.02); /* Safari 3-8 */
+  transform: scale(1.02); 
+}
 
 @media (max-width: 450px) {
   .track-cover{
