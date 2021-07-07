@@ -24,13 +24,13 @@
         <!-- <button class="btn-nav focus:outline-none mr-3" @click="doSearch()">
           <font-awesome-icon :icon="['fas', 'search']" />
         </button> -->
-        <div class="flex my-search mr-2">
+        <div class="flex my-search">
           <input v-model="search" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
           <button class="focus:outline-none" @click="searchData">
             <font-awesome-icon :icon="['fas', 'search']" />
           </button>
         </div>
-        <div class="flex my-search">
+        <div class="my-btn">
           <button class="focus:outline-none" @click="changetheme()">
             <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
             <font-awesome-icon v-else :icon="['fas', 'sun']" />
@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import axios from 'axios'
 
 export default defineComponent({
   name: 'NavbarComp',
@@ -95,22 +96,6 @@ export default defineComponent({
       }
     })
 
-    if(!thisSub){
-      store.dispatch('setSub', 'On')
-    } else {
-      store.dispatch('getSub')
-    }
-    if(!thisAudio){
-      store.dispatch('setAudio', 'On')
-    } else {
-      store.dispatch('getAudio')
-    }
-    if(thisTheme){
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
-
     return {
       storeTheme,
       loadingTheme,
@@ -128,24 +113,19 @@ export default defineComponent({
       searchData
     }
 
-    async function searchData(){
-    }
 
-    // async function getData(query){
-    //   try{
-    //     const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
-    //     const result = await axios.get(`${url}`);
-    //     blogs.value = result.data
-    //     if(result.data.length === 0){
-    //       isEmpty.value = true
-    //     } else {
-    //       isEmpty.value = false
-    //     }
-    //     loading.value = false
-    //   }catch(err){
-    //     console.log(err)
-    //   }
-    // }
+    async function searchData(){
+      emit('searchData')
+      app.router?.push(`/music/search?q=${search.value}`)
+      // try{
+      //   const url = `https://vercel-be-v2.vercel.app/api/v1/music/search?q=${search.value}`
+      //   const result = await axios.get(`${url}`);
+      //   console.log('result', result)
+        
+      // }catch(err){
+      //   console.log(err)
+      // }
+    }
 
     function changetheme(){
       console.log('changetheme')
@@ -190,13 +170,20 @@ export default defineComponent({
   justify-content: center;
   justify-items: center;
   margin: auto;
-  
-}
-.input-search{
-  width: 90%;
-  padding: 5px 7px;
+  background: white;
   margin-right: 10px;
   border-radius: 20px;
+  @apply pr-4 pl-2;
+}
+
+.my-btn{
+  justify-content: center;
+  justify-items: center;
+  margin: auto;
+}
+.input-search{
+  width: 100%;
+  padding: 5px 7px;
   color: black;
 }
 
