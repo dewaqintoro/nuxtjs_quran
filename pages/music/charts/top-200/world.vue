@@ -2,49 +2,57 @@
   <div>
     <Navbar :theme="myTheme" />
     <!-- <button @click="cek" class="mt-36 mb-16">cekAsu</button> -->
+    
+    <div class="header">
+      <p>GLOBAL</p>
+      <P>Top 200</P>
+      <P>The most Shazamed tracks in the world this week</P>
+    </div>
     <div class="main container">
-      <div class="section one">
-        <div v-if="isDOne" class="two-top">
-         <!-- <img :src="imgTop.images.coverart" /> -->
-         <img :src="getMyImg()" />
-         <div class="px-8 py-4">
-           <p><b>#1</b> Top 200</p>
-           <p class="text-xl font-bold">{{imgTop.title}}</p>
-           <p>{{imgTop.subtitle}}</p>
-         </div>
-        </div>
-      </div>
-      <div class="section">
-        <div class="dew">
-
-          <div class="item">
-            <div v-for="(item, index) in globalTop200" :key="index">
-              
-                <Top200Global v-if="index < 20 && isLess" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-                <Top200Global v-if="isMore" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-              
-            </div>
+      <div class="content">
+        <div class="section one">
+          <div v-if="isDOne" class="two-top">
+          <!-- <img :src="imgTop.images.coverart" /> -->
+          <img :src="getMyImg()" />
+          <div class="px-8 py-4">
+            <p><b>#1</b> Top 200</p>
+            <p class="text-xl font-bold">{{imgTop.title}}</p>
+            <p>{{imgTop.subtitle}}</p>
           </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="dew">
 
+            <div class="item">
+              <div v-for="(item, index) in globalTop200" :key="index">
+                
+                  <Top200Global v-if="index < 20 && isLess" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+                  <Top200Global v-if="isMore" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+                
+              </div>
+            </div>
+
+          </div>
+          <div class="text-center mt-4">
+            <button v-if="isDOne" class="btn-more" @click="setMore()">
+              <p v-if="isMore">Show Less</p>
+              <p v-else>Show More</p>
+            </button>
+          </div>
         </div>
-        <div class="text-center mt-4">
-          <button class="btn-more" @click="setMore()">
-            <p v-if="isMore">Show Less</p>
-            <p v-else>Show More</p>
-          </button>
+        <div class="section two">
+          <div v-if="isDOne" class="two-top">
+          <!-- <img :src="imgTop.images.coverart" /> -->
+          <img :src="getMyImg()" />
+          <div class="px-8 py-4">
+            <p><b>#1</b> Top 200</p>
+            <p class="text-xl font-bold">{{imgTop.title}}</p>
+            <p>{{imgTop.subtitle}}</p>
+          </div>
+          </div>
+          
         </div>
-      </div>
-      <div class="section two">
-        <div v-if="isDOne" class="two-top">
-         <!-- <img :src="imgTop.images.coverart" /> -->
-         <img :src="getMyImg()" />
-         <div class="px-8 py-4">
-           <p><b>#1</b> Top 200</p>
-           <p class="text-xl font-bold">{{imgTop.title}}</p>
-           <p>{{imgTop.subtitle}}</p>
-         </div>
-        </div>
-        
       </div>
     </div>
     <div class="sikel">
@@ -201,7 +209,14 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .main{
-  @apply mt-20 flex p-2;
+  @apply p-2 min-h-screen;
+}
+.content{
+  @apply flex;
+}
+.header{
+  background: #f7f7f7;
+  @apply pt-20;
 }
 .section{
   @apply w-1/2;
@@ -209,6 +224,9 @@ export default {
 
 .one{
   display: none;
+}
+.two {
+  padding-left: 1rem;
 }
 
 .two-top{
@@ -251,7 +269,7 @@ export default {
 
 
 @media (max-width: 450px) {
-  .main{
+  .content{
     @apply block;
   }
   .section{

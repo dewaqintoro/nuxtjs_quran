@@ -24,7 +24,8 @@
               <div class="section-btn-full">
                   <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
                     <div class="btn-full">
-                      <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" alt="img" />
+                      <!-- <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" alt="img" /> -->
+                      <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
                       <div class="text-playfull">
                         <p>Play Full Song</p>
                       </div>
@@ -69,7 +70,7 @@
                 <GlobalComp v-if="isMore" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
               </div>
               <div class="text-center mt-4">
-                <button class="btn-more" @click="setMore()">
+                <button v-if="artistTopTracks" class="btn-more" @click="setMore()">
                   <p v-if="isMore">Show Less</p>
                   <p v-else>Show More</p>
                 </button>
@@ -84,7 +85,7 @@
                 <GlobalComp v-if="isMoreSimilar" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
               </div>
               <div class="text-center mt-4">
-                <button class="btn-more" @click="setMoreSimilar()">
+                <button v-if="similaritiesTrack" class="btn-more" @click="setMoreSimilar()">
                   <p v-if="isMoreSimilar">Show Less</p>
                   <p v-else>Show More</p>
                 </button>
@@ -468,7 +469,7 @@ export default {
 }
 
 .second-left {
-  @apply w-4/6;
+  @apply w-4/6 pr-4;
 }
 
 .second-right {

@@ -1,39 +1,39 @@
 <template>
-    <div class="dew">
-      <div class="flex">
-        <div class="number">
-          <p>{{index+1}}</p>
-        </div>
-        <div class="btn-play">
-          <button class="focus:outline-none" @click="play(item)" >
-            <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
-            <font-awesome-icon v-else :icon="['fas', 'play']" />
-          </button>
-        </div>
-        <nuxt-link :to="`../../track/`+item.key">
-          <div class="item-title besar">
-            <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
-            <p v-else class="font-bold">{{item.title}}</p>
-            <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
-            <p v-else>{{item.subtitle}}</p>
-          </div>
-          <div class="item-title kecil">
-            <p v-if="item.title.length > 25" class="font-bold">{{item.title.substring(0, 25)}}...</p>
-            <p v-else class="font-bold">{{item.title}}</p>
-            <p v-if="item.subtitle.length > 30">{{item.subtitle.substring(0, 30)}}...</p>
-            <p v-else>{{item.subtitle}}</p>
-          </div>
-        </nuxt-link>
+  <div class="dew">
+    <div class="flex">
+      <div class="number">
+        <p>{{index+1}}</p>
       </div>
-      <div>
-        <a :href="item.hub.options[0].actions[0].uri" target="_blank">
-          <div class="apple">
-            <font-awesome-icon :icon="['fab', 'apple']" />
-            <span>Music</span>
-          </div>
-        </a>
+      <div class="btn-play">
+        <button class="focus:outline-none" @click="play(item)" >
+          <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
+          <font-awesome-icon v-else :icon="['fas', 'play']" />
+        </button>
       </div>
+      <nuxt-link :to="`../../track/`+item.key">
+        <div class="item-title besar">
+          <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
+          <p v-else class="font-bold">{{item.title}}</p>
+          <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
+          <p v-else>{{item.subtitle}}</p>
+        </div>
+        <div class="item-title kecil">
+          <p v-if="item.title.length > 25" class="font-bold">{{item.title.substring(0, 25)}}...</p>
+          <p v-else class="font-bold">{{item.title}}</p>
+          <p v-if="item.subtitle.length > 30">{{item.subtitle.substring(0, 30)}}...</p>
+          <p v-else>{{item.subtitle}}</p>
+        </div>
+      </nuxt-link>
     </div>
+    <div>
+      <a :href="item.hub.options[0].actions[0].uri" target="_blank">
+        <div class="apple">
+          <font-awesome-icon :icon="['fab', 'apple']" />
+          <span>Music</span>
+        </div>
+      </a>
+    </div>
+  </div>
 </template>
 
 <script>
