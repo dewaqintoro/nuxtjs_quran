@@ -16,8 +16,8 @@
 
       <div class="end">
         <div class="flex my-search">
-          <input v-model="search" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
-          <button class="focus:outline-none" @click="searchData">
+          <input v-model="search" @keyup.enter="searchData" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
+          <button class="focus:outline-none" @click="searchData" >
             <font-awesome-icon :icon="['fas', 'search']" />
           </button>
         </div>
@@ -35,15 +35,19 @@
 
 
     </div>
-    <div class="hah z-100">
-      <div v-if="resultDone && search" class="result-box">
-        <p class="text-xl font-bold pl-4 mt-2">Songs</p>
-        <p>key: {{search}}</p>
-        <!-- <div class="result-item">sss</div>
-        <div class="result-item">sss</div>
-        <div class="result-item">sss</div> -->
+    <div v-if="resultDone && search" class="hah z-100" @click.self="toHide">
+      <div  class="result-box" id="divDew">
+        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">Songs</p>
         <div class="result-item" v-for="(track, index) in resultTracks" :key="index">
-          {{track.alias}}
+          <nuxt-link :to="baseRoute+track.key" >
+            {{track.alias}}
+          </nuxt-link>
+        </div>
+        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">Artists</p>
+        <div class="result-item" v-for="(artist, index) in resultArtists" :key="'a'+index">
+          <nuxt-link :to="baseRouteArtist+artist.id" >
+            {{artist.alias}}
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -84,6 +88,8 @@ export default defineComponent({
     const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
     const search = ref('')
+    const baseRoute = ref('')
+    const baseRouteArtist = ref('')
 
     const resultTracks = ref([])
     const resultArtists = ref([])
@@ -106,6 +112,8 @@ export default defineComponent({
       }
     })
 
+    cekRoute()
+
     return {
       storeTheme,
       loadingTheme,
@@ -116,6 +124,8 @@ export default defineComponent({
       resultTracks,
       resultArtists,
       resultDone,
+      baseRoute,
+      baseRouteArtist,
       cekData,
       closeModal,
       doSearch,
@@ -123,7 +133,24 @@ export default defineComponent({
       setTutorial,
       changetheme,
       dosearch,
-      searchData
+      searchData,
+      toHide
+    }
+
+    function toHide(){
+      resultDone.value = false
+    }
+
+    function cekRoute(){
+      // console.log('route', route.value)
+      if(route.value.name === 'music'){
+        baseRoute.value = 'music/track/'
+        baseRouteArtist.value = 'music/artist/'
+      }
+      if(route.value.name === 'music-track-id'){
+        baseRoute.value = '../../music/track/'
+        baseRouteArtist.value = '../../music/artist/'
+      }
     }
 
 
@@ -194,14 +221,29 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  /* border: 1px solid green; */
+  -webkit-text-fill-color: black;
+  /* -webkit-box-shadow: 0 0 0px 1000px #000 inset; */
+  transition: background-color 5000s ease-in-out 0s;
+}
 .hah{
   position: absolute;
   /* background: rgb(255, 228, 228); */
   width: 100%;
-  @apply px-16 mt-4;
+  @apply px-16 mt-4 h-screen shadow-lg;
 }
 .result-box{
-  background: rgb(226, 226, 226);
+  background: white;
+  border: 1px solid rgb(197, 197, 197);
   min-width: 40%;
   float: right;
   @apply justify-end rounded-xl;
@@ -230,130 +272,6 @@ export default defineComponent({
   color: black;
 }
 
-.switch {
-  @apply mx-2;
-  position: relative;
-  display: inline-block;
-  width: 48px;
-  height: 21.76px;
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-.slider::before {
-  position: absolute;
-  content: '';
-  height: 16.64px;
-  width: 16.64px;
-  left: 3.20px;
-  bottom: 3.20px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-.round {
-  border-radius: 21.76px;
-}
-.round::before {
-  border-radius: 50%;
-}
-input:checked + .slider {
-  background-color: #1f2937;
-}
-input:focus + .slider {
-  box-shadow: 0 0 1px #1f2937;
-}
-input:checked + .slider::before {
-  -webkit-transform: translateX(24px);
-  -ms-transform: translateX(24px);
-  transform: translateX(24px);
-}
-.item-mode {
-  /* @apply py-2;  */
-}
-
-
-
-/* Style The Dropdown Button */
-.dropbtn {
-  /* background-color: #4CAF50; */
-  /* color: white; */
-  /* padding: 16px;
-  font-size: 16px; */
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown-item{
-  cursor: pointer;
-}
-
-/* .dropdown-item:hover{
-  background: gray;
-  color: white;
-} */
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 10px;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown-content a.top:hover {
-  border-radius: 10px 10px 0 0;
-}
-
-.dropdown-content a.under:hover {
-  border-radius: 0 0 10px 10px;
-}
-
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
-} */
-
 
 .box {
   @apply rounded-full flex justify-center;
@@ -367,19 +285,11 @@ input:checked + .slider::before {
   width: 25px;
   height: 25px;
 }
-/* img.img-nav{
-  width: 22px;
-} */
 
-@font-face {
-  font-family: "lpmq";
-  src: url(/fonts/lpmq.otf) format("opentype");
-  font-display: swap;
-}
-.font-arabic{
-  font-family: "lpmq", Arial, sans-serif;
-  line-height: 2;
-}
+.inner{
+    @apply px-8;
+  }
+
 .app-header {
   @apply fixed w-full top-0 py-4;
   @apply z-30 select-none;
@@ -387,7 +297,7 @@ input:checked + .slider::before {
   min-width: 320px;
   .inner {
     @apply flex flex-wrap justify-between h-full text-xl;
-    @apply px-8;
+    /* @apply px-8; */
   }
   .start {
     @apply flex items-center;
@@ -424,8 +334,11 @@ input:checked + .slider::before {
   .hah{
     @apply px-2;
   }
-.result-box{
-  min-width: 70%;
-}
+  .result-box{
+    min-width: 100%;
+  }
+  .inner{
+    @apply px-2;
+  }
 }
 </style>
