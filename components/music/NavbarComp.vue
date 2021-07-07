@@ -1,29 +1,20 @@
 <template>
   <header v-if="!loadingTheme" class="app-header font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="inner container">
+    <div class="inner">
       <div class="start">
         <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
-          <nuxt-link class="btn-nav" to="/">
+          <nuxt-link class="btn-nav" to="/music">
             <img class="img-nav" src="/iconNew.png" />
           </nuxt-link>
         </div>
-        <div v-if="enable" class="mx-2">
+        <!-- <div v-if="enable" class="mx-2">
           <nuxt-link :to="route">
             Home
           </nuxt-link>
-        </div>
-        
-        <!-- <div class="dropdown">
-          <button class="dropbtn font-bold mx-2 focus:outline-none">Tutorial</button>
         </div> -->
-        
       </div>
-      
 
       <div class="end">
-        <!-- <button class="btn-nav focus:outline-none mr-3" @click="doSearch()">
-          <font-awesome-icon :icon="['fas', 'search']" />
-        </button> -->
         <div class="flex my-search">
           <input v-model="search" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
           <button class="focus:outline-none" @click="searchData">
@@ -36,23 +27,31 @@
             <font-awesome-icon v-else :icon="['fas', 'sun']" />
           </button>
         </div>
-        <!-- <button class="btn-nav focus:outline-none" @click="changetheme()" >
-          <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
-          <font-awesome-icon v-else :icon="['fas', 'sun']" />
-        </button> -->
       </div>
 
-      <Transition name="drawer">
+      <!-- <Transition name="drawer">
         <SearchModalComp :theme="storeTheme" v-if="isSearch" @close="closeModal" @dosearch="dosearch" />
-      </Transition>
+      </Transition> -->
 
 
+    </div>
+    <div class="hah z-100">
+      <div v-if="resultDone && search" class="result-box">
+        <p class="text-xl font-bold pl-4 mt-2">Songs</p>
+        <p>key: {{search}}</p>
+        <!-- <div class="result-item">sss</div>
+        <div class="result-item">sss</div>
+        <div class="result-item">sss</div> -->
+        <div class="result-item" v-for="(track, index) in resultTracks" :key="index">
+          {{track.alias}}
+        </div>
+      </div>
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
 export default defineComponent({
@@ -86,6 +85,10 @@ export default defineComponent({
     const routeId = '/blog?category=MERN'
     const search = ref('')
 
+    const resultTracks = ref([])
+    const resultArtists = ref([])
+    const resultDone = ref(false)
+
     // const isChecked = ref(false)
 
     const isChecked = computed(() => {
@@ -96,6 +99,13 @@ export default defineComponent({
       }
     })
 
+    watch(search, () => {
+      // console.log("search: ", search.value)
+      if(search.value.length === 0){
+        resultDone.value = false
+      }
+    })
+
     return {
       storeTheme,
       loadingTheme,
@@ -103,6 +113,9 @@ export default defineComponent({
       routeId,
       isChecked,
       search,
+      resultTracks,
+      resultArtists,
+      resultDone,
       cekData,
       closeModal,
       doSearch,
@@ -114,9 +127,9 @@ export default defineComponent({
     }
 
 
-    async function searchData(){
+    async function doSearchs(){
       emit('searchData')
-      app.router?.push(`/music/search?q=${search.value}`)
+      // app.router?.push(`/music/search?q=${search.value}`)
       // try{
       //   const url = `https://vercel-be-v2.vercel.app/api/v1/music/search?q=${search.value}`
       //   const result = await axios.get(`${url}`);
@@ -125,6 +138,21 @@ export default defineComponent({
       // }catch(err){
       //   console.log(err)
       // }
+    }
+
+    async function searchData(){
+      try{
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/search?q=${search.value}`
+        const result = await axios.get(`${url}`);
+        if(result?.data){
+          resultTracks.value = result?.data?.tracks?.hits
+          resultArtists.value = result?.data?.artists?.hits
+          resultDone.value = true
+        }
+        // console.log('result', result)
+      }catch(err){
+        console.log(err)
+      }
     }
 
     function changetheme(){
@@ -166,6 +194,21 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.hah{
+  position: absolute;
+  /* background: rgb(255, 228, 228); */
+  width: 100%;
+  @apply px-16 mt-4;
+}
+.result-box{
+  background: rgb(226, 226, 226);
+  min-width: 40%;
+  float: right;
+  @apply justify-end rounded-xl;
+}
+.result-item{
+  @apply px-4 py-1;
+}
 .my-search{
   justify-content: center;
   justify-items: center;
@@ -375,5 +418,14 @@ input:checked + .slider::before {
       @apply text-sm;
     } */
   }
+}
+
+@media (max-width: 450px) {
+  .hah{
+    @apply px-2;
+  }
+.result-box{
+  min-width: 70%;
+}
 }
 </style>
