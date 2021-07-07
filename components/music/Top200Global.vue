@@ -1,6 +1,6 @@
 <template>
-    <div class="m-2">
-      <span class="flex">
+    <div class="dew">
+      <div class="flex">
         <div class="number">
           <p>{{index+1}}</p>
         </div>
@@ -17,8 +17,22 @@
             <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
             <p v-else>{{item.subtitle}}</p>
           </div>
+          <div class="item-title kecil">
+            <p v-if="item.title.length > 25" class="font-bold">{{item.title.substring(0, 25)}}...</p>
+            <p v-else class="font-bold">{{item.title}}</p>
+            <p v-if="item.subtitle.length > 30">{{item.subtitle.substring(0, 30)}}...</p>
+            <p v-else>{{item.subtitle}}</p>
+          </div>
         </nuxt-link>
-      </span>
+      </div>
+      <div>
+        <a :href="item.hub.options[0].actions[0].uri" target="_blank">
+          <div class="apple">
+            <font-awesome-icon :icon="['fab', 'apple']" />
+            <span>Music</span>
+          </div>
+        </a>
+      </div>
     </div>
 </template>
 
@@ -76,8 +90,14 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-.kecil{
-  display: none
+.apple{
+  @apply flex justify-items-center bg-black rounded-md text-white py-1 px-2 mr-1;
+}
+.apple svg{
+  @apply my-auto mr-1;
+}
+.dew{
+  @apply mt-2 flex justify-between;
 }
 
 img.img-top{
@@ -87,8 +107,8 @@ img.img-top{
   border-radius: 10px;
 }
 .number{
-  @apply justify-items-center my-auto mx-2 font-bold ;
-  max-width: 10px;
+  @apply justify-items-center my-auto mx-2 font-bold text-center;
+  width: 20px;
 }
 
 .btn-play{
@@ -109,10 +129,29 @@ img.img-top{
   }
 }
 
+@media (min-width: 501px) {
+  .item{
+    min-width: 400px;
+    max-width: 480px;
+  }
+  .besar{
+    display: block;
+  }
+  .kecil{
+    display: none;
+  }
+}
+
 @media (max-width: 450px) {
   .item{
     min-width: 320px;
     max-width: 400px;
+  }
+  .besar{
+    display: none;
+  }
+  .kecil{
+    display: block;
   }
 }
 </style>

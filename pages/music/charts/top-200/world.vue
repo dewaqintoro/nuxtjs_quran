@@ -20,11 +20,18 @@
           <div class="item">
             <div v-for="(item, index) in globalTop200" :key="index">
               
-                <Top200Global :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+                <Top200Global v-if="index < 20 && isLess" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+                <Top200Global v-if="isMore" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
               
             </div>
           </div>
 
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn-more" @click="setMore()">
+            <p v-if="isMore">Show Less</p>
+            <p v-else>Show More</p>
+          </button>
         </div>
       </div>
       <div class="section two">
@@ -85,6 +92,9 @@ export default {
     const globalTop20 = ref([])
     const globalTop200 = ref([])
 
+    const isMore = ref(false)
+    const isLess = ref(true)
+
     const myTheme = {
       background: '#088b71',
       color: 'white',
@@ -114,12 +124,26 @@ export default {
       myTitle,
       musicOn,
       imgTop,
+      isMore,
+      isLess,
       cek,
       playAudio,
       pauseAudio,
       play,
-      getMyImg
+      getMyImg,
+      setMore
     }
+
+    function setMore() {
+      if(isMore.value === true){
+        isMore.value = false
+        isLess.value = true
+      } else{
+        isMore.value = true
+        isLess.value = false
+      }
+    }
+
     function cek(){
       console.log('imgTop.value ',imgTop.value )
       // console.log('globalTop200.value ',globalTop200.value[0] )
@@ -200,6 +224,11 @@ export default {
   max-width: 200px;
   border-radius: 10px;
   @apply justify-items-center flex mx-auto;
+}
+
+.btn-more{
+  background: #08f;
+  @apply px-4 py-2 rounded-2xl font-bold text-white focus:outline-none;
 }
 
 .sikel {
