@@ -3,7 +3,7 @@
   <Navbar :theme="myTheme" />
   <div class="main container">
           <!-- <button @click="cek">cek2</button> -->
-    <div v-if="globalTop20Done" class="top-global">
+    <div v-if="globalTop20Done" class="top-global pt-4">
       <div class="flex justify-between mx-2 mb-2">
         <p class="text-xl font-bold ">Global Top 200 Chart</p>
         <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>

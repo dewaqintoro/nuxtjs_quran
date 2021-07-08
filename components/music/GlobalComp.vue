@@ -2,7 +2,7 @@
   <span class="flex">
     <div v-if="showIndex" class="number">
       <p>{{index+1}}</p>
-      <!-- <button @click="cek">cek</button> -->
+      <button @click="cek">cek</button>
     </div>
     <!-- <nuxt-link :to="`music/track/`+item.key"> -->
 
@@ -28,9 +28,15 @@
       <nuxt-link :to="baseRoute+item.key">
         <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
         <p v-else class="font-bold">{{item.title}}</p>
+      </nuxt-link>
+      <nuxt-link v-if="artistId" :to="baseRouteArtist+item.artists[0].id">
         <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}} ...</p>
         <p v-else>{{item.subtitle}}</p>
       </nuxt-link>
+      <span v-else>
+        <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}} ...</p>
+        <p v-else>{{item.subtitle}}</p>
+      </span>
       <!-- <button class="btn-nav focus:outline-none" @click="play(item)" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
         <font-awesome-icon v-else :icon="['fas', 'play']" />
@@ -87,21 +93,25 @@ export default {
   setup(props, {emit}){
     const { route, store, app } = useContext()
     const baseRoute = ref('')
+    const baseRouteArtist = ref('')
     const idSurah = ref('')
     const isPlay = ref(false)
+    const artistId = ref(false)
 
     cekRoute()
     return {
       isPlay,
       baseRoute,
+      baseRouteArtist,
+      artistId,
       play,
       cek,
       getImg
     }
 
     function cek(){
-      // console.log('item', props.item)
-      console.log('route.value.name', route.value.name)
+      console.log('item', props.item)
+      // console.log('route.value.name', route.value.name)
       // if(route.value.name === 'music-artist-id')
     }
 
@@ -115,9 +125,14 @@ export default {
     function cekRoute(){
       if(route.value.name === 'music'){
         baseRoute.value = 'music/track/'
+        baseRouteArtist.value = 'music/artist/'
       }
       if(route.value.name === 'music-artist-id'){
         baseRoute.value = '../../music/track/'
+        baseRouteArtist.value = '../../music/artist/'
+      }
+      if(props.item?.artists[0]){
+        artistId.value = true
       }
     }
 
@@ -136,6 +151,9 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+a:hover{
+  @apply underline;
+}
 .apple{
   border: 1px solid black;
   width: 80px;
