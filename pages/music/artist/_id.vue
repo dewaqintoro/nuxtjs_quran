@@ -49,24 +49,39 @@
           </div>
         </div>
 
-
-        <div class="mt-8">
+        <div v-if="artistBioDone" class="mt-8">
           <div class="flex justify-between mx-2 mb-2">
-            <p v-if="artistBioDone" class="text-xl font-bold ">Discover similar artists on Apple Music</p>
+            <p class="text-xl font-bold ">ARTIST BIOGRAPHY</p>
+          </div>
+          <p v-if="isLess" v-html="artistBioData.attributes.artistBio.substring(0, 400)"> </p>
+          <p v-if="isMore" v-html="artistBioData.attributes.artistBio"></p>
+          <button class="focus:outline-none text-blue-500 font-bold " v-if="artistBioData.attributes.artistBio.length > 400" @click="setMore">
+            <p v-if="isLess">View More</p>
+            <p v-if="isMore">View Less</p>
+          </button>
+        </div>
+
+
+        <div class="mt-8" v-if="artistBioDone">
+          <div class="flex justify-between mx-2 mb-2">
+            <p class="text-xl font-bold ">Discover similar artists on Apple Music</p>
           </div>
           <hr/>
-          <div v-if="artistBioDone" class="artis-global">
+          <div class="artis-global">
             <div class="dew">
               <div class="artis-item" v-for="(item, index) in similarAartists" :key="index">
                 <!-- <nuxt-link :to="'music/artist/'+item.artists[0].id"> -->
                   <div class="flex m-2">
-                    <div class="item-title">
-                      <div class="image-container">
-                        <img :src="getCoverart(item)" alt="img" />
+                    <a :href="item.attributes.url" target="_blank">
+                      <div class="item-title">
+                        <div class="image-container">
+                          <img :src="getCoverart(item)" alt="img" />
+                        </div>
+                        
+                          <p v-if="item.attributes.name.length > 20"><b>{{item.attributes.name.substring(0, 20)}}...</b></p>
+                          <p v-else><b>{{item.attributes.name}}</b></p>
                       </div>
-                      <p v-if="item.attributes.name.length > 20"><b>{{item.attributes.name.substring(0, 20)}}...</b></p>
-                      <p v-else><b>{{item.attributes.name}}</b></p>
-                    </div>
+                    </a>
                   </div>
                 <!-- </nuxt-link> -->
               </div>
@@ -116,12 +131,15 @@ export default {
     const artistId = ref(route.value.params.id)
     const musicOn = ref(false)
     const artistDetail = ref([])
-    const artistBio = ref([])
+    const artistBioData = ref([])
     const artistTopTracks = ref([])
     const similarAartists = ref([])
     const artistDone = ref(false)
     const artistBioDone = ref(false)
     const topTracksDone = ref(false)
+
+    const isMore = ref(false)
+    const isLess = ref(true)
 
     const myTheme = {
       background: '#088b71',
@@ -143,18 +161,31 @@ export default {
       myTheme,
       musicOn,
       artistDetail,
-      artistBio,
+      artistBioData,
       artistTopTracks,
       similarAartists,
       artistDone,
       artistBioDone,
       topTracksDone,
+      isMore,
+      isLess,
       cek,
       getArtist,
       playAudio,
       pauseAudio,
       play,
-      getCoverart
+      getCoverart,
+      setMore
+    }
+
+    function setMore() {
+      if(isMore.value === true){
+        isMore.value = false
+        isLess.value = true
+      } else{
+        isMore.value = true
+        isLess.value = false
+      }
     }
 
     function getCoverart(item){
@@ -189,7 +220,7 @@ export default {
     }
 
     function cek(){
-      console.log('similarAartists.value',similarAartists.value)
+      console.log('artistBioData.value',artistBioData.value.attributes.artistBio)
     }
 
     async function getArtist(){
@@ -214,9 +245,9 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/bio/${adamid}`
         const result = await axios.get(url);
-        console.log('getArtistBio', result?.data?.data[0]?.views?.["similar-artists"])
+        console.log('getArtistBio', result?.data?.data[0])
         if(result?.status === 200){
-          artistBio.value = result?.data?.data[0]?.views
+          artistBioData.value = result?.data?.data[0]
           similarAartists.value = result?.data?.data[0]?.views?.["similar-artists"]?.data
           setTimeout(() => {
             artistBioDone.value = true
@@ -250,8 +281,16 @@ export default {
 .image-container img{
   width: 150px;
   height: 150px;
+  transition: transform 0.8s;
   @apply rounded-full;
 }
+
+.image-container img:hover {
+  -ms-transform: scale(1.02); /* IE 9 */
+  -webkit-transform: scale(1.02); /* Safari 3-8 */
+  transform: scale(1.02); 
+}
+
 .artis-global{
   overflow-x: scroll;
 }
