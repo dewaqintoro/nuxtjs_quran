@@ -3,7 +3,7 @@
   <Navbar :theme="myTheme" />
   <div class="main container">
           <!-- <button @click="cek">cek2</button> -->
-    <div class="top-global">
+    <div v-if="globalTop20Done" class="top-global">
       <div class="flex justify-between mx-2 mb-2">
         <p class="text-xl font-bold ">Global Top 200 Chart</p>
         <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="artis-global">
+    <div v-if="artisGlobalDone" class="artis-global mt-16">
       <div class="dew">
         <div class="artis-item" v-for="(item, index) in artisGlobal" :key="index">
           <nuxt-link :to="'music/artist/'+item.artists[0].id">
@@ -31,6 +31,17 @@
         </div>
 
 
+      </div>
+    </div>
+
+    <div v-if="discoveryIDDone" class="top-global mt-16">
+      <div class="flex justify-between mx-2 mb-2">
+        <p class="text-xl font-bold ">Discovery Indonesia Tracks</p>
+        <!-- <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link> -->
+      </div>
+      <hr/>
+      <div class="top-global-main">
+        <TopGlobal :globalTop20="discoveryID" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
       </div>
     </div>
 
@@ -81,23 +92,17 @@ export default {
     const mySubTitle = ref('')
     const musicOn = ref(false)
     const isPlay = ref(false)
-    const isCopied = ref(false)
-    const showToast = ref(false)
+    const artisGlobalDone = ref(false)
+    const globalTop20Done = ref(false)
+    const discoveryIDDone = ref(false)
     const storeTheme = computed(() => store.state.theme)
-    const triggerToast = () => {
-      showToast.value = true;
-      setTimeout(() => showToast.value = false, 3000)
-    }
     const myTheme = {
       background: '#088b71',
       color: 'white',
       boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     }
 
-    // var uniqueArray = [];
-    const myuniqueArray = ref([])
-
-    // getDiscoveryID()
+    getDiscoveryID()
     getGlobalTop20()
 
     return {
@@ -107,7 +112,6 @@ export default {
       artisGlobal,
       myText,
       myTheme,
-      isCopied,
       discoveryID_error,
       myTrack,
       myAudio,
@@ -116,8 +120,10 @@ export default {
       musicOn,
       isPlay,
       storeTheme,
+      globalTop20Done,
+      artisGlobalDone,
+      discoveryIDDone,
       cek,
-      triggerToast,
       getDiscoveryID,
       getGlobalTop20,
       play,
@@ -126,11 +132,8 @@ export default {
     }
 
     async function cek(){
-      // const id = ["385334817", "438794466", "560227366", "559146249", "410291747"]
-      // const url = 'track?id=385334817&id=438794466&id=560227366&id=559146249&id=410291747'
-
-      console.log('artisGlobal', artisGlobal.value)
-      console.log('globalTop20', globalTop20.value)
+      console.log('discoveryID', discoveryID.value)
+      // console.log('globalTop20', globalTop20.value)
     }
 
     
@@ -164,6 +167,7 @@ export default {
     function getArtis(){
       var uniqueNames = getUnique(globalTop20.value);
       artisGlobal.value = uniqueNames
+      artisGlobalDone.value = true
     }
 
     async function play(item){
@@ -185,6 +189,7 @@ export default {
         // console.log('result', result)
         if(result?.status === 200){
           globalTop20.value = result?.data?.tracks
+          globalTop20Done.value = true
           getArtis()
         }
       } catch (e){
@@ -197,9 +202,10 @@ export default {
       try {
         const url = `https://www.nuxt.my.id/api/v1/music/discovery/ID`
         const result = await axios.get(url);
-        console.log('result', result)
+        console.log('getDiscoveryID', result)
         if(result?.status === 200){
           discoveryID.value = result?.data?.tracks
+          discoveryIDDone.value = true
         }
       } catch (e){
         console.log(e)

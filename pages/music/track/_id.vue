@@ -71,8 +71,8 @@
                 <GlobalComp v-if="index < 5 && isLess" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
                 <GlobalComp v-if="isMore" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
               </div>
-              <div class="text-center mt-4">
-                <button v-if="artistTopTracks" class="btn-more" @click="setMore()">
+              <div v-if="artistTopTracks.length > 5" class="text-center mt-4">
+                <button class="btn-more" @click="setMore()">
                   <p v-if="isMore">Show Less</p>
                   <p v-else>Show More</p>
                 </button>
