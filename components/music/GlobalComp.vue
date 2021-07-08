@@ -2,7 +2,7 @@
   <span class="flex">
     <div v-if="showIndex" class="number">
       <p>{{index+1}}</p>
-      <button @click="cek">cek</button>
+      <!-- <button @click="cek">cek</button> -->
     </div>
     <!-- <nuxt-link :to="`music/track/`+item.key"> -->
 
@@ -12,7 +12,8 @@
       </div> -->
       <div class="dew-img">
         <div class="img-top">
-          <img :src="item.images.coverart" alt="img" />
+          <!-- <img :src="item.images.coverart" alt="img" /> -->
+          <img :src="getImg(item)" alt="img" />
         </div>
         <div>
           <!-- <font-awesome-icon class="centerItem" :icon="['fas', 'play']" /> -->
@@ -30,10 +31,18 @@
         <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}} ...</p>
         <p v-else>{{item.subtitle}}</p>
       </nuxt-link>
-      <button class="btn-nav focus:outline-none" @click="play(item)" >
+      <!-- <button class="btn-nav focus:outline-none" @click="play(item)" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
         <font-awesome-icon v-else :icon="['fas', 'play']" />
-      </button>
+      </button> -->
+      <div>
+        <a :href="item.hub.options[0].actions[0].uri" target="_blank">
+          <div class="apple">
+            <font-awesome-icon :icon="['fab', 'apple']" />
+            <span>Music</span>
+          </div>
+        </a>
+      </div>
     </div>
     <div class="item-title kecil">
       <nuxt-link :to="baseRoute+item.key">
@@ -42,10 +51,10 @@
         <p v-if="item.subtitle.length > 15">{{item.subtitle.substring(0, 15)}} ...</p>
         <p v-else>{{item.subtitle}}</p>
       </nuxt-link>
-      <button class="btn-nav focus:outline-none" @click="play" >
+      <!-- <button class="btn-nav focus:outline-none" @click="play" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
         <font-awesome-icon v-else :icon="['fas', 'play']" />
-      </button>
+      </button> -->
     </div>
   </span>
 </template>
@@ -86,20 +95,27 @@ export default {
       isPlay,
       baseRoute,
       play,
-      cek
+      cek,
+      getImg
     }
 
     function cek(){
-      console.log('item', props.item)
+      // console.log('item', props.item)
+      console.log('route.value.name', route.value.name)
       // if(route.value.name === 'music-artist-id')
     }
 
+    function getImg(item){
+      let str = item?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625716883/Ngodingbentar/Music/bg-white_aws30t.png'
+      let stre = str.replace("{w}", "400");
+      let dew = stre.replace("{h}", "400");
+      return dew
+    }
+
     function cekRoute(){
-      // console.log('route', route.value)
-      // if(route.value.name === 'music'){
-      //   baseRoute.value = 'music/track/'
-      //   baseRouteArtist.value = 'music/artist/'
-      // }
+      if(route.value.name === 'music'){
+        baseRoute.value = 'music/track/'
+      }
       if(route.value.name === 'music-artist-id'){
         baseRoute.value = '../../music/track/'
       }
@@ -120,6 +136,14 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.apple{
+  border: 1px solid black;
+  width: 80px;
+   @apply flex justify-items-center bg-black rounded-2xl text-white py-0 px-2 mr-1;
+}
+.apple svg{
+  @apply my-auto mr-1;
+}
 .dew-img{
   position: relative;
   width: 80px;

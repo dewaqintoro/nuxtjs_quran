@@ -2,7 +2,7 @@
 <span>
   <Navbar :theme="myTheme" />
   <div class="main container">
-          <button @click="cek">cek2</button>
+          <!-- <button @click="cek">cek2</button> -->
     <div class="top-global">
       <div class="flex justify-between mx-2 mb-2">
         <p class="text-xl font-bold ">Global Top 200 Chart</p>

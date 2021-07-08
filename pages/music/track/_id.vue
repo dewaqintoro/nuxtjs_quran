@@ -6,14 +6,14 @@
         
         <div class="be container">
           <div v-if="isDOne" class="img-cover">
-            <img class="track-img" :src="myTrack.images.coverart" alt="img" />
+            <img class="track-img" :src="getCoverart()" alt="img" />
           </div>
 
           <div class="track-text">
             <div v-if="isDOne">
               <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
               <p class="font-bold">{{myTrack.subtitle}}</p>
-              <p>{{myTrack.genres.primary}} - {{trackCount}} Shazams</p>
+              <p >{{genres}} . {{trackCount}} Shazams</p>
             </div>
           </div>
         </div>
@@ -24,7 +24,6 @@
               <div class="section-btn-full">
                   <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
                     <div class="btn-full">
-                      <!-- <img src="https://www.shazam.com/resources/ec5e994effe5843ced9530e39ce52a5889643dd1/logos/applemusic/apple-music-note.png" alt="img" /> -->
                       <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
                       <div class="text-playfull">
                         <p>Play Full Song</p>
@@ -44,11 +43,11 @@
         <div class="second">
           <div class="second-left">
 
-            <div>
+            <div v-if="albumDone">
               <p class="section-title">Featured In</p>
               <hr class="my-4"/>
               <div class="artis-global">
-                <div v-if="albumDone" class="dew">
+                <div class="dew">
                   <div class="artis-item" v-for="(item, index) in albumfeaturedin" :key="index">
                     <a :href="item.attributes.url" target="_blank">
                       <img :src="getImg(item)" alt="img" />
@@ -159,6 +158,8 @@ export default {
     const myTitle = ref('')
     const mySubTitle = ref('')
 
+    const genres = ref('')
+
     const isMore = ref(false)
     const isLess = ref(true)
 
@@ -202,13 +203,15 @@ export default {
       isLess,
       isMoreSimilar,
       isLessSimilar,
+      genres,
       cek,
       playAudio,
       pauseAudio,
       play,
       setMore,
       setMoreSimilar,
-      getImg
+      getImg,
+      getCoverart
     }
     
 
@@ -227,7 +230,16 @@ export default {
     function getImg(item){
       // console.log('item',item.attributes.artwork.url)
       // console.log('similaritiesTracks',similaritiesTracks.value)
-      let str = item.attributes.artwork.url
+      let str = item.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+      let stre = str.replace("{w}", "400");
+      let dew = stre.replace("{h}", "400");
+      return dew
+    }
+
+    function getCoverart(){
+      // console.log('item',item.attributes.artwork.url)
+      // console.log('similaritiesTracks',similaritiesTracks.value)
+      let str = myTrack.value?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
       let stre = str.replace("{w}", "400");
       let dew = stre.replace("{h}", "400");
       return dew
@@ -251,12 +263,17 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/albumfeaturedin/${myTrack.value.albumadamid}`
         const result = await axios.get(url);
-        console.log('result', result)
+        // console.log('result', result)
+        
         if(result?.status === 200){
-          albumfeaturedin.value = result?.data
-          setTimeout(() => {
-            albumDone.value = true
-          }, 100)
+          if(result?.data?.name === "Error"){
+            albumDone.value = false
+          }else{
+            albumfeaturedin.value = result?.data
+            setTimeout(() => {
+              albumDone.value = true
+            }, 100)
+          }
         }
       } catch (e){
         console.log(e)
@@ -330,8 +347,10 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/${idMusic.value}`
         const result = await axios.get(url);
+        // console.log('result', result)
         if(result?.status === 200){
           myTrack.value = result?.data
+          genres.value = result?.data?.genres?.primary || ''
           if(result?.data?.sections[1].text){
             myLyrics.value = result?.data?.sections[1].text
             setTimeout(() => {
