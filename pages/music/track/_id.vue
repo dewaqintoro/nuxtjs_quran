@@ -12,7 +12,10 @@
           <div class="track-text">
             <div v-if="isDOne">
               <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
-              <p class="font-bold">{{myTrack.subtitle}}</p>
+              <nuxt-link v-if="artistId" :to="'../../music/artist/'+myTrack.artists[0].id">
+                <p class="font-bold">{{myTrack.subtitle}}</p>
+              </nuxt-link>
+              <p v-else class="font-bold">{{myTrack.subtitle}}</p>
               <p >{{genres}} . {{trackCount}} Shazams</p>
             </div>
           </div>
@@ -167,7 +170,7 @@ export default {
     const isLessSimilar = ref(true)
 
     const sumSimilar = ref([])
-
+    const artistId = ref(false)
 
     const myTheme = {
       background: '#088b71',
@@ -204,6 +207,7 @@ export default {
       isMoreSimilar,
       isLessSimilar,
       genres,
+      artistId,
       cek,
       playAudio,
       pauseAudio,
@@ -216,15 +220,15 @@ export default {
     
 
     async function cek(){
-      // console.log('albumfeaturedin',albumfeaturedin.value)
+      console.log('myTrack',myTrack.value.artists)
       // console.log('similaritiesTracks',similaritiesTracks.value)
-      let str = "https://is4-ssl.mzstatic.com/image/thumb/Features125/v4/b5/0e/bd/b50ebdc6-fd92-d166-9fc7-224df3cca02e/source/{w}x{h}SC.DN01.jpeg?l=en-GB";
-      let stre = str.replace("{w}", "400");
-      let dew = stre.replace("{h}", "400");
+      // let str = "https://is4-ssl.mzstatic.com/image/thumb/Features125/v4/b5/0e/bd/b50ebdc6-fd92-d166-9fc7-224df3cca02e/source/{w}x{h}SC.DN01.jpeg?l=en-GB";
+      // let stre = str.replace("{w}", "400");
+      // let dew = stre.replace("{h}", "400");
 
 
 
-      console.log(dew);
+      // console.log(dew);
     }
 
     function getImg(item){
@@ -237,8 +241,6 @@ export default {
     }
 
     function getCoverart(){
-      // console.log('item',item.attributes.artwork.url)
-      // console.log('similaritiesTracks',similaritiesTracks.value)
       let str = myTrack.value?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
       let stre = str.replace("{w}", "400");
       let dew = stre.replace("{h}", "400");
@@ -246,16 +248,12 @@ export default {
     }
 
     async function dew(){
-      console.log('sumSimilar',sumSimilar.value)
-      // console.log('similaritiesTracks',similaritiesTracks.value)
 
       const id = ["1","2","3"]
       let myUrl = 'track?'
       let url = sumSimilar.value.map(idNya => {
-        console.log('idNya', idNya)
         return `id=${idNya}`
       }).join('&')
-      console.log('url', myUrl+url)
 
     }
 
@@ -347,10 +345,13 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/${idMusic.value}`
         const result = await axios.get(url);
-        // console.log('result', result)
+        // console.log('result', result.data)
         if(result?.status === 200){
           myTrack.value = result?.data
           genres.value = result?.data?.genres?.primary || ''
+          if(result?.data?.artists){
+            artistId.value = true
+          }
           if(result?.data?.sections[1].text){
             myLyrics.value = result?.data?.sections[1].text
             setTimeout(() => {
