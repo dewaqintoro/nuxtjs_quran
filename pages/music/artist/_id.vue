@@ -37,6 +37,18 @@
 
       </div>
 
+      <div class="section two container">
+        <div class="top-global">
+          <div class="flex justify-between mx-2 mb-2">
+            <p v-if="artistDone" class="text-xl font-bold ">TOP SONGS BY {{artistDetail.name}} </p>
+          </div>
+          <hr/>
+          <div v-if="topTracksDone" class="top-global-main">
+            <TopGlobal :globalTop20="artistTopTracks" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="sikel">
       <div v-if="musicOn" class="sec-audio">
@@ -58,11 +70,13 @@
 import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Navbar from '~/components/music/NavbarComp'
 import axios from 'axios'
+import TopGlobal from '~/components/music/TopGlobal'
 
 export default {
   name: 'MusicId',
   components: {
-    Navbar
+    Navbar,
+    TopGlobal
   },
   setup(props){
     
@@ -70,8 +84,13 @@ export default {
     const idSurah = ref('')
     const idAyat = ref('')
     const artistId = ref(route.value.params.id)
+    const musicOn = ref(false)
     const artistDetail = ref([])
+    const artistBio = ref([])
+    const artistTopTracks = ref([])
     const artistDone = ref(false)
+    const artistBioDone = ref(false)
+    const topTracksDone = ref(false)
 
     const myTheme = {
       background: '#088b71',
@@ -91,10 +110,42 @@ export default {
 
     return {
       myTheme,
+      musicOn,
       artistDetail,
+      artistBio,
+      artistTopTracks,
       artistDone,
+      artistBioDone,
+      topTracksDone,
       cek,
-      getArtist
+      getArtist,
+      playAudio,
+      pauseAudio,
+      play
+    }
+
+    function playAudio() { 
+      console.log('playAudio')
+      // var x = document.getElementById("myAudio"); 
+      // x.play(); 
+    } 
+
+    function pauseAudio() { 
+      console.log('pauseAudio')
+      // var x = document.getElementById("myAudio"); 
+      // x.pause(); 
+    }
+    
+    async function play(item){
+      console.log('play')
+      // isPlay.value = !isPlay.value
+      // musicOn.value = true
+      // mySubTitle.value = item.subtitle
+      // myTitle.value = item.title
+      // myAudio.value = item?.hub?.actions[1]?.uri
+      // setTimeout(() => {
+      //   playAudio()
+      // }, 100)
     }
 
     function cek(){
@@ -105,11 +156,45 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/${artistId.value}`
         const result = await axios.get(url);
-        console.log('result', result.data)
+        // console.log('result', result.data)
         if(result?.status === 200){
           artistDetail.value = result?.data
           setTimeout(() => {
             artistDone.value = true
+          }, 100)
+          getArtistBio(result?.data?.adamid)
+          getArtistTopTracks()
+        }
+      } catch (e){
+        console.log(e)
+      }
+    }
+
+    async function getArtistBio(adamid){
+      try {
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/bio/${adamid}`
+        const result = await axios.get(url);
+        console.log('getArtistBio', result?.data?.data[0])
+        if(result?.status === 200){
+          artistBio.value = result?.data
+          setTimeout(() => {
+            artistBioDone.value = true
+          }, 100)
+        }
+      } catch (e){
+        console.log(e)
+      }
+    }
+
+    async function getArtistTopTracks(){
+      try {
+        const url = `https://vercel-be-v2.vercel.app/api/v1/music/artisttoptracks/${artistId.value}`
+        const result = await axios.get(url);
+        console.log('getArtistTopTracks', result)
+        if(result?.status === 200){
+          artistTopTracks.value = result?.data?.tracks
+          setTimeout(() => {
+            topTracksDone.value = true
           }, 100)
         }
       } catch (e){
@@ -182,12 +267,10 @@ export default {
 }
 .two{
   background: white;
-  @apply mt-16;
+  @apply mt-32;
 }
 
-.atas{
-  @apply flex w-full;
-}
+
 .track-cover{
   @apply flex w-full;
 }
@@ -207,6 +290,10 @@ export default {
 .btn-more{
   background: #08f;
   @apply px-4 py-2 rounded-2xl font-bold text-white focus:outline-none;
+}
+
+.top-global-main{
+  overflow-x: scroll;
 }
 
 .sikel {
@@ -244,6 +331,9 @@ export default {
 }
 
 @media (max-width: 450px) {
+  .two{
+    @apply mt-8;
+  }
   .track-cover{
     /* margin-top: -90px; */
     @apply block;
