@@ -4,11 +4,24 @@
       <p>{{index+1}}</p>
     </div>
     <!-- <nuxt-link :to="`music/track/`+item.key"> -->
-    <nuxt-link :to="routeLink">
-      <div>
+
+    <!-- <nuxt-link :to="routeLink"> -->
+      <!-- <div>
         <img class="img-top" :src="item.images.coverart" alt="img" />
+      </div> -->
+      <div class="dew-img">
+        <div class="img-top">
+          <img :src="item.images.coverart" alt="img" />
+        </div>
+        <div>
+          <!-- <font-awesome-icon class="centerItem" :icon="['fas', 'play']" /> -->
+          <button class="centerItem focus:outline-none" @click="play" >
+            <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
+            <font-awesome-icon v-else :icon="['fas', 'play']" />
+          </button>
+        </div>
       </div>
-    </nuxt-link>
+    <!-- </nuxt-link> -->
     <div class="item-title besar">
       <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
       <p v-else class="font-bold">{{item.title}}</p>
@@ -82,20 +95,40 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.dew-img{
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+}
+.centerItem {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-50%,0);
+}
+
+.centerItem svg{
+  width: 30px;
+  height: 30px;
+}
 
 .kecil{
   display: none
 }
 
-img.img-top{
-  /* width: 100%; */
-  max-width: 80px;
-  max-height: 80px;
+.img-top{
+  width: 80px;
+  height: 80px;
+}
+.img-top img{
   border-radius: 10px;
 }
 .number{
   @apply justify-items-center my-auto mx-2;
-  max-width: 10px;
+  width: 20px;
 }
 
 .item-title{
@@ -120,11 +153,10 @@ img.img-top{
 }
 
 @media (max-width: 380px) {
-  img.img-top{
+  .img-top{
     /* width: 100%; */
-    max-width: 70px;
-    max-height: 70px;
-    border-radius: 10px;
+    width: 70px;
+    height: 70px;
   }
 }
 

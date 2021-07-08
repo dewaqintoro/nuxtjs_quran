@@ -2,7 +2,7 @@
 <span>
   <Navbar :theme="myTheme" />
   <div class="main container">
-          <!-- <button @click="cek">cek2</button> -->
+          <button @click="cek">cek2</button>
     <div class="top-global">
       <div class="flex justify-between mx-2 mb-2">
         <p class="text-xl font-bold ">Global Top 200 Chart</p>
@@ -17,7 +17,7 @@
     <div class="artis-global">
       <div class="dew">
         <div class="artis-item" v-for="(item, index) in artisGlobal" :key="index">
-          <nuxt-link :to="'music/artist/'+item.key">
+          <nuxt-link :to="'music/artist/'+item.artists[0].id">
             <div class="flex m-2">
               <div class="item-title">
                 <div class="image-container">
