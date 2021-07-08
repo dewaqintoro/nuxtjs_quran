@@ -2,6 +2,7 @@
   <span class="flex">
     <div v-if="showIndex" class="number">
       <p>{{index+1}}</p>
+      <button @click="cek">cek</button>
     </div>
     <!-- <nuxt-link :to="`music/track/`+item.key"> -->
 
@@ -23,20 +24,24 @@
       </div>
     <!-- </nuxt-link> -->
     <div class="item-title besar">
-      <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
-      <p v-else class="font-bold">{{item.title}}</p>
-      <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}} ...</p>
-      <p v-else>{{item.subtitle}}</p>
+      <nuxt-link :to="baseRoute+item.key">
+        <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
+        <p v-else class="font-bold">{{item.title}}</p>
+        <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}} ...</p>
+        <p v-else>{{item.subtitle}}</p>
+      </nuxt-link>
       <button class="btn-nav focus:outline-none" @click="play(item)" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
         <font-awesome-icon v-else :icon="['fas', 'play']" />
       </button>
     </div>
     <div class="item-title kecil">
-      <p v-if="item.title.length > 15" class="font-bold">{{item.title.substring(0, 15)}}</p>
-      <p v-else class="font-bold">{{item.title}}</p>
-      <p v-if="item.subtitle.length > 15">{{item.subtitle.substring(0, 15)}} ...</p>
-      <p v-else>{{item.subtitle}}</p>
+      <nuxt-link :to="baseRoute+item.key">
+        <p v-if="item.title.length > 15" class="font-bold">{{item.title.substring(0, 15)}}</p>
+        <p v-else class="font-bold">{{item.title}}</p>
+        <p v-if="item.subtitle.length > 15">{{item.subtitle.substring(0, 15)}} ...</p>
+        <p v-else>{{item.subtitle}}</p>
+      </nuxt-link>
       <button class="btn-nav focus:outline-none" @click="play" >
         <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
         <font-awesome-icon v-else :icon="['fas', 'play']" />
@@ -72,12 +77,32 @@ export default {
   },
   setup(props, {emit}){
     const { route, store, app } = useContext()
+    const baseRoute = ref('')
     const idSurah = ref('')
     const isPlay = ref(false)
 
+    cekRoute()
     return {
       isPlay,
-      play
+      baseRoute,
+      play,
+      cek
+    }
+
+    function cek(){
+      console.log('item', props.item)
+      // if(route.value.name === 'music-artist-id')
+    }
+
+    function cekRoute(){
+      // console.log('route', route.value)
+      // if(route.value.name === 'music'){
+      //   baseRoute.value = 'music/track/'
+      //   baseRouteArtist.value = 'music/artist/'
+      // }
+      if(route.value.name === 'music-artist-id'){
+        baseRoute.value = '../../music/track/'
+      }
     }
 
     async function play(){
