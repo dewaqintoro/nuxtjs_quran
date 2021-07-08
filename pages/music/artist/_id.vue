@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div v-if="artistBioDone" class="mt-8">
+        <div v-if="artistDescDone" class="mt-8 px-2">
           <div class="flex justify-between mx-2 mb-2">
             <p class="text-xl font-bold ">ARTIST BIOGRAPHY</p>
           </div>
@@ -77,7 +77,6 @@
                         <div class="image-container">
                           <img :src="getCoverart(item)" alt="img" />
                         </div>
-                        
                           <p v-if="item.attributes.name.length > 20"><b>{{item.attributes.name.substring(0, 20)}}...</b></p>
                           <p v-else><b>{{item.attributes.name}}</b></p>
                       </div>
@@ -127,12 +126,12 @@ export default {
     
     const { route, store, app } = useContext()
     const idSurah = ref('')
-    const idAyat = ref('')
     const artistId = ref(route.value.params.id)
     const musicOn = ref(false)
     const artistDetail = ref([])
     const artistBioData = ref([])
     const artistTopTracks = ref([])
+    const artistDescDone = ref(false)
     const similarAartists = ref([])
     const artistDone = ref(false)
     const artistBioDone = ref(false)
@@ -167,6 +166,7 @@ export default {
       artistDone,
       artistBioDone,
       topTracksDone,
+      artistDescDone,
       isMore,
       isLess,
       cek,
@@ -245,10 +245,13 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/bio/${adamid}`
         const result = await axios.get(url);
-        console.log('getArtistBio', result?.data?.data[0])
+        // console.log('getArtistBio', result?.data?.data[0])
         if(result?.status === 200){
           artistBioData.value = result?.data?.data[0]
           similarAartists.value = result?.data?.data[0]?.views?.["similar-artists"]?.data
+          if(result?.data?.data[0]?.attributes?.artistBio){
+            artistDescDone.value = true
+          }
           setTimeout(() => {
             artistBioDone.value = true
           }, 100)
@@ -262,7 +265,7 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artisttoptracks/${artistId.value}`
         const result = await axios.get(url);
-        console.log('getArtistTopTracks', result)
+        // console.log('getArtistTopTracks', result)
         if(result?.status === 200){
           artistTopTracks.value = result?.data?.tracks
           setTimeout(() => {
