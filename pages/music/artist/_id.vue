@@ -6,7 +6,7 @@
         
         <div class="be container">
           <div v-if="artistDone">
-            <img class="track-img" :src="artistDetail.avatar" alt="img" />
+            <img class="track-img" :src="getAvatar(artistDetail)" alt="img" />
           </div>
 
           <div class="track-text">
@@ -16,24 +16,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div v-if="artistDone" class="ce">
-          <div class="container">
-            <div class="track-text">
-              <div class="section-btn-full">
-                  <a :href="artistDetail.hub.options[0].actions[0].uri" target="_blank">
-                    <div class="btn-full">
-                      <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
-                      <div class="text-playfull">
-                        <p>Play Full Song</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-            </div>
-          </div>
-        </div> -->
-
 
       </div>
 
@@ -184,7 +166,8 @@ export default {
       pauseAudio,
       play,
       getCoverart,
-      setMore
+      setMore,
+      getAvatar
     }
 
     function setMore() {
@@ -202,6 +185,11 @@ export default {
       let stre = str.replace("{w}", "180");
       let dew = stre.replace("{h}", "180");
       return dew
+    }
+
+    function getAvatar(item){
+      let str = item?.avatar || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+      return str
     }
 
     function playAudio() { 
@@ -228,7 +216,7 @@ export default {
     }
 
     function cek(){
-      console.log('artistBioData.value',artistBioData.value.attributes.artistBio)
+      console.log('artistDetail.value',artistDetail.value)
     }
 
     async function getArtist(){
