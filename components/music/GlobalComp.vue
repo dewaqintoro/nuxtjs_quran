@@ -2,7 +2,7 @@
   <span class="flex">
     <div v-if="showIndex" class="number">
       <p>{{index+1}}</p>
-      <button @click="cek">cek</button>
+      <!-- <button @click="cek">cek</button> -->
     </div>
     <!-- <nuxt-link :to="`music/track/`+item.key"> -->
 
@@ -116,7 +116,7 @@ export default {
     }
 
     function getImg(item){
-      let str = item?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625716883/Ngodingbentar/Music/bg-white_aws30t.png'
+      let str = item?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
       let stre = str.replace("{w}", "400");
       let dew = stre.replace("{h}", "400");
       return dew
@@ -169,17 +169,21 @@ a:hover{
   border-radius: 6px;
 }
 .centerItem {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%,-50%,0);
+  background: rgb(0, 0, 0);
+  @apply rounded-full;
 }
 
 .centerItem svg{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  color: white;
+  @apply justify-items-center m-auto flex;
 }
 
 .kecil{

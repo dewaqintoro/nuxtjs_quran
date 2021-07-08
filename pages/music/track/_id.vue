@@ -143,7 +143,6 @@ export default {
     const { route, store, app } = useContext()
     const idMusic = ref(route.value.params.id)
     const myTrack = ref([])
-    const playTrack = ref([])
     const myLyrics = ref([])
     const artistTopTracks = ref([])
     const similaritiesTrack = ref([])
@@ -200,7 +199,6 @@ export default {
       myAudio,
       mySubTitle,
       myTitle,
-      playTrack,
       musicOn,
       isMore,
       isLess,
@@ -332,7 +330,6 @@ export default {
       // console.log('item', item)
       isPlay.value = !isPlay.value
       musicOn.value = true
-      playTrack.value = item
       mySubTitle.value = item.subtitle
       myTitle.value = item.title
       myAudio.value = item?.hub?.actions[1]?.uri

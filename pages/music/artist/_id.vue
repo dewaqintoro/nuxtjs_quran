@@ -127,7 +127,6 @@ export default {
     const { route, store, app } = useContext()
     const idSurah = ref('')
     const artistId = ref(route.value.params.id)
-    const musicOn = ref(false)
     const artistDetail = ref([])
     const artistBioData = ref([])
     const artistTopTracks = ref([])
@@ -136,6 +135,12 @@ export default {
     const artistDone = ref(false)
     const artistBioDone = ref(false)
     const topTracksDone = ref(false)
+
+    const isPlay = ref(false)
+    const musicOn = ref(false)
+    const myAudio = ref('')
+    const myTitle = ref('')
+    const mySubTitle = ref('')
 
     const isMore = ref(false)
     const isLess = ref(true)
@@ -158,7 +163,6 @@ export default {
 
     return {
       myTheme,
-      musicOn,
       artistDetail,
       artistBioData,
       artistTopTracks,
@@ -169,6 +173,11 @@ export default {
       artistDescDone,
       isMore,
       isLess,
+      isPlay,
+      myAudio,
+      mySubTitle,
+      myTitle,
+      musicOn,
       cek,
       getArtist,
       playAudio,
@@ -196,27 +205,26 @@ export default {
     }
 
     function playAudio() { 
-      console.log('playAudio')
-      // var x = document.getElementById("myAudio"); 
-      // x.play(); 
+      // console.log('playAudio')
+      var x = document.getElementById("myAudio"); 
+      x.play(); 
     } 
 
     function pauseAudio() { 
-      console.log('pauseAudio')
-      // var x = document.getElementById("myAudio"); 
-      // x.pause(); 
+      // console.log('pauseAudio')
+      var x = document.getElementById("myAudio"); 
+      x.pause(); 
     }
     
     async function play(item){
-      console.log('play')
-      // isPlay.value = !isPlay.value
-      // musicOn.value = true
-      // mySubTitle.value = item.subtitle
-      // myTitle.value = item.title
-      // myAudio.value = item?.hub?.actions[1]?.uri
-      // setTimeout(() => {
-      //   playAudio()
-      // }, 100)
+      isPlay.value = !isPlay.value
+      musicOn.value = true
+      mySubTitle.value = item.subtitle
+      myTitle.value = item.title
+      myAudio.value = item?.hub?.actions[1]?.uri
+      setTimeout(() => {
+        playAudio()
+      }, 100)
     }
 
     function cek(){
