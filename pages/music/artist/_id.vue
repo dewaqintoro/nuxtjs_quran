@@ -38,6 +38,7 @@
       </div>
 
       <div class="section two container">
+        <!-- <button @click="cek">cek</button> -->
         <div class="top-global">
           <div class="flex justify-between mx-2 mb-2">
             <p v-if="artistDone" class="text-xl font-bold ">TOP SONGS BY {{artistDetail.name}} </p>
@@ -47,6 +48,35 @@
             <TopGlobal :globalTop20="artistTopTracks" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
           </div>
         </div>
+
+
+        <div class="mt-8">
+          <div class="flex justify-between mx-2 mb-2">
+            <p v-if="artistBioDone" class="text-xl font-bold ">Discover similar artists on Apple Music</p>
+          </div>
+          <hr/>
+          <div v-if="artistBioDone" class="artis-global">
+            <div class="dew">
+              <div class="artis-item" v-for="(item, index) in similarAartists" :key="index">
+                <!-- <nuxt-link :to="'music/artist/'+item.artists[0].id"> -->
+                  <div class="flex m-2">
+                    <div class="item-title">
+                      <div class="image-container">
+                        <img :src="getCoverart(item)" alt="img" />
+                      </div>
+                      <p v-if="item.attributes.name.length > 20"><b>{{item.attributes.name.substring(0, 20)}}...</b></p>
+                      <p v-else><b>{{item.attributes.name}}</b></p>
+                    </div>
+                  </div>
+                <!-- </nuxt-link> -->
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
     </div>
@@ -88,6 +118,7 @@ export default {
     const artistDetail = ref([])
     const artistBio = ref([])
     const artistTopTracks = ref([])
+    const similarAartists = ref([])
     const artistDone = ref(false)
     const artistBioDone = ref(false)
     const topTracksDone = ref(false)
@@ -114,6 +145,7 @@ export default {
       artistDetail,
       artistBio,
       artistTopTracks,
+      similarAartists,
       artistDone,
       artistBioDone,
       topTracksDone,
@@ -121,7 +153,15 @@ export default {
       getArtist,
       playAudio,
       pauseAudio,
-      play
+      play,
+      getCoverart
+    }
+
+    function getCoverart(item){
+      let str = item?.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+      let stre = str.replace("{w}", "180");
+      let dew = stre.replace("{h}", "180");
+      return dew
     }
 
     function playAudio() { 
@@ -149,7 +189,7 @@ export default {
     }
 
     function cek(){
-      console.log('artistDetail.value',artistDetail.value)
+      console.log('similarAartists.value',similarAartists.value)
     }
 
     async function getArtist(){
@@ -174,9 +214,10 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/bio/${adamid}`
         const result = await axios.get(url);
-        console.log('getArtistBio', result?.data?.data[0])
+        console.log('getArtistBio', result?.data?.data[0]?.views?.["similar-artists"])
         if(result?.status === 200){
-          artistBio.value = result?.data
+          artistBio.value = result?.data?.data[0]?.views
+          similarAartists.value = result?.data?.data[0]?.views?.["similar-artists"]?.data
           setTimeout(() => {
             artistBioDone.value = true
           }, 100)
@@ -206,6 +247,11 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.image-container img{
+  width: 150px;
+  height: 150px;
+  @apply rounded-full;
+}
 .artis-global{
   overflow-x: scroll;
 }
@@ -216,10 +262,7 @@ export default {
   margin: 0 5px;
   min-width: 180px;
   max-width: 220px;
-}
-
-.artis-item img{
-  border-radius: 10px;
+  text-align: center;
 }
 
 .be{
@@ -331,6 +374,15 @@ export default {
 }
 
 @media (max-width: 450px) {
+  .artis-item{
+    margin: 0 5px;
+    min-width: 140px;
+    max-width: 150px;
+  }
+  .image-container img{
+    width: 120px;
+    height: 120px;
+  }
   .two{
     @apply mt-8;
   }
