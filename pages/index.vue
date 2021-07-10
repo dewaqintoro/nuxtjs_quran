@@ -61,62 +61,89 @@
     <div class="example">
       <div class="content">
 
-      <div>
-        <div class="header-story">
-          <div class="dew">
-            <div class="item" v-for="(user, index) in dataUser" :key="index">
-              <img :src="user.img" />
-              <p v-if="user.name.length > 6">{{user.name.substring(0, 6)}}...</p>
-              <p v-else>{{user.name}}</p>
+        <div>
+          <div class="header-story">
+            <div class="dew">
+              <div class="item" v-for="(user, index) in dataUser" :key="index">
+                <img :src="user.img" />
+                <p v-if="user.name.length > 6">{{user.name.substring(0, 6)}}...</p>
+                <p v-else>{{user.name}}</p>
+              </div>
             </div>
           </div>
-        </div>
-        
-
-        <hr/>
-        <div class="home">
           
-          <div class="post">
-            <div class="home-account">
-              <div class="home-account-left">
-                <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
-                <p class="my-auto ml-2 font-bold text-lg">my name</p>
-              </div>
-              <div class="my-auto">
-                <button class="mx-2">
-                  <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
-                </button>
-              </div>
-            </div>
-            <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
-            <div>
 
-            </div>
-          </div>
-
-          <div class="post">
-            <div class="home-account">
-              <div class="home-account-left">
-                <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
-                <p class="my-auto ml-2 font-bold text-lg">my name</p>
+          <hr/>
+          <div class="home">
+            
+            <div class="post">
+              <div class="home-account">
+                <div class="home-account-left">
+                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
+                  <p class="my-auto ml-2 font-bold text-lg">my name</p>
+                </div>
+                <div class="my-auto">
+                  <button class="mx-2">
+                    <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
+                  </button>
+                </div>
               </div>
-              <div class="my-auto">
-                <button class="mx-2">
-                  <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
-                </button>
+              <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
+              <div>
+
               </div>
             </div>
-            <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
-            <div>
 
+            <div class="post">
+              <div class="home-account">
+                <div class="home-account-left">
+                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
+                  <p class="my-auto ml-2 font-bold text-lg">my name</p>
+                </div>
+                <div class="my-auto">
+                  <button class="mx-2">
+                    <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
+                  </button>
+                </div>
+              </div>
+              <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
+              <div>
+
+              </div>
             </div>
+
           </div>
 
         </div>
 
       </div>
-
     </div>
+
+    <div class="sikel">
+      <div class="sec-audio">
+        <div class="this-audio">
+          <div class="footer-icons">
+            <button>
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
+            </button>
+            <button>
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+            </button>
+            <button>
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
+            </button>
+            <button>
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
+            </button>
+            <button>
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
+            </button>
+            <!-- <button>
+              <img class="footer-img" src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
+            </button> -->
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -147,6 +174,14 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.footer-icons{
+  font-size: 25px;
+  @apply flex justify-between w-full px-4 py-2;
+}
+.footer-img{
+  width: 50px;
+  @apply rounded-full;
+}
 .post{
   @apply my-2;
 }
@@ -238,6 +273,24 @@ div.fixed {
   @apply rounded-full;
 }
 
+
+.sikel {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: white;
+   text-align: center;
+}
+.this-audio{
+  @apply justify-items-center mx-auto items-center text-center justify-center flex;
+}
+
+.my-audio{
+  @apply mb-4;
+  width: 80vw;
+  /* height: 35px; */
+}
 
 @media (max-width: 700px) {
 }
