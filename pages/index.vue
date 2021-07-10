@@ -2,7 +2,7 @@
 <span>
   <div class="main">
 
-    <div class="fixed">
+    <!-- <div class="fixed">
       <div class="header-main">
         <div class="ig-logo">
           <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883226/Ngodingbentar/pngegg_nb2ijc.png" />
@@ -91,16 +91,19 @@
         </div>
 
       </div>
-    </div>
+    </div> -->
+
+    <HomeComp v-if="thisRoute === 'home'" :dataPosts="dataPosts" :dataUser="dataUser" />
+    <ProfileComp v-if="thisRoute === 'profile'" />
 
     <div class="sikel">
       <div class="sec-audio">
         <div class="this-audio">
           <div class="footer-icons">
-            <button>
+            <button @click="setRoute('home')">
               <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
             </button>
-            <button>
+            <button @click="setRoute('search')">
               <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
             </button>
             <button>
@@ -109,12 +112,9 @@
             <button>
               <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
             </button>
-            <button>
+            <button @click="setRoute('profile')">
               <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
             </button>
-            <!-- <button>
-              <img class="footer-img" src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
-            </button> -->
           </div>
         </div>
       </div>
@@ -129,20 +129,31 @@
 <script>
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import dataJson from '~/data/ig.json'
+import HomeComp from '~/components/ig/HomeComp'
+import ProfileComp from '~/components/ig/ProfileComp'
 
 import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
+    HomeComp,
+    ProfileComp
   },
   setup(){
     const { store, route, app } = useContext()
     const dataUser = dataJson.stories
     const dataPosts = dataJson.posts
+    const thisRoute = ref('home')
 
     return {
       dataUser,
-      dataPosts
+      dataPosts,
+      thisRoute,
+      setRoute
+    }
+
+    function setRoute(x){
+      thisRoute.value = x
     }
 
   }
@@ -150,20 +161,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.btn-add{
-  background: rgb(10, 145, 235);
-  height: 30px;
-  color: white;
-  padding: 0px 7px;
-  border: 2px solid white;
-  margin-top: 42px;
-  margin-left: -30px;
-  @apply rounded-full font-bold;
-}
-.mirror{
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
+
 .footer-icons{
   font-size: 25px;
   @apply flex justify-between w-full px-4 py-2;
@@ -172,121 +170,10 @@ export default {
   width: 50px;
   @apply rounded-full;
 }
-.post{
-  @apply my-4;
-}
-.example {
-  background-color: white;
-  margin-top: 60px;
-  width: 100%;
-  height: 85vh;
-  border: 1px dotted black;
-  overflow-y: scroll;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.example::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.example {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.toltip{
-  background: rgb(190, 4, 4);
-  color: white;
-  position: absolute;
-  margin-top: -10px;
-  margin-left: -20px;
-  padding: 3px 5px ;
-  @apply rounded-full text-xs;
-}
-.home-account{
-  @apply px-4 mb-2 flex justify-between;
-}
-
-.home-account img{
-  width: 60px;
-  @apply rounded-full;
-}
-
-.home-account-left{
-  @apply flex justify-items-center my-auto;
-}
-
-div.fixed {
-  position: fixed;
-  top: 0;
-  background: white;
-  width: 100%;
-}
 
 .main{
   @apply min-h-full ;
 }
-
-.header-main{
-  background: white;
-  @apply flex justify-between py-2;
-}
-
-.ig-logo{
-  max-width: 120px;
-  @apply ml-2;
-}
-
-.my-icon{
-  font-size: 30px;
-}
-
-.post-icon{
-  font-size: 24px;
-}
-
-.header-story{
-  overflow-x: scroll;
-  -ms-overflow-style: none; 
-  scrollbar-width: none;
-}
-
-.header-story::-webkit-scrollbar {
-  display: none;
-}
-
-.dew{
-  @apply flex;
-}
-
-.item{
-  min-width: 90px;
-  @apply text-center p-2;
-}
-
-.itemS img{
-@apply text-center p-1;
-}
-.item-img{
-  border: 2px solid red;
-  @apply rounded-full p-1;
-}
-
-.item-img img{
-  @apply rounded-full;
-}
-
-.my-item-img{
-  @apply rounded-full p-1;
-}
-
-.my-item-img img{
-  min-width: 77px;
-  @apply rounded-full pt-1;
-}
-
-
 
 .sikel {
    position: fixed;
@@ -316,17 +203,5 @@ div.fixed {
     height: 35px;
   }
 }
-/* @screen tablet {
-}
-@screen mobile {
-  .input-search {
-    @apply my-2 text-lg;
-  }
-  .btn-search {
-    @apply my-2 text-lg font-semibold;
-  }
-  .input-search {
-    @apply px-4;
-  }
-} */
+
 </style>
