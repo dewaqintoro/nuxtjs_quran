@@ -105,9 +105,14 @@
                 <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
               </nuxt-link>
             </button>
-            <button @click="setRoute('search')">
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+            <button>
+              <nuxt-link to="/ig/search">
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+              </nuxt-link>
             </button>
+            <!-- <button @click="setRoute('search')">
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+            </button> -->
             <button>
               <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
             </button>

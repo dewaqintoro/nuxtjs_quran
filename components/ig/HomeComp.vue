@@ -13,8 +13,10 @@
             <font-awesome-icon class="my-icon" :icon="['far', 'heart']" />
           </button>
           <button class="mx-2">
-            <font-awesome-icon class="my-icon" :icon="['far', 'comment']" />
-            <span class="toltip">12</span>
+            <nuxt-link to="/ig/chat">
+              <font-awesome-icon class="my-icon" :icon="['far', 'comment']" />
+              <span class="toltip">12</span>
+            </nuxt-link>
           </button>
         </div>
       </div>
