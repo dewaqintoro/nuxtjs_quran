@@ -19,53 +19,24 @@
       </div>
     </div>
 
-    <!-- <div class="content">
-
-      <div>
-        <div class="header-story">
-          <div class="dew">
-            <div class="item" v-for="(user, index) in dataUser" :key="index">
-              <img :src="user.img" />
-              <p v-if="user.name.length > 6">{{user.name.substring(0, 6)}}...</p>
-              <p v-else>{{user.name}}</p>
-            </div>
-          </div>
-        </div>
-        
-
-        <hr class="mb-2"/>
-        <div class="home">
-          <div>
-            <div class="home-account">
-              <div class="home-account-left">
-                <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
-                <p class="my-auto ml-2 font-bold text-lg">my name</p>
-              </div>
-              <div class="my-auto">
-                <button class="mx-2">
-                  <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
-                </button>
-              </div>
-            </div>
-            <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
-            <div>
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div> -->
-
     <div class="example">
       <div class="content">
 
         <div>
           <div class="header-story">
             <div class="dew">
+              <div class="itemS">
+                <div class="my-item-img flex">
+                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+                  <span class="btn-add">+</span>
+                </div>
+                <p class="-mt-1 pl-1">Your story</p>
+              </div>
+
               <div class="item" v-for="(user, index) in dataUser" :key="index">
-                <img :src="user.img" />
+                <div class="item-img">
+                  <img :src="user.img" />
+                </div>
                 <p v-if="user.name.length > 6">{{user.name.substring(0, 6)}}...</p>
                 <p v-else>{{user.name}}</p>
               </div>
@@ -179,6 +150,16 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.btn-add{
+  background: rgb(10, 145, 235);
+  height: 30px;
+  color: white;
+  padding: 0px 7px;
+  border: 2px solid white;
+  margin-top: 42px;
+  margin-left: -30px;
+  @apply rounded-full font-bold;
+}
 .mirror{
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
@@ -283,9 +264,28 @@ div.fixed {
   min-width: 90px;
   @apply text-center p-2;
 }
-.item img{
+
+.itemS img{
+@apply text-center p-1;
+}
+.item-img{
+  border: 2px solid red;
+  @apply rounded-full p-1;
+}
+
+.item-img img{
   @apply rounded-full;
 }
+
+.my-item-img{
+  @apply rounded-full p-1;
+}
+
+.my-item-img img{
+  min-width: 77px;
+  @apply rounded-full pt-1;
+}
+
 
 
 .sikel {
