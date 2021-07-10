@@ -106,7 +106,7 @@ export default {
   setup(){
     const { store, route, app } = useContext()
     const dataUser = dataJson.stories
-    const dataPosts = dataJson.posts
+    const dataPosts = dataJson.galery
     const thisRoute = ref('home')
 
     const initTheme = computed(() => store.state.initTheme)

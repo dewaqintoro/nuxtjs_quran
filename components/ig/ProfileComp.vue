@@ -19,7 +19,7 @@
       </div>
       <div class="left">
         <div class="item">
-          <p class="text-xl">1</p>
+          <p class="text-xl">3</p>
           <p>Posts</p>
         </div>
         <div class="item">
@@ -71,19 +71,19 @@
 
     <div class="gallery">
       <div class="flex">
-        <div class="gallery-item">
-          <nuxt-link to="../ig/1">
-            <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        <div v-for="post in dataPosts" :key="post.id" class="gallery-item">
+          <nuxt-link :to="'../ig/'+post.id">
+            <img :src="post.postImg" />
           </nuxt-link>
         </div>
-        <div class="gallery-item">
+        <!-- <div class="gallery-item">
           <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
         </div>
         <div class="gallery-item">
           <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
-        </div>
+        </div> -->
       </div>
-      <div class="flex">
+      <!-- <div class="flex">
         <div class="gallery-item">
           <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
         </div>
@@ -93,7 +93,7 @@
         <div class="gallery-item">
           <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
         </div>
-      </div>
+      </div> -->
     </div>
 
     <Transition name="drawer">
@@ -108,11 +108,11 @@ import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-
 export default defineComponent({
   name: 'ProfileComp',
   props: {
-    // route: {
-    //   type: String,
-    //   required: false,
-    //   default: '/'
-    // },
+    dataPosts: {
+      type: Array,
+      required: false,
+      default: '/'
+    },
     // enable: {
     //   type: Boolean,
     //   required: false,

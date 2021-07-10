@@ -104,5 +104,37 @@
       "comments": 129,
       "created": 3
     }
+  ],
+  "galery": [
+    {
+      "id": 1,
+      "name": "Chat",
+      "profileImg" : "https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_3_v80fng.jpg",
+      "postImg" : "https://res.cloudinary.com/dewaqintoro/image/upload/v1625921561/Ngodingbentar/ig/Untitled-1_igvzza.png",
+      "likes": 200,
+      "description": "desscription caption",
+      "comments": 129,
+      "created": 3
+    },
+    {
+      "id": 2,
+      "name": "Youtube",
+      "profileImg" : "https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg",
+      "postImg" : "https://res.cloudinary.com/dewaqintoro/image/upload/v1625921727/Ngodingbentar/ig/Untitled-1e_r7x41u.png",
+      "likes": 200,
+      "description": "desscription caption",
+      "comments": 129,
+      "created": 3
+    },
+    {
+      "id": 3,
+      "name": "Management",
+      "profileImg" : "https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_1_o0bba8.jpg",
+      "postImg" : "https://res.cloudinary.com/dewaqintoro/image/upload/v1625921729/Ngodingbentar/ig/Untitled-1aa_xlraib.png",
+      "likes": 200,
+      "description": "desscription caption",
+      "comments": 129,
+      "created": 3
+    }
   ]
 }

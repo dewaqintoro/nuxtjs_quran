@@ -1,7 +1,7 @@
 <template>
 <span>
   <div class="main">
-    <ProfileComp />
+    <ProfileComp :dataPosts="dataPosts" />
 
     <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
       <div class="sec-audio">
@@ -49,7 +49,7 @@ export default {
   setup(){
     const { store, route, app } = useContext()
     const dataUser = dataJson.stories
-    const dataPosts = dataJson.posts
+    const dataPosts = dataJson.galery
     const thisRoute = ref('home')
 
     const initTheme = computed(() => store.state.initTheme)
