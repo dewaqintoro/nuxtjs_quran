@@ -76,39 +76,42 @@
           <hr/>
           <div class="home">
             
-            <div class="post">
+            <div class="post" v-for="post in dataPosts" :key="post.id">
               <div class="home-account">
                 <div class="home-account-left">
-                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
-                  <p class="my-auto ml-2 font-bold text-lg">my name</p>
+                  <img :src="post.profileImg" />
+                  <p class="my-auto ml-2 font-bold text-lg">{{post.name}}</p>
                 </div>
                 <div class="my-auto">
                   <button class="mx-2">
-                    <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
+                    <font-awesome-icon class="my-icon2" :icon="['fas', 'ellipsis-v']" />
                   </button>
                 </div>
               </div>
-              <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
-              <div>
-
-              </div>
-            </div>
-
-            <div class="post">
-              <div class="home-account">
-                <div class="home-account-left">
-                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883354/Ngodingbentar/Music/200x200cc_4_ek1wir.jpg" />
-                  <p class="my-auto ml-2 font-bold text-lg">my name</p>
+              <img :src="post.postImg" />
+              <div class="justify-between flex px-4 py-3">
+                <div class="flex">
+                  <button>
+                    <font-awesome-icon class="post-icon" :icon="['far', 'heart']" />
+                  </button>
+                  <button>
+                    <font-awesome-icon class="post-icon mx-4 mirror" :icon="['far', 'comment']" />
+                  </button>
+                  <button>
+                    <font-awesome-icon class="post-icon" :icon="['far', 'paper-plane']" />
+                  </button>
                 </div>
-                <div class="my-auto">
-                  <button class="mx-2">
-                    <font-awesome-icon class="my-icon" :icon="['fas', 'ellipsis-h']" />
+                <div>
+                  <button>
+                    <font-awesome-icon class="post-icon" :icon="['far', 'bookmark']" />
                   </button>
                 </div>
               </div>
-              <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883566/Ngodingbentar/Music/500x500cc_hkhll2.jpg"/>
-              <div>
-
+              <div class="px-4">
+                <p><b>590 likes</b></p>
+                <div><b>dewaqintoro</b> What hghg ... <button>more</button></div>
+                <p class="text-gray-400 ">View all 103 comments</p>
+                <p class="text-gray-400 text-xs ">2 hours ago <b>. See translation</b></p>
               </div>
             </div>
 
@@ -163,10 +166,12 @@ export default {
   },
   setup(){
     const { store, route, app } = useContext()
-    const dataUser = dataJson.data
+    const dataUser = dataJson.stories
+    const dataPosts = dataJson.posts
 
     return {
-      dataUser
+      dataUser,
+      dataPosts
     }
 
   }
@@ -174,6 +179,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.mirror{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 .footer-icons{
   font-size: 25px;
   @apply flex justify-between w-full px-4 py-2;
@@ -183,12 +192,13 @@ export default {
   @apply rounded-full;
 }
 .post{
-  @apply my-2;
+  @apply my-4;
 }
 .example {
   background-color: white;
+  margin-top: 60px;
   width: 100%;
-  height: 100vh;
+  height: 85vh;
   border: 1px dotted black;
   overflow-y: scroll;
 }
@@ -214,7 +224,7 @@ export default {
   @apply rounded-full text-xs;
 }
 .home-account{
-  @apply px-2 mb-2 flex justify-between;
+  @apply px-4 mb-2 flex justify-between;
 }
 
 .home-account img{
@@ -238,6 +248,7 @@ div.fixed {
 }
 
 .header-main{
+  background: white;
   @apply flex justify-between py-2;
 }
 
@@ -250,8 +261,11 @@ div.fixed {
   font-size: 30px;
 }
 
+.post-icon{
+  font-size: 24px;
+}
+
 .header-story{
-  margin-top: 60px;
   overflow-x: scroll;
   -ms-overflow-style: none; 
   scrollbar-width: none;
