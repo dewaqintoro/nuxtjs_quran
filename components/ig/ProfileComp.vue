@@ -12,6 +12,7 @@
         <font-awesome-icon class="header-icon" :icon="['fas', 'bars']" />
       </div>
     </div>
+
     <div class="account">
       <div>
         <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
@@ -31,9 +32,77 @@
         </div>
       </div>
     </div>
+
+    <div class="bio mt-4">
+      <p class="font-bold ">Dew</p>
+      <p class="text-gray-400">Personal Blog</p>
+      <p class="font-bold ">Front-End Web Developer</p>
+    </div>
+
+    <div class="mt-4">
+      <div class="flex justify-between">
+        <button class="btn-two">Edit Profile</button>
+        <button class="btn-two">Promotions</button>
+      </div>
+      <div class="flex justify-between mt-2">
+        <button class="btn-three">Insights</button>
+        <button class="btn-three">Add Shop</button>
+        <button class="btn-three">Email</button>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <p><b>Story Highlights</b></p>
+      <p>Keep your favorite stories on your profile</p>
+    </div>
+
+    <div class="flex justify-between mt-2">
+      <div class="tag-icon">
+        <button>
+          <font-awesome-icon class="header-icon" :icon="['fas', 'th']" />
+        </button>
+      </div>
+      <div class="tag-icon">
+        <button>
+          <font-awesome-icon class="header-icon" :icon="['fas', 'id-card-alt']" />
+        </button>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <div class="flex">
+        <div class="gallery-item">
+          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        </div>
+      </div>
+      <div class="flex">
+        <div class="gallery-item">
+          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <style lang="postcss" scoped>
+.gallery img{
+  min-width: 100px;
+}
+.gallery-item{
+  padding: 1px;
+}
 .header{
   @apply flex justify-between ;
 }
@@ -57,5 +126,23 @@
 }
 .account .item{
   @apply text-center font-bold;
+}
+.btn-two{
+  border: 1px solid rgb(160, 160, 160);
+  width: 48%;
+  border-radius: 5px;
+  padding: 5px 0px;
+  @apply font-bold;
+}
+.btn-three{
+  border: 1px solid rgb(160, 160, 160);
+  width: 31%;
+  border-radius: 5px;
+  padding: 5px 0px;
+  @apply font-bold;
+}
+.tag-icon{
+  width: 50%;
+  @apply text-center mx-auto border-b-2 py-2;
 }
 </style>
