@@ -1,6 +1,6 @@
 <template>
-  <div class="main px-4">
-    <div class="header mt-2">
+  <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="main px-4">
+    <div class="header pt-2">
       <div class="header-name">
         <p class="text-2xl font-bold">dewaqintoro</p>
         <span class="flex justify-center mt-3 ml-2">
@@ -72,7 +72,9 @@
     <div class="gallery">
       <div class="flex">
         <div class="gallery-item">
-          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+          <nuxt-link to="../ig/1">
+            <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
+          </nuxt-link>
         </div>
         <div class="gallery-item">
           <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
@@ -120,23 +122,12 @@ export default defineComponent({
   setup(props, { emit }) {
     const { store, route, app } = useContext()
     const isSetting = ref(false)
-    const thisSub = app.$cookies.get('sub')
-    const thisAudio = app.$cookies.get('audio')
     const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
 
-    if(!thisSub){
-      store.dispatch('setSub', 'On')
-    } else {
-      store.dispatch('getSub')
-    }
-    if(!thisAudio){
-      store.dispatch('setAudio', 'On')
-    } else {
-      store.dispatch('getAudio')
-    }
+
     if(thisTheme){
       store.dispatch('getTheme')
     } else {

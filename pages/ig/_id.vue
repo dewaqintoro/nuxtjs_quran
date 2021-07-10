@@ -2,51 +2,17 @@
 <span>
   <div class="main">
 
-    <!-- <div class="fixed">
-      <div class="header-main">
-        <div class="ig-logo">
-          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883226/Ngodingbentar/pngegg_nb2ijc.png" />
-        </div>
-        <div class="flex">
-          <button class="mr-3 ">
-            <font-awesome-icon class="my-icon" :icon="['far', 'heart']" />
-          </button>
-          <button class="mx-2">
-            <font-awesome-icon class="my-icon" :icon="['far', 'comment']" />
-            <span class="toltip">12</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="example">
+    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="example">
       <div class="content">
 
         <div>
-          <div class="header-story">
-            <div class="dew">
-              <div class="itemS">
-                <div class="my-item-img flex">
-                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
-                  <span class="btn-add">+</span>
-                </div>
-                <p class="-mt-1 pl-1">Your story</p>
-              </div>
-
-              <div class="item" v-for="(user, index) in dataUser" :key="index">
-                <div class="item-img">
-                  <img :src="user.img" />
-                </div>
-                <p v-if="user.name.length > 6">{{user.name.substring(0, 6)}}...</p>
-                <p v-else>{{user.name}}</p>
-              </div>
-            </div>
-          </div>
-          
-
-          <hr/>
           <div class="home">
-            
+            <div class="back">
+              <nuxt-link to="/ig/profile">
+                <font-awesome-icon class="icon-back" :icon="['fas', 'arrow-left']" />
+              </nuxt-link>
+              <p class="text-xl font-bold ml-8">Posts</p>
+            </div>
             <div class="post" v-for="post in dataPosts" :key="post.id">
               <div class="home-account">
                 <div class="home-account-left">
@@ -87,23 +53,19 @@
             </div>
 
           </div>
+          
 
         </div>
 
       </div>
-    </div> -->
-
-    <HomeComp v-if="thisRoute === 'home'" :dataPosts="dataPosts" :dataUser="dataUser" />
-    <ProfileComp v-if="thisRoute === 'profile'" />
+    </div>
 
     <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
       <div class="sec-audio">
         <div class="this-audio">
           <div class="footer-icons">
-            <button>
-              <nuxt-link to="/">
-                <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
-              </nuxt-link>
+            <button @click="setRoute('home')">
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
             </button>
             <button @click="setRoute('search')">
               <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
@@ -114,10 +76,8 @@
             <button>
               <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
             </button>
-            <button>
-              <nuxt-link to="/ig/profile">
-                <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
-              </nuxt-link>
+            <button @click="setRoute('profile')">
+              <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
             </button>
           </div>
         </div>
@@ -180,7 +140,16 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
+.back{
+  @apply flex ml-4 mt-4;
+}
+.icon-back{
+  font-size: 25px;
+}
+.mirror{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 .footer-icons{
   font-size: 25px;
   @apply flex justify-between w-full px-4 py-2;
@@ -189,17 +158,119 @@ export default {
   width: 50px;
   @apply rounded-full;
 }
+.post{
+  @apply my-4;
+}
+.example {
+  /* background-color: white; */
+  /* margin-top: 60px; */
+  width: 100%;
+  height: 100vh;
+  border: 1px dotted black;
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.home-account{
+  @apply px-4 mb-2 flex justify-between;
+}
+
+.home-account img{
+  width: 60px;
+  @apply rounded-full;
+}
+
+.home-account-left{
+  @apply flex justify-items-center my-auto;
+}
+
+div.fixed {
+  position: fixed;
+  top: 0;
+  /* background: white; */
+  width: 100%;
+}
 
 .main{
   @apply min-h-full ;
 }
+
+.header-main{
+  /* background: white; */
+  @apply flex justify-between py-2;
+}
+
+.ig-logo{
+  max-width: 120px;
+  @apply ml-2;
+}
+
+.my-icon{
+  font-size: 30px;
+}
+
+.post-icon{
+  font-size: 24px;
+}
+
+.header-story{
+  overflow-x: scroll;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
+.header-story::-webkit-scrollbar {
+  display: none;
+}
+
+.dew{
+  @apply flex;
+}
+
+.item{
+  min-width: 90px;
+  @apply text-center p-2;
+}
+
+.itemS img{
+@apply text-center p-1;
+}
+.item-img{
+  border: 2px solid red;
+  @apply rounded-full p-1;
+}
+
+.item-img img{
+  @apply rounded-full;
+}
+
+.my-item-img{
+  @apply rounded-full p-1;
+}
+
+.my-item-img img{
+  min-width: 77px;
+  @apply rounded-full pt-1;
+}
+
+
 
 .sikel {
    position: fixed;
    left: 0;
    bottom: 0;
    width: 100%;
-   /* background-color: white; */
+   background-color: white;
    text-align: center;
 }
 .this-audio{
@@ -222,5 +293,4 @@ export default {
     height: 35px;
   }
 }
-
 </style>

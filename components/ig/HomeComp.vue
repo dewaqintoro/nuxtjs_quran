@@ -2,13 +2,14 @@
 <span>
   <div class="main">
 
-    <div class="fixed">
+    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
       <div class="header-main">
         <div class="ig-logo">
-          <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883226/Ngodingbentar/pngegg_nb2ijc.png" />
+          <img v-if="!darkTheme" src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883226/Ngodingbentar/pngegg_nb2ijc.png" />
+          <img v-else src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625916132/Ngodingbentar/pngkey.com-instagram-png-13459_vjtwjq.png" />
         </div>
         <div class="flex">
-          <button class="mr-3 ">
+          <button class="mr-3 " @click="cek">
             <font-awesome-icon class="my-icon" :icon="['far', 'heart']" />
           </button>
           <button class="mx-2">
@@ -19,7 +20,7 @@
       </div>
     </div>
 
-    <div class="example">
+    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="example">
       <div class="content">
 
         <div>
@@ -87,6 +88,7 @@
             </div>
 
           </div>
+          
 
         </div>
 
@@ -124,7 +126,7 @@
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useAsync, useContext, watch } from '@nuxtjs/composition-api'
 import dataJson from '~/data/ig.json'
 
 import axios from 'axios'
@@ -147,7 +149,44 @@ export default {
     // const dataUser = dataJson.stories
     // const dataPosts = dataJson.posts
 
+    const initTheme = computed(() => store.state.initTheme)
+    const thisTheme = app.$cookies.get('theme')
+    const loadingTheme = computed(() => store.state.loadingTheme)
+    const storeTheme = computed(() => store.state.theme)
+    const darkTheme = ref(false)
+
+    if(thisTheme){
+      store.dispatch('getTheme')
+    } else {
+      store.dispatch('setTheme', initTheme.value)
+    }
+
+    watch(darkTheme, () => {
+      console.log("darkTheme: ", darkTheme.value)
+      // if(search.value.length === 0){
+      //   resultDone.value = false
+      // }
+    })
+
+    cek()
     return {
+      storeTheme,
+      loadingTheme,
+      darkTheme,
+      cek
+    }
+
+    function cek(){
+      // console.log('storeTheme', storeTheme.value.darktheme)
+      // setTimeout(() => {
+        
+      // }, 100)
+
+      if(storeTheme.value.darktheme === true){
+          darkTheme.value = true
+        }else{
+          darkTheme.value = false
+        }
     }
 
   }
@@ -181,7 +220,7 @@ export default {
   @apply my-4;
 }
 .example {
-  background-color: white;
+  /* background-color: white; */
   margin-top: 60px;
   width: 100%;
   height: 85vh;
@@ -225,7 +264,7 @@ export default {
 div.fixed {
   position: fixed;
   top: 0;
-  background: white;
+  /* background: white; */
   width: 100%;
 }
 
@@ -234,7 +273,7 @@ div.fixed {
 }
 
 .header-main{
-  background: white;
+  /* background: white; */
   @apply flex justify-between py-2;
 }
 

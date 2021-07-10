@@ -5,7 +5,8 @@ export const state = () => ({
   weather: [],
   initTheme: {
     darktheme: false,
-    background: '#f7f7f7',
+    // background: '#f7f7f7',
+    background: 'white',
     color: 'black',
     boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
   },
@@ -77,7 +78,8 @@ export const actions = {
     if(data.darktheme){
       const classObject= {
         'darktheme': false,
-        'background': '#f7f7f7',
+        // 'background': '#f7f7f7',
+        'background': 'white',
         'icon': 'sun',
         'color': 'black',
         'boxShadow':  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
