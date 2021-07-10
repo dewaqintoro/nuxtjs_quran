@@ -2,7 +2,7 @@
   <div>
     <div class="offline" v-if="$nuxt.isOffline">You are offline</div>
     <Nuxt />
-    <footer-comp v-if="!isAgama"/>
+    <!-- <footer-comp v-if="!isAgama"/> -->
   </div>
 </template>
 
