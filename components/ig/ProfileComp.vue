@@ -9,7 +9,7 @@
       </div>
       <div>
         <font-awesome-icon class="header-icon mr-2" :icon="['fas', 'plus-square']" />
-        <font-awesome-icon class="header-icon" :icon="['fas', 'bars']" />
+        <font-awesome-icon @click="doSetting" class="header-icon" :icon="['fas', 'bars']" />
       </div>
     </div>
 
@@ -57,14 +57,14 @@
     </div>
 
     <div class="flex justify-between mt-2">
-      <div class="tag-icon">
+      <div class="tag">
         <button>
-          <font-awesome-icon class="header-icon" :icon="['fas', 'th']" />
+          <font-awesome-icon :icon="['fas', 'th']" />
         </button>
       </div>
-      <div class="tag-icon">
+      <div class="tag">
         <button>
-          <font-awesome-icon class="header-icon" :icon="['fas', 'id-card-alt']" />
+          <font-awesome-icon :icon="['fas', 'id-card-alt']" />
         </button>
       </div>
     </div>
@@ -94,8 +94,80 @@
       </div>
     </div>
 
+    <Transition name="drawer">
+      <Settingcompig :theme="storeTheme" v-if="isSetting" @close="closeModal" />
+    </Transition>
+
   </div>
 </template>
+<script lang="ts">
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'ProfileComp',
+  props: {
+    // route: {
+    //   type: String,
+    //   required: false,
+    //   default: '/'
+    // },
+    // enable: {
+    //   type: Boolean,
+    //   required: false,
+    //   default: true
+    // },
+  },
+  setup(props, { emit }) {
+    const { store, route, app } = useContext()
+    const isSetting = ref(false)
+    const thisSub = app.$cookies.get('sub')
+    const thisAudio = app.$cookies.get('audio')
+    const initTheme = computed(() => store.state.initTheme)
+    const thisTheme = app.$cookies.get('theme')
+    const loadingTheme = computed(() => store.state.loadingTheme)
+    const storeTheme = computed(() => store.state.theme)
+
+    if(!thisSub){
+      store.dispatch('setSub', 'On')
+    } else {
+      store.dispatch('getSub')
+    }
+    if(!thisAudio){
+      store.dispatch('setAudio', 'On')
+    } else {
+      store.dispatch('getAudio')
+    }
+    if(thisTheme){
+      store.dispatch('getTheme')
+    } else {
+      store.dispatch('setTheme', initTheme.value)
+    }
+
+    return {
+      storeTheme,
+      loadingTheme,
+      isSetting,
+      cekData,
+      closeModal,
+      doSetting,
+      cek
+    }
+
+    function cek(){
+      console.log(props)
+    }
+    
+    function closeModal() {
+      isSetting.value = false
+    }
+    function doSetting() {
+      isSetting.value = true
+    }
+    function cekData() {
+    }
+  },
+})
+</script>
 <style lang="postcss" scoped>
 .gallery img{
   min-width: 100px;
@@ -141,8 +213,11 @@
   padding: 5px 0px;
   @apply font-bold;
 }
-.tag-icon{
+.tag{
   width: 50%;
   @apply text-center mx-auto border-b-2 py-2;
+}
+.tag svg{
+  font-size: 24px;
 }
 </style>
