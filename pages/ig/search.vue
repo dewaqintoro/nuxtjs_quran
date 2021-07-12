@@ -17,7 +17,7 @@
       </div>
       <div class="item w-1/3">
         <div>
-          <img src="@/assets/2.png"/>
+          <img src="@/assets/2.PNG"/>
         </div>
         <div>
           <img src="@/assets/200x200cc.jpg"/>
@@ -31,7 +31,7 @@
           <img src="@/assets/200x200cc(4).jpg"/>
         </div>
         <div>
-          <img src="@/assets/1.png"/>
+          <img src="@/assets/1.PNG"/>
         </div>
       </div>
       <div class="item w-2/3">

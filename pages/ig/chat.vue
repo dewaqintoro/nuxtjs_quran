@@ -2,7 +2,7 @@
 <span>
   <div class="main">
 
-    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
+    <div :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
       <div class="header-main">
         <div class="back">
           <nuxt-link to="/">
@@ -22,12 +22,58 @@
       </div>
     </div>
 
+    <div class="search mt-16">
+      <div class="search-wrap">
+        <font-awesome-icon class="icon-back text-gray-400" :icon="['fas', 'search']" />
+        <input class="input-search focus:outline-none pl-4" id="username" type="search"  placeholder="Search">
+        <font-awesome-icon class="icon-back text-gray-400" :icon="['fas', 'sliders-h']" />
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-2">
+      <div class="tag">
+        <button>
+          <p>Primary</p>
+        </button>
+      </div>
+      <div class="tag">
+        <button>
+          <p>General</p>
+        </button>
+      </div>
+      <div class="tag">
+        <button>
+          <p>0 Requests</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="chat">
+      <div class="flex my-2" v-for="chat in dataMessages" :key="chat.id">
+        <div>
+          <div>
+            <img :src="chat.img" />
+          </div>
+        </div>
+        <div class="chat-text">
+          <div class="sender">
+            <p>{{chat.sender}}</p>
+            <p> {{chat.meesage}} . {{chat.ago}}</p>
+          </div>
+          <div class="chat-icon">
+            <font-awesome-icon :icon="['fas', 'camera']" />
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </span>
 </template>
 
 <script>
 import { computed, ref, useAsync, useContext, watch } from '@nuxtjs/composition-api'
+import dataJson from '~/data/ig.json'
 
 import axios from 'axios'
 export default {
@@ -37,7 +83,7 @@ export default {
 
   setup(){
     const { store, route, app } = useContext()
-
+    const dataMessages = dataJson.messages
     const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
@@ -62,6 +108,7 @@ export default {
       storeTheme,
       loadingTheme,
       darkTheme,
+      dataMessages,
       cek
     }
 
@@ -83,6 +130,40 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.chat{
+  @apply mx-4;
+}
+.chat-text{
+  @apply flex justify-between w-full;
+}
+.sender{
+  @apply my-auto pl-4 font-bold;
+}
+.chat img{
+  width: 80px;
+  @apply rounded-full;
+}
+.chat-icon{
+  font-size: 30px;
+  @apply my-2;
+}
+
+.tag{
+  width: 50%;
+  @apply text-center mx-auto border-b-2 py-2;
+}
+
+.search{
+  @apply px-4;
+}
+.search-wrap{
+  background: rgb(241, 241, 241);
+  @apply flex w-full px-4 py-2 rounded-lg;
+}
+.input-search{
+  background: rgb(241, 241, 241);
+  @apply w-full;
+}
 .back{
   @apply flex ml-4;
 }
