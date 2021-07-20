@@ -1,18 +1,15 @@
 <template>
 <span >
-  <Navbar :enable="false" />
+  <Navbar to="/agama" />
   <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="">
+    <div class="font-arabic">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else>
-        <nuxt-link :to="item.route" v-for="item in dataDoa" :key="item.id">
-          <Cardcomp class="content" :theme="storeTheme" :item="item"/>
-        </nuxt-link>
-        <a :href="item.route" target="_blank" v-for="item in extIndex" :key="item.id">
-          <Cardcomp class="content" :theme="storeTheme" :item="item"/>
-        </a>
+        <div class="item" v-for="(doa, index) in dataDoa" :key="index">
+          <Cardcomp :theme="storeTheme" :doa="doa"/>
+        </div>
       </div>
     </div>
   </div>
@@ -23,12 +20,11 @@
 import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 import Loading from '@/components/Loading.vue'
-import dataJson from '~/data/myindex.json'
-import dataExt from '~/data/extIndex.json'
-import Cardcomp from '@/components/GlobalCardComp'
+import dataJson from '~/data/wirid.json'
+import Cardcomp from '~/components/wirid/WiridComp'
 
 export default {
-  name: 'Ngodingbentar',
+  name: 'Wirid',
   components: {
     Navbar,
     Loading,
@@ -37,7 +33,6 @@ export default {
   setup(_, {emit}){
     const { app, store } = useContext()
     const dataDoa = dataJson.data
-    const extIndex = dataExt.data
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
@@ -49,7 +44,6 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
-      extIndex,
       cek,
     }
 
@@ -80,17 +74,32 @@ export default {
   }
 }
 .main {
-  @apply pt-24 min-h-screen pb-8 px-40;
+  @apply pt-24 min-h-screen pb-8;
 }
-
-.content {
-  @apply my-8;
+@font-face {
+  font-family: "lpmq";
+  src: url(/fonts/lpmq.otf) format("opentype");
+  font-display: swap;
+}
+html {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+.font-arabic{
+  font-family: "lpmq", Arial, sans-serif;
+  line-height: 2;
 }
 .item {
   @apply px-8 mx-36 my-4;
 }
 .card {
-  @apply text-2xl p-4 rounded-lg;
+  @apply text-3xl p-4 rounded-lg;
 }
 @screen tablet {
   .main {
@@ -99,7 +108,7 @@ export default {
 }
 @screen mobile {
   .main {
-    @apply pt-20 px-8;
+    @apply pt-20;
   }
   .item {
     @apply mx-2 px-2;
