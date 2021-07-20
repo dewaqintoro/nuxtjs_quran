@@ -56,13 +56,7 @@
       "description": "",
       "icon": ""
     },
-    {
-      "id": 9,
-      "title": "Upload Image (Firebase)",
-      "route" : "firebase",
-      "description": "",
-      "icon": ""
-    },
+    
     {
       "id": 10,
       "title": "KBBI - Unofficial",

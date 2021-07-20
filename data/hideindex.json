@@ -6,6 +6,13 @@
       "route" : "editor",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 9,
+      "title": "Upload Image (Firebase)",
+      "route" : "firebase",
+      "description": "",
+      "icon": ""
     }
   ]
 }
