@@ -7,7 +7,7 @@
       <div class="sec-audio">
         <div class="this-audio">
           <div class="footer-icons">
-            <nuxt-link to="/">
+            <nuxt-link to="/ig">
               <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
             </nuxt-link>
             <button @click="setRoute('search')">

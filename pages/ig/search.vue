@@ -74,7 +74,7 @@
         <div class="this-audio">
           <div class="footer-icons">
             <button>
-              <nuxt-link to="/">
+              <nuxt-link to="/ig">
                 <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
               </nuxt-link>
             </button>

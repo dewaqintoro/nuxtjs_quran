@@ -58,8 +58,8 @@
     },
     {
       "id": 9,
-      "title": "Upload Image (Firebase)",
-      "route" : "firebase",
+      "title": "ig clone (mobile view)",
+      "route" : "ig",
       "description": "",
       "icon": ""
     },

@@ -268,9 +268,11 @@ div.fixed {
   top: 0;
   /* background: white; */
   width: 100%;
+  max-width: 450px;
 }
 
 .main{
+  max-width: 450px;
   @apply min-h-full ;
 }
 
