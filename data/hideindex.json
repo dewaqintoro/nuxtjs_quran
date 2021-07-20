@@ -1,0 +1,11 @@
+{
+  "index":[
+    {
+      "id": 12,
+      "title": "Rich Text",
+      "route" : "editor",
+      "description": "",
+      "icon": ""
+    }
+  ]
+}
