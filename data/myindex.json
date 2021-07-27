@@ -63,6 +63,7 @@
       "description": "",
       "icon": ""
     },
+    
     {
       "id": 10,
       "title": "KBBI - Unofficial",
@@ -72,15 +73,15 @@
     },
     {
       "id": 11,
-      "title": "Reksadana",
+      "title": "Invest",
       "route" : "invest",
       "description": "",
       "icon": ""
     },
     {
       "id": 12,
-      "title": "Rich Text",
-      "route" : "blog/editor",
+      "title": "Music",
+      "route" : "music",
       "description": "",
       "icon": ""
     },

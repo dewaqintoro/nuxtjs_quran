@@ -2,7 +2,7 @@
   <div>
     <div class="offline" v-if="$nuxt.isOffline">You are offline</div>
     <Nuxt />
-    <!-- <footer-comp v-if="!isAgama"/> -->
+    <footer-comp v-if="!isAgama && !isIg"/>
   </div>
 </template>
 
@@ -25,8 +25,15 @@ export default defineComponent({
       }
     })
 
+    const isIg = computed(() => {
+      if(route.value.name === 'ig'){
+        return true
+      }
+    })
+
     return {
-      isAgama
+      isAgama,
+      isIg
     }
   },
 })

@@ -23,8 +23,8 @@
     },
     {
       "id": 103,
-      "title": "Webstore Aruspinggir",
-      "route" : "http://ap-v3.herokuapp.com",
+      "title": "Online Store (Aruspinggir)",
+      "route" : "http://ap-v3.herokuapp.com/",
       "description": "",
       "icon": ""
     }
