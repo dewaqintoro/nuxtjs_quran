@@ -13,39 +13,32 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="content" :style="{ boxShadow: storeTheme.boxShadow }">
-        <!-- <button @click="cek">cek</button> -->
-        <p class="text-2xl font-bold">Nama : {{nabi.nama}}</p>
+        <p class="text-2xl font-bold">Nama : {{ nabi.nama }}</p>
         <!-- <p>Lahir : {{nabi.lahir}}</p> -->
-        <p class="text-xl font-bold">Tempat diutus: {{nabi.tempat}}</p>
+        <p class="text-xl font-bold">Tempat diutus: {{ nabi.tempat }}</p>
         <br/>
         <hr/>
         <div class="kisah text-xl">
-          {{nabi.kisah}}
+          {{ nabi.kisah }}
         </div>
       </div>
-      
     </div>
   </span>
 </template>
 <script>
-import { ref, useAsync, useContext, computed } from '@nuxtjs/composition-api'
-import Headerquran from '~/components/quran/Headerquran.vue'
-import Cardcomp from '~/components/quran/Cardcomp.vue'
-import Navbar from '~/components/Navbar.vue'
+import { ref, useContext, computed } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
 import axios from 'axios'
+import Navbar from '~/components/Navbar.vue'
 
 export default {
   name: 'Surah',
   components: {
-    Headerquran,
     Navbar,
-    Cardcomp,
     Loading
   },
-  setup(){
-    
-    const { route, store, app } = useContext()
+  setup () {
+    const { route, store } = useContext()
     const params = route.value?.params?.id
     getKisah()
     const nabi = ref([])
@@ -53,9 +46,9 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -67,26 +60,20 @@ export default {
       nabi,
       storeTheme,
       loading,
-      loadingTheme,
-      cek,
+      loadingTheme
     }
 
-    function cek() {
-      // console.log('nabi', nabi.value)
-      console.log('nabi', nabi.value.kisah)
-    }
-
-    async function getKisah(){
+    async function getKisah () {
       console.log('params', params)
-      try{
+      try {
         const url = `https://kisahnabi-api-zhirrr.vercel.app/api/searchnabi?q=${params}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         nabi.value = result?.data?.nabi
-        if(result?.data?.nabi){
+        if (result?.data?.nabi) {
           loading.value = false
         }
         // console.log('result', result?.data?.nabi)
-      } catch (err){
+      } catch (err) {
         console.log('err', err)
       }
     }
