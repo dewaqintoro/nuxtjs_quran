@@ -1,155 +1,116 @@
 <template>
-<span>
-  <div class="main">
+  <span>
+    <div class="main">
 
-    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
-      <div class="header-main">
-        <div class="ig-logo">
-          <img v-if="!darkTheme" src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883226/Ngodingbentar/pngegg_nb2ijc.png" />
-          <img v-else src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625916132/Ngodingbentar/pngkey.com-instagram-png-13459_vjtwjq.png" />
+      <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
+        <div class="header-main">
+          <div class="ig-logo">
+            <img v-if="!darkTheme" src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883226/Ngodingbentar/pngegg_nb2ijc.png">
+            <img v-else src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625916132/Ngodingbentar/pngkey.com-instagram-png-13459_vjtwjq.png">
+          </div>
+          <div class="flex">
+            <button class="mr-3 " @click="cek">
+              <font-awesome-icon class="my-icon" :icon="['far', 'heart']" />
+            </button>
+            <button class="mx-2">
+              <nuxt-link to="/ig/chat">
+                <font-awesome-icon class="my-icon" :icon="['far', 'comment']" />
+                <span class="toltip">12</span>
+              </nuxt-link>
+            </button>
+          </div>
         </div>
-        <div class="flex">
-          <button class="mr-3 " @click="cek">
-            <font-awesome-icon class="my-icon" :icon="['far', 'heart']" />
-          </button>
-          <button class="mx-2">
-            <nuxt-link to="/ig/chat">
-              <font-awesome-icon class="my-icon" :icon="['far', 'comment']" />
-              <span class="toltip">12</span>
-            </nuxt-link>
-          </button>
+      </div>
+
+      <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="example">
+        <div class="content">
+
+          <div>
+            <div class="header-story">
+              <div class="dew">
+                <div class="itemS">
+                  <div class="my-item-img flex">
+                    <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg">
+                    <span class="btn-add">+</span>
+                  </div>
+                  <p class="-mt-1 pl-1">Your story</p>
+                </div>
+
+                <div v-for="(user, index) in dataUser" :key="index" class="item">
+                  <div class="item-img">
+                    <img :src="user.img">
+                  </div>
+                  <p v-if="user.name.length > 6">{{ user.name.substring(0, 6) }}...</p>
+                  <p v-else>{{ user.name }}</p>
+                </div>
+              </div>
+            </div>
+            <hr/>
+            <div class="home">
+              <div v-for="post in dataPosts" :key="post.id" class="post">
+                <div class="home-account">
+                  <div class="home-account-left">
+                    <img :src="post.profileImg">
+                    <p class="my-auto ml-2 font-bold text-lg">{{ post.name }}</p>
+                  </div>
+                  <div class="my-auto">
+                    <button class="mx-2">
+                      <font-awesome-icon class="my-icon2" :icon="['fas', 'ellipsis-v']" />
+                    </button>
+                  </div>
+                </div>
+                <img :src="post.postImg">
+                <div class="justify-between flex px-4 py-3">
+                  <div class="flex">
+                    <button>
+                      <font-awesome-icon class="post-icon" :icon="['far', 'heart']" />
+                    </button>
+                    <button>
+                      <font-awesome-icon class="post-icon mx-4 mirror" :icon="['far', 'comment']" />
+                    </button>
+                    <button>
+                      <font-awesome-icon class="post-icon" :icon="['far', 'paper-plane']" />
+                    </button>
+                  </div>
+                  <div>
+                    <button>
+                      <font-awesome-icon class="post-icon" :icon="['far', 'bookmark']" />
+                    </button>
+                  </div>
+                </div>
+                <div class="px-4">
+                  <p><b>590 likes</b></p>
+                  <div><b>dewaqintoro</b> What hghg ... <button>more</button></div>
+                  <p class="text-gray-400 ">View all 103 comments</p>
+                  <p class="text-gray-400 text-xs ">2 hours ago <b>. See translation</b></p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
-
-    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="example">
-      <div class="content">
-
-        <div>
-          <div class="header-story">
-            <div class="dew">
-              <div class="itemS">
-                <div class="my-item-img flex">
-                  <img src="https://res.cloudinary.com/dewaqintoro/image/upload/v1625883355/Ngodingbentar/Music/200x200cc_2_vwvpll.jpg" />
-                  <span class="btn-add">+</span>
-                </div>
-                <p class="-mt-1 pl-1">Your story</p>
-              </div>
-
-              <div class="item" v-for="(user, index) in dataUser" :key="index">
-                <div class="item-img">
-                  <img :src="user.img" />
-                </div>
-                <p v-if="user.name.length > 6">{{user.name.substring(0, 6)}}...</p>
-                <p v-else>{{user.name}}</p>
-              </div>
-            </div>
-          </div>
-          
-
-          <hr/>
-          <div class="home">
-            
-            <div class="post" v-for="post in dataPosts" :key="post.id">
-              <div class="home-account">
-                <div class="home-account-left">
-                  <img :src="post.profileImg" />
-                  <p class="my-auto ml-2 font-bold text-lg">{{post.name}}</p>
-                </div>
-                <div class="my-auto">
-                  <button class="mx-2">
-                    <font-awesome-icon class="my-icon2" :icon="['fas', 'ellipsis-v']" />
-                  </button>
-                </div>
-              </div>
-              <img :src="post.postImg" />
-              <div class="justify-between flex px-4 py-3">
-                <div class="flex">
-                  <button>
-                    <font-awesome-icon class="post-icon" :icon="['far', 'heart']" />
-                  </button>
-                  <button>
-                    <font-awesome-icon class="post-icon mx-4 mirror" :icon="['far', 'comment']" />
-                  </button>
-                  <button>
-                    <font-awesome-icon class="post-icon" :icon="['far', 'paper-plane']" />
-                  </button>
-                </div>
-                <div>
-                  <button>
-                    <font-awesome-icon class="post-icon" :icon="['far', 'bookmark']" />
-                  </button>
-                </div>
-              </div>
-              <div class="px-4">
-                <p><b>590 likes</b></p>
-                <div><b>dewaqintoro</b> What hghg ... <button>more</button></div>
-                <p class="text-gray-400 ">View all 103 comments</p>
-                <p class="text-gray-400 text-xs ">2 hours ago <b>. See translation</b></p>
-              </div>
-            </div>
-
-          </div>
-          
-
-        </div>
-
-      </div>
-    </div>
-
-    <!-- <div class="sikel">
-      <div class="sec-audio">
-        <div class="this-audio">
-          <div class="footer-icons">
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
-
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext, watch } from '@nuxtjs/composition-api'
-import dataJson from '~/data/ig.json'
-
-import axios from 'axios'
+import { computed, ref, useContext, watch } from '@nuxtjs/composition-api'
 export default {
   name: 'Shorten',
-  components: {
-  },
-   props: {
+  props: {
     dataUser: {
       type: Array,
-      required: true,
+      required: true
     },
     dataPosts: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(){
-    const { store, route, app } = useContext()
-    // const dataUser = dataJson.stories
-    // const dataPosts = dataJson.posts
+  setup () {
+    const { store, app } = useContext()
 
     const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
@@ -157,17 +118,14 @@ export default {
     const storeTheme = computed(() => store.state.theme)
     const darkTheme = ref(false)
 
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
     }
 
     watch(darkTheme, () => {
-      console.log("darkTheme: ", darkTheme.value)
-      // if(search.value.length === 0){
-      //   resultDone.value = false
-      // }
+      console.log('darkTheme: ', darkTheme.value)
     })
 
     cek()
@@ -178,19 +136,13 @@ export default {
       cek
     }
 
-    function cek(){
-      // console.log('storeTheme', storeTheme.value.darktheme)
-      // setTimeout(() => {
-        
-      // }, 100)
-
-      if(storeTheme.value.darktheme === true){
-          darkTheme.value = true
-        }else{
-          darkTheme.value = false
-        }
+    function cek () {
+      if (storeTheme.value.darktheme === true) {
+        darkTheme.value = true
+      } else {
+        darkTheme.value = false
+      }
     }
-
   }
 }
 </script>
@@ -296,7 +248,7 @@ div.fixed {
 
 .header-story{
   overflow-x: scroll;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
@@ -333,9 +285,6 @@ div.fixed {
   min-width: 77px;
   @apply rounded-full pt-1;
 }
-
-
-
 .sikel {
    position: fixed;
    left: 0;

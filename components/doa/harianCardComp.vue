@@ -1,16 +1,20 @@
 <template>
-  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-    <button @click="show()" class="btn-show focus:outline-none">
-      <p class="font-bold text-lg">{{doa.title}}</p>
+  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow }">
+    <button class="btn-show focus:outline-none" @click="show()">
+      <p class="font-bold text-lg">
+        {{ doa.title }}
+      </p>
       <div v-if="isShow" class="content">
         <div class="arabic">
-          <p>{{doa.arabic}}</p>
+          <p>{{ doa.arabic }}</p>
         </div>
         <div class="text-left mt-4 text-xl">
           <p v-if="doa.latin"><i>( {{doa.latin}} )</i></p>
           <div v-if="subStore === 'On'">
-            <p class="font-bold pt-4">Terjemahan :</p>
-            <p>{{doa.translation}}</p>
+            <p class="font-bold pt-4">
+              Terjemahan :
+            </p>
+            <p>{{ doa.translation }}</p>
           </div>
         </div>
       </div>
@@ -25,23 +29,23 @@ export default {
   props: {
     theme: {
       type: Object,
-      required: true,
+      required: true
     },
     doa: {
       type: Object,
-      required: true,
+      required: true
     },
     index: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props){
-    const { route, store, app } = useContext()
+  setup (props) {
+    const { store } = useContext()
     const isShow = ref(false)
     const subStore = computed(() => store.state.sub)
     const bgId = computed(() => {
-      if(props.theme?.darktheme){
+      if (props.theme?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -52,19 +56,15 @@ export default {
       bgId,
       isShow,
       subStore,
-      cek,
       show
     }
 
-    function show(){
-      if(isShow.value === true){
+    function show () {
+      if (isShow.value === true) {
         isShow.value = false
       } else {
         isShow.value = true
       }
-    }
-    function cek(){
-      console.log('props', props.doa)
     }
   }
 }

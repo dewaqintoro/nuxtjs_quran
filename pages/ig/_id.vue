@@ -1,127 +1,106 @@
 <template>
-<span>
-  <div class="main">
+  <span>
+    <div class="main">
 
-    <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="example">
-      <div class="content">
+      <div v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color }" class="example">
+        <div class="content">
 
-        <div>
-          <div class="home">
-            <div class="back">
-              <nuxt-link to="/ig/profile">
-                <font-awesome-icon class="icon-back" :icon="['fas', 'arrow-left']" />
-              </nuxt-link>
-              <p class="text-xl font-bold ml-8">Posts</p>
+          <div>
+            <div class="home">
+              <div class="back">
+                <nuxt-link to="/ig/profile">
+                  <font-awesome-icon class="icon-back" :icon="['fas', 'arrow-left']" />
+                </nuxt-link>
+                <p class="text-xl font-bold ml-8">Posts</p>
+              </div>
+              <div v-for="post in dataPosts" :key="post.id" class="post">
+                <div class="home-account">
+                  <div class="home-account-left">
+                    <img :src="post.profileImg">
+                    <p class="my-auto ml-2 font-bold text-lg">{{ post.name }}</p>
+                  </div>
+                  <div class="my-auto">
+                    <button class="mx-2">
+                      <font-awesome-icon class="my-icon2" :icon="['fas', 'ellipsis-v']" />
+                    </button>
+                  </div>
+                </div>
+                <img :src="post.postImg">
+                <div class="justify-between flex px-4 py-3">
+                  <div class="flex">
+                    <button>
+                      <font-awesome-icon class="post-icon" :icon="['far', 'heart']" />
+                    </button>
+                    <button>
+                      <font-awesome-icon class="post-icon mx-4 mirror" :icon="['far', 'comment']" />
+                    </button>
+                    <button>
+                      <font-awesome-icon class="post-icon" :icon="['far', 'paper-plane']" />
+                    </button>
+                  </div>
+                  <div>
+                    <button>
+                      <font-awesome-icon class="post-icon" :icon="['far', 'bookmark']" />
+                    </button>
+                  </div>
+                </div>
+                <div class="px-4">
+                  <p><b>590 likes</b></p>
+                  <div><b>dewaqintoro</b> What hghg ... <button>more</button></div>
+                  <p class="text-gray-400 ">View all 103 comments</p>
+                  <p class="text-gray-400 text-xs ">2 hours ago <b>. See translation</b></p>
+                </div>
+              </div>
             </div>
-            <div class="post" v-for="post in dataPosts" :key="post.id">
-              <div class="home-account">
-                <div class="home-account-left">
-                  <img :src="post.profileImg" />
-                  <p class="my-auto ml-2 font-bold text-lg">{{post.name}}</p>
-                </div>
-                <div class="my-auto">
-                  <button class="mx-2">
-                    <font-awesome-icon class="my-icon2" :icon="['fas', 'ellipsis-v']" />
-                  </button>
-                </div>
-              </div>
-              <img :src="post.postImg" />
-              <div class="justify-between flex px-4 py-3">
-                <div class="flex">
-                  <button>
-                    <font-awesome-icon class="post-icon" :icon="['far', 'heart']" />
-                  </button>
-                  <button>
-                    <font-awesome-icon class="post-icon mx-4 mirror" :icon="['far', 'comment']" />
-                  </button>
-                  <button>
-                    <font-awesome-icon class="post-icon" :icon="['far', 'paper-plane']" />
-                  </button>
-                </div>
-                <div>
-                  <button>
-                    <font-awesome-icon class="post-icon" :icon="['far', 'bookmark']" />
-                  </button>
-                </div>
-              </div>
-              <div class="px-4">
-                <p><b>590 likes</b></p>
-                <div><b>dewaqintoro</b> What hghg ... <button>more</button></div>
-                <p class="text-gray-400 ">View all 103 comments</p>
-                <p class="text-gray-400 text-xs ">2 hours ago <b>. See translation</b></p>
-              </div>
-            </div>
-
           </div>
-          
-
         </div>
-
       </div>
-    </div>
-
-    <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
-      <div class="sec-audio">
-        <div class="this-audio">
-          <div class="footer-icons">
-            <button @click="setRoute('home')">
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
-            </button>
-            <button @click="setRoute('search')">
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
-            </button>
-            <button @click="setRoute('profile')">
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
-            </button>
+      <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
+        <div class="sec-audio">
+          <div class="this-audio">
+            <div class="footer-icons">
+              <button @click="setRoute('home')">
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
+              </button>
+              <button @click="setRoute('search')">
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+              </button>
+              <button>
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
+              </button>
+              <button>
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
+              </button>
+              <button @click="setRoute('profile')">
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import dataJson from '~/data/ig.json'
-import HomeComp from '~/components/ig/HomeComp'
-import ProfileComp from '~/components/ig/ProfileComp'
-
-import axios from 'axios'
 export default {
   name: 'Shorten',
-  components: {
-    HomeComp,
-    ProfileComp
-  },
-  setup(){
-    const { store, route, app } = useContext()
+  setup () {
+    const { store, app } = useContext()
     const dataUser = dataJson.stories
     const dataPosts = dataJson.galery
     const thisRoute = ref('home')
-
     const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-
-
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
     }
-
-
     return {
       dataUser,
       dataPosts,
@@ -131,10 +110,9 @@ export default {
       setRoute
     }
 
-    function setRoute(x){
+    function setRoute (x) {
       thisRoute.value = x
     }
-
   }
 }
 </script>
@@ -225,7 +203,7 @@ div.fixed {
 
 .header-story{
   overflow-x: scroll;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
@@ -262,9 +240,6 @@ div.fixed {
   min-width: 77px;
   @apply rounded-full pt-1;
 }
-
-
-
 .sikel {
    position: fixed;
    left: 0;

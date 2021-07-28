@@ -1,8 +1,6 @@
 <template>
-<span>
   <div class="main">
-    <ProfileComp :dataPosts="dataPosts" />
-
+    <ProfileComp :data-posts="dataPosts" />
     <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
       <div class="sec-audio">
         <div class="this-audio">
@@ -28,26 +26,20 @@
         </div>
       </div>
     </div>
-
   </div>
-</span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import dataJson from '~/data/ig.json'
-import HomeComp from '~/components/ig/HomeComp'
 import ProfileComp from '~/components/ig/ProfileComp'
-
-import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
-    HomeComp,
     ProfileComp
   },
-  setup(){
-    const { store, route, app } = useContext()
+  setup () {
+    const { store, app } = useContext()
     const dataUser = dataJson.stories
     const dataPosts = dataJson.galery
     const thisRoute = ref('home')
@@ -57,13 +49,11 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
 
-
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
     }
-
 
     return {
       dataUser,
@@ -74,10 +64,9 @@ export default {
       setRoute
     }
 
-    function setRoute(x){
+    function setRoute (x) {
       thisRoute.value = x
     }
-
   }
 }
 </script>

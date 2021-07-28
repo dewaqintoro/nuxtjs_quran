@@ -1,79 +1,67 @@
 <template>
-<span>
-  <div class="main">
-    <HomeComp v-if="thisRoute === 'home'" :dataPosts="dataPosts" :dataUser="dataUser" />
-    <ProfileComp v-if="thisRoute === 'profile'" />
+  <span>
+    <div class="main">
+      <HomeComp v-if="thisRoute === 'home'" :data-posts="dataPosts" :data-user="dataUser" />
+      <ProfileComp v-if="thisRoute === 'profile'" />
 
-    <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
-      <div class="sec-audio">
-        <div class="this-audio">
-          <div class="footer-icons">
-            <button>
-              <nuxt-link to="/ig">
-                <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
-              </nuxt-link>
-            </button>
-            <button>
-              <nuxt-link to="/ig/search">
-                <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
-              </nuxt-link>
-            </button>
-            <!-- <button @click="setRoute('search')">
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
-            </button> -->
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
-            </button>
-            <button>
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
-            </button>
-            <button>
-              <nuxt-link to="/ig/profile">
-                <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
-              </nuxt-link>
-            </button>
+      <div v-if="!loadingTheme" class="sikel" :style="{ background: storeTheme.background, color: storeTheme.color }">
+        <div class="sec-audio">
+          <div class="this-audio">
+            <div class="footer-icons">
+              <button>
+                <nuxt-link to="/ig">
+                  <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
+                </nuxt-link>
+              </button>
+              <button>
+                <nuxt-link to="/ig/search">
+                  <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+                </nuxt-link>
+              </button>
+              <button>
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
+              </button>
+              <button>
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'shopping-bag']" />
+              </button>
+              <button>
+                <nuxt-link to="/ig/profile">
+                  <font-awesome-icon class="footer-icon" :icon="['fas', 'user']" />
+                </nuxt-link>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import dataJson from '~/data/ig.json'
 import HomeComp from '~/components/ig/HomeComp'
 import ProfileComp from '~/components/ig/ProfileComp'
-
-import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
     HomeComp,
     ProfileComp
   },
-  setup(){
-    const { store, route, app } = useContext()
+  setup () {
+    const { store, app } = useContext()
     const dataUser = dataJson.stories
     const dataPosts = dataJson.posts
     const thisRoute = ref('home')
-
     const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-
-
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
     }
-
 
     return {
       dataUser,
@@ -84,10 +72,9 @@ export default {
       setRoute
     }
 
-    function setRoute(x){
+    function setRoute (x) {
       thisRoute.value = x
     }
-
   }
 }
 </script>

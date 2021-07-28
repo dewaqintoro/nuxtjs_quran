@@ -1,88 +1,81 @@
 <template>
-<span>
-  <div class="main">
-
-    <div :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
-      <div class="header-main">
-        <div class="back">
-          <nuxt-link to="/">
-            <font-awesome-icon class="icon-back" :icon="['fas', 'arrow-left']" />
-          </nuxt-link>
-          <p class="text-xl font-bold ml-8">dewaqintoro</p>
+  <span>
+    <div class="main">
+      <div :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
+        <div class="header-main">
+          <div class="back">
+            <nuxt-link to="/">
+              <font-awesome-icon class="icon-back" :icon="['fas', 'arrow-left']" />
+            </nuxt-link>
+            <p class="text-xl font-bold ml-8">dewaqintoro</p>
+          </div>
+          <div class="flex">
+            <button class="mr-3 ">
+              <font-awesome-icon class="my-icon" :icon="['fas', 'bars']" />
+            </button>
+            <button class="mx-2 " @click="cek">
+              <font-awesome-icon class="my-icon" :icon="['far', 'edit']" />
+            </button>
+          </div>
         </div>
-        <div class="flex">
-          <button class="mr-3 ">
-            <font-awesome-icon class="my-icon" :icon="['fas', 'bars']" />
-          </button>
-          <button class="mx-2 " @click="cek">
-            <font-awesome-icon class="my-icon" :icon="['far', 'edit']" />
-          </button>
-          
+      </div>
+
+      <div class="search mt-16">
+        <div class="search-wrap">
+          <font-awesome-icon class="icon-back text-gray-400" :icon="['fas', 'search']" />
+          <input id="username" class="input-search focus:outline-none pl-4" type="search" placeholder="Search">
+          <font-awesome-icon class="icon-back text-gray-400" :icon="['fas', 'sliders-h']" />
         </div>
       </div>
-    </div>
 
-    <div class="search mt-16">
-      <div class="search-wrap">
-        <font-awesome-icon class="icon-back text-gray-400" :icon="['fas', 'search']" />
-        <input class="input-search focus:outline-none pl-4" id="username" type="search"  placeholder="Search">
-        <font-awesome-icon class="icon-back text-gray-400" :icon="['fas', 'sliders-h']" />
+      <div class="flex justify-between mt-2">
+        <div class="tag">
+          <button>
+            <p>Primary</p>
+          </button>
+        </div>
+        <div class="tag">
+          <button>
+            <p>General</p>
+          </button>
+        </div>
+        <div class="tag">
+          <button>
+            <p>0 Requests</p>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="flex justify-between mt-2">
-      <div class="tag">
-        <button>
-          <p>Primary</p>
-        </button>
-      </div>
-      <div class="tag">
-        <button>
-          <p>General</p>
-        </button>
-      </div>
-      <div class="tag">
-        <button>
-          <p>0 Requests</p>
-        </button>
-      </div>
-    </div>
-
-    <div class="chat">
-      <div class="flex my-2" v-for="chat in dataMessages" :key="chat.id">
-        <div>
+      <div class="chat">
+        <div v-for="chat in dataMessages" :key="chat.id" class="flex my-2">
           <div>
-            <img :src="chat.img" />
+            <div>
+              <img :src="chat.img">
+            </div>
           </div>
-        </div>
-        <div class="chat-text">
-          <div class="sender">
-            <p>{{chat.sender}}</p>
-            <p> {{chat.meesage}} . {{chat.ago}}</p>
-          </div>
-          <div class="chat-icon">
-            <font-awesome-icon :icon="['fas', 'camera']" />
+          <div class="chat-text">
+            <div class="sender">
+              <p>{{ chat.sender }}</p>
+              <p> {{ chat.meesage }} . {{ chat.ago }}</p>
+            </div>
+            <div class="chat-icon">
+              <font-awesome-icon :icon="['fas', 'camera']" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </div>
-</span>
+    </div>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext, watch } from '@nuxtjs/composition-api'
+import { computed, ref, useContext, watch } from '@nuxtjs/composition-api'
 import dataJson from '~/data/ig.json'
-
-import axios from 'axios'
 export default {
   name: 'Shorten',
-  components: {
-  },
-
-  setup(){
-    const { store, route, app } = useContext()
+  setup () {
+    const { store, app } = useContext()
     const dataMessages = dataJson.messages
     const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
@@ -90,17 +83,14 @@ export default {
     const storeTheme = computed(() => store.state.theme)
     const darkTheme = ref(false)
 
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
     }
 
     watch(darkTheme, () => {
-      console.log("darkTheme: ", darkTheme.value)
-      // if(search.value.length === 0){
-      //   resultDone.value = false
-      // }
+      console.log('darkTheme: ', darkTheme.value)
     })
 
     cek()
@@ -112,19 +102,13 @@ export default {
       cek
     }
 
-    function cek(){
-      // console.log('storeTheme', storeTheme.value.darktheme)
-      // setTimeout(() => {
-        
-      // }, 100)
-
-      if(storeTheme.value.darktheme === true){
-          darkTheme.value = true
-        }else{
-          darkTheme.value = false
-        }
+    function cek () {
+      if (storeTheme.value.darktheme === true) {
+        darkTheme.value = true
+      } else {
+        darkTheme.value = false
+      }
     }
-
   }
 }
 </script>
@@ -171,7 +155,6 @@ export default {
   font-size: 25px;
 }
 
-
 div.fixed {
   position: fixed;
   top: 0;
@@ -203,7 +186,7 @@ div.fixed {
 
 .header-story{
   overflow-x: scroll;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
@@ -240,9 +223,6 @@ div.fixed {
   min-width: 77px;
   @apply rounded-full pt-1;
 }
-
-
-
 .sikel {
    position: fixed;
    left: 0;
