@@ -2,24 +2,25 @@
   <div class="myChart">
     <ClientOnly>
       <div id="chart">
-        <apexchart v-if="isLimit" type="bar" height="600" :options="limitChartOptions" :series="limitSeries"></apexchart>
-        <apexchart v-else type="bar" height="650" :options="chartOptions" :series="series"></apexchart>
+        <apexchart v-if="isLimit" type="bar" height="600" :options="limitChartOptions" :series="limitSeries" />
+        <apexchart v-else type="bar" height="650" :options="chartOptions" :series="series" />
       </div>
       <div class="flex place-items-center">
-        <button :class="{isAll: allActive, isTen: tenActive}" @click="updateShowData" class="switch">{{btnShow}}</button>
+        <button :class="{isAll: allActive, isTen: tenActive}" class="switch" @click="updateShowData">
+          {{ btnShow }}
+        </button>
       </div>
     </ClientOnly>
   </div>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { ref } from '@nuxtjs/composition-api'
 import dataJson from '~/data/prov.json'
 
 export default {
   name: 'CovidBarRecovered',
-  setup(props, {emit}){
-    const { app, store } = useContext()
+  setup () {
     const myProv = dataJson.list_data
     const prov = myProv.map((p) => {
       return p.key
@@ -27,20 +28,16 @@ export default {
     const recovered = myProv.map((p) => {
       return p.jumlah_sembuh
     })
-    
-    const limitProv= ref([])
+    const limitProv = ref([])
     const limitRecovered = ref([])
-
     const isLimit = ref(true)
-    
-
-    const series= [
+    const series = [
       {
         name: 'Sembuh',
         data: recovered
       }
     ]
-    const chartOptions= {
+    const chartOptions = {
       chart: {
         type: 'bar',
         height: 350
@@ -48,27 +45,27 @@ export default {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
+          horizontal: true
         }
       },
       dataLabels: {
         enabled: false
       },
       xaxis: {
-        categories: prov,
+        categories: prov
       },
       fill: {
         colors: '#10ac84'
       }
     }
 
-    const limitSeries= [
+    const limitSeries = [
       {
         name: 'Sembuh',
         data: limitRecovered.value
       }
     ]
-    const limitChartOptions= {
+    const limitChartOptions = {
       chart: {
         type: 'bar',
         height: 350
@@ -76,24 +73,22 @@ export default {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
+          horizontal: true
         }
       },
       dataLabels: {
         enabled: false
       },
       xaxis: {
-        categories: limitProv.value,
+        categories: limitProv.value
       },
       fill: {
         colors: '#10ac84'
       }
     }
-
-    const tenActive= ref(true)
-    const allActive= ref(false)
+    const tenActive = ref(true)
+    const allActive = ref(false)
     const btnShow = ref('Semua Data')
-    
     setLimitCases()
     return {
       isLimit,
@@ -107,13 +102,9 @@ export default {
       updateShowData
     }
 
-    async function cek(){
-      console.log('death.value', death.value)
-    }
-
-    function updateShowData(){
+    function updateShowData () {
       isLimit.value = !isLimit.value
-      if(btnShow.value === 'Semua Data'){
+      if (btnShow.value === 'Semua Data') {
         btnShow.value = '15 Data'
         tenActive.value = true
         allActive.value = false
@@ -124,20 +115,19 @@ export default {
       }
     }
 
-    async function setLimitCases(){
-      prov.map((p) => {
-        if(limitProv.value.length < 15 ){
+    function setLimitCases () {
+      prov.forEach((p) => {
+        if (limitProv.value.length < 15) {
           limitProv.value.push(p)
         }
       })
 
-      recovered.map((p) => {
-        if(limitRecovered.value.length < 15 ){
+      recovered.forEach((p) => {
+        if (limitRecovered.value.length < 15) {
           limitRecovered.value.push(p)
         }
       })
     }
-
   }
 }
 </script>

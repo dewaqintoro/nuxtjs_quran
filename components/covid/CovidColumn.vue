@@ -3,9 +3,8 @@
     <p>Jenis Kelamin Positif Covid-19</p>
     <div class="myChart">
       <ClientOnly>
-        <!-- <button @click="cek">cek col</button> -->
         <div id="chart">
-          <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+          <apexchart type="bar" height="350" :options="chartOptions" :series="series" />
         </div>
       </ClientOnly>
     </div>
@@ -13,21 +12,16 @@
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Loading from '@/components/Loading.vue'
+import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'CovidColumn',
-  components: {
-  },
   props: {
     ProvData: {
-      required: true,
+      required: true
     }
   },
-  setup(props, {emit}){
-    const { app, store } = useContext()
-
+  setup (props) {
     const PositifL = computed(() => props.ProvData?.kasus?.jenis_kelamin?.list_data[0].doc_count || '')
     const PositifP = computed(() => props.ProvData?.kasus?.jenis_kelamin?.list_data[1].doc_count || '')
     const MeninggalL = computed(() => props.ProvData?.meninggal?.jenis_kelamin?.list_data[0].doc_count || '')
@@ -35,11 +29,11 @@ export default {
     const SembuhL = computed(() => props.ProvData?.sembuh?.jenis_kelamin?.list_data[0].doc_count || '')
     const SembuhP = computed(() => props.ProvData?.sembuh?.jenis_kelamin?.list_data[1].doc_count || '')
 
-    const series= computed(() => 
+    const series = computed(() =>
       [
         {
           name: 'Laki',
-          data: [PositifL.value.toString().substring(0, 4) , SembuhL.value.toString().substring(0, 4), MeninggalL.value.toString().substring(0, 4)]
+          data: [PositifL.value.toString().substring(0, 4), SembuhL.value.toString().substring(0, 4), MeninggalL.value.toString().substring(0, 4)]
         }, {
           name: 'Perempuan',
           data: [PositifP.value.toString().substring(0, 4), SembuhP.value.toString().substring(0, 4), MeninggalP.value.toString().substring(0, 4)]
@@ -56,7 +50,7 @@ export default {
           horizontal: false,
           columnWidth: '55%',
           endingShape: 'rounded'
-        },
+        }
       },
       dataLabels: {
         enabled: false
@@ -67,7 +61,7 @@ export default {
         colors: ['transparent']
       },
       xaxis: {
-        categories: ['Kasus', 'Sembuh', 'Meninggal'],
+        categories: ['Kasus', 'Sembuh', 'Meninggal']
       },
       yaxis: {
         title: {
@@ -79,27 +73,18 @@ export default {
       },
       tooltip: {
         y: {
-          formatter: function (val) {
-            return val + "%"
+          formatter (val) {
+            return val + '%'
           }
         }
       }
     }
-    
-    
     return {
       series,
       chartOptions,
       PositifL,
-      PositifP,
-      cek
+      PositifP
     }
-    async function cek(){
-      console.log('props.ProvData', props.ProvData)
-      console.log('PositifL.value', PositifL.value)
-      console.log(typeof props.ProvData)
-    }
-
   }
 }
 </script>
