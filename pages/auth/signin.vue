@@ -32,40 +32,36 @@
         <div>
           <button class="signin mt-4 focus:outline-none" @click="login">Masuk</button>
         </div>
-        
-        
       </div>
     </div>
   </div>
 </template>
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
+import { ref } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
 export default {
   name: 'SignIn',
-  setup() {
+  setup () {
     const values = ref({
       email: 'dew',
-      password: 'ssss',
+      password: 'ssss'
     })
 
-    return { values , login}
+    return { values, login }
 
-    async function login() {
-      try{
-        const url = `https://ap-v3.herokuapp.com/api/users/signin`
-        const result = await axios.post(url, values.value);
-        if(result.status === 200){
-          localStorage.setItem('userInfoNB', JSON.stringify(result.data));
+    async function login () {
+      try {
+        const url = 'https://ap-v3.herokuapp.com/api/users/signin'
+        const result = await axios.post(url, values.value)
+        if (result.status === 200) {
+          localStorage.setItem('userInfoNB', JSON.stringify(result.data))
         }
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
-
-    
-  },
+  }
 }
 </script>
 

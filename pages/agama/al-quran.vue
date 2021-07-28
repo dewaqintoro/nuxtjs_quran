@@ -51,19 +51,19 @@
   </span>
 </template>
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, useContext } from '@nuxtjs/composition-api'
 import Navbar from '~/components/Navbar.vue'
 export default {
   name: 'Quran',
   components: {
-    Navbar,
+    Navbar
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -96,7 +96,6 @@ export default {
   justify-content: center;
   align-self: center;
   /* background-color: #f7f7f7; */
-  
 }
 .container {
   position: relative;
@@ -118,7 +117,6 @@ export default {
   text-align: center;
 }
 
-
 .container .box img {
   position: relative;
   max-width: 50px;
@@ -135,12 +133,10 @@ export default {
 .container .box:nth-child(2){
   grid-column: span 1;
   grid-row: span 1;
-  
 }
 .container .box:nth-child(3){
   grid-column: span 1;
   grid-row: span 2;
-  
 }
 .container .box:nth-child(4){
   grid-column: span 1;

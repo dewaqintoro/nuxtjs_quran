@@ -5,7 +5,7 @@
       <BackComp :theme="storeTheme" route="/agama" />
       <SearchComp :fields="dataFields" :data="data.surah_info" @search="searchFilter" />
       <div class="item text-center flex justify-between">
-        <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
+        <p class="sum" :style="{ boxShadow: storeTheme.boxShadow }">{{ allSurah.length }} data</p>
         <!-- <button class="question focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }" @click="doSetting()">
           <font-awesome-icon class="icon-question" :icon="['fas', 'question']" />
         </button> -->

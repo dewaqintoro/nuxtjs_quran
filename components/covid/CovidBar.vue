@@ -1,26 +1,32 @@
 <template>
   <div class="analitik">
-    <div class="chart-title">Bar</div>
-    <!-- <button @click="cek">cek</button> -->
-
     <div class="flex place-items-center">
       <div class="place-items-center m-auto">
-        <button class="switch" :class="{positifActive: isPositif}" @click="showPositif">Positif</button>
-        <button class="switch" :class="{recoveredActive: isRecoverd}" @click="showRecovered">Sembuh</button>
-        <button class="switch" :class="{deathActive: isDeath}" @click="showDeath">Meninggal</button>
-        <button class="switch" :class="{treatedActive: isTreated}" @click="showTreated">Dirawat</button>
+        <button class="switch" :class="{positifActive: isPositif}" @click="showPositif">
+          Positif
+        </button>
+        <button class="switch" :class="{recoveredActive: isRecoverd}" @click="showRecovered">
+          Sembuh
+        </button>
+        <button class="switch" :class="{deathActive: isDeath}" @click="showDeath">
+          Meninggal
+        </button>
+        <button class="switch" :class="{treatedActive: isTreated}" @click="showTreated">
+          Dirawat
+        </button>
       </div>
     </div>
-    
     <div v-if="isPositif" class="myChart">
       <ClientOnly>
         <div id="chart">
           <!-- <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart> -->
-          <apexchart v-if="isLimit" type="bar" height="600" :options="limitChartOptions" :series="limitSeries"></apexchart>
-          <apexchart v-else type="bar" height="650" :options="chartOptions" :series="series"></apexchart>
+          <apexchart v-if="isLimit" type="bar" height="600" :options="limitChartOptions" :series="limitSeries" />
+          <apexchart v-else type="bar" height="650" :options="chartOptions" :series="series" />
         </div>
         <div class="flex place-items-center">
-          <button :class="{isAll: allActive, isTen: tenActive}" @click="updateShowData" class="switch">{{btnShow}}</button>
+          <button :class="{isAll: allActive, isTen: tenActive}" class="switch" @click="updateShowData">
+            {{ btnShow }}
+          </button>
         </div>
       </ClientOnly>
     </div>
@@ -32,10 +38,7 @@
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Loading from '@/components/Loading.vue'
-import CovidStatistik from '@/components/covid/CovidStatistik.vue'
-import CovidChart from '@/components/covid/CovidChart.vue'
+import { computed, ref } from '@nuxtjs/composition-api'
 import CovidBarDeath from '@/components/covid/CovidBarDeath.vue'
 import CovidBarRecovered from '@/components/covid/CovidBarRecovered.vue'
 import CovidBarTreated from '@/components/covid/CovidBarTreated.vue'
@@ -43,9 +46,6 @@ import CovidBarTreated from '@/components/covid/CovidBarTreated.vue'
 export default {
   name: 'Bar',
   components: {
-    Loading,
-    CovidStatistik,
-    CovidChart,
     CovidBarDeath,
     CovidBarRecovered,
     CovidBarTreated
@@ -53,11 +53,10 @@ export default {
   props: {
     dataProv: {
       type: Object,
-      required: true,
+      required: true
     }
   },
-  setup(props, {emit}){
-    const { app, store } = useContext()
+  setup (props) {
     const myProv = computed(() => props.dataProv.list_data)
     const prov = myProv.value.map((p) => {
       return p.key
@@ -74,21 +73,19 @@ export default {
     const treated = myProv.value.map((p) => {
       return p.jumlah_dirawat
     })
-    
-    const limitProv= ref([])
+    const limitProv = ref([])
     const limitCases = ref([])
     const limitDeaths = ref([])
     const limitRecovered = ref([])
     const limitTreated = ref([])
     const isLimit = ref(true)
-    
-    const limitSeries= [
+    const limitSeries = [
       {
         name: 'Positif',
         data: limitCases.value
       }
     ]
-    const limitChartOptions= {
+    const limitChartOptions = {
       chart: {
         type: 'bar',
         height: 350
@@ -96,24 +93,24 @@ export default {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
+          horizontal: true
         }
       },
       dataLabels: {
         enabled: false
       },
       xaxis: {
-        categories: limitProv.value,
+        categories: limitProv.value
       }
     }
 
-    const series= [
+    const series = [
       {
         name: 'Positif',
         data: cases
       }
     ]
-    const chartOptions= {
+    const chartOptions = {
       chart: {
         type: 'bar',
         height: 350
@@ -121,29 +118,27 @@ export default {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
+          horizontal: true
         }
       },
       dataLabels: {
         enabled: false
       },
       xaxis: {
-        categories: prov,
-      },
+        categories: prov
+      }
     }
 
-    const tenActive= ref(true)
-    const allActive= ref(false)
-    const positifActive= ref(true)
-    const recoveredActive= ref(false)
+    const tenActive = ref(true)
+    const allActive = ref(false)
+    const positifActive = ref(true)
+    const recoveredActive = ref(false)
     const btnShow = ref('Semua Data')
     const classAktif = ref('positif')
     const isPositif = ref(true)
     const isRecoverd = ref(false)
     const isDeath = ref(false)
     const isTreated = ref(false)
-    
-    
     setLimitCases()
     return {
       isLimit,
@@ -155,50 +150,49 @@ export default {
       allActive,
       positifActive,
       recoveredActive,
-      cek,
-      updateShowData,
       btnShow,
       classAktif,
-      showPositif,
-      showRecovered,
-      showDeath,
-      showTreated,
       isPositif,
       isRecoverd,
       isDeath,
-      isTreated
+      isTreated,
+      updateShowData,
+      showPositif,
+      showRecovered,
+      showDeath,
+      showTreated
     }
 
-    function showPositif(){
+    function showPositif () {
       isPositif.value = true
       isRecoverd.value = false
       isDeath.value = false
       isTreated.value = false
     }
 
-    function showRecovered(){
+    function showRecovered () {
       isPositif.value = false
       isRecoverd.value = true
       isDeath.value = false
       isTreated.value = false
     }
 
-    function showDeath(){
+    function showDeath () {
       isPositif.value = false
       isRecoverd.value = false
       isDeath.value = true
       isTreated.value = false
     }
-    function showTreated(){
+    function showTreated () {
       isPositif.value = false
       isRecoverd.value = false
       isDeath.value = false
       isTreated.value = true
     }
 
-    function updateShowData(){
+    function updateShowData () {
       isLimit.value = !isLimit.value
-      if(btnShow.value === 'Semua Data'){
+      if (btnShow.value === 'Semua Data') {
         btnShow.value = '15 Data'
         tenActive.value = true
         allActive.value = false
@@ -209,42 +203,37 @@ export default {
       }
     }
 
-    async function setLimitCases(){
-      prov.map((p) => {
-        if(limitProv.value.length < 15 ){
+    function setLimitCases () {
+      prov.forEach((p) => {
+        if (limitProv.value.length < 15) {
           limitProv.value.push(p)
         }
       })
 
-      cases.map((p) => {
-        if(limitCases.value.length < 15 ){
+      cases.forEach((p) => {
+        if (limitCases.value.length < 15) {
           limitCases.value.push(p)
         }
       })
 
-      deaths.map((p) => {
-        if(limitDeaths.value.length < 15 ){
+      deaths.forEach((p) => {
+        if (limitDeaths.value.length < 15) {
           limitDeaths.value.push(p)
         }
       })
 
-      recovered.map((p) => {
-        if(limitRecovered.value.length < 15 ){
+      recovered.forEach((p) => {
+        if (limitRecovered.value.length < 15) {
           limitRecovered.value.push(p)
         }
       })
 
-      treated.map((p) => {
-        if(limitTreated.value.length < 15 ){
+      treated.forEach((p) => {
+        if (limitTreated.value.length < 15) {
           limitTreated.value.push(p)
         }
       })
-
     }
-    async function cek(){
-      console.log('cases.value', cases.value)
-    }
-
   }
 }
 </script>

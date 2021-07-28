@@ -23,19 +23,19 @@
         :globalactive="globalactive"
         :globalrecovered="globalrecovered"
         :globaldeaths="globaldeaths"
-        :is-loading-indo="isLoadingIndo"
-        :is-loading-global="isLoadingGlobal"
+        :isLoadingIndo="isLoadingIndo"
+        :isLoadingGlobal="isLoadingGlobal"
       />
     </div>
     <div class="two px-4 py-8">
-      <CovidBar v-if="!loadingChart" :data-prov="dataProv" class="mt-4" />
+      <CovidBar v-if="!loadingChart" :dataProv="dataProv" class="mt-4" />
       <CovidChart
         v-if="!loadingChart"
         :prov="prov"
-        :days-date="daysDate"
-        :days-positif="daysPositif"
-        :days-death="daysDeath"
-        :days-recovered="daysRecovered"
+        :daysDate="daysDate"
+        :daysPositif="daysPositif"
+        :daysDeath="daysDeath"
+        :daysRecovered="daysRecovered"
       />
     </div>
   </div>
@@ -114,10 +114,16 @@ export default {
 
     async function getIndoCases () {
       try {
+        if (selected.value === 'NASIONAL') {
+          console.log('case nasional')
+        } else {
+          console.log('bukan')
+        }
         const url = 'https://ngodingbentar-be.herokuapp.com/api/v1/covid'
         const result = await axios.get(url)
         const urlProv = 'https://ngodingbentar-be.herokuapp.com/api/v1/covid/prov'
         const resultProv = await axios.get(urlProv)
+        console.log('resultProv', resultProv)
         if (result.data) {
           dataProv.value = resultProv.data
           prov.value = resultProv.data.list_data.map((p) => {
@@ -125,6 +131,7 @@ export default {
           })
         }
         indoCases.value = result.data
+        console.log('result.data indo', result.data)
         daily.value = result.data?.harian
         setJumlahPositif()
         setJumlahDirawat()
@@ -141,11 +148,12 @@ export default {
     }
 
     async function setJumlahPositif () {
+      console.log('setJumlahPositif')
       try {
-        const bilangan = await indoCases.value?.total?.jumlah_positif
+        const bilangan = await indoCases.value?.total?.jumlahpositif
         if (typeof bilangan === 'number') {
           daysPositif.value = daily.value.map((p) => {
-            return p.jumlah_positif.value
+            return p.jumlahpositif.value
           })
           daysDate.value = daily.value.map((p) => {
             const date = new Date(p.key_as_string)
@@ -160,6 +168,7 @@ export default {
             rupiah += separator + ribuan.join('.')
           }
           jumlahpositif.value = rupiah
+          console.log('jumlahpositif', jumlahpositif.value)
           loadingChart.value = false
         }
       } catch (err) {
@@ -168,7 +177,9 @@ export default {
     }
 
     async function setJumlahDirawat () {
-      const bilangan = await indoCases.value?.total?.jumlah_dirawat
+      const bilangan = await indoCases.value?.total?.jumlahdirawat
+      console.log('indoCases.value', indoCases.value)
+      console.log('setJumlahDirawat', bilangan)
       if (typeof bilangan === 'number') {
         const numberString = bilangan.toString()
         const sisa = numberString.length % 3
@@ -178,20 +189,21 @@ export default {
           const separator = sisa ? '.' : ''
           rupiah += separator + ribuan.join('.')
         }
-        const persen = (indoCases.value?.total?.jumlah_dirawat / indoCases.value?.total?.jumlah_positif) * 100
+        const persen = (indoCases.value?.total?.jumlahdirawat / indoCases.value?.total?.jumlahpositif) * 100
         const data = {
           value: rupiah,
           persentase: persen.toString().substring(0, 4)
         }
         jumlahdirawat.value = data
+        console.log('jumlahdirawat', jumlahdirawat.value)
       }
     }
 
     function setJumlahSembuh () {
-      const bilangan = indoCases.value?.total?.jumlah_sembuh
+      const bilangan = indoCases.value?.total?.jumlahsembuh
       if (typeof bilangan === 'number') {
         daysRecovered.value = daily.value.map((p) => {
-          return p.jumlah_sembuh.value
+          return p.jumlahsembuh.value
         })
         const numberString = bilangan.toString()
         const sisa = numberString.length % 3
@@ -201,21 +213,22 @@ export default {
           const separator = sisa ? '.' : ''
           rupiah += separator + ribuan.join('.')
         }
-        const persen = (indoCases.value?.total?.jumlah_sembuh / indoCases.value?.total?.jumlah_positif) * 100
+        const persen = (indoCases.value?.total?.jumlahsembuh / indoCases.value?.total?.jumlahpositif) * 100
         const data = {
           value: rupiah,
           persentase: persen.toString().substring(0, 4)
         }
         jumlahsembuh.value = data
+        console.log('jumlahsembuh', jumlahsembuh.value)
       }
     }
 
     function setJumlahMeninggal () {
-      const bilangan = indoCases.value?.total?.jumlah_meninggal
+      const bilangan = indoCases.value?.total?.jumlahmeninggal
 
       if (typeof bilangan === 'number') {
         daysDeath.value = daily.value.map((p) => {
-          return p.jumlah_meninggal.value
+          return p.jumlahmeninggal.value
         })
         const numberString = bilangan.toString()
         const sisa = numberString.length % 3
@@ -225,12 +238,13 @@ export default {
           const separator = sisa ? '.' : ''
           rupiah += separator + ribuan.join('.')
         }
-        const persen = (indoCases.value?.total?.jumlah_meninggal / indoCases.value?.total?.jumlah_positif) * 100
+        const persen = (indoCases.value?.total?.jumlahmeninggal / indoCases.value?.total?.jumlahpositif) * 100
         const data = {
           value: rupiah,
           persentase: persen.toString().substring(0, 4)
         }
         jumlahmeninggal.value = data
+        console.log('jumlahmeninggal', jumlahmeninggal.value)
       }
     }
 
@@ -362,6 +376,8 @@ export default {
         const url = 'https://ngodingbentar-be.herokuapp.com/api/v1/vaksinasi'
         const result = await axios.get(url)
         indoVaksinasi.value = result.data?.data
+
+        // console.log('vaksinasi', result.data.data)
       } catch (err) {
         console.log('err', err)
       }

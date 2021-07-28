@@ -1,33 +1,32 @@
 <template>
-<span >
-  <Navbar to="/agama" />
-  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
-    <div class="font-arabic">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
-      </div>
-      <div v-else>
-        <div class="item" v-for="(doa, index) in pageOfItems" :key="index">
-          <Cardcomp :theme="storeTheme" :doa="doa" :index="index+1" />
+  <span>
+    <Navbar to="/agama" />
+    <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <SearchComp :fields="dataFields" :data="dataDoa.data" @search="searchFilter" />
+      <div class="font-arabic">
+        <div v-if="loading">
+          <Loading :theme="storeTheme" />
+        </div>
+        <div v-else>
+          <div v-for="(doa, index) in pageOfItems" :key="index" class="item">
+            <Cardcomp :theme="storeTheme" :doa="doa" :index="index+1" />
+          </div>
+        </div>
+        <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
+          --- Data tidak ditemukan ---
+        </div>
+        <div class="text-center py-3">
+          <jw-pagination :items="allData" @changePage="onChangePage" />
         </div>
       </div>
-      <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
-        --- Data tidak ditemukan ---
-      </div>
-      <div class="text-center py-3">
-        <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
-      </div>
-        
     </div>
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/tahlil.json'
 import Cardcomp from '~/components/doa/harianCardComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
@@ -40,27 +39,20 @@ export default {
     Cardcomp,
     SearchComp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const dataDoa = dataJson
     const search = ref('')
-    const dataFields= {value: 'title'}
+    const dataFields = { value: 'title' }
     const allData = ref([])
     const pageOfItems = ref([])
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
-    const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
-        return 'darkTheme'
-      } else {
-        return 'lightTheme'
-      }
-    })
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -79,34 +71,27 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
-      cek,
       onChangePage,
       searchFilter
     }
 
-    function searchFilter(dataSearch){
-      if(dataSearch === null ){
+    function searchFilter (dataSearch) {
+      if (dataSearch === null) {
         dataSearch = ''
       }
       setTimeout(function () {
         const result = dataDoa.data.filter(doa =>
           doa.title.toLowerCase().includes(dataSearch.toLowerCase())
-        );
+        )
         allData.value = result
         loading.value = false
-      }, 1000);
-      
+      }, 1000)
     }
 
-    async function cek(search){
-      console.log('dew', search)
-    }
-
-    function onChangePage(data = any){
+    function onChangePage (data) {
       pageOfItems.value = data
       window.smoothscroll()
     }
-
   }
 }
 </script>

@@ -1,56 +1,51 @@
 <template>
-<span >
-  <Navbar to="/agama" />
-  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="pb-2">
-      <p>Jadwal Shalat</p>
-      <p>{{jadwalData.lokasi}} - {{jadwalData.daerah}}</p>
-    </div>
-    <SearchComp :placeholder="placeholder" @search="searchFilter" :fields='dataFields' :data='provJson'/>
-    <div class="py-4 px-8 flex justify-center">
-      <!-- <button @click="cek">cek</button> -->
-      <select v-model="monthSelected" name="month" id="month" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
-        <option v-for="(item, index) in bulanAll" :key="index" :value="item.id">{{item.title}}</option>
-      </select>
-      <select v-model="yearSelected" name="year" id="year" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{background: storeTheme.background, boxShadow: storeTheme.boxShadow  }">
-        <option value="2021">2021</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-      </select>
-      <div class="text-center">
-        <button @click="getJadwal" class="sum focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }">Cari</button>
+  <span>
+    <Navbar to="/agama" />
+    <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <div class="pb-2">
+        <p>Jadwal Shalat</p>
+        <p>{{ jadwalData.lokasi }} - {{ jadwalData.daerah }}</p>
       </div>
-    </div>
-    <hr/>
-    <!-- <button @click="getJadwal" class="focus:outline-none">Cari</button> -->
-    
-    <!-- <div class="item text-center">
-      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{jadwalAll.length}} Jadwal</p>
-    </div> -->
-    <div class="min-h-screen font-arabic">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
+      <SearchComp :fields="dataFields" :data="provJson" :placeholder="placeholder" @search="searchFilter" />
+      <div class="py-4 px-8 flex justify-center">
+        <!-- <button @click="cek">cek</button> -->
+        <select v-model="monthSelected" id="month" name="month" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{ background: storeTheme.background, boxShadow: storeTheme.boxShadow }">
+          <option v-for="(item, index) in bulanAll" :key="index" :value="item.id">{{ item.title }}</option>
+        </select>
+        <select v-model="yearSelected" id="year" name="year" class="rounded-xl focus:outline-none py-2 px-4 mx-2" :style="{ background: storeTheme.background, boxShadow: storeTheme.boxShadow }">
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+        </select>
+        <div class="text-center">
+          <button :style="{ boxShadow: storeTheme.boxShadow }" class="sum focus:outline-none" @click="getJadwal">Cari</button>
+        </div>
       </div>
-      <div v-else>
-        <div class="item" v-for="(jadwal, index) in jadwalAll" :key="index">
-          <Cardcomp :theme="storeTheme" :jadwal="jadwal" :index="index+1" />
+      <hr/>
+      <div class="min-h-screen font-arabic">
+        <div v-if="loading">
+          <Loading :theme="storeTheme" />
+        </div>
+        <div v-else>
+          <div v-for="(jadwal, index) in jadwalAll" :key="index" class="item">
+            <Cardcomp :theme="storeTheme" :jadwal="jadwal" :index="index+1" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import axios from 'axios'
 import Loading from '@/components/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/jadwal-shalat/semua_kota.json'
 import bulanJson from '~/data/jadwal-shalat/bulan.json'
 import Cardcomp from '~/components/jadwal/jadwalCardComp.vue'
 // import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
-import axios from 'axios'
 
 export default {
   name: 'JadwalShalat',
@@ -60,8 +55,8 @@ export default {
     Cardcomp,
     SearchComp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const provJson = dataJson
     const bulanAll = bulanJson.data
     const search = ref('')
@@ -75,18 +70,18 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
-    const dataFields= {value: 'lokasi'}
+    const dataFields = { value: 'lokasi' }
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
       }
     })
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -96,7 +91,7 @@ export default {
 
     setTimeout(function () {
       loading.value = false
-    }, 500);
+    }, 500)
 
     // searchFilter(search.value)
     getJadwal()
@@ -119,41 +114,28 @@ export default {
       cek,
       getJadwal,
       onChangePage,
-      searchFilter,
-      selectMonth,
-      selectYear
+      searchFilter
     }
 
-    async function cek(){
+    function cek () {
       console.log('jadwalData.value', jadwalData.value)
-      // console.log('monthSelected.value', monthSelected.value)
-      
     }
 
-
-    async function selectMonth(){
-      // console.log('selectMonth')
-      // console.log('monthSelected.value', monthSelected.value)
-    }
-    async function selectYear(){
-      // console.log('selectYear')
-      // console.log('yearSelected.value', yearSelected.value)
-    }
-
-    function searchFilter(dataSearch){
-      if((dataSearch === null) || (dataSearch === '') ){
+    function searchFilter (dataSearch) {
+      if ((dataSearch === null) || (dataSearch === '')) {
         dataSearch = 'all'
-      } else if(dataSearch !== 'all'){
+      } else if (dataSearch !== 'all') {
         const result = provJson.filter(doa =>
           doa.lokasi.toLowerCase().includes(dataSearch.toLowerCase())
-        );
+        )
         // console.log('result', result[0].id)
-        if(result.length === 1){
+        if (result.length === 1) {
           provSelected.value = result[0].id
           // getJadwal()
         } else {
-          result.map(hasil => {
-            if(hasil.lokasi.length === dataSearch.length){
+          // eslint-disable-next-line array-callback-return
+          result.map((hasil) => {
+            if (hasil.lokasi.length === dataSearch.length) {
               provSelected.value = result[0].id
               // getJadwal()
             } else {
@@ -166,23 +148,21 @@ export default {
       }
     }
 
-    async function getJadwal(){
+    async function getJadwal () {
       try {
         const url = `https://api.myquran.com/v1/sholat/jadwal/${provSelected.value}/${yearSelected.value}/${monthSelected.value}`
-        const result = await axios.get(`${url}`);
+        const result = await axios.get(`${url}`)
         // console.log('result', result?.data?.data?.jadwal)
         jadwalData.value = result?.data?.data
         jadwalAll.value = result?.data?.data?.jadwal
-      } catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
 
-    
-    function onChangePage(data = any){
+    function onChangePage () {
       window.smoothscroll()
     }
-
   }
 }
 </script>

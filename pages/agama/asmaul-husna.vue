@@ -1,20 +1,20 @@
 <template >
   <span>
     <Navbar to="/agama" />
-    <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
-      <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/>
+    <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
+      <SearchComp :fields="dataFields" :data="dataDoa" @search="searchFilter" />
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
-          <div class="item" v-for="(doa, index) in allData" :key="index">
+          <div v-for="(doa, index) in allData" :key="index" class="item">
             <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
               <div class="content items-center">
                 <p class="font-arabic text-3xl">{{doa.arabic}}</p>
                 <p class="my-4">{{doa.latin}}</p>
-                <hr class="garis"/>
-                <p class="arti text-lg"><i>{{doa.translation_id}}</i></p>
+                <hr class="garis" />
+                <p class="arti text-lg"><i>{{ doa.translation_id }}</i></p>
               </div>
             </div>
           </div>
@@ -25,13 +25,11 @@
   </span>
 </template>
 
-
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/asmaul-husna.json'
-import Cardcomp from '~/components/wirid/WiridComp'
 import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {
@@ -39,20 +37,19 @@ export default {
   components: {
     Navbar,
     Loading,
-    Cardcomp,
-    SearchComp,
+    SearchComp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const dataDoa = dataJson.data
     const allData = ref([])
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
     const search = ref('')
-    const dataFields= {value: 'latin'}
+    const dataFields = { value: 'latin' }
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -71,28 +68,21 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
-      cek,
       searchFilter
     }
 
-    function searchFilter(dataSearch){
-      if(dataSearch === null ){
+    function searchFilter (dataSearch) {
+      if (dataSearch === null) {
         dataSearch = ''
       }
       setTimeout(function () {
         const result = dataDoa.filter(doa =>
           doa.latin.toLowerCase().includes(dataSearch.toLowerCase())
-        );
+        )
         allData.value = result
         loading.value = false
-      }, 200);
-      
+      }, 200)
     }
-
-    async function cek(search){
-      console.log('dew', search)
-    }
-
   }
 }
 </script>
@@ -172,7 +162,6 @@ html {
   text-align: center;
 }
 
-
 .container .box img {
   position: relative;
   max-width: 50px;
@@ -189,12 +178,10 @@ html {
 .container .box:nth-child(2){
   grid-column: span 1;
   grid-row: span 1;
-  
 }
 .container .box:nth-child(3){
   grid-column: span 1;
   grid-row: span 2;
-  
 }
 .container .box:nth-child(4){
   grid-column: span 1;

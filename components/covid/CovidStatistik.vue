@@ -3,9 +3,9 @@
     <div class="switch">
       <div class="bg-gray-100">
         <div class="box">
-          <input type="checkbox" class="toggle-btn focus:outline-none " @change="update($event)" />
-          <div class="signup"></div>
-          <div class="login"></div>
+          <input type="checkbox" class="toggle-btn focus:outline-none " @change="update($event)">
+          <div class="signup" />
+          <div class="login" />
         </div>
       </div>
     </div>
@@ -16,30 +16,48 @@
       </div>
       <div v-else class="case-card text-xl grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 ">
         <div class="positif text-white text-center py-4 rounded-lg">
-          <p class="text-2xl font-bold" v-if="jumlah_positif">{{jumlah_positif}}</p>
+          <p v-if="jumlahpositif" class="text-2xl font-bold">
+            {{ jumlahpositif }}
+          </p>
           <p>TERKONFIRMASI</p>
         </div>
         <div class="aktif text-white text-center py-4 rounded-lg">
-          <p class="text-2xl font-bold" v-if="jumlah_dirawat">{{jumlah_dirawat.value}}</p>
-          <p class="text-xl" v-if="jumlah_dirawat">{{jumlah_dirawat.persentase}}%</p>
+          <p v-if="jumlahdirawat" class="text-2xl font-bold">
+            {{ jumlahdirawat.value }}
+          </p>
+          <p v-if="jumlahdirawat" class="text-xl">
+            {{ jumlahdirawat.persentase }}%
+          </p>
           <p>KASUS AKTIF</p>
         </div>
         <div class="sembuh text-white text-center py-4 rounded-lg">
-          <p class="text-2xl font-bold" v-if="jumlah_sembuh">{{jumlah_sembuh.value}}</p>
-          <p class="text-xl" v-if="jumlah_sembuh">{{jumlah_sembuh.persentase}}%</p>
+          <p v-if="jumlahsembuh" class="text-2xl font-bold">
+            {{ jumlahsembuh.value }}
+          </p>
+          <p v-if="jumlahsembuh" class="text-xl">
+            {{ jumlahsembuh.persentase }}%
+          </p>
           <p>SEMBUH</p>
         </div>
         <div class="meninggal text-white text-center py-4 rounded-lg">
-          <p class="text-2xl font-bold" v-if="jumlah_meninggal">{{jumlah_meninggal.value}}</p>
-          <p class="text-xl" v-if="jumlah_meninggal">{{jumlah_meninggal.persentase}}%</p>
+          <p v-if="jumlahmeninggal" class="text-2xl font-bold">
+            {{ jumlahmeninggal.value }}
+          </p>
+          <p v-if="jumlahmeninggal" class="text-xl">
+            {{ jumlahmeninggal.persentase }}%
+          </p>
           <p>MENINGGAL</p>
         </div>
         <div class="vaksinasi text-white text-center py-4 rounded-lg">
-          <p class="text-2xl font-bold" v-if="vaksinasi_tahap_1">{{vaksinasi_tahap_1}}</p>
+          <p v-if="vaksinasitahap1" class="text-2xl font-bold">
+            {{ vaksinasitahap1 }}
+          </p>
           <p>VAKSINASI KE-1</p>
         </div>
         <div class="vaksinasi text-white text-center py-4 rounded-lg">
-          <p class="text-2xl font-bold" v-if="vaksinasi_tahap_2">{{vaksinasi_tahap_2}}</p>
+          <p v-if="vaksinasitahap2" class="text-2xl font-bold">
+            {{ vaksinasitahap2 }}
+          </p>
           <p>VAKSINASI KE-2</p>
         </div>
       </div>
@@ -51,19 +69,27 @@
       </div>
       <div v-else class="case-card text-xl grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 ">
         <div class="positif text-white text-center py-4 rounded-lg">
-          <p v-if="global_Confirmed" class="text-2xl font-bold">{{global_Confirmed}}</p>
+          <p v-if="globalconfirmed" class="text-2xl font-bold">
+            {{ globalconfirmed }}
+          </p>
           <p>TERKONFIRMASI</p>
         </div>
         <div class="aktif text-white text-center py-4 rounded-lg">
-          <p v-if="global_Confirmed" class="text-2xl font-bold">{{global_Active}}</p>
+          <p v-if="globalconfirmed" class="text-2xl font-bold">
+            {{ globalactive }}
+          </p>
           <p>KASUS AKTIF</p>
         </div>
         <div class="sembuh text-white text-center py-4 rounded-lg">
-          <p v-if="global_Confirmed" class="text-2xl font-bold">{{global_Recovered}}</p>
+          <p v-if="globalconfirmed" class="text-2xl font-bold">
+            {{ globalrecovered }}
+          </p>
           <p>SEMBUH</p>
         </div>
         <div class="meninggal text-white text-center py-4 rounded-lg sm:col-span-1 md:col-span-3 lg:col-span-3">
-          <p v-if="global_Confirmed" class="text-2xl font-bold">{{global_Deaths}}</p>
+          <p v-if="globalconfirmed" class="text-2xl font-bold">
+            {{ globaldeaths }}
+          </p>
           <p>MENINGGAL</p>
         </div>
       </div>
@@ -72,54 +98,54 @@
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/LoadingGlobal.vue'
 
 export default {
   name: 'CovidStatistik',
   components: {
-    Loading,
+    Loading
   },
   props: {
-    jumlah_positif: {
+    jumlahpositif: {
       type: String,
-      required: true,
+      required: true
     },
-    jumlah_dirawat: {
+    jumlahdirawat: {
       type: Object,
-      required: true,
+      required: true
     },
-    jumlah_sembuh: {
+    jumlahsembuh: {
       type: Object,
-      required: true,
+      required: true
     },
-    jumlah_meninggal: {
+    jumlahmeninggal: {
       type: Object,
-      required: true,
+      required: true
     },
-    vaksinasi_tahap_1: {
+    vaksinasitahap1: {
       type: String,
-      required: true,
+      required: true
     },
-    vaksinasi_tahap_2: {
+    vaksinasitahap2: {
       type: String,
-      required: true,
+      required: true
     },
-    global_Confirmed: {
+    globalconfirmed: {
       type: String,
-      required: true,
+      required: true
     },
-    global_Active: {
+    globalactive: {
       type: String,
-      required: true,
+      required: true
     },
-    global_Recovered: {
+    globalrecovered: {
       type: String,
-      required: true,
+      required: true
     },
-    global_Deaths: {
+    globaldeaths: {
       type: String,
-      required: true,
+      required: true
     },
     isLoadingIndo: {
       type: Boolean,
@@ -130,24 +156,21 @@ export default {
       type: Boolean,
       required: true,
       default: true
-    },
-    
+    }
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const isIndo = ref(true)
     const myTheme = computed(() => store.state.initTheme)
 
     return {
       isIndo,
-      update,
-      myTheme
+      myTheme,
+      update
     }
-    
-    function update(e) {
+    function update () {
       isIndo.value = !isIndo.value
     }
-
   }
 }
 </script>

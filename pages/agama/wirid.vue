@@ -1,25 +1,25 @@
 <template>
-<span >
-  <Navbar to="/agama" />
-  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="font-arabic">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
-      </div>
-      <div v-else>
-        <div class="item" v-for="(doa, index) in dataDoa" :key="index">
-          <Cardcomp :theme="storeTheme" :doa="doa"/>
+  <span>
+    <Navbar to="/agama" />
+    <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <div class="font-arabic">
+        <div v-if="loading">
+          <Loading :theme="storeTheme" />
+        </div>
+        <div v-else>
+          <div v-for="(doa, index) in dataDoa" :key="index" class="item">
+            <Cardcomp :theme="storeTheme" :doa="doa" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/wirid.json'
 import Cardcomp from '~/components/wirid/WiridComp'
 
@@ -28,10 +28,10 @@ export default {
   components: {
     Navbar,
     Loading,
-    Cardcomp,
+    Cardcomp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const dataDoa = dataJson.data
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
@@ -43,20 +43,14 @@ export default {
       storeTheme,
       loadingTheme,
       loading,
-      dataDoa,
-      cek,
+      dataDoa
     }
 
-    function setLoading(){
+    function setLoading () {
       setTimeout(function () {
         loading.value = false
-      }, 200);
+      }, 200)
     }
-
-    async function cek(search){
-      console.log('dew', search)
-    }
-
   }
 }
 </script>
