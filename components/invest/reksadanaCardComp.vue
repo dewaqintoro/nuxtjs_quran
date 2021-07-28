@@ -1,98 +1,98 @@
 <template>
-  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-    <!-- <button v-if="product == 'reksadana'" @click="show()" class="btn-show focus:outline-none">
-      <p class="font-bold text-lg">{{item.name}}</p>
-      <div v-if="isShow" class="content">
-        <table :style="{ borderColor: theme.color }">
-          <tr>
-            <th class="border-2">Management</th>
-            <td class="border-2">{{item.management}}</td>
-          </tr>
-          <tr>
-            <th class="border-2">Bank Kustodian</th>
-            <td class="border-2">{{item.custodian}}</td>
-          </tr>
-          <tr>
-            <th class="border-2">Tipe</th>
-            <td class="border-2">{{item.type}}</td>
-          </tr>
-        </table>
-      </div>
-    </button> -->
+  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow }">
     <div v-if="product == 'reksadana'">
       <div class="flex justify-between">
-        <p class="font-bold text-lg">{{item.name}}</p>
-        <button @click="show()" class="focus:outline-none">
-          <font-awesome-icon class="icon-show" v-if="isShow" :icon="['fas', 'eye']"/>
-          <font-awesome-icon class="icon-show" v-else :icon="['fas', 'eye-slash']"/>
+        <p class="font-bold text-lg">
+          {{ item.name }}
+        </p>
+        <button class="focus:outline-none" @click="show()">
+          <font-awesome-icon v-if="isShow" class="icon-show" :icon="['fas', 'eye']" />
+          <font-awesome-icon v-else class="icon-show" :icon="['fas', 'eye-slash']" />
         </button>
       </div>
       <div v-if="isShow" class="content">
         <table :style="{ borderColor: theme.color }">
           <tr>
-            <th class="border-2">Management</th>
-            <td class="border-2">{{item.management}}</td>
+            <th class="border-2">
+              Management
+            </th>
+            <td class="border-2">
+              {{ item.management }}
+            </td>
           </tr>
           <tr>
-            <th class="border-2">Bank Kustodian</th>
-            <td class="border-2">{{item.custodian}}</td>
+            <th class="border-2">
+              Bank Kustodian
+            </th>
+            <td class="border-2">
+              {{ item.custodian }}
+            </td>
           </tr>
           <tr>
-            <th class="border-2">Tipe</th>
-            <td class="border-2">{{item.type}}</td>
+            <th class="border-2">
+              Tipe
+            </th>
+            <td class="border-2">
+              {{ item.type }}
+            </td>
           </tr>
         </table>
       </div>
     </div>
     <div v-if="product == 'apps'">
       <div class="flex justify-between">
-        <p class="font-bold text-lg">{{item.name}}</p>
-        <button @click="show()" class="focus:outline-none">
-          <font-awesome-icon class="icon-show" v-if="isShow" :icon="['fas', 'eye']"/>
-          <font-awesome-icon class="icon-show" v-else :icon="['fas', 'eye-slash']"/>
+        <p class="font-bold text-lg">
+          {{ item.name }}
+        </p>
+        <button class="focus:outline-none" @click="show()">
+          <font-awesome-icon v-if="isShow" class="icon-show" :icon="['fas', 'eye']" />
+          <font-awesome-icon v-else class="icon-show" :icon="['fas', 'eye-slash']" />
         </button>
       </div>
       <div v-if="isShow" class="content">
-        <p><b>URL</b> : {{item.url}}</p>
-        <p><b>Owner</b> : {{item.owner}}</p>
+        <p><b>URL</b> : {{ item.url }}</p>
+        <p><b>Owner</b> : {{ item.owner }}</p>
       </div>
     </div>
     <div v-if="product == 'ilegal'">
       <div class="flex justify-between">
-        <p class="font-bold text-lg">{{item.name}}</p>
-        <button @click="show()" class="focus:outline-none">
-          <font-awesome-icon class="icon-show" v-if="isShow" :icon="['fas', 'eye']"/>
-          <font-awesome-icon class="icon-show" v-else :icon="['fas', 'eye-slash']"/>
+        <p class="font-bold text-lg">
+          {{ item.name }}
+        </p>
+        <button class="focus:outline-none" @click="show()">
+          <font-awesome-icon v-if="isShow" class="icon-show" :icon="['fas', 'eye']" />
+          <font-awesome-icon v-else class="icon-show" :icon="['fas', 'eye-slash']" />
         </button>
       </div>
       <div v-if="isShow" class="content">
         <table :style="{ borderColor: theme.color }">
           <tr>
-            <th class="border-2">Alamat</th>
-            <td class="border-2">{{item.address}}</td>
+            <th class="border-2">
+              Alamat
+            </th>
+            <td class="border-2">
+              {{ item.address }}
+            </td>
           </tr>
           <tr>
-            <th class="border-2">Tipe</th>
-            <td class="border-2">{{item.type}}</td>
+            <th class="border-2">
+              Tipe
+            </th>
+            <td class="border-2">
+              {{ item.type }}
+            </td>
           </tr>
           <tr>
-            <th class="border-2">URL</th>
+            <th class="border-2">
+              URL
+            </th>
             <td class="border-2">
               <p v-for="(url, index) in item.urls" :key="index">
-                {{url}}
+                {{ url }}
               </p>
             </td>
           </tr>
         </table>
-        <!-- <p><b>Alamat</b> : {{item.address}}</p>
-        <p><b>Type</b> : {{item.type}}</p>
-        <div>
-          URL :
-          <p v-for="(url, index) in item.urls" :key="index">
-            {{url}}
-          </p>
-        </div> -->
-        
       </div>
     </div>
   </div>
@@ -105,24 +105,24 @@ export default {
   props: {
     theme: {
       type: Object,
-      required: true,
+      required: true
     },
     item: {
       type: Object,
-      required: true,
+      required: true
     },
     product: {
       type: String,
-      required: false,
+      required: true
     }
   },
-  setup(props){
+  setup (props) {
     // console.log(props.item)
     const { store } = useContext()
     const isShow = ref(false)
     const subStore = computed(() => store.state.sub)
     const bgId = computed(() => {
-      if(props.theme?.darktheme){
+      if (props.theme?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -133,7 +133,6 @@ export default {
       bgId,
       isShow,
       subStore,
-      cek,
       show,
       doRedirect
     }
@@ -142,18 +141,15 @@ export default {
     //         window.open(link, target);
     //     }
 
-    function doRedirect(link, target = '_blank'){
-      window.open(link, target);
+    function doRedirect (link, target = '_blank') {
+      window.open(link, target)
     }
-    function show(){
-      if(isShow.value === true){
+    function show () {
+      if (isShow.value === true) {
         isShow.value = false
       } else {
         isShow.value = true
       }
-    }
-    function cek(){
-      console.log('props', props.item)
     }
   }
 }

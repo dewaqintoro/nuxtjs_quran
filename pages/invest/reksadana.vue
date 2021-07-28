@@ -1,44 +1,42 @@
 <template>
-<span >
-  <Navbar route="/invest" />
-  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <!-- <BackComp :theme="storeTheme" route="/invest" /> -->
-    <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa.data'/>
-
-    <div class="item text-center">
-      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allData.length}} data</p>
-    </div>
-    <div class="min-h-screen font-arabic">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
+  <span>
+    <Navbar route="/invest" />
+    <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <SearchComp :fields="dataFields" :data="dataDoa.data" @search="searchFilter" />
+      <div class="item text-center">
+        <p class="sum" :style="{ boxShadow: storeTheme.boxShadow }">
+          {{ allData.length }} data
+        </p>
       </div>
-      <div v-else>
-        <div class="item" v-for="(item, index) in pageOfItems" :key="index">
-          <Cardcomp product="reksadana" :theme="storeTheme" :item="item" :index="index+1" />
-          <!-- <p>{{item.name}}</p> -->
+      <div class="min-h-screen font-arabic">
+        <div v-if="loading">
+          <Loading :theme="storeTheme" />
+        </div>
+        <div v-else>
+          <div v-for="(item, index) in pageOfItems" :key="index" class="item">
+            <Cardcomp product="reksadana" :theme="storeTheme" :item="item" :index="index+1" />
+            <!-- <p>{{item.name}}</p> -->
+          </div>
+        </div>
+        <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
+          --- Data tidak ditemukan ---
+        </div>
+        <div class="text-center py-3">
+          <jw-pagination :items="allData" @changePage="onChangePage" />
         </div>
       </div>
-      <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
-        --- Data tidak ditemukan ---
-      </div>
-      <div class="text-center py-3">
-        <jw-pagination :items="allData" @changePage="onChangePage"></jw-pagination>
-      </div>
-        
     </div>
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
+import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/reksadana.json'
 import Cardcomp from '~/components/invest/reksadanaCardComp.vue'
 // import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
-import BackComp from '@/components/BackComp'
 
 export default {
   name: 'DoaHarian',
@@ -46,11 +44,10 @@ export default {
     Navbar,
     Loading,
     Cardcomp,
-    SearchComp,
-    BackComp
+    SearchComp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const dataDoa = dataJson
     const search = ref('')
     const allData = ref([])
@@ -58,18 +55,18 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
-    const dataFields= {value: 'name'}
+    const dataFields = { value: 'name' }
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
       }
     })
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -79,7 +76,7 @@ export default {
 
     setTimeout(function () {
       loading.value = false
-    }, 500);
+    }, 500)
 
     searchFilter(search.value)
     // searchFilter()
@@ -93,35 +90,24 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
-      cek,
+      bgId,
       onChangePage,
-      searchFilter,
-      bgId
+      searchFilter
     }
 
-    function searchFilter(data){
-      if(data === null ){
+    function searchFilter (data) {
+      if (data === null) {
         data = ''
       }
-      // setTimeout(function () {
-        const result = dataDoa.data.filter(item =>
-          item.name.toLowerCase().includes(data.toLowerCase())
-        );
-        allData.value = result
-        // loading.value = false
-      // }, 200);
-      
+      const result = dataDoa.data.filter(item =>
+        item.name.toLowerCase().includes(data.toLowerCase())
+      )
+      allData.value = result
     }
-
-    async function cek(){
-      console.log('search.value', search.value)
-    }
-
-    function onChangePage(data = any){
+    function onChangePage (data) {
       pageOfItems.value = data
       window.smoothscroll()
     }
-
   }
 }
 </script>
