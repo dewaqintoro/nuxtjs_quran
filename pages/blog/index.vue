@@ -1,25 +1,22 @@
 <template>
-
   <span>
     <NavbarComp route="/blog" @tutorial="tutorial" @dosearch="dosearch" />
-    
-    <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
-      <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
+    <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <div v-if="loading">
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
-          <!-- <button @click="cek">cek</button> -->
-          
-          <div class="item" v-for="blog in blogs" :key="blog._id">
+          <div v-for="blog in blogs" :key="blog._id" class="item">
             <nuxt-link :to="'/blog/'+blog._id">
               <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
                 <div class="content-img">
-                  <img class="banner" :src="blog.banner" />
+                  <img class="banner" :src="blog.banner">
                 </div>
                 <div class="content">
-                  <p class="text-xl font-bold text-left mt-4">{{blog.title}}</p>
+                  <p class="text-xl font-bold text-left mt-4">
+                    {{ blog.title }}
+                  </p>
                   <!-- <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p> -->
                 </div>
                 <div class="text-left">
@@ -33,7 +30,9 @@
       </div>
       <div class="text-center">
         <span v-for="i in pages" :key="i">
-          <button class="btn-page" :class="{ active: i === page}" @click="changePage(i)">{{i}}</button>
+          <button class="btn-page" :class="{ active: i === page}" @click="changePage(i)">
+            {{ i }}
+          </button>
         </span>
       </div>
 
@@ -44,48 +43,39 @@
   </span>
 </template>
 
-
 <script>
 import axios from 'axios'
 import { ref, computed, useContext } from '@nuxtjs/composition-api'
-import MainCardComp from '~/components/blog/MainCardComp.vue'
 import NavbarComp from '~/components/blog/NavbarComp.vue'
 
 export default {
   name: 'Editor',
   components: {
-    MainCardComp,
     NavbarComp
   },
-  setup(){
+  setup () {
     const { app, store, route } = useContext()
-    const myQuery = route.value?.query?.category || ''
     const searchTitle = ref(route.value?.query?.q || '')
     const pageNumber = ref(route.value?.query?.pageNumber || 1)
-    const blogs= ref([])
-    const userInfo = ref({})
+    const blogs = ref([])
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-    const search = ref('')
     const pages = ref(0)
     const page = ref(0)
     const loading = ref(true)
     const isEmpty = ref(false)
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
       }
     })
-
-    local()
     getData(pageNumber.value)
     // searchFilter(search.value)
 
     return {
       blogs,
-      userInfo,
       loadingTheme,
       storeTheme,
       loading,
@@ -100,54 +90,45 @@ export default {
       changePage
     }
 
-    function changePage(e){
+    function changePage (e) {
       app.router?.push(`/blog?pageNumber=${e}`)
       getData(e)
     }
-    
-    function dosearch(e){
+
+    function dosearch (e) {
       console.log('tutorial', e)
       searchTitle.value = e
       getData('')
     }
 
-    function tutorial(e){
+    function tutorial (e) {
       console.log('tutorial', e)
       // getData(e)
     }
 
-    function cek(){
+    function cek () {
       console.log('blogs.value', blogs.value)
     }
 
-    async function local(){
-      const userInfoNB = localStorage.getItem('userInfoNB') ?
-        JSON.parse(localStorage.getItem('userInfoNB')) :
-        null
-      userInfo.value = userInfoNB
-    }
-
-
-    async function getData(e){
+    async function getData (e) {
       console.log('e', e)
-      try{
+      try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog?pageNumber=${e}`
-        const result = await axios.get(`${url}`);
+        const result = await axios.get(`${url}`)
         blogs.value = result.data.blogs
         pages.value = result.data.pages
         page.value = result.data.page
         // console.log('result.data', result.data)
-        if(result.data.blogs.length === 0){
+        if (result.data.blogs.length === 0) {
           isEmpty.value = true
         } else {
           isEmpty.value = false
         }
         loading.value = false
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
-
   }
 }
 </script>
@@ -227,8 +208,6 @@ img.banner{
   /* place-items: center; */
   text-align: center;
 }
-
-
 /* .container .box img {
   position: relative;
   max-width: 50px;
@@ -245,12 +224,10 @@ img.banner{
 .container .box:nth-child(2){
   grid-column: span 1;
   grid-row: span 1;
-  
 }
 .container .box:nth-child(3){
   grid-column: span 1;
   grid-row: span 2;
-  
 }
 .container .box:nth-child(4){
   grid-column: span 1;

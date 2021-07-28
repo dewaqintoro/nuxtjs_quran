@@ -1,14 +1,12 @@
 <template>
-
   <span>
     <NavbarComp route="/blog" @tutorial="tutorial" @dosearch="dosearch" />
-    
-    <div class="main" v-if="!loadingTheme" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
+    <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color, boxShadow: storeTheme.boxShadow }">
       <!-- <SearchComp @search="searchFilter" :fields='dataFields' :data='dataDoa'/> -->
       <div class="text-left m-4 px-2">
         <p v-if="searchKey">Menampilkan pencarian : <b>{{searchKey}}</b> </p>
-        <p v-else>Menampilkan kategori : <b>{{categoryKey || 'Semua'}}</b></p>
-        <p>{{blogs.length || 0}} hasil</p>
+        <p v-else>Menampilkan kategori : <b>{{ categoryKey || 'Semua' }}</b></p>
+        <p>{{ blogs.length || 0 }} hasil</p>
       </div>
       <!-- <button @click="cek">cek</button> -->
       <div v-if="loading">
@@ -16,21 +14,19 @@
       </div>
       <div v-else class="flex">
         <div class="container" :class="bgId">
-          
-          
-          <div class="item" v-for="blog in blogs" :key="blog._id">
+          <div v-for="blog in blogs" :key="blog._id" class="item">
             <nuxt-link :to="'/blog/'+blog._id">
               <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
                 <div class="content-img">
-                  <img class="banner" :src="blog.banner" />
+                  <img class="banner" :src="blog.banner">
                 </div>
                 <div class="content">
-                  <p class="text-xl font-bold text-left mt-4">{{blog.title}}</p>
-                  <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'"></p>
+                  <p class="text-xl font-bold text-left mt-4">{{ blog.title }}</p>
+                  <p class="my-4 text-left" v-html="blog.body.substring(0, 100)+'. . .'" />
                 </div>
                 <div class="text-left">
                   <!-- <p class="bg-gray-300 w-full">{{blog.category}}</p> -->
-                  <button class="bg-green-500 text-white px-2 rounded-md">{{blog.category}}</button>
+                  <button class="bg-green-500 text-white px-2 rounded-md">{{ blog.category }}</button>
                 </div>
               </div>
             </nuxt-link>
@@ -45,24 +41,21 @@
   </span>
 </template>
 
-
 <script>
 import axios from 'axios'
 import { ref, computed, useContext } from '@nuxtjs/composition-api'
-import MainCardComp from '~/components/blog/MainCardComp.vue'
 import NavbarComp from '~/components/blog/NavbarComp.vue'
 
 export default {
   name: 'Editor',
   components: {
-    MainCardComp,
     NavbarComp
   },
-  setup(){
-    const { app, store, route } = useContext()
+  setup () {
+    const { store, route } = useContext()
     const myQuery = ref(route.value?.query?.category || '')
     const searchTitle = ref(route.value?.query?.q || '')
-    const blogs= ref([])
+    const blogs = ref([])
     const userInfo = ref({})
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
@@ -71,7 +64,7 @@ export default {
     const loading = ref(true)
     const isEmpty = ref(false)
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -80,7 +73,7 @@ export default {
     const searchvalue = computed(() => store.state.searchvalue || '')
 
     local()
-    getData(myQuery.value , searchTitle.value)
+    getData(myQuery.value, searchTitle.value)
     // searchFilter(search.value)
 
     return {
@@ -98,63 +91,51 @@ export default {
       tutorial,
       dosearch
     }
-    
-    function dosearch(e){
-      // console.log('dosearch search page')
-      // searchTitle.value = e
-      // console.log('getData dosearch',searchvalue.value)
+
+    function dosearch (e) {
       getData('', e)
-      // setTimeout(() =>{
-      //   getData(e)
-      // }, 200)
     }
 
-    function tutorial(c){
+    function tutorial (c) {
       console.log('tutorial c', c)
       getData(c, '')
     }
 
-    function cek(){
+    function cek () {
       console.log('searchvalue', searchvalue.value)
     }
 
-    async function local(){
-      const userInfoNB = localStorage.getItem('userInfoNB') ?
-        JSON.parse(localStorage.getItem('userInfoNB')) :
-        null
+    function local () {
+      const userInfoNB = localStorage.getItem('userInfoNB')
+        ? JSON.parse(localStorage.getItem('userInfoNB'))
+        : null
       userInfo.value = userInfoNB
     }
 
-
-    async function getData(c, e){
+    async function getData (c, e) {
       loading.value = true
-      const mysearch = e ? e : ''
+      const mysearch = e || ''
       searchKey.value = mysearch
       categoryKey.value = c
-        // const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}&q=${searchvalue.value}`
-      try{
+      try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${c}&q=${mysearch}`
-        const result = await axios.get(`${url}`);
+        const result = await axios.get(`${url}`)
         blogs.value = result.data
-        if(result.data.length === 0){
+        if (result.data.length === 0) {
           isEmpty.value = true
         } else {
           isEmpty.value = false
         }
         loading.value = false
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
-
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-
-
-
 img.banner{
   width: 100%;
   @apply rounded-xl ;
@@ -220,14 +201,6 @@ img.banner{
   /* place-items: center; */
   text-align: center;
 }
-
-
-/* .container .box img {
-  position: relative;
-  max-width: 50px;
-  margin-bottom: 10px;
-} */
-
 .container {
   margin: 20px;
 }
@@ -238,12 +211,10 @@ img.banner{
 .container .box:nth-child(2){
   grid-column: span 1;
   grid-row: span 1;
-  
 }
 .container .box:nth-child(3){
   grid-column: span 1;
   grid-row: span 2;
-  
 }
 .container .box:nth-child(4){
   grid-column: span 1;

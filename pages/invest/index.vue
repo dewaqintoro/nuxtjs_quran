@@ -22,7 +22,7 @@
           </div>
         </nuxt-link>
       </div>
-      <div class="footer"></div>
+      <div class="footer" />
     </div>
   </span>
 </template>

@@ -4,7 +4,7 @@
       <div class="start">
         <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <nuxt-link class="btn-nav" to="/">
-            <img class="img-nav" src="/iconNew.png" />
+            <img class="img-nav" src="/iconNew.png">
           </nuxt-link>
         </div>
         <div v-if="enable" class="mx-2">
@@ -12,105 +12,53 @@
             Home
           </nuxt-link>
         </div>
-        
-        <!-- <div class="dropdown">
-          <button class="dropbtn font-bold mx-2">Tutorial</button>
-          <div class="dropdown-content">
-            <nuxt-link to="/blog/search" @click="setTutorial('')">
-              <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
-            </nuxt-link>
-            <nuxt-link to="/blog/search?category=MERN" @click="setTutorial('MERN')">
-              <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
-            </nuxt-link>
-            <nuxt-link to="/blog/search?category=Mongodb" @click="setTutorial('Mongodb')">
-              <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
-            </nuxt-link>
-            <nuxt-link to="/blog/search?category=Expressjs" @click="setTutorial('Expressjs')">
-              <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
-            </nuxt-link>
-            <nuxt-link to="/blog/search?category=Reactjs" @click="setTutorial('Reactjs')">
-              <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
-            </nuxt-link>
-            <nuxt-link to="/blog/search?category=Nodejs" @click="setTutorial('Nodejs')">
-              <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
-            </nuxt-link>
-          </div>
-        </div> -->
 
         <div class="dropdown">
           <button class="dropbtn font-bold mx-2 focus:outline-none">Tutorial</button>
           <div class="dropdown-content">
             <nuxt-link to="/blog/search" class="top">
-              <p @click="setTutorial('')" class="text-black dropdown-item">Semua</p>
+              <p @click="$emit('tutorial', '')" class="text-black dropdown-item">Semua</p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=MERN">
-              <p @click="setTutorial('MERN')" class="text-black dropdown-item">MERN</p>
+              <p @click="$emit('tutorial', 'MERN')" class="text-black dropdown-item">MERN</p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Mongodb">
-              <p @click="setTutorial('Mongodb')" class="text-black dropdown-item">Mongodb</p>
+              <p @click="$emit('tutorial', 'Mongodb')" class="text-black dropdown-item">Mongodb</p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Expressjs">
-              <p @click="setTutorial('Expressjs')" class="text-black dropdown-item">Expressjs</p>
+              <p @click="$emit('tutorial', 'Expressjs')" class="text-black dropdown-item">Expressjs</p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Reactjs">
-              <p @click="setTutorial('Reactjs')" class="text-black dropdown-item">Reactjs</p>
+              <p @click="$emit('tutorial', 'Reactjs')" class="text-black dropdown-item">Reactjs</p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Nodejs" class="under">
-              <p @click="setTutorial('Nodejs')" class="text-black dropdown-item">Nodejs</p>
+              <p @click="$emit('tutorial', 'Nodejs')" class="text-black dropdown-item">Nodejs</p>
             </nuxt-link>
           </div>
         </div>
-        
       </div>
-
-      <!-- <div>
-        <button @click="cek">cek</button>
-      </div> -->
-
-      <!-- <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
-        <button class="btn-nav focus:outline-none" @click="doSetting()">
-          <font-awesome-icon :icon="['fas', 'cog']" />
-        </button>
-      </div> -->
-      
-
       <div class="end">
         <button class="btn-nav focus:outline-none mr-3" @click="doSetting()">
           <font-awesome-icon :icon="['fas', 'search']" />
         </button>
-        <button class="btn-nav focus:outline-none" @click="changetheme()" >
+        <button class="btn-nav focus:outline-none" @click="changetheme()">
           <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
           <font-awesome-icon v-else :icon="['fas', 'sun']" />
         </button>
-        <!-- <div class="item-mode flex justify-between">
-          <div>Dark </div>
-          <div class="flex justify-center">
-            <label class="switch">
-              <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div> -->
       </div>
 
       <Transition name="drawer">
-        <SearchModalComp :theme="storeTheme" v-if="isSetting" @close="closeModal" @dosearch="dosearch" />
+        <SearchModalComp v-if="isSetting" :theme="storeTheme" @close="closeModal" @dosearch="dosearch" />
       </Transition>
-
-
     </div>
   </header>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import SearchComp from '~/components/SearchComp.vue'
 
 export default defineComponent({
   name: 'NavbarComp',
-  components: {
-    SearchComp,
-  },
   props: {
     route: {
       type: String,
@@ -126,10 +74,10 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
-    },
+    }
   },
-  setup(props, { emit }) {
-    const { store, route, app } = useContext()
+  setup (props, { emit }) {
+    const { store, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
@@ -141,24 +89,24 @@ export default defineComponent({
     // const isChecked = ref(false)
 
     const isChecked = computed(() => {
-      if(storeTheme.value.darktheme){
+      if (storeTheme.value.darktheme) {
         return true
-      }else {
+      } else {
         return false
       }
     })
 
-    if(!thisSub){
+    if (!thisSub) {
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
     }
-    if(!thisAudio){
+    if (!thisAudio) {
       store.dispatch('setAudio', 'On')
     } else {
       store.dispatch('getAudio')
     }
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
@@ -176,60 +124,35 @@ export default defineComponent({
       cek,
       setTutorial,
       changetheme,
-      dosearch,
+      dosearch
     }
 
-    // async function getData(query){
-    //   try{
-    //     const url = `https://vercel-be-v2.vercel.app/api/v1/blog?category=${query}`
-    //     const result = await axios.get(`${url}`);
-    //     blogs.value = result.data
-    //     if(result.data.length === 0){
-    //       isEmpty.value = true
-    //     } else {
-    //       isEmpty.value = false
-    //     }
-    //     loading.value = false
-    //   }catch(err){
-    //     console.log(err)
-    //   }
-    // }
-
-    function changetheme(){
+    function changetheme () {
       console.log('changetheme')
       store.dispatch('changeTheme')
     }
 
-    async function setTutorial(c:any){
-      emit('tutorial', c)
-      // console.log('setTutorial nav', c)
+    function setTutorial () {
+      emit('tutorial')
+    }
+    function dosearch () {
+      emit('dosearch')
     }
 
-    // async function dosearch(e:any){
-    //   console.log('dosearch navbar', e)
-    //   emit('dosearch', e)
-    // }
-
-    async function dosearch(e:any){
-      console.log('dosearch navbar')
-      emit('dosearch', e)
-    }
-
-
-    function cek(){
+    function cek () {
       // console.log(props)
-      console.log('storeTheme',storeTheme)
+      console.log('storeTheme', storeTheme)
     }
-    
-    function closeModal() {
+
+    function closeModal () {
       isSetting.value = false
     }
-    function doSetting() {
+    function doSetting () {
       isSetting.value = true
     }
-    function cekData() {
+    function cekData () {
     }
-  },
+  }
 })
 </script>
 
@@ -290,9 +213,6 @@ input:checked + .slider::before {
   /* @apply py-2;  */
 }
 
-
-
-/* Style The Dropdown Button */
 .dropbtn {
   /* background-color: #4CAF50; */
   /* color: white; */
@@ -349,7 +269,6 @@ input:checked + .slider::before {
   border-radius: 0 0 10px 10px;
 }
 
-
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
@@ -358,7 +277,6 @@ input:checked + .slider::before {
 /* .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 } */
-
 
 .box {
   @apply rounded-full flex justify-center;

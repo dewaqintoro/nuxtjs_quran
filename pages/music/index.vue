@@ -1,88 +1,80 @@
 <template>
-<span>
-  <Navbar :theme="myTheme" />
-  <div class="main container">
-          <!-- <button @click="cek">cek2</button> -->
-    <div v-if="globalTop20Done" class="top-global pt-4">
-      <div class="flex justify-between mx-2 mb-2">
-        <p class="text-xl font-bold ">Global Top 200 Chart</p>
-        <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>
+  <span>
+    <Navbar :theme="myTheme" />
+    <div class="main container">
+      <div v-if="globalTop20Done" class="top-global pt-4">
+        <div class="flex justify-between mx-2 mb-2">
+          <p class="text-xl font-bold ">Global Top 200 Chart</p>
+          <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>
+        </div>
+        <hr/>
+        <div class="top-global-main">
+          <TopGlobal :global-top20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+        </div>
       </div>
-      <hr/>
-      <div class="top-global-main">
-        <TopGlobal :globalTop20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
-      </div>
-    </div>
 
-    <div v-if="artisGlobalDone" class="artis-global mt-16">
-      <div class="dew">
-        <div class="artis-item" v-for="(item, index) in artisGlobal" :key="index">
-          <nuxt-link :to="'music/artist/'+item.artists[0].id">
-            <div class="flex m-2">
-              <div class="item-title">
-                <div class="image-container">
-                  <img :src="item.images.background" alt="img" />
+      <div v-if="artisGlobalDone" class="artis-global mt-16">
+        <div class="dew">
+          <div v-for="(item, index) in artisGlobal" :key="index" class="artis-item">
+            <nuxt-link :to="'music/artist/'+item.artists[0].id">
+              <div class="flex m-2">
+                <div class="item-title">
+                  <div class="image-container">
+                    <img :src="item.images.background" alt="img">
+                  </div>
+                  <p v-if="item.subtitle.length > 20">
+                    {{ item.subtitle.substring(0, 20) }}...
+                  </p>
+                  <p v-else>{{ item.subtitle }}</p>
                 </div>
-                <p v-if="item.subtitle.length > 20">{{item.subtitle.substring(0, 20)}}...</p>
-                <p v-else>{{item.subtitle}}</p>
               </div>
-            </div>
-          </nuxt-link>
-        </div>
-
-
-      </div>
-    </div>
-
-    <div v-if="discoveryIDDone" class="top-global mt-16">
-      <div class="flex justify-between mx-2 mb-2">
-        <p class="text-xl font-bold ">Discovery Indonesia Tracks</p>
-        <!-- <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link> -->
-      </div>
-      <hr/>
-      <div class="top-global-main">
-        <TopGlobal :globalTop20="discoveryID" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
-      </div>
-    </div>
-
-    
-  </div>
-  <div class="sikel">
-    <div v-if="musicOn" class="sec-audio">
-      <div class="this-audio">
-        <div>
-          <div>
-            <p><b>{{myTitle}}</b></p>
-            <p>{{mySubTitle}}</p>
+            </nuxt-link>
           </div>
-          <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
+        </div>
+      </div>
+
+      <div v-if="discoveryIDDone" class="top-global mt-16">
+        <div class="flex justify-between mx-2 mb-2">
+          <p class="text-xl font-bold ">Discovery Indonesia Tracks</p>
+          <!-- <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link> -->
+        </div>
+        <hr/>
+        <div class="top-global-main">
+          <TopGlobal :global-top20="discoveryID" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
         </div>
       </div>
     </div>
-  </div>
-  
-</span>
+    <div class="sikel">
+      <div v-if="musicOn" class="sec-audio">
+        <div class="this-audio">
+          <div>
+            <div>
+              <p><b>{{myTitle}}</b></p>
+              <p>{{mySubTitle}}</p>
+            </div>
+            <audio id="myAudio" :src="myAudio" controls autoplay class="my-audio" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/music/NavbarComp'
-import GlobalComp from '~/components/music/GlobalComp'
-import TopGlobal from '~/components/music/TopGlobal'
-
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
+import Navbar from '~/components/music/NavbarComp'
+import TopGlobal from '~/components/music/TopGlobal'
 export default {
   name: 'Shorten',
   components: {
     Navbar,
-    GlobalComp,
     TopGlobal
   },
-  setup(){
-    const { store, route, app } = useContext()
+  setup () {
+    const { store } = useContext()
     const search = ref('')
     const discoveryID = ref([])
-    const discoveryID_error = ref('')
     const globalTop20 = ref([])
     const artisGlobal = ref([])
     const myText = ref('wadudu')
@@ -99,7 +91,7 @@ export default {
     const myTheme = {
       background: '#088b71',
       color: 'white',
-      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
     }
 
     getDiscoveryID()
@@ -112,7 +104,6 @@ export default {
       artisGlobal,
       myText,
       myTheme,
-      discoveryID_error,
       myTrack,
       myAudio,
       mySubTitle,
@@ -123,7 +114,6 @@ export default {
       globalTop20Done,
       artisGlobalDone,
       discoveryIDDone,
-      cek,
       getDiscoveryID,
       getGlobalTop20,
       play,
@@ -131,46 +121,42 @@ export default {
       pauseAudio
     }
 
-    async function cek(){
-      console.log('discoveryID', discoveryID.value)
-      // console.log('globalTop20', globalTop20.value)
+    function playAudio () {
+      const x = document.getElementById('myAudio')
+      x.play()
     }
 
-    
+    function pauseAudio () {
+      const x = document.getElementById('myAudio')
+      x.pause()
+    }
 
-    function playAudio() { 
-      var x = document.getElementById("myAudio"); 
-      x.play(); 
-    } 
+    function getUnique (array) {
+      const uniqueArray = []
+      const dataDew = []
+      let i = 0
+      for (i; i < array.length; i++) {
+        // if (uniqueArray.indexOf(array[i].subtitle) === -1) {
+        //   uniqueArray.push(array[i].subtitle)
+        //   dataDew.push(array[i])
+        // }
 
-    function pauseAudio() { 
-      var x = document.getElementById("myAudio"); 
-      x.pause(); 
-    } 
-
-    function getUnique(array){
-        var uniqueArray = [];
-        var dataDew = [];
-        // console.log('array',array)
-        
-        var i = 0
-        for(i; i < array.length; i++){
-            if(uniqueArray.indexOf(array[i].subtitle) === -1) {
-                uniqueArray.push(array[i].subtitle);
-                dataDew.push(array[i]);
-            }
+        // alternatif dari di atas
+        if (!uniqueArray.includes(array[i].subtitle)) {
+          uniqueArray.push(array[i].subtitle)
+          dataDew.push(array[i])
         }
-        return dataDew;
+      }
+      return dataDew
     }
 
-
-    function getArtis(){
-      var uniqueNames = getUnique(globalTop20.value);
+    function getArtis () {
+      const uniqueNames = getUnique(globalTop20.value)
       artisGlobal.value = uniqueNames
       artisGlobalDone.value = true
     }
 
-    async function play(item){
+    function play (item) {
       isPlay.value = !isPlay.value
       musicOn.value = true
       // myTrack.value = item
@@ -182,37 +168,34 @@ export default {
       }, 100)
     }
 
-    async function getGlobalTop20(){
+    async function getGlobalTop20 () {
       try {
-        const url = `https://www.nuxt.my.id/api/v1/music/top20/global`
-        const result = await axios.get(url);
+        const url = 'https://www.nuxt.my.id/api/v1/music/top20/global'
+        const result = await axios.get(url)
         // console.log('result', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           globalTop20.value = result?.data?.tracks
           globalTop20Done.value = true
           getArtis()
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
-        discoveryID_error.value = "Gagal memuat data"
       }
     }
 
-    async function getDiscoveryID(){
+    async function getDiscoveryID () {
       try {
-        const url = `https://www.nuxt.my.id/api/v1/music/discovery/ID`
-        const result = await axios.get(url);
+        const url = 'https://www.nuxt.my.id/api/v1/music/discovery/ID'
+        const result = await axios.get(url)
         console.log('getDiscoveryID', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           discoveryID.value = result?.data?.tracks
           discoveryIDDone.value = true
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
-        discoveryID_error.value = "Gagal memuat data"
       }
     }
-
   }
 }
 </script>
@@ -249,7 +232,6 @@ export default {
   @apply flex my-2;
 }
 
-
 .artis-item{
   /* margin: 10px; */
   min-width: 150px;
@@ -280,11 +262,9 @@ img.img-top{
   max-width: 10px;
 }
 
-
 .item-title{
   @apply my-auto justify-items-center w-full;
 }
-
 
 @media (max-width: 700px) {
 }
@@ -296,17 +276,4 @@ img.img-top{
     height: 35px;
   }
 }
-/* @screen tablet {
-}
-@screen mobile {
-  .input-search {
-    @apply my-2 text-lg;
-  }
-  .btn-search {
-    @apply my-2 text-lg font-semibold;
-  }
-  .input-search {
-    @apply px-4;
-  }
-} */
 </style>

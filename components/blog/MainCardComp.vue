@@ -1,11 +1,10 @@
 <template>
   <div>
-    <h1>{{blog.title}}</h1>
+    <h1>{{ blog.title }}</h1>
   </div>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
 export default {
   name: 'SearchNewComp',
   components: {
@@ -13,19 +12,17 @@ export default {
   props: {
     blog: {
       type: Object,
-      required: false,
-      default: {},
+      required: true
     }
   },
-  setup(props, {emit}){
+  setup (props) {
     return {
       cek
     }
 
-    function cek(){
+    function cek () {
       console.log('props', props)
     }
-
   }
 }
 </script>
