@@ -1,41 +1,41 @@
 <template>
-<span >
-  <Navbar :enable="false" />
-  <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <div class="">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
-      </div>
-      <div v-else>
-        <nuxt-link :to="item.route" v-for="item in dataDoa" :key="item.id">
-          <Cardcomp class="content" :theme="storeTheme" :item="item"/>
-        </nuxt-link>
-        <a :href="item.route" target="_blank" v-for="item in extIndex" :key="item.id">
-          <Cardcomp class="content" :theme="storeTheme" :item="item"/>
-        </a>
+  <span>
+    <Navbar :enable="false" />
+    <div v-if="!loadingTheme" class="main text-center" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <div class="">
+        <div v-if="loading">
+          <Loading :theme="storeTheme" />
+        </div>
+        <div v-else>
+          <nuxt-link v-for="item in dataDoa" :key="item.id" :to="item.route">
+            <Cardcomp class="content" :theme="storeTheme" :item="item" />
+          </nuxt-link>
+          <a v-for="item in extIndex" :key="item.id" :href="item.route" target="_blank">
+            <Cardcomp class="content" :theme="storeTheme" :item="item" />
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
+import Cardcomp from '@/components/GlobalCardComp'
+import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/myindex.json'
 import dataExt from '~/data/extIndex.json'
-import Cardcomp from '@/components/GlobalCardComp'
 
 export default {
   name: 'Ngodingbentar',
   components: {
     Navbar,
     Loading,
-    Cardcomp,
+    Cardcomp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const dataDoa = dataJson.data
     const extIndex = dataExt.data
     const loadingTheme = computed(() => store.state.loadingTheme)
@@ -49,20 +49,14 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
-      extIndex,
-      cek,
+      extIndex
     }
 
-    function setLoading(){
+    function setLoading () {
       setTimeout(function () {
         loading.value = false
-      }, 200);
+      }, 200)
     }
-
-    async function cek(search){
-      console.log('dew', search)
-    }
-
   }
 }
 </script>
