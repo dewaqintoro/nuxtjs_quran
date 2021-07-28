@@ -1,61 +1,60 @@
 <template>
-<!-- <span></span> -->
-<span >
-  <Navbar to="/agama" />
-  <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
-    <BackComp :theme="storeTheme" route="/agama" />
-    <SearchComp @search="searchFilter" :fields='dataFields' :data='data.surah_info'/>
-    <div class="item text-center flex justify-between">
-      <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
-      <!-- <button class="question focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }" @click="doSetting()">
-        <font-awesome-icon class="icon-question" :icon="['fas', 'question']" />
-      </button> -->
-    </div>
-    <div class=" min-h-screen font-arabic">
-      <div v-if="loading">
-        <Loading :theme="storeTheme" />
+  <span>
+    <Navbar to="/agama" />
+    <div v-if="!loadingTheme" class="main" :style="{ background: storeTheme.background, color: storeTheme.color }">
+      <BackComp :theme="storeTheme" route="/agama" />
+      <SearchComp :fields="dataFields" :data="data.surah_info" @search="searchFilter" />
+      <div class="item text-center flex justify-between">
+        <p class="sum" :style="{ boxShadow: storeTheme.boxShadow  }">{{allSurah.length}} data</p>
+        <!-- <button class="question focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow  }" @click="doSetting()">
+          <font-awesome-icon class="icon-question" :icon="['fas', 'question']" />
+        </button> -->
       </div>
-      <div v-else>
-        <div class="item" :class="bgId" v-for="(surah, index) in pageOfItems" :key="index">
-          <nuxt-link :to="'/agama/surah/'+surah.index">
-            <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
-              <div class="">
-                <div class="idSurah" :style="{ boxShadow: storeTheme.boxShadow  }">{{surah.index}}</div>
-                <div class="nameSurah">
-                  <p>{{surah.arabic}}</p>
-                  <p class="mt-4">{{surah.latin}}</p>
-                  <p class="italic text-base">( {{surah.translation}} : {{surah.ayah_count}} ayat )</p>
+      <div class=" min-h-screen font-arabic">
+        <div v-if="loading">
+          <Loading :theme="storeTheme" />
+        </div>
+        <div v-else>
+          <div v-for="(surah, index) in pageOfItems" :key="index" class="item" :class="bgId">
+            <nuxt-link :to="'/agama/surah/'+surah.index">
+              <div class="card" :style="{ boxShadow: storeTheme.boxShadow }">
+                <div class="">
+                  <div class="idSurah" :style="{ boxShadow: storeTheme.boxShadow }">{{ surah.index }}</div>
+                  <div class="nameSurah">
+                    <p>{{ surah.arabic }}</p>
+                    <p class="mt-4">{{ surah.latin }}</p>
+                    <p class="italic text-base">( {{ surah.translation }} : {{ surah.ayah_count }} ayat )</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </nuxt-link>
+            </nuxt-link>
+          </div>
+
+          <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
+            --- Data tidak ditemukan ---
+          </div>
+
+          <div class="text-center py-3">
+            <jw-pagination :items="allSurah" @changePage="onChangePage" />
+          </div>
         </div>
 
-        <div v-if="pageOfItems.length === 0" class="text-center text-2xl font-bold mt-16">
-        --- Data tidak ditemukan ---
-        </div>
+        <Transition name="drawer">
+          <About v-if="isSetting" :source="source" :theme="storeTheme" @close="closeModal" />
+        </Transition>
 
-        <div class="text-center py-3">
-          <jw-pagination :items="allSurah" @changePage="onChangePage"></jw-pagination>
-        </div>
       </div>
-
-      <Transition name="drawer">
-        <About :source="source" :theme="storeTheme" v-if="isSetting" @close="closeModal" />
-      </Transition>
-
     </div>
-  </div>
-</span>
+  </span>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import Navbar from '~/components/Navbar.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import Loading from '@/components/Loading.vue'
+import BackComp from '@/components/BackComp'
+import Navbar from '~/components/Navbar.vue'
 import json from '~/data/surah-info.json'
 import SearchComp from '~/components/SearchNewComp.vue'
-import BackComp from '@/components/BackComp'
 
 export default {
   name: 'Quran',
@@ -65,11 +64,11 @@ export default {
     SearchComp,
     BackComp
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     const data = json
     const search = ref('')
-    const dataFields= {value: 'latin'}
+    const dataFields = { value: 'latin' }
     const allSurah = ref([])
     const pageOfItems = ref([])
     const loading = ref(true)
@@ -78,16 +77,16 @@ export default {
     const isSetting = ref(false)
     const source = 'https://quran.kemenag.go.id'
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
       }
     })
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -96,8 +95,8 @@ export default {
     }
 
     setTimeout(function () {
-        loading.value = false
-    }, 500);
+      loading.value = false
+    }, 500)
 
     searchFilter(search.value)
     return {
@@ -110,40 +109,36 @@ export default {
       isSetting,
       pageOfItems,
       loading,
-      cek,
-      searchFilter,
-      onChangePage,
       loadingTheme,
       storeTheme,
+      searchFilter,
+      onChangePage,
       closeModal,
       doSetting
     }
-    async function cek(){
-    }
 
-    function closeModal() {
+    function closeModal () {
       isSetting.value = false
     }
-    function doSetting() {
+    function doSetting () {
       isSetting.value = true
     }
 
-    function onChangePage(data = any){
+    function onChangePage (data) {
       pageOfItems.value = data
       window.smoothscroll()
     }
-    function searchFilter(dataSearch){
-      if(dataSearch === null ){
+    function searchFilter (dataSearch) {
+      if (dataSearch === null) {
         dataSearch = ''
       }
-      // setTimeout(function () {
-          const result = data.surah_info.filter(surat =>
-            surat.latin.toLowerCase().includes(dataSearch.toLowerCase())
-          );
-          allSurah.value = result
-          // loading.value = false
-      // }, 1000);
-      
+      setTimeout(function () {
+        const result = data.surah_info.filter(surat =>
+          surat.latin.toLowerCase().includes(dataSearch.toLowerCase())
+        )
+        allSurah.value = result
+        loading.value = false
+      }, 100)
     }
   }
 }
@@ -209,7 +204,6 @@ html {
   .nameSurah {
     @apply px-4 text-right w-full;
   }
-  
 }
 @screen tablet {
   .main {

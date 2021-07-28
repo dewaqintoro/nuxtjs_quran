@@ -6,47 +6,32 @@
         <Loading :theme="storeTheme" />
       </div>
       <div v-else class="content">
-      <BackComp :theme="storeTheme" route="/agama/surah" class="mb-4" />
-
-        <!-- <div class="back">
-          <div class="btn-back" :style="{ boxShadow: storeTheme.boxShadow }">
-            <nuxt-link to="/agama/surah">
-              <font-awesome-icon :icon="['fas', 'arrow-left']" />
-            </nuxt-link>
-          </div>
-        </div> -->
-
+        <BackComp :theme="storeTheme" route="/agama/surah" class="mb-4" />
         <Headerquran :surah="surah" :theme="storeTheme" />
-      <!-- <button @click="cek()">cek</button> -->
-        <div class="text-center flex justify-center">
-        </div>
-        <div class="item" v-for="(surat, index) in pageOfItems" :key="index">
+        <div v-for="(surat, index) in pageOfItems" :key="index" class="item">
           <Cardcomp
-          :theme="storeTheme"
-          :index="index"
-          :surat="surat"
-          :surah="surah"
-          :arti="surah.translations.id.text[surat[0]]" 
-          :audio="setAudio(surat[0])"
+            :theme="storeTheme"
+            :index="index"
+            :surat="surat"
+            :surah="surah"
+            :arti="surah.translations.id.text[surat[0]]"
+            :audio="setAudio(surat[0])"
           />
-          <!-- :arti="surah.translations.id.text[index]" -->
         </div>
       </div>
-
       <div class="text-center py-3">
-				<jw-pagination :items="newSurah" @changePage="onChangePage"></jw-pagination>
-			</div>
-      
+        <jw-pagination :items="newSurah" @changePage="onChangePage" />
+      </div>
     </div>
   </span>
 </template>
 <script>
-import { ref, useAsync, useContext, computed } from '@nuxtjs/composition-api'
+import { ref, useContext, computed } from '@nuxtjs/composition-api'
+import Loading from '@/components/Loading.vue'
+import BackComp from '@/components/BackComp'
 import Headerquran from '~/components/quran/Headerquran.vue'
 import Cardcomp from '~/components/quran/Cardcomp.vue'
 import Navbar from '~/components/Navbar.vue'
-import Loading from '@/components/Loading.vue'
-import BackComp from '@/components/BackComp'
 export default {
   name: 'Surah',
   components: {
@@ -56,9 +41,8 @@ export default {
     Loading,
     BackComp
   },
-  setup(){
-    
-    const { route, store, app } = useContext()
+  setup () {
+    const { route, store } = useContext()
     const idParams = route.value?.params?.id
     getSurah()
     const surah = ref({})
@@ -68,9 +52,9 @@ export default {
     const newSurah = ref([])
     const pageOfItems = ref([])
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -90,20 +74,20 @@ export default {
       setAudio
     }
 
-    function setAudio(id){
+    function setAudio (id) {
       let data = ref('')
       let idSuray = ref('')
-      if (id.length === 1){
+      if (id.length === 1) {
         data = `00${id}`
-      } else if(id.length === 2){
+      } else if (id.length === 2) {
         data = `0${id}`
       } else {
         data = id
       }
 
-      if (idParams.length === 1){
+      if (idParams.length === 1) {
         idSuray = `00${idParams}`
-      } else if(idParams.length === 2){
+      } else if (idParams.length === 2) {
         idSuray = `0${idParams}`
       } else {
         idSuray = idParams
@@ -112,26 +96,26 @@ export default {
       return result
     }
 
-    function cek() {
-      console.log('newSurah',newSurah.value)
-      console.log('pageOfItems',pageOfItems.value)
+    function cek () {
+      console.log('newSurah', newSurah.value)
+      console.log('pageOfItems', pageOfItems.value)
       console.log('surah.translations.id.text', surah.value.translations.id.text)
     }
 
-    function onChangePage(data = any){
+    function onChangePage (data) {
       pageOfItems.value = data
       window.smoothscroll()
     }
-    async function getNewSurah(){
-      var obj2 = surah.value?.text
-      var result2 = Object.entries(obj2);
+    function getNewSurah () {
+      const obj2 = surah.value?.text
+      const result2 = Object.entries(obj2)
       newSurah.value = result2
-      setTimeout(async function () {  
+      setTimeout(() => {
         loading.value = false
-      }, 500);
+      }, 500)
     }
 
-    async function getSurah(){
+    async function getSurah () {
       const resp = await import(`~/data/surah/${idParams}.json`)
       surah.value = resp[idParams]
       getNewSurah()

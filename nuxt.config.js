@@ -4,8 +4,8 @@ export default {
     algoliaPublicKey: process.env.ALGOLIA_PUBLIC_KEY || 'http://localhost:3000'
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
-  configureWebpack: config => {
-      config.output.globalObject = "this"
+  configureWebpack: (config) => {
+    config.output.globalObject = 'this'
   },
   head: {
     title: 'Ngoding Bentar',
@@ -28,16 +28,16 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/material.css',
+    '~/assets/material.css'
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '@/plugins/axios' },
-    // {src: '@/plugins/global.ts', ssr: false},
-    // {src: '@/plugins/editor.ts', ssr: false},
-    // {src: '@/plugins/pagination.ts', ssr: false},
-    // {src: '@/plugins/chart.ts', ssr: false},
-    // {src: '@/plugins/instanSearch', ssr: false },
+    { src: '@/plugins/axios' },
+    { src: '@/plugins/global.ts', ssr: false },
+    { src: '@/plugins/editor.ts', ssr: false },
+    { src: '@/plugins/pagination.ts', ssr: false },
+    { src: '@/plugins/chart.ts', ssr: false },
+    { src: '@/plugins/instanSearch', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,7 +51,7 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api',
     '@nuxtjs/fontawesome',
-    '@nuxt/typescript-build',
+    '@nuxt/typescript-build'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -105,7 +105,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile:['vue-instantsearch', 'instantsearch.js/es'],
+    transpile: ['vue-instantsearch', 'instantsearch.js/es'],
     loaders: {
       vue: {
         transformAssetUrls: {
@@ -114,7 +114,7 @@ export default {
       }
     },
 
-    extend(config, ctx) {
+    extend (config, ctx) {
       config.module.rules.push({
         test: /\.(ogg|mp3|wav|mpe?g)$/i,
         loader: 'file-loader',
