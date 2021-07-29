@@ -1,12 +1,12 @@
 <template>
   <div>
     <Navbar :theme="myTheme" />
-    <!-- <button @click="cek" class="mt-36 mb-16">cekAsu</button> -->
-    
     <div class="header">
       <div class="container p-4">
         <p><b>GLOBAL</b></p>
-        <p class="text-2xl font-bold">Top 200</p>
+        <p class="text-2xl font-bold">
+          Top 200
+        </p>
         <p>The most Shazamed tracks in the world this week</p>
       </div>
     </div>
@@ -14,46 +14,61 @@
       <div class="content">
         <div class="section one">
           <div v-if="isDOne" class="two-top">
-          <!-- <img :src="imgTop.images.coverart" /> -->
-          <img :src="getMyImg()" />
-          <div class="px-8 py-4">
-            <p><b>#1</b> Top 200</p>
-            <p class="text-xl font-bold">{{imgTop.title}}</p>
-            <p>{{imgTop.subtitle}}</p>
-          </div>
+            <img :src="getMyImg()">
+            <div class="px-8 py-4">
+              <p><b>#1</b> Top 200</p>
+              <p class="text-xl font-bold">
+                {{ imgTop.title }}
+              </p>
+              <p>{{ imgTop.subtitle }}</p>
+            </div>
           </div>
         </div>
         <div class="section">
           <div class="dew">
-
             <div class="item">
               <div v-for="(item, index) in globalTop200" :key="index">
-                
-                  <Top200Global v-if="index < 20 && isLess" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-                  <Top200Global v-if="isMore" :item="item" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-                
+                <Top200Global
+                  v-if="index < 20 && isLess"
+                  :item="item"
+                  :index="index"
+                  @play="play"
+                  @pauseAudio="pauseAudio"
+                  @playAudio="playAudio"
+                />
+                <Top200Global
+                  v-if="isMore"
+                  :item="item"
+                  :index="index"
+                  @play="play"
+                  @pauseAudio="pauseAudio"
+                  @playAudio="playAudio"
+                />
               </div>
             </div>
-
           </div>
           <div class="text-center mt-4">
             <button v-if="isDOne" class="btn-more" @click="setMore()">
-              <p v-if="isMore">Show Less</p>
-              <p v-else>Show More</p>
+              <p v-if="isMore">
+                Show Less
+              </p>
+              <p v-else>
+                Show More
+              </p>
             </button>
           </div>
         </div>
         <div class="section two">
           <div v-if="isDOne" class="two-top">
-          <!-- <img :src="imgTop.images.coverart" /> -->
-          <img :src="getMyImg()" />
-          <div class="px-8 py-4">
-            <p><b>#1</b> Top 200</p>
-            <p class="text-xl font-bold">{{imgTop.title}}</p>
-            <p>{{imgTop.subtitle}}</p>
+            <img :src="getMyImg()">
+            <div class="px-8 py-4">
+              <p><b>#1</b> Top 200</p>
+              <p class="text-xl font-bold">
+                {{ imgTop.title }}
+              </p>
+              <p>{{ imgTop.subtitle }}</p>
+            </div>
           </div>
-          </div>
-          
         </div>
       </div>
     </div>
@@ -62,10 +77,10 @@
         <div class="this-audio">
           <div>
             <div>
-              <p><b>{{myTitle}}</b></p>
-              <p>{{mySubTitle}}</p>
+              <p><b>{{ myTitle }}</b></p>
+              <p>{{ mySubTitle }}</p>
             </div>
-            <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
+            <audio id="myAudio" :src="myAudio" controls autoplay class="my-audio" />
           </div>
         </div>
       </div>
@@ -74,10 +89,10 @@
 </template>
 
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
+import { ref } from '@nuxtjs/composition-api'
+import axios from 'axios'
 import Navbar from '~/components/music/NavbarComp'
 import Top200Global from '~/components/music/Top200Global'
-import axios from 'axios'
 
 export default {
   name: 'MusicId',
@@ -85,10 +100,7 @@ export default {
     Navbar,
     Top200Global
   },
-  setup(props){
-    
-    const { route, store, app } = useContext()
-    const idSurah = ref('')
+  setup () {
     const imgTop = ref([])
     const isDOne = ref(false)
     const isPlay = ref(false)
@@ -97,27 +109,16 @@ export default {
     const myTitle = ref('')
     const mySubTitle = ref('')
     const myTrack = ref([])
-
-
     const globalTop20 = ref([])
     const globalTop200 = ref([])
-
     const isMore = ref(false)
     const isLess = ref(true)
 
     const myTheme = {
       background: '#088b71',
       color: 'white',
-      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
     }
-
-    const bgId = computed(() => {
-      if(props.theme?.darktheme){
-        return 'darkTheme'
-      } else {
-        return 'lightTheme'
-      }
-    })
 
     // getGlobalTop20()
     getGlobalTop200()
@@ -144,34 +145,34 @@ export default {
       setMore
     }
 
-    function setMore() {
-      if(isMore.value === true){
+    function setMore () {
+      if (isMore.value === true) {
         isMore.value = false
         isLess.value = true
-      } else{
+      } else {
         isMore.value = true
         isLess.value = false
       }
     }
 
-    function cek(){
-      console.log('imgTop.value ',imgTop.value )
+    function cek () {
+      console.log('imgTop.value ', imgTop.value)
       // console.log('globalTop200.value ',globalTop200.value[0] )
     }
 
-    function getMyImg(){
+    function getMyImg () {
       const myImg = globalTop200.value[0].images.coverart || 'https://is3-ssl.mzstatic.com/image/thumb/Music125/v4/aa/02/57/aa025710-a0c6-90e9-4a18-2881efad4855/190296614316.jpg/400x400cc.jpg'
 
       console.log('myImg', myImg)
       return myImg
     }
 
-    async function getGlobalTop200(){
+    async function getGlobalTop200 () {
       try {
-        const url = `https://www.nuxt.my.id/api/v1/music/top200/global`
-        const result = await axios.get(url);
+        const url = 'https://www.nuxt.my.id/api/v1/music/top200/global'
+        const result = await axios.get(url)
         // console.log('result', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           globalTop200.value = result?.data?.tracks
           imgTop.value = result?.data?.tracks[0]
           setTimeout(() => {
@@ -179,23 +180,23 @@ export default {
           }, 300)
           // console.log(result?.data?.tracks[0].images.coverart)
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
         // discoveryID_error.value = "Gagal memuat data"
       }
     }
 
-    function playAudio() { 
-      var x = document.getElementById("myAudio"); 
-      x.play(); 
-    } 
-
-    function pauseAudio() { 
-      var x = document.getElementById("myAudio"); 
-      x.pause(); 
+    function playAudio () {
+      const x = document.getElementById('myAudio')
+      x.play()
     }
 
-    async function play(item){
+    function pauseAudio () {
+      const x = document.getElementById('myAudio')
+      x.pause()
+    }
+
+    function play (item) {
       isPlay.value = !isPlay.value
       musicOn.value = true
       myTrack.value = item
@@ -268,7 +269,6 @@ export default {
   width: 80vw;
   /* height: 35px; */
 }
-
 
 @media (max-width: 450px) {
   .content{

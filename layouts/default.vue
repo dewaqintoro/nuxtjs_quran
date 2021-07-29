@@ -1,32 +1,30 @@
 <template>
   <div>
-    <div class="offline" v-if="$nuxt.isOffline">You are offline</div>
+    <div v-if="$nuxt.isOffline" class="offline">
+      Tidak ada koneksi
+    </div>
     <Nuxt />
-    <footer-comp v-if="!isAgama && !isIg"/>
+    <footer-comp v-if="!isAgama && !isIg" />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'Footer',
   props: {
-    // theme: {
-    //   type: Object,
-    //   required: true,
-    // },
   },
-  setup(_, { emit }) {
-    const { store, route, app } = useContext()
+  setup () {
+    const { route } = useContext()
 
     const isAgama = computed(() => {
-      if(route.value.name === 'agama'){
+      if (route.value.name === 'agama') {
         return true
       }
     })
 
     const isIg = computed(() => {
-      if(route.value.name === 'ig'){
+      if (route.value.name === 'ig') {
         return true
       }
     })
@@ -35,7 +33,7 @@ export default defineComponent({
       isAgama,
       isIg
     }
-  },
+  }
 })
 </script>
 

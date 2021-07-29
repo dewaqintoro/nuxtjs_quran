@@ -1,13 +1,14 @@
 <template>
   <div>
     <Navbar :theme="myTheme" @searchData="doSearch" />
-    <button @click="cek" class="mt-36">cek</button>
-
+    <button class="mt-36" @click="cek">
+      cek
+    </button>
     <div>
       <p>Tracks</p>
       <div v-if="resultDone">
         <div v-for="(track, index) in resultTracks" :key="index">
-          <p> {{track.alias}} </p>
+          <p> {{ track.alias }} </p>
         </div>
       </div>
     </div>
@@ -16,44 +17,33 @@
       <p>Artist</p>
       <div v-if="resultDone">
         <div v-for="(track, index) in resultArtists" :key="index">
-          <p> {{track.alias}} </p>
+          <p> {{ track.alias }} </p>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
-import Navbar from '~/components/music/NavbarComp'
+import { ref, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
+import Navbar from '~/components/music/NavbarComp'
 
 export default {
   name: 'MusicId',
   components: {
     Navbar
   },
-  setup(props){
-    
-    const { route, store, app } = useContext()
-    const querySearch = route.value.query.q
+  setup () {
+    const { route } = useContext()
     const resultTracks = ref([])
     const resultArtists = ref([])
     const resultDone = ref(false)
     const myTheme = {
       background: '#088b71',
       color: 'white',
-      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
     }
-
-    const bgId = computed(() => {
-      if(props.theme?.darktheme){
-        return 'darkTheme'
-      } else {
-        return 'lightTheme'
-      }
-    })
 
     doSearch()
 
@@ -66,26 +56,26 @@ export default {
       doSearch,
       searchData
     }
-    function cek(){
+    function cek () {
       console.log('route.1', route.value.query.q)
     }
-    function doSearch(){
+    function doSearch () {
       resultDone.value = false
       setTimeout(() => {
         searchData()
       }, 100)
     }
-    async function searchData(){
-      try{
+    async function searchData () {
+      try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/search?q=${route.value.query.q}`
-        const result = await axios.get(`${url}`);
-        if(result?.data){
+        const result = await axios.get(`${url}`)
+        if (result?.data) {
           resultTracks.value = result?.data?.tracks?.hits
           resultArtists.value = result?.data?.artists?.hits
           resultDone.value = true
         }
         // console.log('result', result)
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }

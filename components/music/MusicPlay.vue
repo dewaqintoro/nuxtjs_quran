@@ -3,42 +3,22 @@
     <div class="containerCustom" :style="{ background: theme.background, color: theme.color }">
       <div class="wrapper">
         <p>Music</p>
-        <!-- <div class="flex my-search">
-          <input v-model="search" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
-          <button class="focus:outline-none" @click="searchData">
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </button>
-        </div> -->
-
-
-        <!-- <div class="flex mt-4">
-          <div class="flex buttom">
-          </div>
-          <div class="w-full buttom" align="right">
-            <button
-              @click="$emit('close')"
-              class="btn save text-white font-bold py-2 px-4 focus:outline-none"
-            >
-              Kembali
-            </button>
-          </div>
-        </div> -->
       </div>
     </div>
   </AppModalNew>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'MusicPlay',
   props: {
     theme: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, { emit }) {
+  setup (props, { emit }) {
     const { app, store, route } = useContext()
     const thisRoute = route.value
     const isLoading = ref(true)
@@ -47,21 +27,21 @@ export default defineComponent({
     const audioStore = computed(() => store.state.audio)
     const search = ref('')
     const isChecked = computed(() => {
-      if(props.theme.darktheme){
+      if (props.theme.darktheme) {
         return true
-      }else {
+      } else {
         return false
       }
     })
     const isSub = computed(() => {
-      if(subStore.value === 'On'){
+      if (subStore.value === 'On') {
         return true
       } else {
         return false
       }
     })
     const isAudio = computed(() => {
-      if(audioStore.value === 'On'){
+      if (audioStore.value === 'On') {
         return true
       } else {
         return false
@@ -80,8 +60,8 @@ export default defineComponent({
       searchData
     }
 
-    async function searchData(){
-      if(thisRoute.path === "/blog/search"){
+    function searchData () {
+      if (thisRoute.path === '/blog/search') {
         // console.log('thisRoute sama', thisRoute.path)
         emit('dosearch', search.value)
       }
@@ -90,17 +70,16 @@ export default defineComponent({
       store.commit('setSearchValue', search.value)
       emit('close')
     }
-    async function changesub(){
+    function changesub () {
       store.dispatch('changeSub')
     }
-    async function changeaudio(){
+    function changeaudio () {
       store.dispatch('changeAudio')
     }
-    function changetheme(){
+    function changetheme () {
       store.dispatch('changeTheme')
     }
-
-  },
+  }
 })
 </script>
 
@@ -109,7 +88,6 @@ export default defineComponent({
   justify-content: center;
   justify-items: center;
   margin: auto;
-  
 }
 .input-search{
   width: 90%;
@@ -170,7 +148,6 @@ input:checked + .slider::before {
   transform: translateX(24px);
 }
 
-
 .containerCustom {
   margin: 0 auto;
   display: flex;
@@ -206,7 +183,7 @@ input:checked + .slider::before {
       border-radius: 6px;
     }
     .item {
-      @apply py-2; 
+      @apply py-2;
     }
   }
 }

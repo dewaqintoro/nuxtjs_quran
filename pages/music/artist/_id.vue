@@ -3,88 +3,96 @@
     <Navbar :theme="myTheme" />
     <div class="main">
       <div class="section one">
-        
         <div class="be container">
           <div v-if="artistDone">
-            <img class="track-img" :src="getAvatar(artistDetail)" alt="img" />
+            <img class="track-img" :src="getAvatar(artistDetail)" alt="img">
           </div>
-
           <div class="track-text">
             <div v-if="artistDone">
-              <p class="text-2xl font-bold text-black">{{artistDetail.name}}</p>
-              <p class="font-bold">{{artistDetail.genres.primary}}</p>
+              <p class="text-2xl font-bold text-black">
+                {{ artistDetail.name }}
+              </p>
+              <p class="font-bold">
+                {{ artistDetail.genres.primary }}
+              </p>
             </div>
           </div>
         </div>
-
       </div>
-
       <div class="section two container">
         <!-- <button @click="cek">cek</button> -->
         <div class="top-global">
           <div class="flex justify-between mx-2 mb-2">
-            <p v-if="artistDone" class="text-xl font-bold ">TOP SONGS BY {{artistDetail.name}} </p>
+            <p v-if="artistDone" class="text-xl font-bold ">
+              TOP SONGS BY {{ artistDetail.name }}
+            </p>
           </div>
           <hr/>
           <div v-if="topTracksDone" class="top-global-main">
-            <TopGlobal :globalTop20="artistTopTracks" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio"/>
+            <TopGlobal :global-top20="artistTopTracks" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
           </div>
         </div>
 
         <div v-if="artistDescDone" class="mt-8 px-2">
           <div class="flex justify-between mx-2 mb-2">
-            <p class="text-xl font-bold ">ARTIST BIOGRAPHY</p>
+            <p class="text-xl font-bold ">
+              ARTIST BIOGRAPHY
+            </p>
           </div>
-          <p v-if="isLess" v-html="artistBioData.attributes.artistBio.substring(0, 400)"> </p>
-          <p v-if="isMore" v-html="artistBioData.attributes.artistBio"></p>
-          <button class="focus:outline-none text-blue-500 font-bold " v-if="artistBioData.attributes.artistBio.length > 400" @click="setMore">
-            <p v-if="isLess">View More</p>
-            <p v-if="isMore">View Less</p>
+          <p v-if="isLess" v-html="artistBioData.attributes.artistBio.substring(0, 400)" />
+          <p v-if="isMore" v-html="artistBioData.attributes.artistBio" />
+          <button v-if="artistBioData.attributes.artistBio.length > 400" class="focus:outline-none text-blue-500 font-bold " @click="setMore">
+            <p v-if="isLess">
+              View More
+            </p>
+            <p v-if="isMore">
+              View Less
+            </p>
           </button>
         </div>
 
-
-        <div class="mt-8" v-if="artistBioDone">
+        <div v-if="artistBioDone" class="mt-8">
           <div class="flex justify-between mx-2 mb-2">
-            <p class="text-xl font-bold ">Discover similar artists on Apple Music</p>
+            <p class="text-xl font-bold ">
+              Discover similar artists on Apple Music
+            </p>
           </div>
           <hr/>
           <div class="artis-global">
             <div class="dew">
-              <div class="artis-item" v-for="(item, index) in similarAartists" :key="index">
+              <div v-for="(item, index) in similarAartists" :key="index" class="artis-item">
                 <!-- <nuxt-link :to="'music/artist/'+item.artists[0].id"> -->
-                  <div class="flex m-2">
-                    <a :href="item.attributes.url" target="_blank">
-                      <div class="item-title">
-                        <div class="image-container">
-                          <img :src="getCoverart(item)" alt="img" />
-                        </div>
-                          <p v-if="item.attributes.name.length > 20"><b>{{item.attributes.name.substring(0, 20)}}...</b></p>
-                          <p v-else><b>{{item.attributes.name}}</b></p>
+                <div class="flex m-2">
+                  <a :href="item.attributes.url" target="_blank">
+                    <div class="item-title">
+                      <div class="image-container">
+                        <img :src="getCoverart(item)" alt="img">
                       </div>
-                    </a>
-                  </div>
+                      <p v-if="item.attributes.name.length > 20">
+                        <b>{{ item.attributes.name.substring(0, 20) }}...</b>
+                      </p>
+                      <p v-else>
+                        <b>{{ item.attributes.name }}</b>
+                      </p>
+                    </div>
+                  </a>
+                </div>
                 <!-- </nuxt-link> -->
               </div>
-
-
             </div>
           </div>
         </div>
-
-
       </div>
-
     </div>
     <div class="sikel">
       <div v-if="musicOn" class="sec-audio">
         <div class="this-audio">
           <div>
             <div>
-              <p><b>{{myTitle}}</b></p>
-              <p>{{mySubTitle}}</p>
+              <p><b>{{ myTitle }}</b></p>
+              <p>{ {mySubTitle }}</p>
             </div>
-            <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
+            <audio id="myAudio" :src="myAudio" controls autoplay class="my-audio" />
           </div>
         </div>
       </div>
@@ -93,9 +101,9 @@
 </template>
 
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
-import Navbar from '~/components/music/NavbarComp'
+import { ref, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
+import Navbar from '~/components/music/NavbarComp'
 import TopGlobal from '~/components/music/TopGlobal'
 
 export default {
@@ -104,10 +112,8 @@ export default {
     Navbar,
     TopGlobal
   },
-  setup(props){
-    
-    const { route, store, app } = useContext()
-    const idSurah = ref('')
+  setup () {
+    const { route } = useContext()
     const artistId = ref(route.value.params.id)
     const artistDetail = ref([])
     const artistBioData = ref([])
@@ -130,16 +136,8 @@ export default {
     const myTheme = {
       background: '#088b71',
       color: 'white',
-      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
     }
-
-    const bgId = computed(() => {
-      if(props.theme?.darktheme){
-        return 'darkTheme'
-      } else {
-        return 'lightTheme'
-      }
-    })
 
     getArtist()
 
@@ -170,41 +168,41 @@ export default {
       getAvatar
     }
 
-    function setMore() {
-      if(isMore.value === true){
+    function setMore () {
+      if (isMore.value === true) {
         isMore.value = false
         isLess.value = true
-      } else{
+      } else {
         isMore.value = true
         isLess.value = false
       }
     }
 
-    function getCoverart(item){
-      let str = item?.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
-      let stre = str.replace("{w}", "180");
-      let dew = stre.replace("{h}", "180");
+    function getCoverart (item) {
+      const str = item?.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+      const stre = str.replace('{w}', '180')
+      const dew = stre.replace('{h}', '180')
       return dew
     }
 
-    function getAvatar(item){
-      let str = item?.avatar || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+    function getAvatar (item) {
+      const str = item?.avatar || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
       return str
     }
 
-    function playAudio() { 
+    function playAudio () {
       // console.log('playAudio')
-      var x = document.getElementById("myAudio"); 
-      x.play(); 
-    } 
-
-    function pauseAudio() { 
-      // console.log('pauseAudio')
-      var x = document.getElementById("myAudio"); 
-      x.pause(); 
+      const x = document.getElementById('myAudio')
+      x.play()
     }
-    
-    async function play(item){
+
+    function pauseAudio () {
+      // console.log('pauseAudio')
+      const x = document.getElementById('myAudio')
+      x.pause()
+    }
+
+    function play (item) {
       isPlay.value = !isPlay.value
       musicOn.value = true
       mySubTitle.value = item.subtitle
@@ -215,16 +213,16 @@ export default {
       }, 100)
     }
 
-    function cek(){
-      console.log('artistDetail.value',artistDetail.value)
+    function cek () {
+      console.log('artistDetail.value', artistDetail.value)
     }
 
-    async function getArtist(){
+    async function getArtist () {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/${artistId.value}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('result', result.data)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           artistDetail.value = result?.data
           setTimeout(() => {
             artistDone.value = true
@@ -232,43 +230,43 @@ export default {
           getArtistBio(result?.data?.adamid)
           getArtistTopTracks()
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
 
-    async function getArtistBio(adamid){
+    async function getArtistBio (adamid) {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/bio/${adamid}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('getArtistBio', result?.data?.data[0])
-        if(result?.status === 200){
+        if (result?.status === 200) {
           artistBioData.value = result?.data?.data[0]
-          similarAartists.value = result?.data?.data[0]?.views?.["similar-artists"]?.data
-          if(result?.data?.data[0]?.attributes?.artistBio){
+          similarAartists.value = result?.data?.data[0]?.views?.['similar-artists']?.data
+          if (result?.data?.data[0]?.attributes?.artistBio) {
             artistDescDone.value = true
           }
           setTimeout(() => {
             artistBioDone.value = true
           }, 100)
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
 
-    async function getArtistTopTracks(){
+    async function getArtistTopTracks () {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artisttoptracks/${artistId.value}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('getArtistTopTracks', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           artistTopTracks.value = result?.data?.tracks
           setTimeout(() => {
             topTracksDone.value = true
           }, 100)
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
@@ -287,7 +285,7 @@ export default {
 .image-container img:hover {
   -ms-transform: scale(1.02); /* IE 9 */
   -webkit-transform: scale(1.02); /* Safari 3-8 */
-  transform: scale(1.02); 
+  transform: scale(1.02);
 }
 
 .artis-global{
@@ -351,7 +349,6 @@ export default {
   @apply mt-32;
 }
 
-
 .track-cover{
   @apply flex w-full;
 }
@@ -408,7 +405,7 @@ export default {
 .track-img:hover {
   -ms-transform: scale(1.02); /* IE 9 */
   -webkit-transform: scale(1.02); /* Safari 3-8 */
-  transform: scale(1.02); 
+  transform: scale(1.02);
 }
 
 @media (max-width: 450px) {

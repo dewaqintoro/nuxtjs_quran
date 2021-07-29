@@ -49,8 +49,8 @@
         <div class="this-audio">
           <div>
             <div>
-              <p><b>{{myTitle}}</b></p>
-              <p>{{mySubTitle}}</p>
+              <p><b>{{ myTitle }}</b></p>
+              <p>{{ mySubTitle }}</p>
             </div>
             <audio id="myAudio" :src="myAudio" controls autoplay class="my-audio" />
           </div>
@@ -172,7 +172,7 @@ export default {
       try {
         const url = 'https://www.nuxt.my.id/api/v1/music/top20/global'
         const result = await axios.get(url)
-        // console.log('result', result)
+        console.log('result getGlobalTop20', result)
         if (result?.status === 200) {
           globalTop20.value = result?.data?.tracks
           globalTop20Done.value = true

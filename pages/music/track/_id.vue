@@ -3,20 +3,24 @@
     <Navbar :theme="myTheme" />
     <div class="main">
       <div class="section one">
-        
         <div class="be container">
           <div v-if="isDOne" class="img-cover">
-            <img class="track-img" :src="getCoverart()" alt="img" />
+            <img class="track-img" :src="getCoverart()" alt="img">
           </div>
-
           <div class="track-text">
             <div v-if="isDOne">
-              <p class="text-2xl font-bold text-black">{{myTrack.title}}</p>
+              <p class="text-2xl font-bold text-black">
+                {{ myTrack.title }}
+              </p>
               <nuxt-link v-if="artistId" :to="'../../music/artist/'+myTrack.artists[0].id">
-                <p class="font-bold">{{myTrack.subtitle}}</p>
+                <p class="font-bold">
+                  {{ myTrack.subtitle }}
+                </p>
               </nuxt-link>
-              <p v-else class="font-bold">{{myTrack.subtitle}}</p>
-              <p >{{genres}} . {{trackCount}} Shazams</p>
+              <p v-else class="font-bold">
+                {{ myTrack.subtitle }}
+              </p>
+              <p>{{ genres }} . {{ trackCount }} Shazams</p>
             </div>
           </div>
         </div>
@@ -25,87 +29,131 @@
           <div class="container">
             <div class="track-text">
               <div class="section-btn-full">
-                  <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
-                    <div class="btn-full">
-                      <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
-                      <div class="text-playfull">
-                        <p>Play Full Song</p>
-                      </div>
+                <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
+                  <div class="btn-full">
+                    <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
+                    <div class="text-playfull">
+                      <p>Play Full Song</p>
                     </div>
-                  </a>
-                </div>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-
-
       </div>
       <div class="section two container">
-        <!-- <button @click="cek">cek</button> -->
-
         <div class="second">
           <div class="second-left">
-
             <div v-if="albumDone">
-              <p class="section-title">Featured In</p>
+              <p class="section-title">
+                Featured In
+              </p>
               <hr class="my-4"/>
               <div class="artis-global">
                 <div class="dew">
-                  <div class="artis-item" v-for="(item, index) in albumfeaturedin" :key="index">
+                  <div v-for="(item, index) in albumfeaturedin" :key="index" class="artis-item">
                     <a :href="item.attributes.url" target="_blank">
-                      <img :src="getImg(item)" alt="img" />
-                      <p class="uppercase ">{{item.type}}</p>
-                      <p class="text-lg "><b>{{item.attributes.name}}</b></p>
-                      <p class="text-sm">{{item.attributes.curatorName}}</p>
+                      <img :src="getImg(item)" alt="img">
+                      <p class="uppercase ">
+                        {{ item.type }}
+                      </p>
+                      <p class="text-lg "><b>{{ item.attributes.name }}</b></p>
+                      <p class="text-sm">{{ item.attributes.curatorName }}</p>
                     </a>
                   </div>
                 </div>
               </div>
             </div>
-
-
             <div v-if="topTracksDone">
-              <p class="section-title mt-8">Top Songs By {{myTrack.subtitle}}</p>
+              <p class="section-title mt-8">
+                Top Songs By {{ myTrack.subtitle }}
+              </p>
               <hr class="my-4"/>
-              <div class="my-4" v-for="(song, index) in artistTopTracks" :key="index">
-                <GlobalComp v-if="index < 5 && isLess" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
-                <GlobalComp v-if="isMore" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
+              <div v-for="(song, index) in artistTopTracks" :key="index" class="my-4">
+                <GlobalComp
+                  v-if="index < 5 && isLess"
+                  :item="song"
+                  :index="index"
+                  :route-link="song.key"
+                  :show-index="false"
+                  @play="play"
+                  @pauseAudio="pauseAudio"
+                  @playAudio="playAudio"
+                />
+                <GlobalComp
+                  v-if="isMore"
+                  :item="song"
+                  :index="index"
+                  :route-link="song.key"
+                  :show-index="false"
+                  @play="play"
+                  @pauseAudio="pauseAudio"
+                  @playAudio="playAudio"
+                />
               </div>
               <div v-if="artistTopTracks.length > 5" class="text-center mt-4">
                 <button class="btn-more" @click="setMore()">
-                  <p v-if="isMore">Show Less</p>
-                  <p v-else>Show More</p>
+                  <p v-if="isMore">
+                    Show Less
+                  </p>
+                  <p v-else>
+                    Show More
+                  </p>
                 </button>
               </div>
             </div>
 
             <div v-if="similaritiesDone">
-              <p class="section-title mt-8">Similar Songs</p>
+              <p class="section-title mt-8">
+                Similar Songs
+              </p>
               <hr class="my-4"/>
-              <div class="my-4" v-for="(song, index) in similaritiesTrack" :key="index">
-                <GlobalComp v-if="index < 5 && isLessSimilar" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
-                <GlobalComp v-if="isMoreSimilar" :item="song" :index="index" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" :routeLink="song.key" :showIndex="false" />
+              <div v-for="(song, index) in similaritiesTrack" :key="index" class="my-4">
+                <GlobalComp
+                  v-if="index < 5 && isLessSimilar"
+                  :item="song"
+                  :index="index"
+                  :route-link="song.key"
+                  :show-index="false"
+                  @play="play"
+                  @pauseAudio="pauseAudio"
+                  @playAudio="playAudio"
+                />
+                <GlobalComp
+                  v-if="isMoreSimilar"
+                  :item="song"
+                  :index="index"
+                  :route-link="song.key"
+                  :show-index="false"
+                  @play="play"
+                  @pauseAudio="pauseAudio"
+                  @playAudio="playAudio"
+                />
               </div>
               <div class="text-center mt-4">
                 <button v-if="similaritiesTrack" class="btn-more" @click="setMoreSimilar()">
-                  <p v-if="isMoreSimilar">Show Less</p>
-                  <p v-else>Show More</p>
+                  <p v-if="isMoreSimilar">
+                    Show Less
+                  </p>
+                  <p v-else>
+                    Show More
+                  </p>
                 </button>
               </div>
             </div>
-
-            
-
           </div>
           <div class="second-right">
             <div v-if="isLyric">
-              <p class="section-title">Lyrics</p>
-              <p v-for="(lyric, index) in myLyrics" :key="index">{{lyric}}</p>
+              <p class="section-title">
+                Lyrics
+              </p>
+              <p v-for="(lyric, index) in myLyrics" :key="index">
+                {{ lyric }}
+              </p>
             </div>
           </div>
         </div>
-        
-        
       </div>
     </div>
     <div class="sikel">
@@ -113,10 +161,10 @@
         <div class="this-audio">
           <div>
             <div>
-              <p><b>{{myTitle}}</b></p>
-              <p>{{mySubTitle}}</p>
+              <p><b>{{ myTitle }}</b></p>
+              <p>{{ mySubTitle }}</p>
             </div>
-            <audio :src="myAudio" controls autoplay class="my-audio" id="myAudio"></audio>
+            <audio id="myAudio" :src="myAudio" controls autoplay class="my-audio" />
           </div>
         </div>
       </div>
@@ -125,22 +173,19 @@
 </template>
 
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
-import Navbar from '~/components/music/NavbarComp'
+import { ref, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
-import Top200Global from '~/components/music/Top200Global'
+import Navbar from '~/components/music/NavbarComp'
 import GlobalComp from '~/components/music/GlobalComp'
 
 export default {
   name: 'MusicId',
   components: {
     Navbar,
-    Top200Global,
     GlobalComp
   },
-  setup(props){
-    
-    const { route, store, app } = useContext()
+  setup () {
+    const { route } = useContext()
     const idMusic = ref(route.value.params.id)
     const myTrack = ref([])
     const myLyrics = ref([])
@@ -153,28 +198,21 @@ export default {
     const similaritiesDone = ref(false)
     const isLyric = ref(false)
     const trackCount = ref(0)
-
     const isPlay = ref(false)
     const musicOn = ref(false)
     const myAudio = ref('')
     const myTitle = ref('')
     const mySubTitle = ref('')
-
     const genres = ref('')
-
     const isMore = ref(false)
     const isLess = ref(true)
-
     const isMoreSimilar = ref(false)
     const isLessSimilar = ref(true)
-
-    const sumSimilar = ref([])
     const artistId = ref(false)
-
     const myTheme = {
       background: '#088b71',
       color: 'white',
-      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
     }
 
     getMusic()
@@ -195,7 +233,6 @@ export default {
       similaritiesDone,
       albumDone,
       isPlay,
-      myTrack,
       myAudio,
       mySubTitle,
       myTitle,
@@ -215,118 +252,91 @@ export default {
       getImg,
       getCoverart
     }
-    
 
-    async function cek(){
-      console.log('myTrack',myTrack.value.artists)
-      // console.log('similaritiesTracks',similaritiesTracks.value)
-      // let str = "https://is4-ssl.mzstatic.com/image/thumb/Features125/v4/b5/0e/bd/b50ebdc6-fd92-d166-9fc7-224df3cca02e/source/{w}x{h}SC.DN01.jpeg?l=en-GB";
-      // let stre = str.replace("{w}", "400");
-      // let dew = stre.replace("{h}", "400");
-
-
-
-      // console.log(dew);
+    function cek () {
+      console.log('myTrack', myTrack.value.artists)
     }
 
-    function getImg(item){
-      // console.log('item',item.attributes.artwork.url)
-      // console.log('similaritiesTracks',similaritiesTracks.value)
-      let str = item.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
-      let stre = str.replace("{w}", "400");
-      let dew = stre.replace("{h}", "400");
+    function getImg (item) {
+      const str = item.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+      const stre = str.replace('{w}', '400')
+      const dew = stre.replace('{h}', '400')
       return dew
     }
 
-    function getCoverart(){
-      let str = myTrack.value?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
-      let stre = str.replace("{w}", "400");
-      let dew = stre.replace("{h}", "400");
+    function getCoverart () {
+      const str = myTrack.value?.images?.coverart || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
+      const stre = str.replace('{w}', '400')
+      const dew = stre.replace('{h}', '400')
       return dew
     }
 
-    async function dew(){
-
-      const id = ["1","2","3"]
-      let myUrl = 'track?'
-      let url = sumSimilar.value.map(idNya => {
-        return `id=${idNya}`
-      }).join('&')
-
-    }
-
-    async function getAlbumfeaturedin(){
+    async function getAlbumfeaturedin () {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/albumfeaturedin/${myTrack.value.albumadamid}`
-        const result = await axios.get(url);
-        // console.log('result', result)
-        
-        if(result?.status === 200){
-          if(result?.data?.name === "Error"){
+        const result = await axios.get(url)
+        if (result?.status === 200) {
+          if (result?.data?.name === 'Error') {
             albumDone.value = false
-          }else{
+          } else {
             albumfeaturedin.value = result?.data
             setTimeout(() => {
               albumDone.value = true
             }, 100)
           }
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
 
-    async function getSimilar(){
+    async function getSimilar () {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/similarities/${idMusic.value}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('result', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           similaritiesTrack.value = result?.data?.tracks
-
-          // result?.data?.tracks.map((track => {
-          //   sumSimilar.value.push(track.key)
-          // }))
           setTimeout(() => {
             similaritiesDone.value = true
           }, 100)
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
 
-    function setMore() {
-      if(isMore.value === true){
+    function setMore () {
+      if (isMore.value === true) {
         isMore.value = false
         isLess.value = true
-      } else{
+      } else {
         isMore.value = true
         isLess.value = false
       }
     }
 
-    function setMoreSimilar() {
-      if(isMoreSimilar.value === true){
+    function setMoreSimilar () {
+      if (isMoreSimilar.value === true) {
         isMoreSimilar.value = false
         isLessSimilar.value = true
-      } else{
+      } else {
         isMoreSimilar.value = true
         isLessSimilar.value = false
       }
     }
 
-    function playAudio() { 
-      var x = document.getElementById("myAudio"); 
-      x.play(); 
-    } 
-
-    function pauseAudio() { 
-      var x = document.getElementById("myAudio"); 
-      x.pause(); 
+    function playAudio () {
+      const x = document.getElementById('myAudio')
+      x.play()
     }
 
-    async function play(item){
+    function pauseAudio () {
+      const x = document.getElementById('myAudio')
+      x.pause()
+    }
+
+    function play (item) {
       // console.log('item', item)
       isPlay.value = !isPlay.value
       musicOn.value = true
@@ -338,18 +348,18 @@ export default {
       }, 100)
     }
 
-    async function getMusic(){
+    async function getMusic () {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/${idMusic.value}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('result', result.data)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           myTrack.value = result?.data
           genres.value = result?.data?.genres?.primary || ''
-          if(result?.data?.artists){
+          if (result?.data?.artists) {
             artistId.value = true
           }
-          if(result?.data?.sections[1].text){
+          if (result?.data?.sections[1].text) {
             myLyrics.value = result?.data?.sections[1].text
             setTimeout(() => {
               isLyric.value = true
@@ -361,46 +371,43 @@ export default {
             getAlbumfeaturedin()
           }, 100)
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
 
-    async function getTrackCount(){
+    async function getTrackCount () {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/count/${idMusic.value}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('result', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           trackCount.value = result?.data?.total
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
 
-    async function getArtistTopTracks(){
+    async function getArtistTopTracks () {
       try {
         const idArtist = myTrack.value?.artists[0]?.id
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artisttoptracks/${idArtist}`
-        const result = await axios.get(url);
+        const result = await axios.get(url)
         // console.log('result', result)
-        if(result?.status === 200){
+        if (result?.status === 200) {
           artistTopTracks.value = result?.data?.tracks
           setTimeout(() => {
             topTracksDone.value = true
           }, 100)
         }
-      } catch (e){
+      } catch (e) {
         console.log(e)
       }
     }
-
   }
 }
 </script>
-
-
 <style lang="postcss" scoped>
 .artis-global{
   overflow-x: scroll;
@@ -523,7 +530,7 @@ export default {
 .track-img:hover {
   -ms-transform: scale(1.02); /* IE 9 */
   -webkit-transform: scale(1.02); /* Safari 3-8 */
-  transform: scale(1.02); 
+  transform: scale(1.02);
 }
 
 @media (max-width: 450px) {

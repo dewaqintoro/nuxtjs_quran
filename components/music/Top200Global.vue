@@ -2,26 +2,42 @@
   <div class="dew">
     <div class="flex">
       <div class="number">
-        <p>{{index+1}}</p>
+        <p>{{ index+1 }}</p>
       </div>
       <div class="btn-play">
-        <button class="focus:outline-none" @click="play(item)" >
+        <button class="focus:outline-none" @click="play(item)">
           <font-awesome-icon v-if="isPlay" :icon="['fas', 'pause']" />
           <font-awesome-icon v-else :icon="['fas', 'play']" />
         </button>
       </div>
       <nuxt-link :to="`../../track/`+item.key">
         <div class="item-title besar">
-          <p v-if="item.title.length > 40" class="font-bold">{{item.title.substring(0, 40)}}</p>
-          <p v-else class="font-bold">{{item.title}}</p>
-          <p v-if="item.subtitle.length > 40">{{item.subtitle.substring(0, 40)}}...</p>
-          <p v-else>{{item.subtitle}}</p>
+          <p v-if="item.title.length > 40" class="font-bold">
+            {{ item.title.substring(0, 40) }}
+          </p>
+          <p v-else class="font-bold">
+            {{ item.title }}
+          </p>
+          <p v-if="item.subtitle.length > 40">
+            {{ item.subtitle.substring(0, 40) }}...
+          </p>
+          <p v-else>
+            {{ item.subtitle }}
+          </p>
         </div>
         <div class="item-title kecil">
-          <p v-if="item.title.length > 25" class="font-bold">{{item.title.substring(0, 25)}}...</p>
-          <p v-else class="font-bold">{{item.title}}</p>
-          <p v-if="item.subtitle.length > 30">{{item.subtitle.substring(0, 30)}}...</p>
-          <p v-else>{{item.subtitle}}</p>
+          <p v-if="item.title.length > 25" class="font-bold">
+            {{ item.title.substring(0, 25) }}...
+          </p>
+          <p v-else class="font-bold">
+            {{ item.title }}
+          </p>
+          <p v-if="item.subtitle.length > 30">
+            {{ item.subtitle.substring(0, 30) }}..
+          </p>
+          <p v-else>
+            {{ item.subtitle }}
+          </p>
         </div>
       </nuxt-link>
     </div>
@@ -37,27 +53,21 @@
 </template>
 
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
-import GlobalComp from '~/components/music/GlobalComp'
+import { ref } from '@nuxtjs/composition-api'
 
 export default {
   name: 'TopGlobal',
-  components: {
-    GlobalComp,
-  },
   props: {
     item: {
       type: Object,
-      required: true,
+      required: true
     },
     index: {
       type: Number,
-      required: true,
+      required: true
     }
   },
-  setup(props, {emit}){
-    const { route, store, app } = useContext()
-    const idSurah = ref('')
+  setup (props, { emit }) {
     const isPlay = ref(false)
 
     return {
@@ -67,25 +77,24 @@ export default {
       pauseAudio
     }
 
-    async function play(){
-      if(isPlay.value === true){
+    function play () {
+      if (isPlay.value === true) {
         isPlay.value = false
         emit('pauseAudio')
-      }else{
+      } else {
         emit('play', props.item)
         // emit('playAudio')
         isPlay.value = true
       }
     }
 
-    function playAudio() {
+    function playAudio () {
       emit('playAudio')
-    } 
+    }
 
-    function pauseAudio() {
+    function pauseAudio () {
       emit('pauseAudio')
-    } 
-
+    }
   }
 }
 </script>

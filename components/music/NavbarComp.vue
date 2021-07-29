@@ -4,20 +4,22 @@
       <div class="start">
         <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <nuxt-link class="btn-nav" to="/music">
-            <img class="img-nav" src="/iconNew.png" />
+            <img class="img-nav" src="/iconNew.png">
           </nuxt-link>
         </div>
-        <!-- <div v-if="enable" class="mx-2">
-          <nuxt-link :to="route">
-            Home
-          </nuxt-link>
-        </div> -->
       </div>
 
       <div class="end">
         <div class="flex my-search">
-          <input v-model="search" @keyup.enter="searchData" class="input-search focus:outline-none" id="username" type="search"  placeholder="Cari Disini. . .">
-          <button class="focus:outline-none" @click="searchData" >
+          <input
+            id="username"
+            v-model="search"
+            class="input-search focus:outline-none"
+            type="search"
+            placeholder="Cari Disini. . ."
+            @keyup.enter="searchData"
+          >
+          <button class="focus:outline-none" @click="searchData">
             <font-awesome-icon :icon="['fas', 'search']" />
           </button>
         </div>
@@ -28,25 +30,23 @@
           </button>
         </div>
       </div>
-
-      <!-- <Transition name="drawer">
-        <SearchModalComp :theme="storeTheme" v-if="isSearch" @close="closeModal" @dosearch="dosearch" />
-      </Transition> -->
-
-
     </div>
     <div v-if="resultDone && search" class="hah z-100" @click.self="toHide">
-      <div  class="result-box" id="divDew">
-        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">Songs</p>
-        <div class="result-item" v-for="(track, index) in resultTracks" :key="index">
-          <nuxt-link :to="baseRoute+track.key" >
-            {{track.alias}}
+      <div id="divDew" class="result-box">
+        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">
+          Songs
+        </p>
+        <div v-for="(track, index) in resultTracks" :key="index" class="result-item">
+          <nuxt-link :to="baseRoute+track.key">
+            {{ track.alias }}
           </nuxt-link>
         </div>
-        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">Artists</p>
-        <div class="result-item" v-for="(artist, index) in resultArtists" :key="'a'+index">
-          <nuxt-link :to="baseRouteArtist+artist.id" >
-            {{artist.alias}}
+        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">
+          Artists
+        </p>
+        <div v-for="(artist, index) in resultArtists" :key="'a'+index" class="result-item">
+          <nuxt-link :to="baseRouteArtist+artist.id">
+            {{ artist.alias }}
           </nuxt-link>
         </div>
       </div>
@@ -75,15 +75,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
-    },
+    }
   },
-  setup(props, { emit }) {
-    const { store, route, app } = useContext()
+  setup () {
+    const { store, route } = useContext()
     const isSearch = ref(false)
-    const thisSub = app.$cookies.get('sub')
-    const thisAudio = app.$cookies.get('audio')
-    const initTheme = computed(() => store.state.initTheme)
-    const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
@@ -98,16 +94,15 @@ export default defineComponent({
     // const isChecked = ref(false)
 
     const isChecked = computed(() => {
-      if(storeTheme.value.darktheme){
+      if (storeTheme.value.darktheme) {
         return true
-      }else {
+      } else {
         return false
       }
     })
 
     watch(search, () => {
-      // console.log("search: ", search.value)
-      if(search.value.length === 0){
+      if (search.value.length === 0) {
         resultDone.value = false
       }
     })
@@ -130,99 +125,67 @@ export default defineComponent({
       closeModal,
       doSearch,
       cek,
-      setTutorial,
       changetheme,
-      dosearch,
       searchData,
       toHide
     }
 
-    function toHide(){
+    function toHide () {
       resultDone.value = false
     }
 
-    function cekRoute(){
+    function cekRoute () {
       // console.log('route', route.value)
-      if(route.value.name === 'music'){
+      if (route.value.name === 'music') {
         baseRoute.value = 'music/track/'
         baseRouteArtist.value = 'music/artist/'
       }
-      if(route.value.name === 'music-track-id'){
+      if (route.value.name === 'music-track-id') {
         baseRoute.value = '../../music/track/'
         baseRouteArtist.value = '../../music/artist/'
       }
     }
 
-
-    async function doSearchs(){
-      emit('searchData')
-      // app.router?.push(`/music/search?q=${search.value}`)
-      // try{
-      //   const url = `https://vercel-be-v2.vercel.app/api/v1/music/search?q=${search.value}`
-      //   const result = await axios.get(`${url}`);
-      //   console.log('result', result)
-        
-      // }catch(err){
-      //   console.log(err)
-      // }
-    }
-
-    async function searchData(){
-      try{
+    async function searchData () {
+      try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/search?q=${search.value}`
-        const result = await axios.get(`${url}`);
-        if(result?.data){
+        const result = await axios.get(`${url}`)
+        if (result?.data) {
           resultTracks.value = result?.data?.tracks?.hits
           resultArtists.value = result?.data?.artists?.hits
           resultDone.value = true
         }
         // console.log('result', result)
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
 
-    function changetheme(){
+    function changetheme () {
       console.log('changetheme')
       store.dispatch('changeTheme')
     }
 
-    async function setTutorial(c:any){
-      emit('tutorial', c)
-      // console.log('setTutorial nav', c)
-    }
-
-    // async function dosearch(e:any){
-    //   console.log('dosearch navbar', e)
-    //   emit('dosearch', e)
-    // }
-
-    async function dosearch(e:any){
-      console.log('dosearch navbar')
-      emit('dosearch', e)
-    }
-
-
-    function cek(){
+    function cek () {
       // console.log(props)
-      console.log('storeTheme',storeTheme)
+      console.log('storeTheme', storeTheme)
     }
-    
-    function closeModal() {
+
+    function closeModal () {
       isSearch.value = false
     }
-    function doSearch() {
+    function doSearch () {
       isSearch.value = true
     }
-    function cekData() {
+    function cekData () {
     }
-  },
+  }
 })
 </script>
 
 <style lang="postcss" scoped>
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -271,7 +234,6 @@ select:-webkit-autofill:focus {
   padding: 5px 7px;
   color: black;
 }
-
 
 .box {
   @apply rounded-full flex justify-center;
