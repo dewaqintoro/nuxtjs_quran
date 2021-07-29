@@ -7,37 +7,37 @@
           Pilih Expedisi:
         </label>
         <div class="cek-resi">
-          <!-- <div class="resi-kurir">
-            <select v-model="ekspedisiSelected" name="year" id="year" class="rounded-xl focus:outline-none py-2 px-4 shadow-md" :style="{background: storeTheme.background}">
-              <option value="jne">JNE</option>
-              <option value="jnt">JNT</option>
-              <option value="pos">POS</option>
-              <option value="sicepat">SiCepat</option>
-              <option value="tiki">TIKI</option>
-              <option value="anteraja">ANTERAJA</option>
-              <option value="wahana">WAHANA</option>
-              <option value="ninja">NINJA</option>
-            </select>
-          </div>
-          <div class="resi-awb">
-            <input class="focus:outline-none rounded-xl py-2 px-4 shadow-md" v-model="awb" placeholder="Masukkan Resi" :style="{background: storeTheme.background  }"/>
-          </div> -->
           <select v-model="ekspedisiSelected" class="rounded-xl focus:outline-none py-2 px-4 shadow-md" :style="{background: storeTheme.background}">
-            <option value="jne">JNE</option>
-            <option value="jnt">JNT</option>
-            <option value="pos">POS</option>
-            <option value="sicepat">SiCepat</option>
-            <option value="tiki">TIKI</option>
-            <option value="anteraja">ANTERAJA</option>
-            <option value="wahana">WAHANA</option>
-            <option value="ninja">NINJA</option>
+            <option value="jne">
+              JNE
+            </option>
+            <option value="jnt">
+              JNT
+            </option>
+            <option value="pos">
+              POS
+            </option>
+            <option value="sicepat">
+              SiCepat
+            </option>
+            <option value="tiki">
+              TIKI
+            </option>
+            <option value="anteraja">
+              ANTERAJA
+            </option>
+            <option value="wahana">
+              WAHANA
+            </option>
+            <option value="ninja">
+              NINJA
+            </option>
           </select>
-          <input v-model="awb" type="search" placeholder="No Resi. . ." class="input-awb focus:outline-none rounded-xl py-2 px-4 shadow-md" :style="{background: storeTheme.background}"/>
+          <input v-model="awb" type="search" placeholder="No Resi. . ." class="input-awb focus:outline-none rounded-xl py-2 px-4 shadow-md" :style="{background: storeTheme.background}">
         </div>
-        <button @click="cekResi()" class="cek-biaya mt-4 focus:outline-none justify-end text-white font-bold py-2 px-4 rounded-full shadow-md">
+        <button class="cek-biaya mt-4 focus:outline-none justify-end text-white font-bold py-2 px-4 rounded-full shadow-md" @click="cekResi()">
           Cek Resi
         </button>
-        
       </div>
       <div v-if="showDetail" class="bg-white p-8 rounded-3xl mt-8 justify-center mx-auto">
         <!-- 0201102000450503 -->
@@ -49,36 +49,52 @@
           <table class="mx-auto">
             <tr>
               <td>No Resi</td>
-              <td class="pl-4 font-semibold ">: {{dataResi.summary.awb}}</td>
+              <td class="pl-4 font-semibold ">
+                : {{ dataResi.summary.awb }}
+              </td>
             </tr>
             <tr>
               <td>Status</td>
-              <td class="pl-4 font-semibold">: {{dataResi.summary.status}}</td>
+              <td class="pl-4 font-semibold">
+                : {{ dataResi.summary.status }}
+              </td>
             </tr>
             <tr>
               <td>Service</td>
-              <td class="pl-4 font-semibold">: {{dataResi.summary.service}}</td>
+              <td class="pl-4 font-semibold">
+                : {{ dataResi.summary.service }}
+              </td>
             </tr>
             <tr>
               <td>Deskripsi</td>
-              <td class="pl-4 font-semibold">: {{dataResi.summary.desc}}</td>
+              <td class="pl-4 font-semibold">
+                : {{ dataResi.summary.desc }}
+              </td>
             </tr>
             <tr>
               <td>Dikirim oleh</td>
-              <td class="pl-4 font-semibold">: {{dataResi.detail.shipper}} - {{dataResi.detail.origin}}</td>
+              <td class="pl-4 font-semibold">
+                : {{ dataResi.detail.shipper }} - {{ dataResi.detail.origin }}
+              </td>
             </tr>
             <tr>
               <td>Dikirim ke</td>
-              <td class="pl-4 font-semibold">: {{dataResi.detail.receiver}} - {{dataResi.detail.destination}}</td>
+              <td class="pl-4 font-semibold">
+                : {{ dataResi.detail.receiver }} - {{ dataResi.detail.destination }}
+              </td>
             </tr>
           </table>
         </div>
         <hr/>
-        <p class="text-center mt-6 font-bold">Histori</p>
+        <p class="text-center mt-6 font-bold">
+          Histori
+        </p>
         <section class="timeline-area">
-          <div class="time" v-for="(item, index) in dataResi.history" :key="index">
-            <h2 class="font-bold">{{item.date}}</h2>
-            <h3>{{item.desc}}</h3>
+          <div v-for="(item, index) in dataResi.history" :key="index" class="time">
+            <h2 class="font-bold">
+              {{ item.date }}
+            </h2>
+            <h3>{{ item.desc }}</h3>
           </div>
         </section>
         <!-- <div v-if="dataResi">
@@ -89,17 +105,17 @@
   </div>
 </template>
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
 export default {
-  name: "CekResi",
-  setup() {
-    const { app, store } = useContext()
+  name: 'CekResi',
+  setup () {
+    const { store } = useContext()
     const ekspedisiSelected = ref('jne')
     const storeTheme = computed(() => store.state.theme)
     const awb = ref('')
-    const apiKey= 'febd21cf7746d439d869d5b6b329429dba2c849fc98b056a60eb39d05df75019'
+    const apiKey = 'febd21cf7746d439d869d5b6b329429dba2c849fc98b056a60eb39d05df75019'
     const dataResi = ref([])
     const showDetail = ref(false)
     return {
@@ -112,23 +128,23 @@ export default {
       cek
     }
 
-    function cek(){
+    function cek () {
       console.log('dataResi', dataResi.value)
     }
 
-    async function cekResi(){
+    async function cekResi () {
       // console.log('awb',awb.value)
-      try{
+      try {
         const url = `https://api.binderbyte.com/v1/track?api_key=${apiKey}&courier=${ekspedisiSelected.value}&awb=${awb.value}`
-        const result = await axios.get(`${url}`);
+        const result = await axios.get(`${url}`)
         dataResi.value = result?.data?.data
         showDetail.value = true
         // console.log('result', result?.data?.data)
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
-  },
+  }
 }
 </script>
 
@@ -232,7 +248,4 @@ export default {
     max-width: 100px;
   }
 }
-
-
-
 </style>
