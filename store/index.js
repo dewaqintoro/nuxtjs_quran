@@ -1,6 +1,6 @@
 export const state = () => ({
   audio: 'On',
-  sub: '',
+  sub: 'On',
   theme: {
     darktheme: false,
     // background: '#f7f7f7',
@@ -23,11 +23,14 @@ export const state = () => ({
 })
 
 export const actions = {
-  setSub (data) {
-    this.$cookies.set('sub', data, {
+  setSub () {
+    this.$cookies.set('sub', this.state.sub, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
+    setTimeout(() => {
+      this.dispatch('getSub')
+    }, 100)
   },
   getSub ({ commit }) {
     const subCookie = this.$cookies.get('sub')
@@ -36,16 +39,19 @@ export const actions = {
   changeSub ({ commit }) {
     const subCookie = this.$cookies.get('sub')
     if (subCookie === 'On') {
-      this.dispatch('setSub', 'Off')
       commit('setState', { sub: 'Off' })
+      setTimeout(() => {
+        this.dispatch('setSub')
+      }, 100)
     } else {
-      this.dispatch('setSub', 'On')
       commit('setState', { sub: 'On' })
+      setTimeout(() => {
+        this.dispatch('setSub')
+      }, 100)
     }
   },
 
   setAudio () {
-    console.log('this.state.audio', this.state.audio)
     this.$cookies.set('audio', this.state.audio, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
@@ -57,7 +63,6 @@ export const actions = {
   getAudio ({ commit }) {
     const audioCookie = this.$cookies.get('audio')
     commit('setState', { audio: audioCookie })
-    console.log('audioCookie', audioCookie)
   },
   changeAudio ({ commit }) {
     const audioCookie = this.$cookies.get('audio')

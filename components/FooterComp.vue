@@ -19,17 +19,10 @@ export default defineComponent({
     // },
   },
   setup () {
-    const { store, app } = useContext()
+    const { store } = useContext()
     const isSetting = ref(false)
-    const thisSub = app.$cookies.get('sub')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-
-    if (!thisSub) {
-      store.dispatch('setSub', 'On')
-    } else {
-      store.dispatch('getSub')
-    }
 
     return {
       storeTheme,

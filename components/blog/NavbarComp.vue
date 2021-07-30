@@ -90,9 +90,8 @@ export default defineComponent({
     }
   },
   setup (_, { emit }) {
-    const { store, app } = useContext()
+    const { store } = useContext()
     const isSetting = ref(false)
-    const thisSub = app.$cookies.get('sub')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
@@ -104,12 +103,6 @@ export default defineComponent({
         return false
       }
     })
-
-    if (!thisSub) {
-      store.dispatch('setSub', 'On')
-    } else {
-      store.dispatch('getSub')
-    }
 
     return {
       storeTheme,

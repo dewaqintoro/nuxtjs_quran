@@ -18,6 +18,7 @@ export default defineComponent({
     const { route, app, store } = useContext()
     const thisTheme = app.$cookies.get('theme')
     const thisAudio = app.$cookies.get('audio')
+    const thisSub = app.$cookies.get('sub')
     const isAgama = computed(() => {
       if (route.value.name === 'agama') {
         return true
@@ -41,6 +42,12 @@ export default defineComponent({
       store.dispatch('setAudio')
     } else {
       store.dispatch('getAudio')
+    }
+
+    if (!thisSub) {
+      store.dispatch('setSub')
+    } else {
+      store.dispatch('getSub')
     }
 
     return {
