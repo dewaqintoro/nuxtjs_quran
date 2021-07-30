@@ -15,8 +15,9 @@ export default defineComponent({
   props: {
   },
   setup () {
-    const { route } = useContext()
-
+    const { route, app, store } = useContext()
+    const initTheme = computed(() => store.state.initTheme)
+    const thisTheme = app.$cookies.get('theme')
     const isAgama = computed(() => {
       if (route.value.name === 'agama') {
         return true
@@ -28,6 +29,14 @@ export default defineComponent({
         return true
       }
     })
+
+    if (thisTheme) {
+      store.dispatch('getTheme')
+      console.log('ada tema')
+    } else {
+      store.dispatch('setTheme', initTheme.value)
+      console.log('tidak ada tema')
+    }
 
     return {
       isAgama,
