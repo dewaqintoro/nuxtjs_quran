@@ -1,11 +1,11 @@
 <template>
-    <div class="py-4" :style="{ background: storeTheme.background, color: storeTheme.color }">
-      <div class="text-center">
-        <a href="https://www.instagram.com/ngodingbentar/" target="_blank">@ngodingbentar</a>
-        /
-        <a href="https://www.instagram.com/dewaqintoro/" target="_blank">@dewaqintoro</a>
-      </div>
+  <div v-if="!loadingTheme" class="py-4" :style="{ background: storeTheme.background, color: storeTheme.color }">
+    <div class="text-center">
+      <a href="https://www.instagram.com/ngodingbentar/" target="_blank">@ngodingbentar</a>
+      /
+      <a href="https://www.instagram.com/dewaqintoro/" target="_blank">@dewaqintoro</a>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,8 +18,8 @@ export default defineComponent({
     //   required: true,
     // },
   },
-  setup(_, { emit }) {
-    const { store, route, app } = useContext()
+  setup () {
+    const { store, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
@@ -28,17 +28,17 @@ export default defineComponent({
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
 
-    if(!thisSub){
+    if (!thisSub) {
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
     }
-    if(!thisAudio){
+    if (!thisAudio) {
       store.dispatch('setAudio', 'On')
     } else {
       store.dispatch('getAudio')
     }
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
@@ -47,9 +47,9 @@ export default defineComponent({
     return {
       storeTheme,
       loadingTheme,
-      isSetting,
+      isSetting
     }
-  },
+  }
 })
 </script>
 
