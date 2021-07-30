@@ -1,29 +1,23 @@
 <template>
   <div class="back">
-      <nuxt-link :to="route">
-    <div class="btn-back" :style="{ boxShadow: theme.boxShadow }">
+    <nuxt-link :to="route">
+      <div class="btn-back" :style="{ boxShadow: theme.boxShadow }">
         <font-awesome-icon :icon="['fas', 'arrow-left']" />
-    </div>
-      </nuxt-link>
+      </div>
+    </nuxt-link>
   </div>
 </template>
 <script>
-import { ref, useContext, computed } from '@nuxtjs/composition-api'
 export default {
   name: 'Cardcomp',
   props: {
     theme: {
       type: Object,
-      required: true,
+      required: true
     },
     route: {
       type: String,
-      required: true,
-    },
-  },
-  setup(props){
-
-    return {
+      required: true
     }
   }
 }
