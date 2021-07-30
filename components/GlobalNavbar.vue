@@ -9,7 +9,7 @@
         </div>
         <span v-if="menu" class="flex">
           <div v-for="(item, index) in menu" :key="index" class="square" :style="{ boxShadow: theme.boxShadow }">
-            <button class="focus:outline-none" @click="$emit(item.action)">{{item.title}}</button>
+            <button class="focus:outline-none" @click="$emit(item.action)">{{ item.title }}</button>
           </div>
         </span>
       </div>

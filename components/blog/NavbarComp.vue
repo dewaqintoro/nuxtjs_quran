@@ -12,27 +12,40 @@
             Home
           </nuxt-link>
         </div>
-
         <div class="dropdown">
-          <button class="dropbtn font-bold mx-2 focus:outline-none">Tutorial</button>
+          <button class="dropbtn font-bold mx-2 focus:outline-none">
+            Tutorial
+          </button>
           <div class="dropdown-content">
             <nuxt-link to="/blog/search" class="top">
-              <p @click="$emit('tutorial', '')" class="text-black dropdown-item">Semua</p>
+              <p class="text-black dropdown-item" @click="$emit('tutorial', '')">
+                Semua
+              </p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=MERN">
-              <p @click="$emit('tutorial', 'MERN')" class="text-black dropdown-item">MERN</p>
+              <p class="text-black dropdown-item" @click="$emit('tutorial', 'MERN')">
+                MERN
+              </p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Mongodb">
-              <p @click="$emit('tutorial', 'Mongodb')" class="text-black dropdown-item">Mongodb</p>
+              <p class="text-black dropdown-item" @click="$emit('tutorial', 'Mongodb')">
+                Mongodb
+              </p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Expressjs">
-              <p @click="$emit('tutorial', 'Expressjs')" class="text-black dropdown-item">Expressjs</p>
+              <p class="text-black dropdown-item" @click="$emit('tutorial', 'Expressjs')">
+                Expressjs
+              </p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Reactjs">
-              <p @click="$emit('tutorial', 'Reactjs')" class="text-black dropdown-item">Reactjs</p>
+              <p class="text-black dropdown-item" @click="$emit('tutorial', 'Reactjs')">
+                Reactjs
+              </p>
             </nuxt-link>
             <nuxt-link to="/blog/search?category=Nodejs" class="under">
-              <p @click="$emit('tutorial', 'Nodejs')" class="text-black dropdown-item">Nodejs</p>
+              <p class="text-black dropdown-item" @click="$emit('tutorial', 'Nodejs')">
+                Nodejs
+              </p>
             </nuxt-link>
           </div>
         </div>
@@ -76,7 +89,7 @@ export default defineComponent({
       default: false
     }
   },
-  setup (props, { emit }) {
+  setup (_, { emit }) {
     const { store, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
