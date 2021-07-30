@@ -1,11 +1,10 @@
 <template>
-  <div class="title text-center" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
-    <div class="text-3xl">{{surah.name}}</div>
+  <div class="title text-center" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow }">
+    <div class="text-3xl">{{ surah.name }}</div>
     <div class="text-xl mt-4">
-      <p>( {{surah.name_latin}} - {{surah.translations.id.name}} )</p>
-      <p>{{surah.number_of_ayah}} Ayat</p>
+      <p>( {{ surah.name_latin }} - {{ surah.translations.id.name }} )</p>
+      <p>{ {surah.number_of_ayah }} Ayat</p>
     </div>
-    
   </div>
 </template>
 
@@ -16,14 +15,12 @@ export default {
   props: {
     surah: {
       type: Object,
-      required: true,
+      required: true
     },
     theme: {
       type: Object,
-      required: true,
-    },
-  },
-  setup(){
+      required: true
+    }
   }
 }
 </script>

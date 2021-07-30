@@ -2,19 +2,19 @@
   <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
     <div>
       <div class="nameSurah">
-          <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow  }">
-            <!-- <button @click="cek()">cek</button> -->
-            <p>{{surat[0]}}</p>
-          </div>
-          <div class="surat">
-            <p>{{surat[1]}}</p>
-          </div>
-        <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
-          <p class="font-bold">Terjemahan :</p>
-          <p>{{arti}}</p>
+        <div class="idSurah" :class="bgId" :style="{ boxShadow: theme.boxShadow }">
+          <p>{{ surat[0] }}</p>
         </div>
-        
-        <audio v-if="audioStore === 'On'" :src="audio.value" controls class="my-audio"></audio>
+        <div class="surat">
+          <p>{{ surat[1] }}</p>
+        </div>
+        <div v-if="subStore === 'On'" class="text-left mt-4 text-xl">
+          <p class="font-bold">
+            Terjemahan :
+          </p>
+          <p>{{ arti }}</p>
+        </div>
+        <audio v-if="audioStore === 'On'" :src="audio.value" controls class="my-audio" />
       </div>
     </div>
   </div>
@@ -27,42 +27,38 @@ export default {
   props: {
     theme: {
       type: Object,
-      required: true,
+      required: true
     },
     surat: {
       type: Array,
-      required: true,
+      required: true
     },
     surah: {
       type: Object,
-      required: true,
+      required: true
     },
     arti: {
       type: String,
-      required: true,
+      required: true
     },
     index: {
       type: Number,
-      required: true,
+      required: true
     },
     audio: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props){
-    
-    const { route, store, app } = useContext()
-    const sumAyat = props.surah?.number
-    const sumIndex = props.surat[0]
-    const idSurah = ref('')
+  setup (props) {
+    const { store } = useContext()
     const idAyat = ref('')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
     const loadingAudio = computed(() => store.state.loadingAudio)
 
     const bgId = computed(() => {
-      if(props.theme?.darktheme){
+      if (props.theme?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -75,11 +71,10 @@ export default {
       loadingAudio,
       idAyat,
       audioStore,
-      cek,
+      cek
     }
-
-    function cek(){
-      console.log('audioStore',audioStore)
+    function cek () {
+      console.log('audioStore', audioStore)
     }
   }
 }

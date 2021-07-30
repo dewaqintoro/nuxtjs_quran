@@ -1,11 +1,13 @@
 <template>
-  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
+  <div class="card" :class="bgId" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow }">
     <div class="content">
-      <div class="idSurah" :style="{ boxShadow: theme.boxShadow  }">
-          <p class="text-lg">{{doa.times}}X</p>
-        </div>
+      <div class="idSurah" :style="{ boxShadow: theme.boxShadow }">
+        <p class="text-lg">
+          {{ doa.times }}X
+        </p>
+      </div>
       <div class="arabic">
-        <p>{{doa.arabic}}</p>
+        <p>{{ doa.arabic }}</p>
       </div>
     </div>
   </div>
@@ -18,19 +20,19 @@ export default {
   props: {
     theme: {
       type: Object,
-      required: true,
+      required: true
     },
     doa: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props){
-    const { route, store, app } = useContext()
+  setup (props) {
+    const { store } = useContext()
     const isShow = ref(false)
     const subStore = computed(() => store.state.sub)
     const bgId = computed(() => {
-      if(props.theme?.darktheme){
+      if (props.theme?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -40,10 +42,10 @@ export default {
       bgId,
       isShow,
       subStore,
-      cek,
+      cek
     }
 
-    function cek(){
+    function cek () {
       console.log('props', props.doa)
     }
   }
