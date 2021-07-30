@@ -122,17 +122,10 @@ export default defineComponent({
     }
   },
   setup () {
-    const { store, app } = useContext()
+    const { store } = useContext()
     const isSetting = ref(false)
-    const initTheme = computed(() => store.state.initTheme)
-    const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-    if (thisTheme) {
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
 
     return {
       storeTheme,

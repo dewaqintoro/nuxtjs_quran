@@ -98,17 +98,10 @@ import { computed, ref, useContext } from '@nuxtjs/composition-api'
 export default {
   name: 'Shorten',
   setup () {
-    const { store, app } = useContext()
+    const { store } = useContext()
     const thisRoute = ref('home')
-    const initTheme = computed(() => store.state.initTheme)
-    const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-    if (thisTheme) {
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
     return {
       thisRoute,
       storeTheme,

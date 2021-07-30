@@ -75,19 +75,11 @@ import dataJson from '~/data/ig.json'
 export default {
   name: 'Shorten',
   setup () {
-    const { store, app } = useContext()
+    const { store } = useContext()
     const dataMessages = dataJson.messages
-    const initTheme = computed(() => store.state.initTheme)
-    const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const darkTheme = ref(false)
-
-    if (thisTheme) {
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
 
     watch(darkTheme, () => {
       console.log('darkTheme: ', darkTheme.value)

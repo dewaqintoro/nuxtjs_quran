@@ -49,19 +49,12 @@ export default {
     ProfileComp
   },
   setup () {
-    const { store, app } = useContext()
+    const { store } = useContext()
     const dataUser = dataJson.stories
     const dataPosts = dataJson.posts
     const thisRoute = ref('home')
-    const initTheme = computed(() => store.state.initTheme)
-    const thisTheme = app.$cookies.get('theme')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
-    if (thisTheme) {
-      store.dispatch('getTheme')
-    } else {
-      store.dispatch('setTheme', initTheme.value)
-    }
 
     return {
       dataUser,
