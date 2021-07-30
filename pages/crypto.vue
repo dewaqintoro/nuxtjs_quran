@@ -7,52 +7,49 @@
         </div> -->
         <div class="mt-8">
           <nuxt-link to="/">
-            <img class="icon" src="/cripto/icon.png"/>
+            <img class="icon" src="/cripto/icon.png">
           </nuxt-link>
         </div>
         <ul class="mt-16">
           <li>
             <nuxt-link to="#">
-              <img class="m-auto" src="/cripto/icon-home.png"/>
+              <img class="m-auto" src="/cripto/icon-home.png">
             </nuxt-link>
           </li>
           <li>
             <nuxt-link to="#">
-              <img class="m-auto" src="/cripto/icon-wallet.png"/>
+              <img class="m-auto" src="/cripto/icon-wallet.png">
             </nuxt-link>
           </li>
           <li>
             <nuxt-link to="#">
-              <img class="m-auto" src="/cripto/icon-chart.png"/>
+              <img class="m-auto" src="/cripto/icon-chart.png">
             </nuxt-link>
           </li>
           <li>
             <nuxt-link to="#">
-              <img class="m-auto" src="/cripto/icon-cube.png"/>
+              <img class="m-auto" src="/cripto/icon-cube.png">
             </nuxt-link>
           </li>
           <li>
             <nuxt-link to="#">
-              <img class="m-auto" src="/cripto/icon-profile.png"/>
+              <img class="m-auto" src="/cripto/icon-profile.png">
             </nuxt-link>
           </li>
         </ul>
-        <!-- <div class="mt-32">
-          <nuxt-link to="#">
-            <img class="m-auto" src="/cripto/icon-login.png"/>
-          </nuxt-link>
-        </div> -->
       </div>
-      <div class="section-main overflow-y-scroll max-h-screen" >
+      <div class="section-main overflow-y-scroll max-h-screen">
         <div class="head text-3xl justify-between flex">
-          <div class="font-bold">Overview</div>
+          <div class="font-bold">
+            Overview
+          </div>
           <div class="flex">
-            <nuxt-link to="#" class="circle" >
+            <nuxt-link to="#" class="circle">
               <div class="btn-rounded">
                 <font-awesome-icon :icon="['fas', 'search']" />
               </div>
             </nuxt-link>
-            <nuxt-link to="#" class="circle" >
+            <nuxt-link to="#" class="circle">
               <div class="btn-rounded">
                 <font-awesome-icon :icon="['far', 'bell']" />
               </div>
@@ -61,8 +58,9 @@
               <div class="btn-rounded">
                 <font-awesome-icon :icon="['fas', 'user-circle']" />
               </div>
-              <h1 class="mx-2">DewaQin</h1>
-              <!-- <font-awesome-icon :icon="['fas', 'chevron-down']" /> -->
+              <h1 class="mx-2">
+                DewaQin
+              </h1>
             </nuxt-link>
           </div>
         </div>
@@ -74,7 +72,9 @@
             <div class="py-4">
               <div class="portfolio-card ">
                 <div class="pl-6 pt-6">
-                  <h1 class="font-bold text-xl ">$ 17 643.41</h1>
+                  <h1 class="font-bold text-xl ">
+                    $ 17 643.41
+                  </h1>
                   <p>Portfolio balance</p>
                 </div>
               </div>
@@ -95,14 +95,16 @@
               <div class="asset-content">
                 <div class="asset-card btc">
                   <div class="flex justify-between">
-                    <p class="font-bold text-xl">1.25 BTC</p>
+                    <p class="font-bold text-xl">
+                      1.25 BTC
+                    </p>
                     <nuxt-link to="#">
                       <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
                     </nuxt-link>
                   </div>
                   <p>$ 2948.04</p>
                   <div class="asset-coin">
-                    <img src="/cripto/btc.png"/>
+                    <img src="/cripto/btc.png">
                     <p>+ 0.14%</p>
                   </div>
                 </div>
@@ -110,14 +112,16 @@
               <div class="asset-content">
                 <div class="asset-card btc ltc">
                   <div class="flex justify-between">
-                    <p class="font-bold text-xl">1.25 BTC</p>
+                    <p class="font-bold text-xl">
+                      1.25 BTC
+                    </p>
                     <nuxt-link to="#">
                       <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
                     </nuxt-link>
                   </div>
                   <p>$ 2948.04</p>
                   <div class="asset-coin">
-                    <img src="/cripto/btc.png"/>
+                    <img src="/cripto/btc.png">
                     <p>+ 0.14%</p>
                   </div>
                 </div>
@@ -125,14 +129,16 @@
               <div class="asset-content">
                 <div class="asset-card eth">
                   <div class="flex justify-between">
-                    <p class="font-bold text-xl">1.25 BTC</p>
+                    <p class="font-bold text-xl">
+                      1.25 BTC
+                    </p>
                     <nuxt-link to="#">
                       <font-awesome-icon class="mt-2" :icon="['fas', 'ellipsis-v']" />
                     </nuxt-link>
                   </div>
                   <p>$ 2948.04</p>
                   <div class="asset-coin">
-                    <img src="/cripto/btc.png"/>
+                    <img src="/cripto/btc.png">
                     <p>+ 0.14%</p>
                   </div>
                 </div>
@@ -143,26 +149,44 @@
         <div class="part-two mt-8 flex">
           <div class="two-left">
             <div class="market-head flex justify-between pr-4">
-              <div class="text-2xl font-bold">Market is down 0.80%</div>
+              <div class="text-2xl font-bold">
+                Market is down 0.80%
+              </div>
               <div class="flex">
                 <div class="time">
                   <!-- <h1 class="mx-2">24h</h1> -->
-                  <select name="cars" id="cars" class="focus:outline-none">
-                    <option value="volvo">24H</option>
-                    <option value="saab">1Day</option>
-                    <option value="mercedes">1M</option>
-                    <option value="audi">1Y</option>
+                  <select id="cars" name="cars" class="focus:outline-none">
+                    <option value="volvo">
+                      24H
+                    </option>
+                    <option value="saab">
+                      1Day
+                    </option>
+                    <option value="mercedes">
+                      1M
+                    </option>
+                    <option value="audi">
+                      1Y
+                    </option>
                   </select>
                   <!-- <font-awesome-icon :icon="['fas', 'chevron-down']" /> -->
                 </div>
                 <div class="time">
                   <!-- <h1 class="mx-2">Top gainers</h1>
                   <font-awesome-icon :icon="['fas', 'chevron-down']" /> -->
-                  <select name="top" id="top" class="focus:outline-none">
-                    <option value="topgainer">Top gainers</option>
-                    <option value="saab">A</option>
-                    <option value="mercedes">B</option>
-                    <option value="audi">C</option>
+                  <select id="top" name="top" class="focus:outline-none">
+                    <option value="topgainer">
+                      Top gainers
+                    </option>
+                    <option value="saab">
+                      A
+                    </option>
+                    <option value="mercedes">
+                      B
+                    </option>
+                    <option value="audi">
+                      C
+                    </option>
                   </select>
                 </div>
               </div>
@@ -174,20 +198,26 @@
                   <th>Proce</th>
                   <th>Chanee</th>
                   <th>Market Cap</th>
-                  <th class="text-center">Watch</th>
+                  <th class="text-center">
+                    Watch
+                  </th>
                 </tr>
                 <tr class="font-bold">
                   <td class="flex">
                     <div>
-                      <img src="/cripto/band.png"/>
+                      <img src="/cripto/band.png">
                     </div>
                     <div class="ml-2">
                       <div>Band Protocol</div>
-                      <div class="font-normal ">BAND</div>
+                      <div class="font-normal ">
+                        BAND
+                      </div>
                     </div>
                   </td>
                   <td>$2.42</td>
-                  <td class="chanee">+13.38%</td>
+                  <td class="chanee">
+                    +13.38%
+                  </td>
                   <td>$399.8M</td>
                   <td class="text-center">
                     <font-awesome-icon :icon="['far', 'star']" />
@@ -196,15 +226,19 @@
                 <tr class="font-bold">
                   <td class="flex">
                     <div>
-                      <img src="/cripto/ve.png"/>
+                      <img src="/cripto/ve.png">
                     </div>
                     <div class="ml-2">
                       <div>VeChain</div>
-                      <div class="font-normal">VET</div>
+                      <div class="font-normal">
+                        VET
+                      </div>
                     </div>
                   </td>
                   <td>$7.48</td>
-                  <td class="chanee">+11.19%</td>
+                  <td class="chanee">
+                    +11.19%
+                  </td>
                   <td>$152.5M</td>
                   <td class="text-center">
                     <font-awesome-icon :icon="['far', 'star']" />
@@ -213,15 +247,19 @@
                 <tr class="font-bold">
                   <td class="flex">
                     <div>
-                      <img src="/cripto/aeve.png"/>
+                      <img src="/cripto/aeve.png">
                     </div>
                     <div class="ml-2">
                       <div>Aave</div>
-                      <div class="font-normal ">AAVE</div>
+                      <div class="font-normal ">
+                        AAVE
+                      </div>
                     </div>
                   </td>
                   <td>$0.0184</td>
-                  <td class="chanee">+7.57%</td>
+                  <td class="chanee">
+                    +7.57%
+                  </td>
                   <td>$1.2B</td>
                   <td class="text-center">
                     <font-awesome-icon :icon="['far', 'star']" />
@@ -230,15 +268,19 @@
                 <tr class="font-bold">
                   <td class="flex">
                     <div>
-                      <img src="/cripto/waves.png"/>
+                      <img src="/cripto/waves.png">
                     </div>
                     <div class="ml-2">
                       <div>Waves</div>
-                      <div class="font-normal">WAVES</div>
+                      <div class="font-normal">
+                        WAVES
+                      </div>
                     </div>
                   </td>
                   <td>$30.68</td>
-                  <td class="chanee">+6.80%</td>
+                  <td class="chanee">
+                    +6.80%
+                  </td>
                   <td>$399.8M</td>
                   <td class="text-center">
                     <font-awesome-icon :icon="['far', 'star']" />
@@ -251,13 +293,19 @@
             <div class="two-right-card">
               <div class="flex items-center font-bold ">
                 Earn
-                <img src="/cripto/free.png"/>
+                <img src="/cripto/free.png">
                 crypto
               </div>
-              <div class="font-bold">with Coinview Earn!</div>
-              <div class="py-4 text-lg">Learn about different cryptocurrencies and earn them for free!</div>
+              <div class="font-bold">
+                with Coinview Earn!
+              </div>
+              <div class="py-4 text-lg">
+                Learn about different cryptocurrencies and earn them for free!
+              </div>
               <div class="pt-6 pb-4">
-                <button class="btn-earn bg-bluec text-xl text-black font-bold px-6 py-2 rounded-2xl ">Earn now</button>
+                <button class="btn-earn bg-bluec text-xl text-black font-bold px-6 py-2 rounded-2xl ">
+                  Earn now
+                </button>
               </div>
             </div>
           </div>
@@ -266,26 +314,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-
-export default {
-  name: 'Crypto',
-  components: {
-  },
-  setup(_, {emit}){
-    const { app, store } = useContext()
-
-    return {
-    }
-
-    async function getWeather(){
-    }
-
-  }
-}
-</script>
 
 <style lang="postcss" scoped>
 ::-webkit-scrollbar {
@@ -301,11 +329,11 @@ ul li{
 }
 th {
   padding-top:10px;
-  padding-bottom:10px; 
+  padding-bottom:10px;
 }
 td {
   padding-top:10px;
-  padding-bottom:10px; 
+  padding-bottom:10px;
 }
 .port-head {
   @apply font-bold text-2xl;

@@ -8,127 +8,125 @@ export const state = () => ({
     // background: '#f7f7f7',
     background: 'white',
     color: 'black',
-    boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+    boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
   },
   loadingTheme: true,
   loadingAudio: false,
   loadingweather: true,
-  searchvalue: '',
+  searchvalue: ''
 })
 
 export const actions = {
-  setSub({ commit }, data) {
-    this.$cookies.set('sub',data, {
+  setSub (data) {
+    this.$cookies.set('sub', data, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
   },
-  getSub({ commit }) {
+  getSub ({ commit }) {
     const subCookie = this.$cookies.get('sub')
     commit('setState', { sub: subCookie })
   },
-  changeSub({ commit }) {
+  changeSub ({ commit }) {
     const subCookie = this.$cookies.get('sub')
-    if(subCookie === 'On'){
-      this.dispatch('setSub', 'Off');
+    if (subCookie === 'On') {
+      this.dispatch('setSub', 'Off')
       commit('setState', { sub: 'Off' })
     } else {
-      this.dispatch('setSub', 'On');
+      this.dispatch('setSub', 'On')
       commit('setState', { sub: 'On' })
     }
   },
 
-  setAudio({ commit }, data) {
-    this.$cookies.set('audio',data, {
+  setAudio (data) {
+    this.$cookies.set('audio', data, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
   },
-  getAudio({ commit }) {
+  getAudio ({ commit }) {
     const audioCookie = this.$cookies.get('audio')
     commit('setState', { audio: audioCookie })
   },
-  changeAudio({ commit }) {
+  changeAudio ({ commit }) {
     const audioCookie = this.$cookies.get('audio')
-    if(audioCookie === 'On'){
-      this.dispatch('setAudio', 'Off');
+    if (audioCookie === 'On') {
+      this.dispatch('setAudio', 'Off')
       commit('setState', { audio: 'Off' })
     } else {
-      this.dispatch('setAudio', 'On');
+      this.dispatch('setAudio', 'On')
       commit('setState', { audio: 'On' })
     }
   },
 
-  setTheme({ commit }, data) {
-    this.$cookies.set('theme',data, {
+  setTheme (data) {
+    this.$cookies.set('theme', data, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
-    this.dispatch('getTheme');
+    this.dispatch('getTheme')
   },
-  getTheme({ commit }) {
+  getTheme ({ commit }) {
     const themeCookie = this.$cookies.get('theme')
     commit('setState', { theme: themeCookie })
     setTimeout(function () {
       commit('setState', { loadingTheme: false })
-    }, 200);
+    }, 200)
   },
-  changeTheme({ commit }) {
+  changeTheme ({ commit }) {
     const data = this.$cookies.get('theme')
-    if(data.darktheme){
-      const classObject= {
-        'darktheme': false,
+    if (data.darktheme) {
+      const classObject = {
+        darktheme: false,
         // 'background': '#f7f7f7',
-        'background': 'white',
-        'icon': 'sun',
-        'color': 'black',
-        'boxShadow':  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+        background: 'white',
+        icon: 'sun',
+        color: 'black',
+        boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
       }
-      this.dispatch('setTheme', classObject);
+      this.dispatch('setTheme', classObject)
       commit('setState', { theme: classObject })
     } else {
-      const classObject= {
-        'darktheme': true,
-        'background': '#36454f',
-        'icon': 'moon',
-        'color': 'white',
-        'boxShadow': '5px 5px 10px #29343c,-5px -5px 10px #435662',
+      const classObject = {
+        darktheme: true,
+        background: '#36454f',
+        icon: 'moon',
+        color: 'white',
+        boxShadow: '5px 5px 10px #29343c,-5px -5px 10px #435662'
       }
-      this.dispatch('setTheme', classObject);
+      this.dispatch('setTheme', classObject)
       commit('setState', { theme: classObject })
     }
   },
 
-  setLoadingAudio({ commit }, data) {
+  setLoadingAudio ({ commit }) {
     commit('setState', { loadingAudio: false })
   },
 
-  setWeather({ commit }, data) {
-    console.log('setWeather')
-    this.$cookies.set('weather',data, {
+  setWeather (data) {
+    this.$cookies.set('weather', data, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
-    this.dispatch('getWeather');
+    this.dispatch('getWeather')
   },
-  getWeather({ commit }) {
+  getWeather ({ commit }) {
     console.log('getWeather')
     const weatherCookie = this.$cookies.get('weather')
     commit('setState', { weather: weatherCookie })
     setTimeout(function () {
       commit('setState', { loadingweather: false })
-    }, 200);
-  },
-  
+    }, 200)
+  }
 }
 
 export const mutations = {
-  setState(state, params) {
+  setState (state, params) {
     for (const [key, value] of Object.entries(params)) {
       state[key] = value
     }
   },
-  setSearchValue(state, params) {
+  setSearchValue (state, params) {
     state.searchvalue = params
-  },
+  }
 }

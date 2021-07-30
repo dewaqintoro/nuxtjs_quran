@@ -1,14 +1,15 @@
 <template>
   <div class="main">
     <div class="content">
-      
       <div class="container">
         <div class="my-item">
           <!-- <h1>Lokasi v2</h1> -->
           <div class="search">
-              <SearchComp @search="searchFilter" :fields='dataFields' :data='dataCity'/>
+            <SearchComp :fields="dataFields" :data="dataCity" @search="searchFilter" />
           </div>
-          <p v-if="ifError">Data tidak tersedia</p>
+          <p v-if="ifError">
+            Data tidak tersedia
+          </p>
           <div v-if="loadingweather" class="loading">
             <Loading :sum="2" :theme="initTheme" />
           </div>
@@ -16,23 +17,32 @@
             <div>
               <div>
                 <div v-if="weather.weather" class="text-center items-center p-4">
-                  <p class="text-xl font-bold py-2" v-if="weather"><font-awesome-icon :icon="['fas', 'map-marker-alt']" /> {{weather.city_name}} - Indonesia</p>
-                  <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" /> {{currentDate}}</p>
-                  <img :src="imgUrl" class="imgUrl"/>
-                  <p v-if="weather.weather">{{weather.weather.description}}</p>
-                  <p class="font-bold py-2 text-4xl">{{weather.temp}}°C</p>
+                  <p v-if="weather" class="text-xl font-bold py-2"><font-awesome-icon :icon="['fas', 'map-marker-alt']" />
+                    {{ weather.city_name }} - Indonesia
+                  </p>
+                  <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" />
+                    {{ currentDate }}
+                  </p>
+                  <img :src="imgUrl" class="imgUrl">
+                  <p v-if="weather.weather">
+                    {{ weather.weather.description }}
+                  </p>
+                  <p class="font-bold py-2 text-4xl">
+                    {{ weather.temp }}°C
+                  </p>
                 </div>
                 <div v-else class="loadingFetch ml-4 h-64">
-                  <p class="">loading</p>
+                  <p class="">
+                    loading
+                  </p>
                 </div>
               </div>
-                <!-- <button @click="cek">cek</button> -->
               <div class="other text-lg">
-                <div v-if="weather.weather" >
-                  <p>Relative humidity : {{rh}}%</p>
-                  <p>Wind speed : {{wind_spd}} m/s</p>
-                  <p>Latitude : {{weather.lat}}</p>
-                  <p>Longitude  : {{weather.lon}}</p>
+                <div v-if="weather.weather">
+                  <p>Relative humidity : {{ rh }}%</p>
+                  <p>Wind speed : {{ windSpeed }} m/s</p>
+                  <p>Latitude : {{ weather.lat }}</p>
+                  <p>Longitude  : {{ weather.lon }}</p>
                 </div>
                 <div v-else class="loadingFetch h-16">
                   <p>loading</p>
@@ -40,7 +50,6 @@
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -48,11 +57,11 @@
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import dataJson from '~/data/csvjson.json'
-import SearchComp from '~/components/SearchNewComp.vue'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import Loading from '@/components/Loading.vue'
+import dataJson from '~/data/csvjson.json'
+import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {
   name: 'Quran',
@@ -60,25 +69,25 @@ export default {
     SearchComp,
     Loading
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup () {
+    const { store } = useContext()
     // const dataCity = dataJson.rajaongkir?.results
     const dataCity = dataJson
     const search = ref('')
     const allData = ref([])
-    const dataFields= {value: 'name'}
+    const dataFields = { value: 'name' }
     const weather = ref([])
     const minutely = ref([])
     const initialData = ({
-        city: "Sleman",
-        country: "Indonesia", 
-        admin_name: "Yogyakarta",
+      city: 'Sleman',
+      country: 'Indonesia',
+      admin_name: 'Yogyakarta'
     })
     const selectedCity = ref([initialData])
     const ifError = ref(false)
-    const loading = ref (true)
+    const loading = ref(true)
     const imgUrl = ref('')
-    const wind_spd = computed(() => {
+    const windSpeed = computed(() => {
       const spd = weather.value.wind_spd.toString()
       return spd.substring(0, 4)
     })
@@ -88,17 +97,16 @@ export default {
     })
     // const currentDate = ref('')
     const currentDate = computed(() => {
-
-      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      var myDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      var date = new Date();
-      var day = date.getDate();
-      var month = date.getMonth();
-      var thisDay = date.getDay(),
-          thisDay = myDays[thisDay];
-      var yy = date.getYear();
-      var year = (yy < 1000) ? yy + 1900 : yy;
-      return thisDay + ', ' + day + ' ' + months[month] + ' ' + year
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      const myDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      const date = new Date()
+      const day = date.getDate()
+      const month = date.getMonth()
+      const thisDay = date.getDay()
+      const hariIni = myDays[thisDay]
+      const yy = date.getYear()
+      const year = (yy < 1000) ? yy + 1900 : yy
+      return hariIni + ', ' + day + ' ' + months[month] + ' ' + year
     })
     const storeWeather = computed(() => store.state.weather)
     const loadingweather = computed(() => store.state.loadingweather)
@@ -106,9 +114,8 @@ export default {
       darktheme: false,
       background: '#f7f7f7',
       color: 'black',
-      boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+      boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
     }
-    const author = `<a href='https://www.freepik.com/vectors/icons'>Icons vector created by anindyanfitri - www.freepik.com</a>`
     cekCuaca()
 
     // getWeather()
@@ -123,46 +130,41 @@ export default {
       imgUrl,
       minutely,
       allData,
-      wind_spd,
+      windSpeed,
       rh,
       initTheme,
       loading,
       dataFields,
+      ifError,
+      loadingweather,
       searchFilter,
       cek,
       cekCuaca,
-      ifError,
       setWeather,
-      getWeather,
-      loadingweather
+      getWeather
     }
 
-    async function getWeather(){
+    function getWeather () {
       store.dispatch('getWeather')
     }
 
-    async function setWeather(){
+    function setWeather () {
       store.dispatch('setWeather', weather.value)
     }
 
-
-    async function cekCuaca(){
+    async function cekCuaca () {
       loading.value = true
-       const params = {
-        lat : selectedCity.value[0]?.latitude || '-7.7156',
-        long : selectedCity.value[0]?.longitude || '110.3556',
+      const params = {
+        lat: selectedCity.value[0]?.latitude || '-7.7156',
+        long: selectedCity.value[0]?.longitude || '110.3556',
         lang: 'en'
         // city : selectedCity.value[0]?.city || 'Sleman',
       }
+      const url = 'https://www.nuxt.my.id/api/v1/cuaca'
 
-      // const url = `http://localhost:5000/api/v1/cuaca`
-      // const url = `https://ngodingbentar-be.herokuapp.com/api/v1/cuaca`
-      const url = `https://www.nuxt.my.id/api/v1/cuaca`
-      // const url = `http://localhost:5000/api/v1/history`
-
-      if(selectedCity.value[0] !== 'undefined'){
-        const result = await axios.get(url, {params});
-        if(result?.data?.data){
+      if (selectedCity.value[0] !== 'undefined') {
+        const result = await axios.get(url, { params })
+        if (result?.data?.data) {
           weather.value = result?.data?.data[0]
           imgUrl.value = `https://www.weatherbit.io/static/img/icons/${result?.data?.data[0]?.weather?.icon}.png`
           minutely.value = result.data?.minutely
@@ -172,28 +174,28 @@ export default {
       } else {
         console.log(selectedCity)
       }
-           
     }
 
-    function searchFilter(data){
-      if(data === null ){
+    function searchFilter (data) {
+      if (data === null) {
         data = ''
       }
 
       const result = dataCity.filter(doa =>
         doa.name.toLowerCase().includes(data.toLowerCase())
-      );
+      )
       allData.value = result
-      if(result.length === 1){
+      if (result.length === 1) {
         selectedCity.value = result
         ifError.value = false
         cekCuaca()
       } else if (result.length > 20) {
         ifError.value = false
       } else {
-        if(result.length <=20){
-          result.map(hasil => {
-            if(hasil.name.length === data.length){
+        // eslint-disable-next-line no-lonely-if
+        if (result.length <= 20) {
+          result.forEach((hasil) => {
+            if (hasil.name.length === data.length) {
               selectedCity.value = result
               cekCuaca()
             } else {
@@ -206,10 +208,9 @@ export default {
       }
     }
 
-    async function cek(){
+    function cek () {
       console.log('weather.value', weather.value)
     }
-
   }
 }
 </script>
