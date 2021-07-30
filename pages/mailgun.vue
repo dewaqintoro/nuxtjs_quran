@@ -1,111 +1,111 @@
 <template>
-<div class="main-menu">
-  <div class="section">
-    <div class="bg-white p-8 rounded-3xl">
-      <div v-if="isSuccess" class="success">
-        <p>Email Berhasil Dikirim</p>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            From
-          </label>
-          <input v-model="fromV" class="my-input" type="text">
+  <div class="main-menu">
+    <div class="section">
+      <div class="bg-white p-8 rounded-3xl">
+        <div v-if="isSuccess" class="success">
+          <p>Email Berhasil Dikirim</p>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            To
-          </label>
-          <input v-model="toV" class="my-input" type="email">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              From
+            </label>
+            <input v-model="fromV" class="my-input" type="text">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Subject
-          </label>
-          <input v-model="subject" class="my-input" type="text">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              To
+            </label>
+            <input v-model="toV" class="my-input" type="email">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Brand
-          </label>
-          <input v-model="brand" class="my-input" type="text">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Subject
+            </label>
+            <input v-model="subject" class="my-input" type="text">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            customer
-          </label>
-          <input v-model="customer" class="my-input" type="text">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Brand
+            </label>
+            <input v-model="brand" class="my-input" type="text">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Product-1
-          </label>
-          <input v-model="productOne" class="my-input" type="text">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              customer
+            </label>
+            <input v-model="customer" class="my-input" type="text">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Price-1
-          </label>
-          <input v-model="priceOne" class="my-input" type="number">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Product-1
+            </label>
+            <input v-model="productOne" class="my-input" type="text">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Product-2
-          </label>
-          <input v-model="productTwo" class="my-input" type="text">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Price-1
+            </label>
+            <input v-model="priceOne" class="my-input" type="number">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Price-2
-          </label>
-          <input v-model="priceTwo" class="my-input" type="number">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Product-2
+            </label>
+            <input v-model="productTwo" class="my-input" type="text">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Product-3
-          </label>
-          <input v-model="productThree" class="my-input" type="text">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Price-2
+            </label>
+            <input v-model="priceTwo" class="my-input" type="number">
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <label class="my-label">
-            Price-3
-          </label>
-          <input v-model="priceThree" class="my-input" type="number">
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Product-3
+            </label>
+            <input v-model="productThree" class="my-input" type="text">
+          </div>
         </div>
+        <div class="item">
+          <div class="content">
+            <label class="my-label">
+              Price-3
+            </label>
+            <input v-model="priceThree" class="my-input" type="number">
+          </div>
+        </div>
+        <button class="cek-biaya focus:outline-none justify-end text-white font-bold py-2 px-4 rounded-full" @click="sendEmail()">
+          Kirim Email
+        </button>
       </div>
-      <button @click="sendEmail()" class="cek-biaya focus:outline-none justify-end text-white font-bold py-2 px-4 rounded-full">
-        Kirim Email
-      </button>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import { ref } from '@nuxtjs/composition-api'
 import axios from 'axios'
 export default {
-  setup() {
+  setup () {
     const fromV = ref('Admin')
     const toV = ref('ngodingbentar.official@gmail.com')
     const subject = ref('Billing')
@@ -119,9 +119,9 @@ export default {
     const priceThree = ref(300000)
     const isSuccess = ref(false)
 
-    if (process.browser){
+    if (process.browser) {
       window.smoothscroll = () => {
-        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop
         if (currentScroll > 0) {
           window.requestAnimationFrame(window.smoothscroll)
           window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 5)))
@@ -145,9 +145,9 @@ export default {
       sendEmail
     }
 
-    async function sendEmail(){
-      try{
-        const url = `https://ngodingbentar-be.herokuapp.com/api/v1/mailgun`
+    async function sendEmail () {
+      try {
+        const url = 'https://ngodingbentar-be.herokuapp.com/api/v1/mailgun'
         const data = {
           from: fromV.value,
           to: toV.value,
@@ -159,22 +159,22 @@ export default {
           productTwo: productTwo.value,
           priceTwo: priceTwo.value,
           productThree: productThree.value,
-          priceThree: priceThree.value,
+          priceThree: priceThree.value
         }
         const result = await axios.post(url, data)
-        if(result.data){
+        if (result.data) {
           isSuccess.value = true
           window.smoothscroll()
-          setTimeout(function(){
+          setTimeout(function () {
             isSuccess.value = false
           }, 5000)
         }
         // console.log(result)
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
-  },
+  }
 }
 </script>
 
