@@ -61,7 +61,6 @@ export default defineComponent({
       search,
       changesub,
       changeaudio,
-      changetheme,
       searchData
     }
 
@@ -79,9 +78,6 @@ export default defineComponent({
     }
     function changeaudio () {
       store.dispatch('changeAudio')
-    }
-    function changetheme () {
-      store.dispatch('changeTheme')
     }
   }
 })

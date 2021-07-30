@@ -56,17 +56,13 @@ export default defineComponent({
       isSub,
       isAudio,
       changesub,
-      changeaudio,
-      changetheme
+      changeaudio
     }
     function changesub () {
       store.dispatch('changeSub')
     }
     function changeaudio () {
       store.dispatch('changeAudio')
-    }
-    function changetheme () {
-      store.dispatch('changeTheme')
     }
   }
 })
