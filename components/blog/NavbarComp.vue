@@ -93,11 +93,9 @@ export default defineComponent({
     const { store, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
-    const thisAudio = app.$cookies.get('audio')
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
-    // const isChecked = ref(false)
 
     const isChecked = computed(() => {
       if (storeTheme.value.darktheme) {
@@ -111,11 +109,6 @@ export default defineComponent({
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
-    }
-    if (!thisAudio) {
-      store.dispatch('setAudio', 'On')
-    } else {
-      store.dispatch('getAudio')
     }
 
     return {

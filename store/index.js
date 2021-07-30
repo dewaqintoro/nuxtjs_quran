@@ -1,5 +1,5 @@
 export const state = () => ({
-  audio: '',
+  audio: 'On',
   sub: '',
   theme: {
     darktheme: false,
@@ -44,24 +44,33 @@ export const actions = {
     }
   },
 
-  setAudio (data) {
-    this.$cookies.set('audio', data, {
+  setAudio () {
+    console.log('this.state.audio', this.state.audio)
+    this.$cookies.set('audio', this.state.audio, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
+    setTimeout(() => {
+      this.dispatch('getAudio')
+    }, 100)
   },
   getAudio ({ commit }) {
     const audioCookie = this.$cookies.get('audio')
     commit('setState', { audio: audioCookie })
+    console.log('audioCookie', audioCookie)
   },
   changeAudio ({ commit }) {
     const audioCookie = this.$cookies.get('audio')
     if (audioCookie === 'On') {
-      this.dispatch('setAudio', 'Off')
       commit('setState', { audio: 'Off' })
+      setTimeout(() => {
+        this.dispatch('setAudio')
+      }, 100)
     } else {
-      this.dispatch('setAudio', 'On')
       commit('setState', { audio: 'On' })
+      setTimeout(() => {
+        this.dispatch('setAudio')
+      }, 100)
     }
   },
 

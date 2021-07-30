@@ -36,18 +36,12 @@ export default defineComponent({
     const { store, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
-    const thisAudio = app.$cookies.get('audio')
     const loadingTheme = computed(() => store.state.loadingTheme)
 
     if (!thisSub) {
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
-    }
-    if (!thisAudio) {
-      store.dispatch('setAudio', 'On')
-    } else {
-      store.dispatch('getAudio')
     }
 
     return {

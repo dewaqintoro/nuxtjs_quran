@@ -16,8 +16,8 @@ export default defineComponent({
   },
   setup () {
     const { route, app, store } = useContext()
-    const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
+    const thisAudio = app.$cookies.get('audio')
     const isAgama = computed(() => {
       if (route.value.name === 'agama') {
         return true
@@ -35,6 +35,12 @@ export default defineComponent({
       console.log('ada tema')
     } else {
       store.dispatch('setTheme')
+    }
+
+    if (!thisAudio) {
+      store.dispatch('setAudio')
+    } else {
+      store.dispatch('getAudio')
     }
 
     return {
