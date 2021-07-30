@@ -23,7 +23,6 @@ export default {
     const { app, store } = useContext()
     const storeTheme = computed(() => store.state.theme)
     const loadingTheme = computed(() => store.state.loadingTheme)
-    const initTheme = computed(() => store.state.initTheme)
     const thisTheme = app.$cookies.get('theme')
     // const background = ref('')
 
@@ -38,7 +37,7 @@ export default {
     if (thisTheme) {
       store.dispatch('getTheme')
     } else {
-      store.dispatch('setTheme', initTheme.value)
+      store.dispatch('setTheme')
     }
 
     return {

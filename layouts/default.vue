@@ -34,8 +34,7 @@ export default defineComponent({
       store.dispatch('getTheme')
       console.log('ada tema')
     } else {
-      store.dispatch('setTheme', initTheme.value)
-      console.log('tidak ada tema')
+      store.dispatch('setTheme')
     }
 
     return {

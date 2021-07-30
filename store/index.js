@@ -1,7 +1,13 @@
 export const state = () => ({
   audio: '',
   sub: '',
-  theme: {},
+  theme: {
+    darktheme: false,
+    // background: '#f7f7f7',
+    background: 'white',
+    color: 'black',
+    boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
+  },
   weather: [],
   initTheme: {
     darktheme: false,
@@ -59,8 +65,8 @@ export const actions = {
     }
   },
 
-  setTheme (data) {
-    this.$cookies.set('theme', data, {
+  setTheme () {
+    this.$cookies.set('theme', this.state.theme, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
@@ -84,8 +90,15 @@ export const actions = {
         color: 'black',
         boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
       }
-      this.dispatch('setTheme', classObject)
       commit('setState', { theme: classObject })
+      this.$cookies.set('theme', this.state.theme, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      this.dispatch('getTheme')
+      // setTimeout(() => {
+      //   this.dispatch('setTheme', classObject)
+      // }, 100)
     } else {
       const classObject = {
         darktheme: true,
@@ -94,8 +107,13 @@ export const actions = {
         color: 'white',
         boxShadow: '5px 5px 10px #29343c,-5px -5px 10px #435662'
       }
-      this.dispatch('setTheme', classObject)
       commit('setState', { theme: classObject })
+      // this.dispatch('setTheme', classObject)
+      this.$cookies.set('theme', this.state.theme, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      this.dispatch('getTheme')
     }
   },
 
@@ -111,7 +129,6 @@ export const actions = {
     this.dispatch('getWeather')
   },
   getWeather ({ commit }) {
-    console.log('getWeather')
     const weatherCookie = this.$cookies.get('weather')
     commit('setState', { weather: weatherCookie })
     setTimeout(function () {
