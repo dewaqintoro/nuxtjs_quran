@@ -2,14 +2,21 @@
   <div class="cari" :class="bgId">
     <!-- <button @click="cek">cek</button> -->
     <div class="dew" :style="{ boxShadow: storeTheme.boxShadow }">
-      <ejs-autocomplete class="cari-input" @change="searchFilter" v-model="search" :dataSource='data' :fields='fields' :placeholder="placeholder" :highlight="true" >
-      </ejs-autocomplete>
+      <ejs-autocomplete
+        v-model="search"
+        :data-source="data"
+        class="cari-input"
+        :fields="fields"
+        :placeholder="placeholder"
+        :highlight="true"
+        @change="searchFilter"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 export default {
   name: 'SearchNewComp',
   components: {
@@ -18,12 +25,14 @@ export default {
     data: {
       type: Array,
       required: false,
-      default: [],
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: []
     },
     fields: {
       type: Object,
       required: false,
-      default: {},
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: {}
     },
     placeholder: {
       type: String,
@@ -31,12 +40,12 @@ export default {
       default: 'Search. . .'
     }
   },
-  setup(props, {emit}){
-    const { app, store } = useContext()
+  setup (props, { emit }) {
+    const { store } = useContext()
     const storeTheme = computed(() => store.state.theme)
     const search = ref('')
     const bgId = computed(() => {
-      if(storeTheme.value?.darktheme){
+      if (storeTheme.value?.darktheme) {
         return 'darkTheme'
       } else {
         return 'lightTheme'
@@ -51,13 +60,12 @@ export default {
       cek
     }
 
-    function cek(){
+    function cek () {
       console.log('props', props.data)
     }
-    async function searchFilter(){
+    function searchFilter () {
       emit('search', search.value)
     }
-
   }
 }
 </script>

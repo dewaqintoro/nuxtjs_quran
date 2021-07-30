@@ -2,86 +2,78 @@
   <AppModal title="Setting" :theme="theme" :show-header="true" :size="size" @close="$emit('close')">
     <div class="containerCustom" :style="{ background: theme.background, color: theme.color }">
       <div class="wrapper">
-
         <div class="item flex justify-between">
-          <div class="text-xl">Dark theme</div>
+          <div class="text-xl">
+            Dark theme
+          </div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
-              <span class="slider round"></span>
+              <input type="checkbox" :checked="isChecked" @change="changetheme()">
+              <span class="slider round" />
             </label>
           </div>
         </div>
 
         <div class="item flex justify-between">
-          <div class="text-xl">Terjemhan</div>
+          <div class="text-xl">
+            Terjemhan
+          </div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="changesub()" :checked="isSub"/>
-              <span class="slider round"></span>
+              <input type="checkbox" :checked="isSub" @change="changesub()">
+              <span class="slider round" />
             </label>
           </div>
         </div>
 
         <div class="item flex justify-between">
-          <div class="text-xl">Audio</div>
+          <div class="text-xl">
+            Audio
+          </div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="changeaudio()" :checked="isAudio"/>
-              <span class="slider round"></span>
+              <input type="checkbox" :checked="isAudio" @change="changeaudio()">
+              <span class="slider round" />
             </label>
           </div>
         </div>
-
-        <!-- <div class="flex mt-4">
-          <div class="flex buttom">
-          </div>
-          <div class="w-full buttom" align="right">
-            <button
-              @click="$emit('close')"
-              class="btn save text-white font-bold py-2 px-4 focus:outline-none"
-            >
-              Kembali
-            </button>
-          </div>
-        </div> -->
       </div>
     </div>
   </AppModal>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'Setting',
   props: {
     theme: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, { emit }) {
-    const { app, store } = useContext()
+  setup (props) {
+    const { store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
     const isChecked = computed(() => {
-      if(props.theme.darktheme){
+      if (props.theme.darktheme) {
         return true
-      }else {
+      } else {
         return false
       }
     })
     const isSub = computed(() => {
-      if(subStore.value === 'On'){
+      if (subStore.value === 'On') {
         return true
       } else {
         return false
       }
     })
     const isAudio = computed(() => {
-      if(audioStore.value === 'On'){
+      if (audioStore.value === 'On') {
         return true
       } else {
         return false
@@ -97,17 +89,16 @@ export default defineComponent({
       changeaudio,
       changetheme
     }
-    async function changesub(){
+    function changesub () {
       store.dispatch('changeSub')
     }
-    async function changeaudio(){
+    function changeaudio () {
       store.dispatch('changeAudio')
     }
-    function changetheme(){
+    function changetheme () {
       store.dispatch('changeTheme')
     }
-
-  },
+  }
 })
 </script>
 
@@ -164,7 +155,6 @@ input:checked + .slider::before {
   transform: translateX(24px);
 }
 
-
 .containerCustom {
   margin: 0 auto;
   display: flex;
@@ -200,7 +190,7 @@ input:checked + .slider::before {
       border-radius: 6px;
     }
     .item {
-      @apply py-2; 
+      @apply py-2;
     }
   }
 }

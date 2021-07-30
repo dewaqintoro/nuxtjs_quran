@@ -4,9 +4,14 @@
     <div class="section">
       <div class="main">
         <div class="head">Url Shortener</div>
-        <transition name="toast">
+        <div v-if="showToast" class="toast-wrapper">
+          <div class="toast">
+            Link Copied
+          </div>
+        </div>
+        <!-- <transition name="toast">
           <Toast v-if="showToast" class="text-center m-auto w-full" />
-        </transition>
+        </transition> -->
         <div class="search">
           <input
             id="username"
@@ -34,13 +39,12 @@
 <script>
 import { ref } from '@nuxtjs/composition-api'
 import axios from 'axios'
-import Toast from '@/components//Toast'
+// import Toast from '@/components/Toast'
 import Navbar from '~/components/GlobalNavbar'
 
 export default {
   name: 'Shorten',
   components: {
-    Toast,
     Navbar
   },
   setup () {
@@ -89,7 +93,6 @@ export default {
       // eslint-disable-next-line no-useless-catch
       try {
         navigator.clipboard.writeText(myLink.value?.shortUrl)
-        console.log('copy')
         triggerToast()
       } catch (e) {
         throw e
@@ -180,6 +183,23 @@ export default {
   /* @apply mx-2 py-2 px-4 text-white w-full; */
   background: transparent;
   color: white;
+}
+
+.toast-wrapper {
+  position: fixed;
+  width: 100%;
+  top: 90px;
+  right: 1px;
+  z-index: 100;
+}
+.toast {
+  padding: 8px;
+  color: white;
+  background: #139279;
+  border-radius: 5px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 @screen tablet {

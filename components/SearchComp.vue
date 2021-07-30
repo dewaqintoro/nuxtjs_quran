@@ -1,34 +1,40 @@
 <template>
   <div class="search text-center">
-    <input class="input-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" id="username" type="search" v-model="search" @change="searchFilter" placeholder="Cari Disini. . .">
+    <input
+      id="username"
+      v-model="search"
+      class="input-search focus:outline-none"
+      :style="{ boxShadow: storeTheme.boxShadow }"
+      type="search"
+      placeholder="Cari Disini. . ."
+      @change="searchFilter"
+    >
 
-    <button @click="searchFilter()" class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button">
+    <button class="btn-search focus:outline-none" :style="{ boxShadow: storeTheme.boxShadow }" type="button" @click="searchFilter()">
       Cari
     </button>
   </div>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 export default {
   name: 'SearchComp',
   components: {
   },
-  setup(_, {emit}){
-    const { app, store } = useContext()
+  setup (_, { emit }) {
+    const { store } = useContext()
     const storeTheme = computed(() => store.state.theme)
     const search = ref('')
 
     return {
       search,
       storeTheme,
-      searchFilter,
+      searchFilter
     }
-    async function searchFilter(){
-      // console.log('search', search)
+    function searchFilter () {
       emit('search', search.value)
     }
-
   }
 }
 </script>

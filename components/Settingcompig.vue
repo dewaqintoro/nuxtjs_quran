@@ -2,38 +2,53 @@
   <AppModal :theme="theme" :show-header="true" :size="size" @close="$emit('close')">
     <div class="containerCustom" :style="{ background: theme.background, color: theme.color }">
       <div class="wrapper">
-
         <div class="item flex justify-between">
-          <div class="text-xl">Dark theme</div>
+          <div class="text-xl">
+            Dark theme
+          </div>
           <div class="flex justify-center">
             <label class="switch">
-              <input type="checkbox" @change="changetheme()" :checked="isChecked"/>
-              <span class="slider round"></span>
+              <input type="checkbox" :checked="isChecked" @change="changetheme()">
+              <span class="slider round" />
             </label>
           </div>
         </div>
 
         <div class="item flex justify-between">
-          <div class="text-xl">Setting</div>
+          <div class="text-xl">
+            Setting
+          </div>
         </div>
 
         <div class="item flex justify-between">
-          <div class="text-xl">Archive</div>
+          <div class="text-xl">
+            Archive
+          </div>
         </div>
         <div class="item flex justify-between">
-          <div class="text-xl">Insights</div>
+          <div class="text-xl">
+            Insights
+          </div>
         </div>
         <div class="item flex justify-between">
-          <div class="text-xl">Your Activity</div>
+          <div class="text-xl">
+            Your Activity
+          </div>
         </div>
         <div class="item flex justify-between">
-          <div class="text-xl">QR Code</div>
+          <div class="text-xl">
+            QR Code
+          </div>
         </div>
         <div class="item flex justify-between">
-          <div class="text-xl">Saved</div>
+          <div class="text-xl">
+            Saved
+          </div>
         </div>
         <div class="item flex justify-between">
-          <div class="text-xl">Close Friends</div>
+          <div class="text-xl">
+            Close Friends
+          </div>
         </div>
       </div>
     </div>
@@ -41,37 +56,37 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'Settingcompig',
   props: {
     theme: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup(props, { emit }) {
-    const { app, store } = useContext()
+  setup (props) {
+    const { store } = useContext()
     const isLoading = ref(true)
     const size = ref('small')
     const subStore = computed(() => store.state.sub)
     const audioStore = computed(() => store.state.audio)
     const isChecked = computed(() => {
-      if(props.theme.darktheme){
+      if (props.theme.darktheme) {
         return true
-      }else {
+      } else {
         return false
       }
     })
     const isSub = computed(() => {
-      if(subStore.value === 'On'){
+      if (subStore.value === 'On') {
         return true
       } else {
         return false
       }
     })
     const isAudio = computed(() => {
-      if(audioStore.value === 'On'){
+      if (audioStore.value === 'On') {
         return true
       } else {
         return false
@@ -87,17 +102,16 @@ export default defineComponent({
       changeaudio,
       changetheme
     }
-    async function changesub(){
+    function changesub () {
       store.dispatch('changeSub')
     }
-    async function changeaudio(){
+    function changeaudio () {
       store.dispatch('changeAudio')
     }
-    function changetheme(){
+    function changetheme () {
       store.dispatch('changeTheme')
     }
-
-  },
+  }
 })
 </script>
 
@@ -154,7 +168,6 @@ input:checked + .slider::before {
   transform: translateX(24px);
 }
 
-
 .containerCustom {
   margin: 0 auto;
   display: flex;
@@ -190,7 +203,7 @@ input:checked + .slider::before {
       border-radius: 6px;
     }
     .item {
-      @apply py-2; 
+      @apply py-2;
     }
   }
 }
