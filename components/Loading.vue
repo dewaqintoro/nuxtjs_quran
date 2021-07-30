@@ -1,19 +1,19 @@
 <template>
   <div class="item">
-    <div v-for="(x, index) in sum" :key="index" class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow  }">
+    <div v-for="(x, index) in sum" :key="index" class="card my-8" :style="{ background: theme.background, color: theme.color, boxShadow: theme.boxShadow }">
       <div class="flex">
         <div class="nameSurahLoading">
           <div class="flex justify-between">
-            <div class="satuA loading"></div>
-            <div class="satuB loading"></div>
+            <div class="satuA loading" />
+            <div class="satuB loading" />
           </div>
           <div class="flex justify-between">
-            <div class="duaA"></div>
-            <div class="duaB loading"></div>
+            <div class="duaA" />
+            <div class="duaB loading" />
           </div>
           <div class="flex justify-between">
-            <div class="tigaA"></div>
-            <div class="tigaB loading"></div>
+            <div class="tigaA" />
+            <div class="tigaB loading" />
           </div>
         </div>
       </div>
@@ -28,15 +28,15 @@ export default {
   props: {
     theme: {
       type: Object,
-      required: true,
+      required: true
     },
     sum: {
       type: Number,
       required: false,
       default: 4
-    },
+    }
   },
-  setup(){
+  setup () {
   }
 }
 </script>
@@ -55,7 +55,6 @@ export default {
   .nameSurah {
     @apply px-4 text-right w-full;
   }
-  
 }
 .loading {
   @apply my-2;

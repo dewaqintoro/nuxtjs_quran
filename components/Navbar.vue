@@ -4,7 +4,7 @@
       <div class="start">
         <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
           <nuxt-link class="btn-nav" to="/">
-            <img class="img-nav" src="/iconNew.png" />
+            <img class="img-nav" src="/iconNew.png">
           </nuxt-link>
         </div>
 
@@ -13,7 +13,6 @@
             <font-awesome-icon :icon="['fas', 'home']" />
           </nuxt-link>
         </div>
-        
       </div>
       <div class="end box" :style="{ boxShadow: storeTheme.boxShadow }">
         <button class="btn-nav focus:outline-none" @click="doSetting()">
@@ -21,7 +20,7 @@
         </button>
       </div>
       <Transition name="drawer">
-        <Setting :theme="storeTheme" v-if="isSetting" @close="closeModal" />
+        <Setting v-if="isSetting" :theme="storeTheme" @close="closeModal" />
       </Transition>
     </div>
   </header>
@@ -41,10 +40,10 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: true
-    },
+    }
   },
-  setup(props, { emit }) {
-    const { store, route, app } = useContext()
+  setup (props) {
+    const { store, app } = useContext()
     const isSetting = ref(false)
     const thisSub = app.$cookies.get('sub')
     const thisAudio = app.$cookies.get('audio')
@@ -53,17 +52,17 @@ export default defineComponent({
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
 
-    if(!thisSub){
+    if (!thisSub) {
       store.dispatch('setSub', 'On')
     } else {
       store.dispatch('getSub')
     }
-    if(!thisAudio){
+    if (!thisAudio) {
       store.dispatch('setAudio', 'On')
     } else {
       store.dispatch('getAudio')
     }
-    if(thisTheme){
+    if (thisTheme) {
       store.dispatch('getTheme')
     } else {
       store.dispatch('setTheme', initTheme.value)
@@ -79,19 +78,18 @@ export default defineComponent({
       cek
     }
 
-    function cek(){
+    function cek () {
       console.log(props)
     }
-    
-    function closeModal() {
+    function closeModal () {
       isSetting.value = false
     }
-    function doSetting() {
+    function doSetting () {
       isSetting.value = true
     }
-    function cekData() {
+    function cekData () {
     }
-  },
+  }
 })
 </script>
 
