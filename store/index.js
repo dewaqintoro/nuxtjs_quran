@@ -80,6 +80,7 @@ export const actions = {
   },
 
   setTheme () {
+    console.log('this.state.theme', this.state.theme)
     this.$cookies.set('theme', this.state.theme, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
