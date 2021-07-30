@@ -1,40 +1,46 @@
 <template>
-<div class="min-h-screen">
-  <Navbar :theme="myTheme" />
-  <div class="section">
-    <div class="main">
-      <div class="head">KBBI - Unofficial</div>
-      <div class="search">
-        <input class="input-search focus:outline-none" id="username" type="search" v-model="search" placeholder="Paste long url and shorten it.">
-        <button @click="searchFilter()" class="btn-search focus:outline-none" type="button">
-          <font-awesome-icon :icon="['fas', 'search']" />
-        </button>
+  <div class="min-h-screen">
+    <Navbar :theme="myTheme" />
+    <div class="section">
+      <div class="main">
+        <div class="head">
+          KBBI - Unofficial
+        </div>
+        <div class="search">
+          <input id="username" v-model="search" class="input-search focus:outline-none" type="search" placeholder="Paste long url and shorten it.">
+          <button class="btn-search focus:outline-none" type="button" @click="searchFilter()">
+            <font-awesome-icon :icon="['fas', 'search']" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="means">
+      <p v-if="means.length > 0" class="text-2xl font-bold">
+        Arti
+      </p>
+      <div class="section-loader items-center justify-center">
+        <div v-if="loading" class="loader" />
+      </div>
+      <div v-for="(mean, index) in means" :key="index" class="text-left">
+        <p class="text-xl my-2">
+          {{ index+1 }} - {{ mean }}
+        </p>
       </div>
     </div>
   </div>
-  <div class="means">
-    <p v-if="means.length > 0" class="text-2xl font-bold">Arti</p>
-    <div class="section-loader items-center justify-center">
-      <div v-if="loading" class="loader"></div>
-    </div>
-    <div class="text-left" v-for="(mean, index) in means" :key="index">
-      <p class="text-xl my-2">{{index+1}} - {{mean}}</p>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
-import { computed, ref, useAsync, useContext } from '@nuxtjs/composition-api'
+import { ref } from '@nuxtjs/composition-api'
+import axios from 'axios'
 import Navbar from '~/components/GlobalNavbar'
 
-import axios from 'axios'
 export default {
   name: 'Shorten',
   components: {
     Navbar
   },
-  setup(){
+  setup () {
     const means = ref([])
     const lema = ref('')
     const loading = ref(false)
@@ -42,7 +48,7 @@ export default {
     const myTheme = {
       background: '#8854d0',
       color: 'white',
-      boxShadow:  '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
     }
 
     return {
@@ -51,20 +57,19 @@ export default {
       search,
       loading,
       myTheme,
-      searchFilter,
+      searchFilter
     }
 
-    async function searchFilter(){
+    async function searchFilter () {
       loading.value = true
       const url = `https://kbbi-api-zhirrr.vercel.app/api/kbbi?text=${search.value}`
-      const result = await axios.get(url);
-      if(result?.data){
+      const result = await axios.get(url)
+      if (result?.data) {
         loading.value = false
       }
       means.value = result?.data?.arti
       lema.value = result?.data?.lema
     }
-
   }
 }
 </script>
@@ -84,7 +89,7 @@ export default {
 
 .means {
   max-width: 60vw;
-  @apply pt-4 mx-auto text-center 
+  @apply pt-4 mx-auto text-center;
 }
 
 .head {
@@ -132,7 +137,6 @@ export default {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 
 @screen tablet {
 }
