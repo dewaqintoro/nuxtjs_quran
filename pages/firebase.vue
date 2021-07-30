@@ -5,21 +5,27 @@
       <div class="flex items-center justify-center">
         <label class="upload-icon w-64 flex flex-col items-center px-4 py-6 bg-blue-400  text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-500 text-white">
           <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
           </svg>
           <span class="mt-2 text-base leading-normal">Select a file</span>
-          <input type='file' class="hidden" @change="uploadFileHandler" />
+          <input type="file" class="hidden" @change="uploadFileHandler">
         </label>
       </div>
       <div class="mt-2 items-center justify-center">
-        <p v-if="errorSize">Ukuran file terlalu besar !!! File harus dibawah 100kb.</p>
+        <p v-if="errorSize">
+          Ukuran file terlalu besar !!! File harus dibawah 100kb.
+        </p>
         <!-- <h1 v-if="loading">Loading</h1> -->
         <div class="section-loader items-center justify-center">
-          <div v-if="loading" class="loader"></div>
+          <div v-if="loading" class="loader"/>
         </div>
-        <h1 class="mt-2">My Images {{myImg.length}}</h1>
+        <h1 class="mt-2">
+          My Images {{ myImg.length }}
+        </h1>
         <div v-for="(item, index) in myImg" :key="index">
-          <p class="link">{{item}}</p>
+          <p class="link">
+            {{ item }}
+          </p>
         </div>
       </div>
     </div>
@@ -29,23 +35,22 @@
 
 <script>
 import { defineComponent, ref } from '@vue/composition-api'
-import Navbar from '~/components/GlobalNavbar'
-
 import axios from 'axios'
+import Navbar from '~/components/GlobalNavbar'
 export default defineComponent({
   components: {
     Navbar
   },
-  setup() {
+  setup () {
     const myImg = ref([])
     const loading = ref(false)
     const errorSize = ref(false)
     const myTheme = {
       background: '#f7f7f7',
       color: 'black',
-      boxShadow:  '5px 5px 12px #dedede,-5px -5px 12px #ffffff',
+      boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
     }
-    return{
+    return {
       myImg,
       loading,
       errorSize,
@@ -53,35 +58,35 @@ export default defineComponent({
       uploadFileHandler
     }
 
-    async function uploadFileHandler(event){
-      try{
-        const file = event.target.files[0];
-        if(file.size > 100000){
+    async function uploadFileHandler (event) {
+      try {
+        const file = event.target.files[0]
+        if (file.size > 100000) {
           errorSize.value = true
           setTimeout(() => {
             errorSize.value = false
           }, 3000)
         } else {
           loading.value = true
-          const bodyFormData = new FormData();
-          bodyFormData.append('image', file);
+          const bodyFormData = new FormData()
+          bodyFormData.append('image', file)
           console.log('bodyFormData', bodyFormData)
-          const url = `https://aruspinggir-v1.herokuapp.com/api/uploads/s3`
+          const url = 'https://aruspinggir-v1.herokuapp.com/api/uploads/s3'
           const result = await axios.post(url, bodyFormData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
+              'Content-Type': 'multipart/form-data'
+            }
+          })
           myImg.value.push(result.data)
-          if(result.data){
+          if (result.data) {
             loading.value = false
           }
         }
-      }catch(err){
+      } catch (err) {
         console.log(err)
       }
     }
-  },
+  }
 })
 </script>
 
