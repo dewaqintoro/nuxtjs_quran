@@ -35,7 +35,6 @@ import Loading from '@/components/Loading.vue'
 import Navbar from '~/components/Navbar.vue'
 import dataJson from '~/data/reksadana.json'
 import Cardcomp from '~/components/invest/reksadanaCardComp.vue'
-// import SearchComp from '~/components/SearchComp.vue'
 import SearchComp from '~/components/SearchNewComp.vue'
 
 export default {

@@ -81,7 +81,6 @@ export const actions = {
 
   setTheme () {
     if (this.state.theme) {
-      console.log('ada state', this.state.theme)
       this.$cookies.set('theme', this.state.theme, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7
@@ -95,7 +94,6 @@ export const actions = {
         color: 'black',
         boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
       }
-      console.log('tidak ada state', mytheme)
 
       this.$cookies.set('theme', mytheme, {
         path: '/',

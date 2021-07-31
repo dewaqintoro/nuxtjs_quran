@@ -3,7 +3,7 @@
     <Navbar :theme="myTheme" />
     <div class="main container">
       <div v-if="!globalTop20Done">Loading !!!</div>
-      <div>
+      <div v-else>
         <div class="top-global pt-4">
           <div class="flex justify-between mx-2 mb-2">
             <p class="text-xl font-bold ">Global Top 200 Chart</p>

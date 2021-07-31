@@ -2,155 +2,160 @@
   <div>
     <Navbar :theme="myTheme" />
     <div class="main">
-      <div class="section one">
-        <div class="be container">
-          <div v-if="isDOne" class="img-cover">
-            <img class="track-img" :src="getCoverart()" alt="img">
-          </div>
-          <div class="track-text">
-            <div v-if="isDOne">
-              <p class="text-2xl font-bold text-black">
-                {{ myTrack.title }}
-              </p>
-              <nuxt-link v-if="artistId" :to="'../../music/artist/'+myTrack.artists[0].id">
-                <p class="font-bold">
+      <div v-if="!isDOne" class="mt-8 text-center">
+        Loading !!!
+      </div>
+      <div v-else>
+        <div class="section one">
+          <div class="be container">
+            <div v-if="isDOne" class="img-cover">
+              <img class="track-img" :src="getCoverart()" alt="img">
+            </div>
+            <div class="track-text">
+              <div v-if="isDOne">
+                <p class="text-2xl font-bold text-black">
+                  {{ myTrack.title }}
+                </p>
+                <nuxt-link v-if="artistId" :to="'../../music/artist/'+myTrack.artists[0].id">
+                  <p class="font-bold">
+                    {{ myTrack.subtitle }}
+                  </p>
+                </nuxt-link>
+                <p v-else class="font-bold">
                   {{ myTrack.subtitle }}
                 </p>
-              </nuxt-link>
-              <p v-else class="font-bold">
-                {{ myTrack.subtitle }}
-              </p>
-              <p>{{ genres }} . {{ trackCount }} Shazams</p>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="isDOne" class="ce">
-          <div class="container">
-            <div class="track-text">
-              <div class="section-btn-full">
-                <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
-                  <div class="btn-full">
-                    <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
-                    <div class="text-playfull">
-                      <p>Play Full Song</p>
-                    </div>
-                  </div>
-                </a>
+                <p>{{ genres }} . {{ trackCount }} Shazams</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="section two container">
-        <div class="second">
-          <div class="second-left">
-            <div v-if="albumDone">
-              <p class="section-title">
-                Featured In
-              </p>
-              <hr class="my-4"/>
-              <div class="artis-global">
-                <div class="dew">
-                  <div v-for="(item, index) in albumfeaturedin" :key="index" class="artis-item">
-                    <a :href="item.attributes.url" target="_blank">
-                      <img :src="getImg(item)" alt="img">
-                      <p class="uppercase ">
-                        {{ item.type }}
-                      </p>
-                      <p class="text-lg "><b>{{ item.attributes.name }}</b></p>
-                      <p class="text-sm">{{ item.attributes.curatorName }}</p>
-                    </a>
-                  </div>
+
+          <div v-if="isDOne" class="ce">
+            <div class="container">
+              <div class="track-text">
+                <div class="section-btn-full">
+                  <a :href="myTrack.hub.options[0].actions[0].uri" target="_blank">
+                    <div class="btn-full">
+                      <font-awesome-icon class="m-auto" :icon="['fas', 'music']" />
+                      <div class="text-playfull">
+                        <p>Play Full Song</p>
+                      </div>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
-            <div v-if="topTracksDone">
-              <p class="section-title mt-8">
-                Top Songs By {{ myTrack.subtitle }}
-              </p>
-              <hr class="my-4"/>
-              <div v-for="(song, index) in artistTopTracks" :key="index" class="my-4">
-                <GlobalComp
-                  v-if="index < 5 && isLess"
-                  :item="song"
-                  :index="index"
-                  :route-link="song.key"
-                  :show-index="false"
-                  @play="play"
-                  @pauseAudio="pauseAudio"
-                  @playAudio="playAudio"
-                />
-                <GlobalComp
-                  v-if="isMore"
-                  :item="song"
-                  :index="index"
-                  :route-link="song.key"
-                  :show-index="false"
-                  @play="play"
-                  @pauseAudio="pauseAudio"
-                  @playAudio="playAudio"
-                />
-              </div>
-              <div v-if="artistTopTracks.length > 5" class="text-center mt-4">
-                <button class="btn-more" @click="setMore()">
-                  <p v-if="isMore">
-                    Show Less
-                  </p>
-                  <p v-else>
-                    Show More
-                  </p>
-                </button>
-              </div>
-            </div>
-
-            <div v-if="similaritiesDone">
-              <p class="section-title mt-8">
-                Similar Songs
-              </p>
-              <hr class="my-4"/>
-              <div v-for="(song, index) in similaritiesTrack" :key="index" class="my-4">
-                <GlobalComp
-                  v-if="index < 5 && isLessSimilar"
-                  :item="song"
-                  :index="index"
-                  :route-link="song.key"
-                  :show-index="false"
-                  @play="play"
-                  @pauseAudio="pauseAudio"
-                  @playAudio="playAudio"
-                />
-                <GlobalComp
-                  v-if="isMoreSimilar"
-                  :item="song"
-                  :index="index"
-                  :route-link="song.key"
-                  :show-index="false"
-                  @play="play"
-                  @pauseAudio="pauseAudio"
-                  @playAudio="playAudio"
-                />
-              </div>
-              <div class="text-center mt-4">
-                <button v-if="similaritiesTrack" class="btn-more" @click="setMoreSimilar()">
-                  <p v-if="isMoreSimilar">
-                    Show Less
-                  </p>
-                  <p v-else>
-                    Show More
-                  </p>
-                </button>
-              </div>
-            </div>
           </div>
-          <div class="second-right">
-            <div v-if="isLyric">
-              <p class="section-title">
-                Lyrics
-              </p>
-              <p v-for="(lyric, index) in myLyrics" :key="index">
-                {{ lyric }}
-              </p>
+        </div>
+        <div class="section two container">
+          <div class="second">
+            <div class="second-left">
+              <div v-if="albumDone">
+                <p class="section-title">
+                  Featured In
+                </p>
+                <hr class="my-4"/>
+                <div class="artis-global">
+                  <div class="dew">
+                    <div v-for="(item, index) in albumfeaturedin" :key="index" class="artis-item">
+                      <a :href="item.attributes.url" target="_blank">
+                        <img :src="getImg(item)" alt="img">
+                        <p class="uppercase ">
+                          {{ item.type }}
+                        </p>
+                        <p class="text-lg "><b>{{ item.attributes.name }}</b></p>
+                        <p class="text-sm">{{ item.attributes.curatorName }}</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="topTracksDone">
+                <p class="section-title mt-8">
+                  Top Songs By {{ myTrack.subtitle }}
+                </p>
+                <hr class="my-4"/>
+                <div v-for="(song, index) in artistTopTracks" :key="index" class="my-4">
+                  <GlobalComp
+                    v-if="index < 5 && isLess"
+                    :item="song"
+                    :index="index"
+                    :route-link="song.key"
+                    :show-index="false"
+                    @play="play"
+                    @pauseAudio="pauseAudio"
+                    @playAudio="playAudio"
+                  />
+                  <GlobalComp
+                    v-if="isMore"
+                    :item="song"
+                    :index="index"
+                    :route-link="song.key"
+                    :show-index="false"
+                    @play="play"
+                    @pauseAudio="pauseAudio"
+                    @playAudio="playAudio"
+                  />
+                </div>
+                <div v-if="artistTopTracks.length > 5" class="text-center mt-4">
+                  <button class="btn-more" @click="setMore()">
+                    <p v-if="isMore">
+                      Show Less
+                    </p>
+                    <p v-else>
+                      Show More
+                    </p>
+                  </button>
+                </div>
+              </div>
+
+              <div v-if="similaritiesDone">
+                <p class="section-title mt-8">
+                  Similar Songs
+                </p>
+                <hr class="my-4"/>
+                <div v-for="(song, index) in similaritiesTrack" :key="index" class="my-4">
+                  <GlobalComp
+                    v-if="index < 5 && isLessSimilar"
+                    :item="song"
+                    :index="index"
+                    :route-link="song.key"
+                    :show-index="false"
+                    @play="play"
+                    @pauseAudio="pauseAudio"
+                    @playAudio="playAudio"
+                  />
+                  <GlobalComp
+                    v-if="isMoreSimilar"
+                    :item="song"
+                    :index="index"
+                    :route-link="song.key"
+                    :show-index="false"
+                    @play="play"
+                    @pauseAudio="pauseAudio"
+                    @playAudio="playAudio"
+                  />
+                </div>
+                <div class="text-center mt-4">
+                  <button v-if="similaritiesTrack" class="btn-more" @click="setMoreSimilar()">
+                    <p v-if="isMoreSimilar">
+                      Show Less
+                    </p>
+                    <p v-else>
+                      Show More
+                    </p>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="second-right">
+              <div v-if="isLyric">
+                <p class="section-title">
+                  Lyrics
+                </p>
+                <p v-for="(lyric, index) in myLyrics" :key="index">
+                  {{ lyric }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
