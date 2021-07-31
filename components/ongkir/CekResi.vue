@@ -115,7 +115,7 @@ export default {
     const ekspedisiSelected = ref('jne')
     const storeTheme = computed(() => store.state.theme)
     const awb = ref('')
-    const apiKey = 'febd21cf7746d439d869d5b6b329429dba2c849fc98b056a60eb39d05df75019'
+    const apiKey = '95d638ec7b8f7252f92151cc473304774bcb2a57a256bb2a90ff551f00a2421f'
     const dataResi = ref([])
     const showDetail = ref(false)
     return {

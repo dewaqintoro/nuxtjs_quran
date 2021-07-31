@@ -1,8 +1,8 @@
 <template>
-  <header v-if="!loadingTheme" class="app-header font-bold" :style="{ background: storeTheme.background, color: storeTheme.color }">
+  <header class="app-header font-bold">
     <div class="inner">
       <div class="start">
-        <div class="box" :style="{ boxShadow: storeTheme.boxShadow }">
+        <div class="box">
           <nuxt-link class="btn-nav" to="/music">
             <img class="img-nav" src="/iconNew.png">
           </nuxt-link>
@@ -23,31 +23,30 @@
             <font-awesome-icon :icon="['fas', 'search']" />
           </button>
         </div>
-        <div class="my-btn">
-          <button class="focus:outline-none" @click="changetheme()">
-            <font-awesome-icon v-if="isChecked" :icon="['fas', 'moon']" />
-            <font-awesome-icon v-else :icon="['fas', 'sun']" />
-          </button>
-        </div>
       </div>
     </div>
-    <div v-if="resultDone && search" class="hah z-100" @click.self="toHide">
+    <div v-if="search" class="hah z-100" @click.self="toHide">
       <div id="divDew" class="result-box">
-        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">
-          Songs
-        </p>
-        <div v-for="(track, index) in resultTracks" :key="index" class="result-item">
-          <nuxt-link :to="baseRoute+track.key">
-            {{ track.alias }}
-          </nuxt-link>
+        <div v-if="!resultDone" class="text-center my-2">
+          Loading
         </div>
-        <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">
-          Artists
-        </p>
-        <div v-for="(artist, index) in resultArtists" :key="'a'+index" class="result-item">
-          <nuxt-link :to="baseRouteArtist+artist.id">
-            {{ artist.alias }}
-          </nuxt-link>
+        <div v-else>
+          <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">
+            Songs
+          </p>
+          <div v-for="(track, index) in resultTracks" :key="index" class="result-item">
+            <nuxt-link :to="baseRoute+track.key">
+              {{ track.alias }}
+            </nuxt-link>
+          </div>
+          <p class="text-xl font-bold pl-4 mt-2 text-blue-600 ">
+            Artists
+          </p>
+          <div v-for="(artist, index) in resultArtists" :key="'a'+index" class="result-item">
+            <nuxt-link :to="baseRouteArtist+artist.id">
+              {{ artist.alias }}
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
@@ -55,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
 export default defineComponent({
@@ -80,27 +79,13 @@ export default defineComponent({
   setup () {
     const { store, route } = useContext()
     const isSearch = ref(false)
-    const loadingTheme = computed(() => store.state.loadingTheme)
-    const storeTheme = computed(() => store.state.theme)
     const routeId = '/blog?category=MERN'
     const search = ref('')
     const baseRoute = ref('')
     const baseRouteArtist = ref('')
-
     const resultTracks = ref([])
     const resultArtists = ref([])
     const resultDone = ref(false)
-
-    // const isChecked = ref(false)
-
-    const isChecked = computed(() => {
-      if (storeTheme.value.darktheme) {
-        return true
-      } else {
-        return false
-      }
-    })
-
     watch(search, () => {
       if (search.value.length === 0) {
         resultDone.value = false
@@ -110,11 +95,8 @@ export default defineComponent({
     cekRoute()
 
     return {
-      storeTheme,
-      loadingTheme,
       isSearch,
       routeId,
-      isChecked,
       search,
       resultTracks,
       resultArtists,
@@ -168,7 +150,7 @@ export default defineComponent({
 
     function cek () {
       // console.log(props)
-      console.log('storeTheme', storeTheme)
+      console.log('storeTheme')
     }
 
     function closeModal () {
@@ -218,10 +200,12 @@ select:-webkit-autofill:focus {
   justify-content: center;
   justify-items: center;
   margin: auto;
-  background: white;
+  background: rgb(231, 231, 231);
   margin-right: 10px;
-  border-radius: 20px;
-  @apply pr-4 pl-2;
+  @apply pr-4 pl-4 py-1 rounded-full;
+  input{
+    background: rgb(231, 231, 231);
+  }
 }
 
 .my-btn{
@@ -253,6 +237,7 @@ select:-webkit-autofill:focus {
   }
 
 .app-header {
+  background: white;
   @apply fixed w-full top-0 py-4;
   @apply z-30 select-none;
   height: var(--header-height);
