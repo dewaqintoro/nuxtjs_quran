@@ -2,17 +2,23 @@
   <span>
     <div class="flex text-center">
       <div class="m-auto">
-        <h4>Your Position</h4>
-        <p>Latitude: {{ currPos.lat.toFixed(2) }}</p>
-        <p>Longtitude: {{ currPos.lng.toFixed(2) }}</p>
+        <h4>Lokasimu</h4>
+        <span v-if="otherPos">
+          Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
+          {{ currPos.lng.toFixed(2) }}
+        </span>
       </div>
       <div class="m-auto">
-        <h4>Clicked Position</h4>
+        <h4>Jarak</h4>
+        {{ distance.toFixed(2) }} km
+      </div>
+      <div class="m-auto">
+        <h4>Tujuan</h4>
         <span v-if="otherPos">
           Latitude: {{ otherPos.lat.toFixed(2) }}, Longitude:
           {{ otherPos.lng.toFixed(2) }}
         </span>
-        <span v-else>Click the map to select a position</span>
+        <span v-else>Klik pada peta</span>
       </div>
     </div>
     <div ref="mapDiv" style="width: 100%; height: 80vh" />
@@ -21,7 +27,7 @@
 
 <script>
 /* eslint-disable no-undef */
-import { computed, defineComponent, onMounted, onUnmounted, ref } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from '@vue/composition-api'
 import { Loader } from '@googlemaps/js-api-loader'
 import { useGeolocation } from '~/plugins/useGeolocation'
 
@@ -58,10 +64,52 @@ export default defineComponent({
         clickListener.remove()
       }
     })
+
+    let line = null
+    watch([map, currPos, otherPos], () => {
+      if (line) {
+        line.setMap(null)
+      }
+      if (map.value && otherPos.value != null) {
+        line = new google.maps.Polyline({
+          path: [currPos.value, otherPos.value],
+          map: map.value
+        })
+      }
+    })
+
+    const haversineDistance = (pos1, pos2) => {
+      const R = 3958.8
+      const rlat1 = pos1.lat * (Math.PI / 180)
+      const rlat2 = pos2.lat * (Math.PI / 180)
+      const difflat = rlat2 - rlat1
+      const difflon = (pos2.lng - pos1.lng) * (Math.PI / 180)
+
+      const d =
+        2 *
+        R *
+        Math.asin(
+          Math.sqrt(
+            Math.sin(difflat / 2) * Math.sin(difflat / 2) +
+              Math.cos(rlat1) *
+                Math.cos(rlat2) *
+                Math.sin(difflon / 2) *
+                Math.sin(difflon / 2)
+          )
+        )
+      const km = d * 1.609344
+      return km
+    }
+    const distance = computed(() =>
+      otherPos.value === null
+        ? 0
+        : haversineDistance(currPos.value, otherPos.value)
+    )
     return {
       currPos,
       mapDiv,
-      otherPos
+      otherPos,
+      distance
     }
   }
 })
