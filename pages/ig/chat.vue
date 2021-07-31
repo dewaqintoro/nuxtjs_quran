@@ -4,7 +4,7 @@
       <div :style="{ background: storeTheme.background, color: storeTheme.color }" class="fixed">
         <div class="header-main">
           <div class="back">
-            <nuxt-link to="/">
+            <nuxt-link to="/ig">
               <font-awesome-icon class="icon-back" :icon="['fas', 'arrow-left']" />
             </nuxt-link>
             <p class="text-xl font-bold ml-8">dewaqintoro</p>
