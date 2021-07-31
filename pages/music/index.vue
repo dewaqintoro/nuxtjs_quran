@@ -2,45 +2,48 @@
   <span>
     <Navbar :theme="myTheme" />
     <div class="main container">
-      <div v-if="globalTop20Done" class="top-global pt-4">
-        <div class="flex justify-between mx-2 mb-2">
-          <p class="text-xl font-bold ">Global Top 200 Chart</p>
-          <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>
-        </div>
-        <hr/>
-        <div class="top-global-main">
-          <TopGlobal :global-top20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-        </div>
-      </div>
-
-      <div v-if="artisGlobalDone" class="artis-global mt-16">
-        <div class="dew">
-          <div v-for="(item, index) in artisGlobal" :key="index" class="artis-item">
-            <nuxt-link :to="'music/artist/'+item.artists[0].id">
-              <div class="flex m-2">
-                <div class="item-title">
-                  <div class="image-container">
-                    <img :src="item.images.background" alt="img">
-                  </div>
-                  <p v-if="item.subtitle.length > 20">
-                    {{ item.subtitle.substring(0, 20) }}...
-                  </p>
-                  <p v-else>{{ item.subtitle }}</p>
-                </div>
-              </div>
-            </nuxt-link>
+      <div v-if="!globalTop20Done">Loading !!!</div>
+      <div>
+        <div class="top-global pt-4">
+          <div class="flex justify-between mx-2 mb-2">
+            <p class="text-xl font-bold ">Global Top 200 Chart</p>
+            <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link>
+          </div>
+          <hr/>
+          <div class="top-global-main">
+            <TopGlobal :global-top20="globalTop20" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
           </div>
         </div>
-      </div>
 
-      <div v-if="discoveryIDDone" class="top-global mt-16">
-        <div class="flex justify-between mx-2 mb-2">
-          <p class="text-xl font-bold ">Discovery Indonesia Tracks</p>
-          <!-- <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link> -->
+        <div v-if="artisGlobalDone" class="artis-global mt-16">
+          <div class="dew">
+            <div v-for="(item, index) in artisGlobal" :key="index" class="artis-item">
+              <nuxt-link :to="'music/artist/'+item.artists[0].id">
+                <div class="flex m-2">
+                  <div class="item-title">
+                    <div class="image-container">
+                      <img :src="item.images.background" alt="img">
+                    </div>
+                    <p v-if="item.subtitle.length > 20">
+                      {{ item.subtitle.substring(0, 20) }}...
+                    </p>
+                    <p v-else>{{ item.subtitle }}</p>
+                  </div>
+                </div>
+              </nuxt-link>
+            </div>
+          </div>
         </div>
-        <hr/>
-        <div class="top-global-main">
-          <TopGlobal :global-top20="discoveryID" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+
+        <div v-if="discoveryIDDone" class="top-global mt-16">
+          <div class="flex justify-between mx-2 mb-2">
+            <p class="text-xl font-bold ">Discovery Indonesia Tracks</p>
+            <!-- <nuxt-link to="music/charts/top-200/world" class="text-xl font-bold text-blue-600 ">View All</nuxt-link> -->
+          </div>
+          <hr/>
+          <div class="top-global-main">
+            <TopGlobal :global-top20="discoveryID" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+          </div>
         </div>
       </div>
     </div>

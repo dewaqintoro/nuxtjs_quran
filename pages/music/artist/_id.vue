@@ -2,82 +2,87 @@
   <div>
     <Navbar :theme="myTheme" />
     <div class="main">
-      <div class="section one">
-        <div class="be container">
-          <div v-if="artistDone">
-            <img class="track-img" :src="getAvatar(artistDetail)" alt="img">
-          </div>
-          <div class="track-text">
+      <div v-if="!artistDone" class="pt-8 text-center">
+        Loading !!!
+      </div>
+      <div v-else>
+        <div class="section one">
+          <div class="be container">
             <div v-if="artistDone">
-              <p class="text-2xl font-bold text-black">
-                {{ artistDetail.name }}
-              </p>
-              <p class="font-bold">
-                {{ artistDetail.genres.primary }}
-              </p>
+              <img class="track-img" :src="getAvatar(artistDetail)" alt="img">
+            </div>
+            <div class="track-text">
+              <div v-if="artistDone">
+                <p class="text-2xl font-bold text-black">
+                  {{ artistDetail.name }}
+                </p>
+                <p class="font-bold">
+                  {{ artistDetail.genres.primary }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="section two container">
-        <!-- <button @click="cek">cek</button> -->
-        <div class="top-global">
-          <div class="flex justify-between mx-2 mb-2">
-            <p v-if="artistDone" class="text-xl font-bold ">
-              TOP SONGS BY {{ artistDetail.name }}
-            </p>
+        <div class="section two container">
+          <!-- <button @click="cek">cek</button> -->
+          <div class="top-global">
+            <div class="flex justify-between mx-2 mb-2">
+              <p v-if="artistDone" class="text-xl font-bold ">
+                TOP SONGS BY {{ artistDetail.name }}
+              </p>
+            </div>
+            <hr/>
+            <div v-if="topTracksDone" class="top-global-main">
+              <TopGlobal :global-top20="artistTopTracks" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
+            </div>
           </div>
-          <hr/>
-          <div v-if="topTracksDone" class="top-global-main">
-            <TopGlobal :global-top20="artistTopTracks" @play="play" @pauseAudio="pauseAudio" @playAudio="playAudio" />
-          </div>
-        </div>
 
-        <div v-if="artistDescDone" class="mt-8 px-2">
-          <div class="flex justify-between mx-2 mb-2">
-            <p class="text-xl font-bold ">
-              ARTIST BIOGRAPHY
-            </p>
+          <div v-if="artistDescDone" class="mt-8 px-2">
+            <div class="flex justify-between mx-2 mb-2">
+              <p class="text-xl font-bold ">
+                ARTIST BIOGRAPHY
+              </p>
+            </div>
+            <p v-if="isLess" v-html="artistBioData.attributes.artistBio.substring(0, 400)" />
+            <p v-if="isMore" v-html="artistBioData.attributes.artistBio" />
+            <button v-if="artistBioData.attributes.artistBio.length > 400" class="focus:outline-none text-blue-500 font-bold " @click="setMore">
+              <p v-if="isLess">
+                View More
+              </p>
+              <p v-if="isMore">
+                View Less
+              </p>
+            </button>
           </div>
-          <p v-if="isLess" v-html="artistBioData.attributes.artistBio.substring(0, 400)" />
-          <p v-if="isMore" v-html="artistBioData.attributes.artistBio" />
-          <button v-if="artistBioData.attributes.artistBio.length > 400" class="focus:outline-none text-blue-500 font-bold " @click="setMore">
-            <p v-if="isLess">
-              View More
-            </p>
-            <p v-if="isMore">
-              View Less
-            </p>
-          </button>
-        </div>
 
-        <div v-if="artistBioDone" class="mt-8">
-          <div class="flex justify-between mx-2 mb-2">
-            <p class="text-xl font-bold ">
-              Discover similar artists on Apple Music
-            </p>
-          </div>
-          <hr/>
-          <div class="artis-global">
-            <div class="dew">
-              <div v-for="(item, index) in similarAartists" :key="index" class="artis-item">
-                <!-- <nuxt-link :to="'music/artist/'+item.artists[0].id"> -->
-                <div class="flex m-2">
-                  <a :href="item.attributes.url" target="_blank">
-                    <div class="item-title">
-                      <div class="image-container">
-                        <img :src="getCoverart(item)" alt="img">
+          <div v-if="artistBioDone" class="mt-8">
+            <div class="flex justify-between mx-2 mb-2">
+              <p class="text-xl font-bold ">
+                Discover similar artists on Apple Music
+              </p>
+            </div>
+            <hr/>
+            <div class="artis-global">
+              <div class="dew">
+                <div v-for="(item, index) in similarAartists" :key="index" class="artis-item">
+                  <!-- <nuxt-link :to="'music/artist/'+item.artists[0].id"> -->
+                  <div class="flex m-2">
+                    <a :href="item.attributes.url" target="_blank">
+                      <div class="item-title">
+                        <div class="image-container">
+                          <img :src="getCoverart(item)" alt="img">
+                        </div>
+                        <p v-if="item.attributes.name.length > 20">
+                          <b>{{ item.attributes.name.substring(0, 20) }}...</b>
+                        </p>
+                        <p v-else>
+                          <b>{{ item.attributes.name }}</b>
+                        </p>
                       </div>
-                      <p v-if="item.attributes.name.length > 20">
-                        <b>{{ item.attributes.name.substring(0, 20) }}...</b>
-                      </p>
-                      <p v-else>
-                        <b>{{ item.attributes.name }}</b>
-                      </p>
-                    </div>
-                  </a>
+                    </a>
+                  </div>
+                  <!-- </nuxt-link> -->
                 </div>
-                <!-- </nuxt-link> -->
               </div>
             </div>
           </div>
@@ -90,7 +95,7 @@
           <div>
             <div>
               <p><b>{{ myTitle }}</b></p>
-              <p>{ {mySubTitle }}</p>
+              <p>{{ mySubTitle }}</p>
             </div>
             <audio id="myAudio" :src="myAudio" controls autoplay class="my-audio" />
           </div>

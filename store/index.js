@@ -80,12 +80,29 @@ export const actions = {
   },
 
   setTheme () {
-    console.log('this.state.theme', this.state.theme)
-    this.$cookies.set('theme', this.state.theme, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7
-    })
-    this.dispatch('getTheme')
+    if (this.state.theme) {
+      console.log('ada state', this.state.theme)
+      this.$cookies.set('theme', this.state.theme, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      this.dispatch('getTheme')
+    } else {
+      const mytheme = {
+        darktheme: false,
+        // background: '#f7f7f7',
+        background: 'white',
+        color: 'black',
+        boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
+      }
+      console.log('tidak ada state', mytheme)
+
+      this.$cookies.set('theme', mytheme, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7
+      })
+      this.dispatch('getTheme')
+    }
   },
   getTheme ({ commit }) {
     const themeCookie = this.$cookies.get('theme')

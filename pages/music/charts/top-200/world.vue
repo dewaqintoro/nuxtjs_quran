@@ -1,72 +1,77 @@
 <template>
   <div>
     <Navbar :theme="myTheme" />
-    <div class="header">
-      <div class="container p-4">
-        <p><b>GLOBAL</b></p>
-        <p class="text-2xl font-bold">
-          Top 200
-        </p>
-        <p>The most Shazamed tracks in the world this week</p>
-      </div>
+    <div v-if="!isDOne" class="pt-24 text-center">
+      Loading !!!
     </div>
-    <div class="main container">
-      <div class="content">
-        <div class="section one">
-          <div v-if="isDOne" class="two-top">
-            <img :src="getMyImg()">
-            <div class="px-8 py-4">
-              <p><b>#1</b> Top 200</p>
-              <p class="text-xl font-bold">
-                {{ imgTop.title }}
-              </p>
-              <p>{{ imgTop.subtitle }}</p>
-            </div>
-          </div>
+    <div v-else>
+      <div class="header">
+        <div class="container p-4">
+          <p><b>GLOBAL</b></p>
+          <p class="text-2xl font-bold">
+            Top 200
+          </p>
+          <p>The most Shazamed tracks in the world this week</p>
         </div>
-        <div class="section">
-          <div class="dew">
-            <div class="item">
-              <div v-for="(item, index) in globalTop200" :key="index">
-                <Top200Global
-                  v-if="index < 20 && isLess"
-                  :item="item"
-                  :index="index"
-                  @play="play"
-                  @pauseAudio="pauseAudio"
-                  @playAudio="playAudio"
-                />
-                <Top200Global
-                  v-if="isMore"
-                  :item="item"
-                  :index="index"
-                  @play="play"
-                  @pauseAudio="pauseAudio"
-                  @playAudio="playAudio"
-                />
+      </div>
+      <div class="main container">
+        <div class="content">
+          <div class="section one">
+            <div v-if="isDOne" class="two-top">
+              <img :src="getMyImg()">
+              <div class="px-8 py-4">
+                <p><b>#1</b> Top 200</p>
+                <p class="text-xl font-bold">
+                  {{ imgTop.title }}
+                </p>
+                <p>{{ imgTop.subtitle }}</p>
               </div>
             </div>
           </div>
-          <div class="text-center mt-4">
-            <button v-if="isDOne" class="btn-more" @click="setMore()">
-              <p v-if="isMore">
-                Show Less
-              </p>
-              <p v-else>
-                Show More
-              </p>
-            </button>
+          <div class="section">
+            <div class="dew">
+              <div class="item">
+                <div v-for="(item, index) in globalTop200" :key="index">
+                  <Top200Global
+                    v-if="index < 20 && isLess"
+                    :item="item"
+                    :index="index"
+                    @play="play"
+                    @pauseAudio="pauseAudio"
+                    @playAudio="playAudio"
+                  />
+                  <Top200Global
+                    v-if="isMore"
+                    :item="item"
+                    :index="index"
+                    @play="play"
+                    @pauseAudio="pauseAudio"
+                    @playAudio="playAudio"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button v-if="isDOne" class="btn-more" @click="setMore()">
+                <p v-if="isMore">
+                  Show Less
+                </p>
+                <p v-else>
+                  Show More
+                </p>
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="section two">
-          <div v-if="isDOne" class="two-top">
-            <img :src="getMyImg()">
-            <div class="px-8 py-4">
-              <p><b>#1</b> Top 200</p>
-              <p class="text-xl font-bold">
-                {{ imgTop.title }}
-              </p>
-              <p>{{ imgTop.subtitle }}</p>
+          <div class="section two">
+            <div v-if="isDOne" class="two-top">
+              <img :src="getMyImg()">
+              <div class="px-8 py-4">
+                <p><b>#1</b> Top 200</p>
+                <p class="text-xl font-bold">
+                  {{ imgTop.title }}
+                </p>
+                <p>{{ imgTop.subtitle }}</p>
+              </div>
             </div>
           </div>
         </div>
