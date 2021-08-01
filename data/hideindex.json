@@ -13,6 +13,13 @@
       "route" : "firebase",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 13,
+      "title": "Blog",
+      "route" : "blog",
+      "description": "",
+      "icon": ""
     }
   ]
 }
