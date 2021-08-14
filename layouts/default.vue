@@ -36,7 +36,6 @@ export default defineComponent({
 
     if (thisTheme) {
       store.dispatch('getTheme')
-      console.log('ada tema')
     } else {
       store.dispatch('setTheme')
     }

@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { computed, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 export default {
   name: 'Shorten',
   props: {
@@ -114,10 +114,6 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const storeTheme = computed(() => store.state.theme)
     const darkTheme = ref(false)
-
-    watch(darkTheme, () => {
-      console.log('darkTheme: ', darkTheme.value)
-    })
 
     cek()
     return {
