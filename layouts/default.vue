@@ -29,6 +29,9 @@ export default defineComponent({
       if (route.value.name === 'ig') {
         return true
       }
+      if (route.value.name === 'ig-profile') {
+        return true
+      }
     })
 
     if (thisTheme) {

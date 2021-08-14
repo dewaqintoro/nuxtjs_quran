@@ -8,8 +8,10 @@
             <nuxt-link to="/ig">
               <font-awesome-icon class="footer-icon" :icon="['fas', 'home']" />
             </nuxt-link>
-            <button @click="setRoute('search')">
-              <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+            <button>
+              <nuxt-link to="/ig/search">
+                <font-awesome-icon class="footer-icon" :icon="['fas', 'search']" />
+              </nuxt-link>
             </button>
             <button>
               <font-awesome-icon class="footer-icon" :icon="['fas', 'plus-square']" />
@@ -73,7 +75,8 @@ export default {
 }
 
 .main{
-  @apply min-h-full ;
+  min-height: 100vh;
+  /* @apply min-h-full ; */
 }
 
 .sikel {
