@@ -168,7 +168,8 @@ export default {
   /* background-color: white; */
   margin-top: 60px;
   width: 100%;
-  height: 85vh;
+  /* height: 85vh; */
+  height: 90vh;
   border: 1px dotted black;
   overflow-y: scroll;
 }
@@ -221,7 +222,7 @@ div.fixed {
 
 .header-main{
   /* background: white; */
-  @apply flex justify-between py-2;
+  @apply flex justify-between pt-2 pb-4;
 }
 
 .ig-logo{
