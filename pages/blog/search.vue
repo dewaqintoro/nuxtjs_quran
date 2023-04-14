@@ -106,10 +106,12 @@ export default {
     }
 
     function local () {
-      const userInfoNB = localStorage.getItem('userInfoNB')
-        ? JSON.parse(localStorage.getItem('userInfoNB'))
-        : null
-      userInfo.value = userInfoNB
+      if (typeof window !== 'undefined') {
+        const userInfoNB = localStorage.getItem('userInfoNB')
+          ? JSON.parse(localStorage.getItem('userInfoNB'))
+          : null
+        userInfo.value = userInfoNB
+      }
     }
 
     async function getData (c, e) {

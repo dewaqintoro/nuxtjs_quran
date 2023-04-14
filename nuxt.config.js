@@ -59,9 +59,9 @@ export default {
 
   axios: { browserBaseURL: '/api', proxy: true },
 
-  // http: {
-  //   proxy: true
-  // },
+  http: {
+    proxy: true
+  },
   // pwa: {
   //   manifest: {
   //     name: 'Ngodingbentar',

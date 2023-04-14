@@ -89,19 +89,19 @@
               <p class="text-lg font-bold">Kurir</p>
             </div>
             <div class="mt-4 text-white font-semibold overflow-y-auto section-kurir">
-              <div v-for="(x, index) in biayaJne" :key="index" class="kurir flex mb-4 p-2 rounded-xl">
+              <div v-for="(x, index) in biayaJne" :key="index+'a'" class="kurir flex mb-4 p-2 rounded-xl">
                 <label for="one" class="ml-4">
                   <h1>JNE</h1>
                   <p>{{ x.service }} : {{ x.cost[0].value }}</p>
                 </label>
               </div>
-              <div v-for="(x, index) in biayaPos" :key="index" class="kurir flex mb-4 p-2 rounded-xl">
+              <div v-for="(x, index) in biayaPos" :key="index+'b'" class="kurir flex mb-4 p-2 rounded-xl">
                 <label for="one" class="ml-4">
                   <h1>POS</h1>
                   <p>{{ x.service }} : {{ x.cost[0].value }}</p>
                 </label>
               </div>
-              <div v-for="(x, index) in biayaTiki" :key="index" class="kurir flex mb-4 p-2 rounded-xl">
+              <div v-for="(x, index) in biayaTiki" :key="index+'c'" class="kurir flex mb-4 p-2 rounded-xl">
                 <label for="one" class="ml-4">
                   <h1>Tiki</h1>
                   <p>{{ x.service }} : {{ x.cost[0].value }}</p>

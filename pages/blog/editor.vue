@@ -119,30 +119,32 @@ export default {
 
     async function uploadFileHandler (e) {
       const file = e.target.files[0]
-      const userInfoNB = localStorage.getItem('userInfoNB')
-        ? JSON.parse(localStorage.getItem('userInfoNB'))
-        : null
+      if (typeof window !== 'undefined') {
+        const userInfoNB = localStorage.getItem('userInfoNB')
+          ? JSON.parse(localStorage.getItem('userInfoNB'))
+          : null
 
-      if (file) {
-        if (file.size < 500000) {
-          const bodyFormData = new FormData()
-          bodyFormData.append('image', file)
-          await axios
-            .post('https://ap-v3.herokuapp.com/api/uploads/s3', bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${userInfoNB.token}`
-              }
-            })
-            .then((response) => {
-              myimg.value = response.data
-              values.value.banner = response.data
-            })
-            .catch((err) => {
-              console.log(err.message)
-            })
-        } else {
-          alert('lebih besar 500kb')
+        if (file) {
+          if (file.size < 500000) {
+            const bodyFormData = new FormData()
+            bodyFormData.append('image', file)
+            await axios
+              .post('https://ap-v3.herokuapp.com/api/uploads/s3', bodyFormData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: `Bearer ${userInfoNB.token}`
+                }
+              })
+              .then((response) => {
+                myimg.value = response.data
+                values.value.banner = response.data
+              })
+              .catch((err) => {
+                console.log(err.message)
+              })
+          } else {
+            alert('lebih besar 500kb')
+          }
         }
       }
     }
@@ -152,10 +154,12 @@ export default {
     }
 
     function local () {
-      const userInfoNB = localStorage.getItem('userInfoNB')
-        ? JSON.parse(localStorage.getItem('userInfoNB'))
-        : null
-      userInfo.value = userInfoNB
+      if (typeof window !== 'undefined') {
+        const userInfoNB = localStorage.getItem('userInfoNB')
+          ? JSON.parse(localStorage.getItem('userInfoNB'))
+          : null
+        userInfo.value = userInfoNB
+      }
     }
   }
 }
