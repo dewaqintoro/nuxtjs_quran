@@ -189,48 +189,46 @@ export default {
     }
 
     async function setProv () {
-      const url = 'https://ngodingbentar-api.herokuapp.com/api/orders/province'
+      const url = '/api/province'
       const data = await axios.get(`${url}`)
       province.value = data?.data?.rajaongkir?.results
     }
 
     async function setAsalCity () {
-      const url = `https://ngodingbentar-api.herokuapp.com/api/orders/city/${asalProv.value}`
+      const url = `/api/ongkir/city/${asalProv.value}`
       const data = await axios.get(`${url}`)
       cityAsal.value = data?.data?.rajaongkir?.results
     }
 
     async function setCity () {
-      const url = `https://ngodingbentar-api.herokuapp.com/api/orders/city/${selectedProv.value}`
+      const url = `/api/ongkir/city/${selectedProv.value}`
       const data = await axios.get(`${url}`)
       city.value = data?.data?.rajaongkir?.results
     }
 
     function cekBiaya () {
-      cekBiayaJne()
-      cekBiayaPos()
-      cekBiayaTiki()
+      cekBiayaJne('jne')
+      cekBiayaJne('pos')
+      cekBiayaJne('tiki')
     }
 
-    async function cekBiayaJne () {
-      const url = `https://ngodingbentar-api.herokuapp.com/api/orders/ongkir/jne/${asalCity.value}/${selectedCity.value}/${berat.value}`
-      // const data = await axios.get(`/api/v1${url}`, {headers});
-      const data = await axios.get(`${url}`)
-      biayaJne.value = data?.data?.rajaongkir?.results[0]?.costs
-    }
+    async function cekBiayaJne (kurir) {
+      const url = '/api/ongkir/costs'
+      const payload = {
+        origin: asalCity.value,
+        destination: selectedCity.value,
+        weight: berat.value,
+        courier: kurir
+      }
+      const data = await axios.post(url, payload)
 
-    async function cekBiayaPos () {
-      const url = `https://ngodingbentar-api.herokuapp.com/api/orders/ongkir/pos/${asalCity.value}/${selectedCity.value}/${berat.value}`
-      // const data = await axios.get(`/api/v1${url}`, {headers});
-      const data = await axios.get(`${url}`)
-      biayaPos.value = data?.data?.rajaongkir?.results[0]?.costs
-    }
-
-    async function cekBiayaTiki () {
-      const url = `https://ngodingbentar-api.herokuapp.com/api/orders/ongkir/tiki/${asalCity.value}/${selectedCity.value}/${berat.value}`
-      // const data = await axios.get(`/api/v1${url}`, {headers});
-      const data = await axios.get(`${url}`)
-      biayaTiki.value = data?.data?.rajaongkir?.results[0]?.costs
+      if (kurir === 'jne') {
+        biayaJne.value = data?.data?.rajaongkir?.results[0]?.costs
+      } else if (kurir === 'pos') {
+        biayaPos.value = data?.data?.rajaongkir?.results[0]?.costs
+      } else if (kurir === 'tiki') {
+        biayaTiki.value = data?.data?.rajaongkir?.results[0]?.costs
+      }
     }
   }
 }

@@ -57,10 +57,11 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['cookie-universal-nuxt', '@nuxtjs/axios', '@nuxtjs/pwa'],
 
-  // axios: {},
-  http: {
-    proxy: true // Can be also an object with default options
-  },
+  axios: { browserBaseURL: '/api', proxy: true },
+
+  // http: {
+  //   proxy: true
+  // },
   // pwa: {
   //   manifest: {
   //     name: 'Ngodingbentar',
@@ -99,9 +100,9 @@ export default {
   //       }],
   //   },
   // },
-  // proxy: {
-  //   '/api/v1': { target: 'https://api.rajaongkir.com', pathRewrite: {'^/api/v1': ''}, changeOrigin: true }
-  // },
+  proxy: {
+    '/api': { target: process.env.API_URL, pathRewrite: { '^/api': '/' } }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
