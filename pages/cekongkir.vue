@@ -6,6 +6,9 @@
         <CekResi />
       </div>
       <div v-else class="section lg:flex">
+        <div>
+          <button @click="setProv">setProv</button>
+        </div>
         <div class="section-input lg:w-4/6">
           <div class="bg-white p-8 rounded-3xl">
             <div class="main">
@@ -115,7 +118,7 @@
   </span>
 </template>
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { ref, onMounted } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import Navbar from '~/components/GlobalNavbar'
 import CekResi from '~/components/ongkir/CekResi.vue'
@@ -155,7 +158,9 @@ export default {
       boxShadow: '5px 5px 12px #dedede,-5px -5px 12px #ffffff'
     }
 
-    setProv()
+    onMounted(() => {
+      setProv()
+    })
 
     return {
       menu,
