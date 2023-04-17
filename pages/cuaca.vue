@@ -17,10 +17,12 @@
             <div>
               <div>
                 <div v-if="weather.weather" class="text-center items-center p-4">
-                  <p v-if="weather" class="text-xl font-bold py-2"><font-awesome-icon :icon="['fas', 'map-marker-alt']" />
+                  <p v-if="weather" class="text-xl font-bold py-2">
+                    <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
                     {{ weather.city_name }} - Indonesia
                   </p>
-                  <p class="text-gray-400 text-sm"><font-awesome-icon :icon="['fas', 'calendar-alt']" />
+                  <p class="text-gray-400 text-sm">
+                    <font-awesome-icon :icon="['fas', 'calendar-alt']" />
                     {{ currentDate }}
                   </p>
                   <img :src="imgUrl" class="imgUrl">
@@ -160,7 +162,7 @@ export default {
         lang: 'en'
         // city : selectedCity.value[0]?.city || 'Sleman',
       }
-      const url = 'https://www.nuxt.my.id/api/v1/cuaca'
+      const url = '/api/cuaca'
 
       if (selectedCity.value[0] !== 'undefined') {
         const result = await axios.get(url, { params })
