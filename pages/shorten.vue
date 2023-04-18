@@ -81,7 +81,7 @@ export default {
     }
 
     function clearSearch () {
-      console.log('clearSearch')
+      // console.log('clearSearch')
     }
 
     function outFunc () {
@@ -103,14 +103,14 @@ export default {
         longUrl: search.value
       }
 
-      const url = 'https://www.nuxt.my.id/api/v1/shorten'
+      const url = '/api/shorten'
       const result = await axios.post(url, params)
       myLink.value = result?.data
-      console.log('result', result)
+      // console.log('result', result)
     }
 
     function cek () {
-      console.log('myLink', myLink.value)
+      // console.log('myLink', myLink.value)
     }
   }
 }

@@ -42,7 +42,9 @@
       <div v-if="showDetail" class="bg-white p-8 rounded-3xl mt-8 justify-center mx-auto">
         <!-- 0201102000450503 -->
         <div class="text-center font-bold">
-          <p class="text-lg">Ekspedisi {{dataResi.summary.courier}}</p>
+          <p class="text-lg">
+            Ekspedisi {{dataResi.summary.courier}}
+          </p>
           <p>Informasi Pengiriman</p>
         </div>
         <div class="justify-center mx-auto mt-4">
