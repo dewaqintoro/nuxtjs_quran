@@ -115,7 +115,6 @@ export default {
     const ekspedisiSelected = ref('jne')
     const storeTheme = computed(() => store.state.theme)
     const awb = ref('')
-    const apiKey = '95d638ec7b8f7252f92151cc473304774bcb2a57a256bb2a90ff551f00a2421f'
     const dataResi = ref([])
     const showDetail = ref(false)
     return {
@@ -133,13 +132,11 @@ export default {
     }
 
     async function cekResi () {
-      // console.log('awb',awb.value)
       try {
-        const url = `https://api.binderbyte.com/v1/track?api_key=${apiKey}&courier=${ekspedisiSelected.value}&awb=${awb.value}`
+        const url = `/api/check-resi?kurir=${ekspedisiSelected.value}&resi=${awb.value}`
         const result = await axios.get(`${url}`)
         dataResi.value = result?.data?.data
         showDetail.value = true
-        // console.log('result', result?.data?.data)
       } catch (err) {
         console.log(err)
       }
