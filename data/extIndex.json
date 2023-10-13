@@ -27,6 +27,13 @@
       "route" : "http://ap-v3.herokuapp.com/",
       "description": "",
       "icon": ""
+    },
+    {
+      "id": 104,
+      "title": "Open AI",
+      "route" : "https://openai-nuxtjs-ten.vercel.app",
+      "description": "",
+      "icon": ""
     }
   ]
 }
