@@ -3,10 +3,10 @@ export default {
     netlifyToml: {
       redirects: [
         {
-          from= "/api/*"
-          to= "https://ngodingbentar-be-v3.vercel.app/api/v1/:splat"
-          host= "ngodingbentar-be-v3.vercel.app"
-          status= 200
+          from: "/api/*",
+          to: "https://ngodingbentar-be-v3.vercel.app/api/v1/:splat",
+          host: "ngodingbentar-be-v3.vercel.app",
+          status: 200
         }
       ]
     }
