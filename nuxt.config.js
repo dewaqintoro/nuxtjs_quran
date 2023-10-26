@@ -51,7 +51,8 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api',
     '@nuxtjs/fontawesome',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/netlify-files'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
