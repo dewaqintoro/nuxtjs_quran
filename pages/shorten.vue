@@ -26,7 +26,9 @@
           </button>
         </div>
         <div class="short-url">
-          <input :value="myLink.shortUrl || '-'" class="copy-text text-center focus:outline-none">
+          <div class="flex items-center text-white">
+            <p>{{ myLink.shortUrl || '-'}}</p>
+          </div>
           <button class="focus:outline-none mx-2 bg-gray-100 py-2 px-4 rounded-lg" @click="copy">
             Copy
           </button>

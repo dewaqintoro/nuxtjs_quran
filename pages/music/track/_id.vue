@@ -58,7 +58,7 @@
                   <div class="dew">
                     <div v-for="(item, index) in albumfeaturedin" :key="index" class="artis-item">
                       <a :href="item.attributes.url" target="_blank">
-                        <img :src="getImg(item)" alt="img">
+                        <!-- <img :src="getImg(item)" alt="img"> -->
                         <p class="uppercase ">
                           {{ item.type }}
                         </p>
@@ -263,6 +263,7 @@ export default {
     }
 
     function getImg (item) {
+      console.log('item', item)
       const str = item.attributes?.artwork?.url || 'https://res.cloudinary.com/dewaqintoro/image/upload/v1625719164/Ngodingbentar/Music/nocoverart_xsc5u2.jpg'
       const stre = str.replace('{w}', '400')
       const dew = stre.replace('{h}', '400')
@@ -355,7 +356,7 @@ export default {
 
     async function getMusic () {
       try {
-        const url = `https://vercel-be-v2.vercel.app/api/v1/music/track/${idMusic.value}`
+        const url = `/api/v1/music/track/${idMusic.value}`
         const result = await axios.get(url)
         // console.log('result', result.data)
         if (result?.status === 200) {

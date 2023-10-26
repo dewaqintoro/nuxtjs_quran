@@ -5,7 +5,7 @@
       <div v-if="!artistDone" class="pt-8 text-center">
         Loading !!!
       </div>
-      <div v-else>
+      <div v-if="lolos">
         <div class="section one">
           <div class="be container">
             <div v-if="artistDone">
@@ -137,6 +137,7 @@ export default {
 
     const isMore = ref(false)
     const isLess = ref(true)
+    const lolos = false
 
     const myTheme = {
       background: '#088b71',
@@ -163,6 +164,7 @@ export default {
       mySubTitle,
       myTitle,
       musicOn,
+      lolos,
       cek,
       getArtist,
       playAudio,
@@ -226,7 +228,7 @@ export default {
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/${artistId.value}`
         const result = await axios.get(url)
-        // console.log('result', result.data)
+        console.log('result getArtist', result.data)
         if (result?.status === 200) {
           artistDetail.value = result?.data
           setTimeout(() => {
@@ -241,9 +243,11 @@ export default {
     }
 
     async function getArtistBio (adamid) {
+      console.log('adamid', adamid)
       try {
         const url = `https://vercel-be-v2.vercel.app/api/v1/music/artist/bio/${adamid}`
         const result = await axios.get(url)
+        console.log('result bio', result)
         // console.log('getArtistBio', result?.data?.data[0])
         if (result?.status === 200) {
           artistBioData.value = result?.data?.data[0]

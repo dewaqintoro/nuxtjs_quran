@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <Navbar />
     <div class="content">
       <div class="container">
         <div class="my-item">
@@ -64,12 +65,14 @@ import axios from 'axios'
 import Loading from '@/components/Loading.vue'
 import dataJson from '~/data/csvjson.json'
 import SearchComp from '~/components/SearchNewComp.vue'
+import Navbar from '~/components/Navbar.vue'
 
 export default {
   name: 'Quran',
   components: {
     SearchComp,
-    Loading
+    Loading,
+    Navbar
   },
   setup () {
     const { store } = useContext()
