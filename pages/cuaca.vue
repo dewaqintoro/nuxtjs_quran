@@ -165,7 +165,8 @@ export default {
         lang: 'en'
         // city : selectedCity.value[0]?.city || 'Sleman',
       }
-      const url = '/api/cuaca'
+      // const url = '/api/cuaca'
+      const url = 'https://ngodingbentar-be-v3.vercel.app/api/v1/cuaca'
 
       if (selectedCity.value[0] !== 'undefined') {
         const result = await axios.get(url, { params })
