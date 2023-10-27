@@ -5,63 +5,72 @@
       "title": "Al-Quran",
       "route" : "agama/islam",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 2,
       "title": "Cuaca",
       "route" : "cuaca",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 3,
       "title": "Shorten Link",
       "route" : "shorten",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 4,
       "title": "Cek Ongkir",
       "route" : "cekongkir",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 5,
       "title": "Dashboard Crypto (Desktop)",
       "route" : "crypto",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 6,
       "title": "Covid-19",
       "route" : "covid",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 7,
       "title": "Algolia",
       "route" : "algolia",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 8,
       "title": "Mailgun",
       "route" : "mailgun",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 9,
       "title": "ig clone (mobile view)",
       "route" : "ig",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     
     {
@@ -69,28 +78,32 @@
       "title": "KBBI - Unofficial",
       "route" : "kbbi",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 11,
       "title": "Invest",
       "route" : "invest",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 12,
       "title": "Music",
       "route" : "music",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     },
     {
       "id": 14,
       "title": "Maps",
       "route" : "maps",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "int"
     }
   ]
 }

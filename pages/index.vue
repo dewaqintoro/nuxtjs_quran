@@ -7,12 +7,14 @@
           <Loading :theme="storeTheme" />
         </div>
         <div v-else>
-          <nuxt-link v-for="item in dataDoa" :key="item.id" :to="item.route">
-            <Cardcomp class="content" :theme="storeTheme" :item="item" />
-          </nuxt-link>
-          <a v-for="item in extIndex" :key="item.id" :href="item.route" target="_blank">
-            <Cardcomp class="content" :theme="storeTheme" :item="item" />
-          </a>
+          <span v-for="item in thisIndex" :key="item.id">
+            <nuxt-link v-if="item.type === 'int'" :to="item.route">
+              <Cardcomp class="content" :theme="storeTheme" :item="item" />
+            </nuxt-link>
+            <a v-else :href="item.route" target="_blank">
+              <Cardcomp class="content" :theme="storeTheme" :item="item" />
+            </a>
+          </span>
         </div>
       </div>
     </div>
@@ -41,6 +43,19 @@ export default {
     const loadingTheme = computed(() => store.state.loadingTheme)
     const loading = ref(true)
     const storeTheme = computed(() => store.state.theme)
+    const thisIndex = computed(() => {
+      const data = [...dataDoa, ...extIndex]
+      const duh = data.sort(function (a, b) {
+        if (a.title < b.title) {
+          return -1
+        }
+        if (a.title > b.title) {
+          return 1
+        }
+        return 0
+      })
+      return duh
+    })
 
     setLoading()
 
@@ -49,7 +64,8 @@ export default {
       loadingTheme,
       loading,
       dataDoa,
-      extIndex
+      extIndex,
+      thisIndex
     }
 
     function setLoading () {

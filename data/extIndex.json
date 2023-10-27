@@ -5,28 +5,72 @@
       "title": "Chat (Mobile)",
       "route" : "https://vue-chat-five.vercel.app/",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "ext"
     },
     {
       "id": 101,
       "title": "Youtube Downloader",
       "route" : "https://yt-ngodingbentar.herokuapp.com",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "ext"
     },
     {
       "id": 102,
       "title": "Task Management",
       "route" : "https://board-ngodingbentar.vercel.app",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "ext"
     },
     {
       "id": 103,
       "title": "Online Store (Aruspinggir)",
       "route" : "http://ap-v3.herokuapp.com/",
       "description": "",
-      "icon": ""
+      "icon": "",
+      "type": "ext"
+    },
+    {
+      "id": 104,
+      "title": "Trello Clone",
+      "route" : "https://ngodingbentar-trello.vercel.app/",
+      "description": "",
+      "icon": "",
+      "type": "ext"
+    },
+    {
+      "id": 105,
+      "title": "Open AI",
+      "route" : "https://openai-nuxtjs-ten.vercel.app/",
+      "description": "",
+      "icon": "",
+      "type": "ext"
+    },
+    {
+      "id": 106,
+      "title": "Portfolio Glass",
+      "route" : "https://portfolio-glass.vercel.app/",
+      "description": "",
+      "icon": "",
+      "type": "ext"
+    },
+    {
+      "id": 107,
+      "title": "Landing Page",
+      "route" : "https://fe-katak-landing.vercel.app/",
+      "description": "",
+      "icon": "",
+      "type": "ext"
+    },
+    {
+      "id": 108,
+      "title": "Maps v2",
+      "route" : "https://maps-ngodingbentar.vercel.app/",
+      "description": "",
+      "icon": "",
+      "type": "ext"
     }
   ]
 }
