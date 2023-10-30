@@ -7,7 +7,7 @@
           KBBI - Unofficial
         </div>
         <div class="search">
-          <input id="username" v-model="search" class="input-search focus:outline-none" type="search" placeholder="Paste long url and shorten it.">
+          <input id="username" v-model="search" class="input-search focus:outline-none" type="search" placeholder="Pencarian">
           <button class="btn-search focus:outline-none" type="button" @click="searchFilter()">
             <font-awesome-icon :icon="['fas', 'search']" />
           </button>
